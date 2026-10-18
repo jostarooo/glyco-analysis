@@ -26,3 +26,6 @@ Thumbs.db
 # 本地密钥
 .env
 *token*
+
+# 会话内工作清单
+.audit/

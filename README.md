@@ -20,8 +20,15 @@ N-糖，挂上的糖链会不会影响它做受体？"
 ## 现在能跑什么
 
 ```powershell
+# 环境自检：写 reports/env_check.md，并验证 GPU 真前向
+D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\env_check.py
+
 # 接口体检：一次性打印 UniProt / GlyGen / GlyConnect / GlyTouCan / KEGG / PubChem 的可用性
 D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\check_endpoints.py
+
+# 发布到 GitHub：建仓后通过 Git Data API 镜像当前 HEAD（需要 classic PAT 的 repo scope）
+# 先把 token 写入 %USERPROFILE%\.github-token，或设置 GH_TOKEN
+D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\publish_github.py --private
 ```
 
 环境事实见 `REPRO.md`，复现用的三个上游仓库在 `D:\wbworkspace\`（LoRA-N-Gly / GlycanML / Doc2Agent）。
@@ -30,7 +37,7 @@ D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\check_endpoints.p
 
 ```
 glyco-analysis/
-├─ scripts/          可直接运行的脚本（check_endpoints.py）
+├─ scripts/          可直接运行的脚本（env_check.py / check_endpoints.py / publish_github.py）
 ├─ reports/          体检与实验产出的 Markdown / CSV
 ├─ docs/             设计与说明
 ├─ data/             本地数据（不入库，见 .gitignore）
