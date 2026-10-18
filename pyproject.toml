@@ -1,0 +1,23 @@
+[project]
+name = "glyco-analysis"
+version = "0.1.0"
+description = "糖基化分析系统：蛋白质语言模型位点预测 + 糖链图神经网络 + 工具调用智能体"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "torch>=2.6",
+    "transformers>=4.45",
+    "peft>=0.13",
+    "scikit-learn>=1.5",
+    "pandas>=2.2",
+    "numpy>=1.26",
+    "requests>=2.32",
+    "tqdm>=4.66",
+]
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu128" }

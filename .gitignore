@@ -1,0 +1,28 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# 数据与产物（体积大 / 含本地路径）
+data/*
+!data/.gitkeep
+runs/
+checkpoints/
+
+# 模型缓存（应落在 D:\hf，不在仓库内）
+*.safetensors
+*.bin
+*.pt
+*.pth
+
+# 编辑器与系统
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# 本地密钥
+.env
+*token*
