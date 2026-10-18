@@ -27,5 +27,9 @@ Thumbs.db
 .env
 *token*
 
+# 发布记录：脚本每次发布重写，描述的是它刚镜像的那个提交，入库会立刻过期；
+# 留本地，副本放 D:\毕设交付\Wnn_日期\03-附件材料\
+reports/github_publish_*.md
+
 # 会话内工作清单
 .audit/

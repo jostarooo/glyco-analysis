@@ -56,16 +56,27 @@
 
 ### GitHub 发布
 
-本机 `git push` 到 GitHub 的传输不稳定，项目仓库用 `POST /user/repos` + Git Data API 发布：
+本机到 `github.com` 的 git 通道是被重置的（`Recv failure: Connection was reset`，代理端口 5899 也不再监听），
+而 `api.github.com` 可达，所以发布固定走 `scripts/publish_github.py`：
 
 ```powershell
 # classic PAT，必须有 repo scope；不要把 token 写进仓库
-$env:GH_TOKEN = '<classic-pat>'
+$env:GH_TOKEN = '<classic-pat>'      # 或写入 %USERPROFILE%\.github-token
 D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\publish_github.py --private
 ```
 
-脚本会逐 blob 校验本地与远端 SHA，再比较 tree SHA 和远端 branch，不使用 force push。
-2026-10-18 当前状态：**本地提交已完成，远端尚未发布，等待可用 token**。
+脚本做三件事：
+
+1. 建仓（已存在则复用）；空仓库先用 Contents API 播种一个提交——否则 Git Data API 的所有写操作都会返回
+   `409 Git Repository is empty.`（连 `POST /git/blobs` 也一样）；
+2. 按 `git rev-list --reverse` 逐 commit 重放本地历史，镜像 tree、父提交、提交信息与作者/提交时间；
+3. 逐项校验：blob SHA、每层 tree SHA、远端 ref，最后要求 **远端 HEAD 的 commit SHA 与本地完全相同**
+   （提交信息结尾的换行要省掉再发，GitHub 会补一个，这样字节才能对齐）。
+
+任何一项对不上就报错退出；发布记录写在 `reports/github_publish_<日期>.md`。
+
+2026-10-18 状态：**已发布** → https://github.com/jostarooo/glyco-analysis
+（private，`main` = `59c53b7`，与本地 `HEAD` 及 tree 逐字节一致，10 个文件）。
 
 ## 五、复现记录
 
@@ -73,3 +84,4 @@ D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\publish_github.py
 |---|---|---|---|
 | 2026-10-18 | 建 uv + Python 3.12 venv、装 cu128 torch、设 D 盘缓存 | `scripts/env_check.py`：CUDA 可用，sm_120，512×512 真前向最大误差 4.768e-05 | ✅ 通过 |
 | 2026-10-18 | 体检 UniProt / GlyGen / GlyConnect / GlyTouCan / KEGG / PubChem | `scripts/check_endpoints.py`；UniProt 返回 1381，GlyGen 584 KB | ✅ 4/6；GlyConnect `500`，GlyTouCan `404` |
+| 2026-10-18 | 建 GitHub 私有仓库并把本地两次提交镜像上去 | `scripts/publish_github.py --private`；远端 HEAD 与 tree 均与本地逐字节一致，10 个文件 | ✅ 通过 |

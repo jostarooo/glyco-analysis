@@ -26,10 +26,15 @@ D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\env_check.py
 # 接口体检：一次性打印 UniProt / GlyGen / GlyConnect / GlyTouCan / KEGG / PubChem 的可用性
 D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\check_endpoints.py
 
-# 发布到 GitHub：建仓后通过 Git Data API 镜像当前 HEAD（需要 classic PAT 的 repo scope）
-# 先把 token 写入 %USERPROFILE%\.github-token，或设置 GH_TOKEN
+# 同步到 GitHub：本机 git push 通道不通，发布走 REST API（需要 classic PAT 的 repo scope）
+# 先把 token 写入 %USERPROFILE%\.github-token，或设置 GH_TOKEN；别把 token 写进仓库
 D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\publish_github.py --private
 ```
+
+发布脚本会把本地历史逐 commit 重放到远端，并校验 commit SHA 与 tree SHA 都与本地一致，
+不一致就报错退出；空仓库的首次提交由脚本自己播种。详见 `REPRO.md` 第四节。
+
+远端：https://github.com/jostarooo/glyco-analysis （private，`main`）
 
 环境事实见 `REPRO.md`，复现用的三个上游仓库在 `D:\wbworkspace\`（LoRA-N-Gly / GlycanML / Doc2Agent）。
 
