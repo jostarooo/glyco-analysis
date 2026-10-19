@@ -1,0 +1,7 @@
+# 行尾策略：源码与文档统一 LF；数据产物禁止任何转换，保证 SHA256 可核对。
+# 背景：本机 core.autocrlf=true，不加规则时检出会把 LF 变 CRLF，产物哈希对不上。
+* text=auto eol=lf
+*.csv -text
+*.json -text
+*.xlsx -text
+*.png -text
