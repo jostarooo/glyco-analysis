@@ -1,7 +1,7 @@
 # 糖基化分析系统：以蛋白质语言模型预测 N-糖基化位点、以图神经网络解析糖链、并用工具调用智能体把两者串成一个可对话的分析工作台。
 
 > 本科毕业设计（张驰，指导教师王老师）· 2026-10-27 第一次对齐
-> 代码状态：W1 环境搭建阶段，可运行的东西只有接口体检脚本。
+> 代码状态：W1 —— 环境与六个接口已就绪，F1 数据集 v0 可复现（口径与哈希见 `reports/dataset_v0.md`）。
 
 ## 它解决什么问题
 
@@ -26,6 +26,12 @@ D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\env_check.py
 # 接口体检：一次性打印 UniProt / GlyGen / GlyConnect / GlyTouCan / KEGG / PubChem 的可用性
 D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\check_endpoints.py
 
+# 构建 F1 数据集 v0：UniProt 实验标注 → N-X-S/T 候选位点表（带缓存，复跑 0 次网络请求）
+D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\build_dataset.py
+
+# 独立复算校验：不共享代码，从原始 JSON 缓存重推并逐字段对照（PASS 才退出 0）
+D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\check_dataset.py
+
 # 同步到 GitHub：本机 git push 通道不通，发布走 REST API（需要 classic PAT 的 repo scope）
 # 先把 token 写入 %USERPROFILE%\.github-token，或设置 GH_TOKEN；别把 token 写进仓库
 D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\publish_github.py --private
@@ -42,8 +48,8 @@ D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\publish_github.py
 
 ```
 glyco-analysis/
-├─ scripts/          可直接运行的脚本（env_check.py / check_endpoints.py / publish_github.py）
-├─ reports/          体检与实验产出的 Markdown / CSV
+├─ scripts/          可直接运行的脚本（env_check / check_endpoints / build_dataset / check_dataset / publish_github）
+├─ reports/          体检、数据集与发布记录（dataset_v0.md / candidates_30*.csv 等）
 ├─ docs/             设计与说明
 ├─ data/             本地数据（不入库，见 .gitignore）
 └─ REPRO.md          复现手册：可行性五关、术语表、本机配置

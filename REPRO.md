@@ -54,6 +54,16 @@
 > 网络约束：2026-10-18 实测 `raw.githubusercontent.com` 连接重置，GitHub git 智能协议对两个大仓库零字节卡死。
 > 因 F1/F3 上游体积为 262 MB / 约 1.4 GB，先按 `UPSTREAM.md` 取复现必需文件。快照不能 `git pull`，补取入口写在各自目录的 `UPSTREAM.md`。
 
+### F1 数据集 v0（2026-10-19）
+
+```powershell
+D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\build_dataset.py    # 生成 reports/candidates_30*.csv
+D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\check_dataset.py    # 独立复算校验，PASS 才退出 0
+```
+
+30 个蛋白 / 201 个候选位点（label1 153），UniProt release 2026_03；复跑 0 次网络请求且
+三个产物 SHA256 不变，校验器 1854 条断言全过。抽样口径、数据质量指标与哈希表见 `reports/dataset_v0.md`。
+
 ### GitHub 发布
 
 本机到 `github.com` 的 git 通道是被重置的（`Recv failure: Connection was reset`，代理端口 5899 也不再监听），
@@ -85,3 +95,4 @@ D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\publish_github.py
 | 2026-10-18 | 建 uv + Python 3.12 venv、装 cu128 torch、设 D 盘缓存 | `scripts/env_check.py`：CUDA 可用，sm_120，512×512 真前向最大误差 4.768e-05 | ✅ 通过 |
 | 2026-10-18 | 体检 UniProt / GlyGen / GlyConnect / GlyTouCan / KEGG / PubChem | `scripts/check_endpoints.py`；UniProt 返回 1381，GlyGen 584 KB | ✅ 4/6；GlyConnect `500`，GlyTouCan `404` |
 | 2026-10-18 | 建 GitHub 私有仓库并把本地两次提交镜像上去 | `scripts/publish_github.py --private`；远端 HEAD 与 tree 均与本地逐字节一致，10 个文件 | ✅ 通过 |
+| 2026-10-19 | 构建 F1 数据集 v0（UniProt 实验标注 → 30 蛋白 / 201 候选位点，release 2026_03） | 复跑 0 次网络请求且三产物 SHA256 不变；`scripts/check_dataset.py` 独立复算 1854 断言全过 | ✅ 通过；口径见 `reports/dataset_v0.md` |
