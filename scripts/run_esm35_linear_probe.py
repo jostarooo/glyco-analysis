@@ -1,9 +1,3 @@
-"""Run the frozen ESM-2 35M linear probe on the F1 v0 candidate table.
-
-The runner writes a complete run directory only after every artifact is
-available. ``manifest.json`` is the completion marker and is written last.
-"""
-
 from __future__ import annotations
 
 import argparse
@@ -16,7 +10,6 @@ import platform
 import re
 import subprocess
 import sys
-import warnings
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Sequence
@@ -28,7 +21,8 @@ DEFAULT_CANDIDATES = REPO_ROOT / "reports" / "candidates_30.csv"
 DEFAULT_CACHE_DIR = REPO_ROOT / "data" / "raw" / "uniprot"
 DEFAULT_OUT_DIR = REPO_ROOT / "reports" / "esm35_linear_probe_v0"
 
-SCHEMA = "glyco.esm35-linear-probe/v1"
+SCHEMA = "glyco.esm35-linear-probe/v2"
+BENCHMARK_ID = "experimental_positive_vs_unannotated_control"
 MODEL_ID = "facebook/esm2_t12_35M_UR50D"
 MODEL_REVISION = "6fbf070e65b0b7291e7bbcd451118c216cff79d8"
 HIDDEN_SIZE = 480
@@ -39,6 +33,19 @@ SEED = 20261020
 C = 1.0
 THRESHOLD = 0.5
 BOOTSTRAP_REPLICATES = 2000
+EXPECTED_SOURCE_ROWS = 201
+EXPECTED_EVALUATION_ROWS = 130
+EXPECTED_PROTEINS = 28
+EXPECTED_UNIQUE_WINDOWS = 51
+EXPECTED_POSITIVE_ROWS = 82
+EXPECTED_CONTROL_ROWS = 48
+EXPECTED_INFERRED_ROWS = 71
+EXPECTED_INFERRED_ACCESSIONS = 15
+EXPECTED_FULLY_EXCLUDED_PROTEINS = ("P13611",)
+EXPERIMENTAL_EVIDENCE_CODES = frozenset({"ECO:0000269"})
+INFERRED_ONLY_EVIDENCE_CODES = frozenset({"ECO:0000255"})
+EVIDENCE_CODE = re.compile(r"ECO:\d{7}\Z")
+ACCESSION = re.compile(r"[A-Za-z0-9]+\Z")
 
 CANDIDATE_COLUMNS = (
     "accession",
@@ -76,8 +83,8 @@ FOLD_COLUMNS = (
     "test_rows",
     "train_positive",
     "test_positive",
-    "train_negative",
-    "test_negative",
+    "train_unannotated",
+    "test_unannotated",
 )
 PREDICTION_COLUMNS = (
     "row_id",
@@ -101,7 +108,7 @@ SEQUON = re.compile(r"N[^P][ST]\Z")
 
 
 class InputError(ValueError):
-    """The input table or sequence cache violates the declared contract."""
+    pass
 
 
 @dataclass(frozen=True)
@@ -122,6 +129,8 @@ class Candidate:
     label: bool
     seq_len: int
     sequence: str
+    evidence: tuple[str, ...]
+    evidence_class: str
 
 
 @dataclass(frozen=True)
@@ -171,6 +180,10 @@ class InputData:
     candidate_sha256: str
     uniprot_list_sha256: str
     sequence_cache_sha256: str
+    source_rows: int
+    excluded_inferred_rows: int
+    inferred_positive_accessions: tuple[str, ...]
+    excluded_protein_accessions: tuple[str, ...]
 
 
 def sha256_bytes(body: bytes) -> str:
@@ -216,6 +229,55 @@ def atomic_write_npy(path: Path, values: np.ndarray) -> None:
     os.replace(temporary, path)
 
 
+def invalidate_run(out_dir: Path) -> None:
+    (out_dir / "manifest.json").unlink(missing_ok=True)
+
+
+def parse_evidence(raw: str, row_id: str) -> tuple[str, ...]:
+    codes = tuple(sorted({part for part in raw.split(";") if part}))
+    for code in codes:
+        if EVIDENCE_CODE.fullmatch(code) is None:
+            raise InputError(f"{row_id} has invalid evidence code {code!r}")
+    return codes
+
+
+def classify_evidence(label: bool, codes: Sequence[str], row_id: str) -> str:
+    evidence = frozenset(codes)
+    if label:
+        if not evidence:
+            raise InputError(f"{row_id} is positive but has no evidence codes")
+        if evidence & EXPERIMENTAL_EVIDENCE_CODES:
+            return "experimental"
+        if evidence <= INFERRED_ONLY_EVIDENCE_CODES:
+            return "inferred"
+        raise InputError(
+            f"{row_id} has unsupported non-experimental evidence {sorted(evidence)}"
+        )
+    if evidence:
+        raise InputError(f"{row_id} has evidence but is not labelled positive")
+    return "unannotated"
+
+
+def select_probe_candidates(
+    candidates: Sequence[Candidate],
+) -> tuple[tuple[Candidate, ...], tuple[str, ...]]:
+    selected = tuple(
+        candidate
+        for candidate in candidates
+        if candidate.evidence_class in {"experimental", "unannotated"}
+    )
+    inferred_accessions = tuple(
+        sorted(
+            {
+                candidate.accession
+                for candidate in candidates
+                if candidate.evidence_class == "inferred"
+            }
+        )
+    )
+    return selected, inferred_accessions
+
+
 def read_candidates(candidates_path: Path, cache_dir: Path) -> InputData:
     if not candidates_path.is_file():
         raise FileNotFoundError(f"candidate table not found: {candidates_path}")
@@ -233,6 +295,10 @@ def read_candidates(candidates_path: Path, cache_dir: Path) -> InputData:
         raise InputError("candidate table is empty")
 
     accessions = sorted({row["accession"] for row in raw_rows})
+    for accession in accessions:
+        if ACCESSION.fullmatch(accession) is None:
+            raise InputError(f"unsafe accession for cache lookup: {accession!r}")
+
     records: dict[str, dict] = {}
     cache_hash = hashlib.sha256()
     for accession in accessions:
@@ -240,7 +306,20 @@ def read_candidates(candidates_path: Path, cache_dir: Path) -> InputData:
         if not path.is_file():
             raise FileNotFoundError(f"cached UniProt record not found: {path}")
         body = path.read_bytes()
-        records[accession] = json.loads(body.decode("utf-8"))
+        try:
+            record = json.loads(body.decode("utf-8"))
+        except (UnicodeDecodeError, json.JSONDecodeError) as error:
+            raise InputError(f"invalid cached UniProt JSON for {accession}") from error
+        if not isinstance(record, dict):
+            raise InputError(f"cached UniProt record for {accession} is not an object")
+        sequence_payload = record.get("sequence")
+        if (
+            not isinstance(sequence_payload, dict)
+            or not isinstance(sequence_payload.get("value"), str)
+            or not sequence_payload["value"]
+        ):
+            raise InputError(f"cached UniProt record for {accession} has no sequence")
+        records[accession] = record
         cache_hash.update(accession.encode("ascii"))
         cache_hash.update(b"\0")
         cache_hash.update(bytes.fromhex(sha256_bytes(body)))
@@ -248,11 +327,23 @@ def read_candidates(candidates_path: Path, cache_dir: Path) -> InputData:
     list_path = cache_dir / "_list.json"
     if not list_path.is_file():
         raise FileNotFoundError(f"UniProt list cache not found: {list_path}")
+    try:
+        list_payload = json.loads(list_path.read_text(encoding="utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as error:
+        raise InputError("invalid UniProt list cache JSON") from error
+    if (
+        not isinstance(list_payload, dict)
+        or not isinstance(list_payload.get("release"), str)
+        or not list_payload["release"]
+    ):
+        raise InputError("UniProt list cache has no release")
     list_sha256 = file_sha256(list_path)
 
     candidates = []
     seen: set[tuple[str, int]] = set()
-    release = ""
+    release = raw_rows[0]["uniprot_release"]
+    if not release:
+        raise InputError("candidate table has an empty UniProt release")
     for raw in raw_rows:
         accession = raw["accession"]
         try:
@@ -268,14 +359,10 @@ def read_candidates(candidates_path: Path, cache_dir: Path) -> InputData:
             raise InputError(f"{accession}#{position} has invalid label {raw['label']!r}")
         if raw["sequon"] != "1":
             raise InputError(f"{accession}#{position} is not marked as a sequon")
-        if raw["uniprot_release"] != raw_rows[0]["uniprot_release"]:
+        if raw["uniprot_release"] != release:
             raise InputError("candidate rows contain multiple UniProt releases")
-        release = raw["uniprot_release"]
-        if not release:
-            raise InputError("candidate table has an empty UniProt release")
 
-        record = records[accession]
-        sequence = record["sequence"]["value"]
+        sequence = records[accession]["sequence"]["value"]
         if seq_len != len(sequence):
             raise InputError(
                 f"{accession} declares seq_len {seq_len}, cache has {len(sequence)}"
@@ -299,25 +386,47 @@ def read_candidates(candidates_path: Path, cache_dir: Path) -> InputData:
         label = raw["label"] == "1"
         if label != (raw["linkage"] == "N-linked"):
             raise InputError(f"{accession}#{position} label and linkage disagree")
+        row_id = f"{accession}:{position}"
+        evidence = parse_evidence(raw["evidence"], row_id)
+        evidence_class = classify_evidence(label, evidence, row_id)
 
         candidates.append(
             Candidate(
-                row_id=f"{accession}:{position}",
+                row_id=row_id,
                 accession=accession,
                 position=position,
                 label=label,
                 seq_len=seq_len,
                 sequence=sequence,
+                evidence=evidence,
+                evidence_class=evidence_class,
             )
         )
 
+    if release != list_payload["release"]:
+        raise InputError(
+            f"candidate release {release!r} differs from cache {list_payload['release']!r}"
+        )
     candidates.sort(key=lambda item: (item.accession, item.position))
+    selected, inferred_positive_accessions = select_probe_candidates(candidates)
+    excluded_inferred_rows = sum(
+        candidate.evidence_class == "inferred" for candidate in candidates
+    )
+    source_accessions = {candidate.accession for candidate in candidates}
+    selected_accessions = {candidate.accession for candidate in selected}
+    excluded_protein_accessions = tuple(
+        sorted(source_accessions - selected_accessions)
+    )
     return InputData(
-        candidates=tuple(candidates),
+        candidates=selected,
         uniprot_release=release,
         candidate_sha256=file_sha256(candidates_path),
         uniprot_list_sha256=list_sha256,
         sequence_cache_sha256=cache_hash.hexdigest().upper(),
+        source_rows=len(candidates),
+        excluded_inferred_rows=excluded_inferred_rows,
+        inferred_positive_accessions=inferred_positive_accessions,
+        excluded_protein_accessions=excluded_protein_accessions,
     )
 
 
@@ -399,10 +508,9 @@ def configure_torch() -> None:
     torch.backends.cudnn.deterministic = True
     torch.backends.cuda.matmul.allow_tf32 = False
     torch.backends.cudnn.allow_tf32 = False
-    if hasattr(torch.backends.cuda, "enable_flash_sdp"):
-        torch.backends.cuda.enable_flash_sdp(False)
-        torch.backends.cuda.enable_mem_efficient_sdp(False)
-        torch.backends.cuda.enable_math_sdp(True)
+    torch.backends.cuda.enable_flash_sdp(False)
+    torch.backends.cuda.enable_mem_efficient_sdp(False)
+    torch.backends.cuda.enable_math_sdp(True)
     torch.use_deterministic_algorithms(True)
     torch.set_float32_matmul_precision("highest")
 
@@ -588,15 +696,12 @@ def fit_and_predict(
         test_features = scaler.transform(features[test_indices])
         classifier = LogisticRegression(
             C=C,
-            penalty="l2",
             solver="liblinear",
             max_iter=5000,
             random_state=SEED,
             class_weight=None,
         )
-        with warnings.catch_warnings():
-            warnings.filterwarnings("ignore", category=FutureWarning)
-            classifier.fit(train_features, train_labels)
+        classifier.fit(train_features, train_labels)
         if int(np.max(classifier.n_iter_)) >= 5000:
             raise RuntimeError(f"{fold.fold_id} logistic regression did not converge")
         fold_logits = classifier.decision_function(test_features)
@@ -630,54 +735,60 @@ def fit_and_predict(
 def point_metrics(labels: np.ndarray, predictions: np.ndarray, probabilities: np.ndarray):
     labels = labels.astype(bool, copy=False)
     predictions = predictions.astype(bool, copy=False)
-    true_positive = int(np.sum(labels & predictions))
-    true_negative = int(np.sum(~labels & ~predictions))
-    false_positive = int(np.sum(~labels & predictions))
-    false_negative = int(np.sum(labels & ~predictions))
+    positive_predicted_positive = int(np.sum(labels & predictions))
+    positive_predicted_control = int(np.sum(labels & ~predictions))
+    control_predicted_positive = int(np.sum(~labels & predictions))
+    control_predicted_control = int(np.sum(~labels & ~predictions))
 
     null_reasons: dict[str, str] = {}
     mcc_denominator = math.sqrt(
-        (true_positive + false_positive)
-        * (true_positive + false_negative)
-        * (true_negative + false_positive)
-        * (true_negative + false_negative)
+        (positive_predicted_positive + control_predicted_positive)
+        * (positive_predicted_positive + positive_predicted_control)
+        * (control_predicted_control + control_predicted_positive)
+        * (control_predicted_control + positive_predicted_control)
     )
     mcc = (
-        (true_positive * true_negative - false_positive * false_negative)
+        (
+            positive_predicted_positive * control_predicted_control
+            - control_predicted_positive * positive_predicted_control
+        )
         / mcc_denominator
         if mcc_denominator
         else None
     )
     if mcc is None:
         null_reasons["mcc"] = "confusion matrix has no square root support"
-    sensitivity = (
-        true_positive / (true_positive + false_negative)
-        if true_positive + false_negative
+    positive_recall = (
+        positive_predicted_positive
+        / (positive_predicted_positive + positive_predicted_control)
+        if positive_predicted_positive + positive_predicted_control
         else None
     )
-    if sensitivity is None:
-        null_reasons["sensitivity"] = "no positive labels"
-    specificity = (
-        true_negative / (true_negative + false_positive)
-        if true_negative + false_positive
+    if positive_recall is None:
+        null_reasons["positive_recall"] = "no experimental positives"
+    control_specificity = (
+        control_predicted_control
+        / (control_predicted_control + control_predicted_positive)
+        if control_predicted_control + control_predicted_positive
         else None
     )
-    if specificity is None:
-        null_reasons["specificity"] = "no negative labels"
-    precision = (
-        true_positive / (true_positive + false_positive)
-        if true_positive + false_positive
+    if control_specificity is None:
+        null_reasons["control_specificity"] = "no unannotated controls"
+    positive_precision = (
+        positive_predicted_positive
+        / (positive_predicted_positive + control_predicted_positive)
+        if positive_predicted_positive + control_predicted_positive
         else None
     )
-    if precision is None:
-        null_reasons["precision"] = "no predicted positives"
-    accuracy = (
-        (true_positive + true_negative) / len(labels)
+    if positive_precision is None:
+        null_reasons["positive_precision"] = "no predicted positives"
+    weak_label_accuracy = (
+        (positive_predicted_positive + control_predicted_control) / len(labels)
         if len(labels)
         else None
     )
-    if accuracy is None:
-        null_reasons["accuracy"] = "no rows"
+    if weak_label_accuracy is None:
+        null_reasons["weak_label_accuracy"] = "no rows"
     if np.unique(labels).size == 2:
         from sklearn.metrics import roc_auc_score
 
@@ -688,17 +799,21 @@ def point_metrics(labels: np.ndarray, predictions: np.ndarray, probabilities: np
 
     return {
         "confusion": {
-            "true_negative": true_negative,
-            "false_positive": false_positive,
-            "false_negative": false_negative,
-            "true_positive": true_positive,
+            "experimental_positive": {
+                "predicted_positive": positive_predicted_positive,
+                "predicted_control": positive_predicted_control,
+            },
+            "unannotated_control": {
+                "predicted_positive": control_predicted_positive,
+                "predicted_control": control_predicted_control,
+            },
         },
         "metrics": {
             "mcc": None if mcc is None else float(mcc),
-            "sensitivity": sensitivity,
-            "specificity": specificity,
-            "precision": precision,
-            "accuracy": accuracy,
+            "positive_recall": positive_recall,
+            "control_specificity": control_specificity,
+            "positive_precision": positive_precision,
+            "weak_label_accuracy": weak_label_accuracy,
             "roc_auc": roc_auc,
         },
         "null_reasons": null_reasons,
@@ -727,15 +842,18 @@ def bootstrap_by_protein(
     predicted = np.asarray(
         [prediction.prediction for prediction in predictions], dtype=bool
     )
+    probabilities = np.asarray(
+        [prediction.probability for prediction in predictions], dtype=np.float64
+    )
     rng = np.random.default_rng(seed)
-    values = {"mcc": [], "sensitivity": [], "specificity": []}
+    values = {"mcc": [], "positive_recall": [], "control_specificity": []}
 
     for _ in range(replicates):
         sampled = rng.choice(accessions, size=len(accessions), replace=True)
         indices = np.concatenate([indices_by_accession[accession] for accession in sampled])
-        metrics = point_metrics(labels[indices], predicted[indices], labels[indices])[
-            "metrics"
-        ]
+        metrics = point_metrics(
+            labels[indices], predicted[indices], probabilities[indices]
+        )["metrics"]
         if all(metrics[name] is not None for name in values):
             for name in values:
                 values[name].append(metrics[name])
@@ -774,6 +892,7 @@ def metrics_document(predictions: Sequence[Prediction]) -> dict:
     point = point_metrics(labels, predicted, probabilities)
     return {
         "schema": SCHEMA,
+        "benchmark_id": BENCHMARK_ID,
         "threshold": THRESHOLD,
         "confusion": point["confusion"],
         "metrics": point["metrics"],
@@ -803,12 +922,24 @@ def metrics_markdown(metrics: dict, proteins: int) -> str:
         "| 指标 | 数值 |",
         "|---|---:|",
         f"| MCC | {format_metric(point['mcc'])} |",
-        f"| 灵敏度 | {format_metric(point['sensitivity'])} |",
-        f"| 特异度 | {format_metric(point['specificity'])} |",
-        f"| 精确率 | {format_metric(point['precision'])} |",
-        f"| 准确率 | {format_metric(point['accuracy'])} |",
-        f"| ROC AUC | {format_metric(point['roc_auc'])} |",
-        f"| 混淆矩阵 | TN={confusion['true_negative']} FP={confusion['false_positive']} FN={confusion['false_negative']} TP={confusion['true_positive']} |",
+        f"| 实验阳性召回率 | {format_metric(point['positive_recall'])} |",
+        f"| 未标注对照保持率 | {format_metric(point['control_specificity'])} |",
+        f"| 阳性预测精确率 | {format_metric(point['positive_precision'])} |",
+        f"| 弱标签一致率 | {format_metric(point['weak_label_accuracy'])} |",
+        (
+            "| ROC AUC（实验阳性 vs 未标注对照） | "
+            f"{format_metric(point['roc_auc'])} |"
+        ),
+        (
+            "| 实验阳性计数 | "
+            f"预测阳性={confusion['experimental_positive']['predicted_positive']} "
+            f"预测对照={confusion['experimental_positive']['predicted_control']} |"
+        ),
+        (
+            "| 未标注对照计数 | "
+            f"预测阳性={confusion['unannotated_control']['predicted_positive']} "
+            f"预测对照={confusion['unannotated_control']['predicted_control']} |"
+        ),
         "",
         (
             f"按蛋白做 {bootstrap['replicates']} 次重采样，共 {proteins} 个蛋白。"
@@ -819,8 +950,14 @@ def metrics_markdown(metrics: dict, proteins: int) -> str:
         "| 区间 | 95% |",
         "|---|---:|",
         f"| MCC | {format_interval(bootstrap['ci95']['mcc'])} |",
-        f"| 灵敏度 | {format_interval(bootstrap['ci95']['sensitivity'])} |",
-        f"| 特异度 | {format_interval(bootstrap['ci95']['specificity'])} |",
+        (
+            "| 实验阳性召回率 | "
+            f"{format_interval(bootstrap['ci95']['positive_recall'])} |"
+        ),
+        (
+            "| 未标注对照保持率 | "
+            f"{format_interval(bootstrap['ci95']['control_specificity'])} |"
+        ),
         "<!-- END GENERATED METRICS -->",
     ]
     return "\n".join(lines) + "\n"
@@ -837,17 +974,29 @@ def report_text(
     source = manifest_base["source"]
     settings = manifest_base["settings"]
     counts = manifest_base["counts"]
+    benchmark = manifest_base["benchmark"]
     environment = manifest_base["environment"]
     return (
         "# ESM-2 35M 冻结主干线性探针\n\n"
-        "本报告只针对 F1 v0 候选位点表。label 0 表示 UniProt 未标注已验证的 "
-        "N-linked 位点，不代表实验验证为阴性。\n\n"
+        "本报告只针对 F1 v0 候选位点表的弱标签基准。正类是含 "
+        "`ECO:0000269` 实验证据的 N-linked 位点；对照是同一张候选表中 "
+        "没有 N-linked 标注的 sequon。未标注不是实验阴性，因此本报告不估计 "
+        "生物特异性或真阴性率。\n\n"
         "## 运行口径\n\n"
         f"- 模型：`{model['id']}`，revision `{model['revision']}`\n"
         f"- 候选表 SHA256：`{inputs['candidates']['sha256']}`\n"
         f"- UniProt release：`{inputs['uniprot_release']}`\n"
         f"- 切分：`{settings['split']}`\n"
         f"- 表征：`{settings['representation']}`\n"
+        f"- 基准：`{benchmark['id']}`\n"
+        f"- 候选来源行数：{counts['source_rows']}\n"
+        f"- 评估行数：{counts['rows']} = "
+        f"{counts['positive']} 实验阳性 + "
+        f"{counts['unannotated_control']} 未标注对照\n"
+        f"- 排除仅含 `ECO:0000255` 的推断阳性："
+        f"{counts['excluded_inferred_positive']} 行\n"
+        f"- 因此不再进入评估的蛋白："
+        f"{', '.join(benchmark['excluded_protein_accessions']) or '无'}\n"
         f"- 行数、蛋白数、唯一窗口数：{counts['rows']} / "
         f"{counts['proteins']} / {counts['unique_windows']}\n"
         f"- 分类器：`{settings['classifier']}`，C={settings['C']}，"
@@ -917,8 +1066,8 @@ def git_state() -> tuple[str, bool]:
             encoding="utf-8",
         ).stdout
         return commit, bool(status.strip())
-    except (OSError, subprocess.CalledProcessError):
-        return "unknown", True
+    except (OSError, subprocess.CalledProcessError) as error:
+        raise RuntimeError("cannot record git provenance") from error
 
 
 def environment_versions() -> dict:
@@ -957,6 +1106,7 @@ def write_run(
     device: str,
 ) -> Path:
     config.out_dir.mkdir(parents=True, exist_ok=True)
+    invalidate_run(config.out_dir)
     artifact_paths = {
         name: config.out_dir / name for name in ARTIFACT_NAMES
     }
@@ -1025,6 +1175,23 @@ def write_run(
     manifest_base = {
         "schema": SCHEMA,
         "status": "complete",
+        "benchmark": {
+            "id": BENCHMARK_ID,
+            "positive_definition": (
+                "UniProt N-linked annotation containing ECO:0000269"
+            ),
+            "control_definition": (
+                "candidate sequon with no UniProt N-linked annotation"
+            ),
+            "positive_evidence_codes": ["ECO:0000269"],
+            "excluded_inferred_evidence_codes": ["ECO:0000255"],
+            "inferred_positive_accessions": list(
+                inputs.inferred_positive_accessions
+            ),
+            "excluded_protein_accessions": list(
+                inputs.excluded_protein_accessions
+            ),
+        },
         "inputs": {
             "candidates": {
                 "path": relative_input_path(config.candidates_path),
@@ -1061,10 +1228,14 @@ def write_run(
         },
         "environment": environment_versions(),
         "counts": {
+            "source_rows": inputs.source_rows,
             "proteins": proteins,
             "rows": len(candidates),
             "positive": sum(candidate.label for candidate in candidates),
-            "negative": sum(not candidate.label for candidate in candidates),
+            "unannotated_control": sum(
+                not candidate.label for candidate in candidates
+            ),
+            "excluded_inferred_positive": inputs.excluded_inferred_rows,
             "unique_windows": len(jobs),
             "folds": len(folds),
         },
@@ -1121,19 +1292,53 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 2
 
     candidates = inputs.candidates
-    if len(candidates) != 201:
-        print(f"input error: expected 201 rows, got {len(candidates)}", file=sys.stderr)
+    if inputs.source_rows != EXPECTED_SOURCE_ROWS:
+        print(
+            f"input error: expected {EXPECTED_SOURCE_ROWS} source rows, "
+            f"got {inputs.source_rows}",
+            file=sys.stderr,
+        )
         return 2
-    if len({candidate.accession for candidate in candidates}) != 29:
-        print("input error: expected 29 proteins", file=sys.stderr)
+    if len(candidates) != EXPECTED_EVALUATION_ROWS:
+        print(
+            f"input error: expected {EXPECTED_EVALUATION_ROWS} evaluation rows, "
+            f"got {len(candidates)}",
+            file=sys.stderr,
+        )
+        return 2
+    if sum(candidate.label for candidate in candidates) != EXPECTED_POSITIVE_ROWS:
+        print("input error: unexpected experimental-positive count", file=sys.stderr)
+        return 2
+    if sum(not candidate.label for candidate in candidates) != EXPECTED_CONTROL_ROWS:
+        print("input error: unexpected unannotated-control count", file=sys.stderr)
+        return 2
+    if inputs.excluded_inferred_rows != EXPECTED_INFERRED_ROWS:
+        print("input error: unexpected inferred-positive count", file=sys.stderr)
+        return 2
+    if len(inputs.inferred_positive_accessions) != EXPECTED_INFERRED_ACCESSIONS:
+        print("input error: unexpected inferred-positive accession count", file=sys.stderr)
+        return 2
+    if inputs.excluded_protein_accessions != EXPECTED_FULLY_EXCLUDED_PROTEINS:
+        print("input error: unexpected fully excluded protein set", file=sys.stderr)
+        return 2
+    if len({candidate.accession for candidate in candidates}) != EXPECTED_PROTEINS:
+        print(
+            f"input error: expected {EXPECTED_PROTEINS} proteins",
+            file=sys.stderr,
+        )
         return 2
 
     windows = build_windows(candidates)
     jobs = build_embedding_jobs(windows)
-    if len(jobs) != 82:
-        print(f"input error: expected 82 unique windows, got {len(jobs)}", file=sys.stderr)
+    if len(jobs) != EXPECTED_UNIQUE_WINDOWS:
+        print(
+            f"input error: expected {EXPECTED_UNIQUE_WINDOWS} unique windows, "
+            f"got {len(jobs)}",
+            file=sys.stderr,
+        )
         return 2
 
+    invalidate_run(config.out_dir)
     configure_torch()
     try:
         tokenizer, model, device = load_encoder(config)
@@ -1156,7 +1361,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             metrics,
             device=device.type,
         )
-    except Exception as error:
+    except (OSError, RuntimeError, ValueError) as error:
         print(f"run error: {type(error).__name__}: {error}", file=sys.stderr)
         return 1
 
@@ -1164,13 +1369,14 @@ def main(argv: Sequence[str] | None = None) -> int:
     interval = metrics["bootstrap"]["ci95"]["mcc"]
     print(
         "rows={rows} proteins={proteins} windows={windows} "
-        "MCC={mcc:.6f} sensitivity={sensitivity:.6f} specificity={specificity:.6f}".format(
+        "MCC={mcc:.6f} positive_recall={positive_recall:.6f} "
+        "control_specificity={control_specificity:.6f}".format(
             rows=len(candidates),
             proteins=len({candidate.accession for candidate in candidates}),
             windows=len(jobs),
             mcc=point["mcc"],
-            sensitivity=point["sensitivity"],
-            specificity=point["specificity"],
+            positive_recall=point["positive_recall"],
+            control_specificity=point["control_specificity"],
         )
     )
     print(
