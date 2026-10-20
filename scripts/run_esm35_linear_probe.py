@@ -1104,8 +1104,9 @@ def write_run(
     metrics: dict,
     *,
     device: str,
+    git_commit: str,
+    git_dirty: bool,
 ) -> Path:
-    commit, dirty = git_state()
     config.out_dir.mkdir(parents=True, exist_ok=True)
     invalidate_run(config.out_dir)
     artifact_paths = {
@@ -1201,7 +1202,7 @@ def write_run(
             "uniprot_list_sha256": inputs.uniprot_list_sha256,
             "sequence_cache_sha256": inputs.sequence_cache_sha256,
         },
-        "source": {"git_commit": commit, "git_dirty": dirty},
+        "source": {"git_commit": git_commit, "git_dirty": git_dirty},
         "model": {
             "id": MODEL_ID,
             "revision": MODEL_REVISION,
@@ -1286,6 +1287,11 @@ def parse_args(argv: Sequence[str] | None = None) -> ProbeConfig:
 def main(argv: Sequence[str] | None = None) -> int:
     config = parse_args(argv)
     try:
+        git_commit, git_dirty = git_state()
+    except RuntimeError as error:
+        print(f"run error: {error}", file=sys.stderr)
+        return 1
+    try:
         inputs = read_candidates(config.candidates_path, config.cache_dir)
     except (FileNotFoundError, InputError, json.JSONDecodeError) as error:
         print(f"input error: {error}", file=sys.stderr)
@@ -1360,6 +1366,8 @@ def main(argv: Sequence[str] | None = None) -> int:
             predictions,
             metrics,
             device=device.type,
+            git_commit=git_commit,
+            git_dirty=git_dirty,
         )
     except (OSError, RuntimeError, ValueError) as error:
         print(f"run error: {type(error).__name__}: {error}", file=sys.stderr)
