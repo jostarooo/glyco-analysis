@@ -1,0 +1,103 @@
+{
+  "artifacts": {
+    "embeddings.npy": {
+      "bytes": 386048,
+      "sha256": "EA568DC78E0BDF91B26258E2865941B96F467E4D777BBDE760715C33B62515FE"
+    },
+    "folds.csv": {
+      "bytes": 1164,
+      "sha256": "2FAFF50FFE3E761F0411060E8D826F60F6D9FDFCB5DA374886A4AE624C87B910"
+    },
+    "metrics.json": {
+      "bytes": 873,
+      "sha256": "F7C1FE3182909AA4B7C4A6ED89BE17D7E4A9898A5CA9E92918AC10C981564CAA"
+    },
+    "predictions.csv": {
+      "bytes": 15369,
+      "sha256": "5BB2750259D888D72038B6D9E8391E1E057B1C543635EF930E2974152CD72982"
+    },
+    "report.md": {
+      "bytes": 1932,
+      "sha256": "D48B946229C64DFDE0AF35BBADD570844009E41D83C5CC8016757F8E7FEC7BF7"
+    },
+    "windows.csv": {
+      "bytes": 24871,
+      "sha256": "C1F8061704A68E27CF6323FA00456C7C6E1C99CCFED3B8AAAE9B305E6C5AB3DA"
+    }
+  },
+  "counts": {
+    "folds": 29,
+    "negative": 48,
+    "positive": 153,
+    "proteins": 29,
+    "rows": 201,
+    "unique_windows": 82
+  },
+  "environment": {
+    "numpy": "2.5.4",
+    "python": "3.12.14",
+    "scikit_learn": "1.9.1",
+    "torch": "2.9.1+cu128",
+    "transformers": "5.20.1"
+  },
+  "inputs": {
+    "candidates": {
+      "path": "reports/candidates_30.csv",
+      "sha256": "A584C3814226B7287807676F65D5CFFE2F5D47A53BC00476A4B9945CB0719F1C"
+    },
+    "sequence_cache_sha256": "4F4FAF8EA074AB65FC58513721AD9AD58D6DB677BB97ED47FAB23DA7B0927AC5",
+    "uniprot_list_sha256": "52F0D4617409BC6CC5673F209829EDD5618F1403799ADA2BE7BCF86A6FD148E9",
+    "uniprot_release": "2026_03"
+  },
+  "model": {
+    "files": {
+      "config.json": {
+        "bytes": 778,
+        "sha256": "AE07364EFA51E0FA1D81DA3FE608F6D948ABDBBB69785BA6E1DF379A458E58EE"
+      },
+      "model.safetensors": {
+        "bytes": 136008798,
+        "sha256": "E35647818E0E064351D4531ED480D225A002567B4B2B93AD3A9246D753150FC0"
+      },
+      "special_tokens_map.json": {
+        "bytes": 125,
+        "sha256": "3AEDCD4211C0D43AEC4E607FF60A63255F3174EAD795E997350F09A5F8CD9EE1"
+      },
+      "tokenizer_config.json": {
+        "bytes": 95,
+        "sha256": "7E9161ECDB548EC45A41CBC6B24AA4476FDD418461F491C4207BAA99419A29AD"
+      },
+      "vocab.txt": {
+        "bytes": 93,
+        "sha256": "0B82CC0A7C7CF9E567B1E5892D793285B9FBAE822C964CA48696F7DB44598E03"
+      }
+    },
+    "hidden_size": 480,
+    "id": "facebook/esm2_t12_35M_UR50D",
+    "layers": 12,
+    "max_position_embeddings": 1026,
+    "revision": "6fbf070e65b0b7291e7bbcd451118c216cff79d8"
+  },
+  "schema": "glyco.esm35-linear-probe/v1",
+  "settings": {
+    "C": 1.0,
+    "bootstrap_replicates": 2000,
+    "class_weight": "none",
+    "classifier": "LogisticRegression",
+    "device": "cuda",
+    "dtype": "float32",
+    "max_iter": 5000,
+    "max_window_residues": 1023,
+    "representation": "last_hidden_state_at_target_token",
+    "seed": 20261020,
+    "solver": "liblinear",
+    "split": "leave_one_protein_out",
+    "threshold": 0.5,
+    "window_radius": 511
+  },
+  "source": {
+    "git_commit": "f5c8758017c6f71706bad3b5b26e4cba2f1eb8c1",
+    "git_dirty": true
+  },
+  "status": "complete"
+}

@@ -1,0 +1,40 @@
+{
+  "bootstrap": {
+    "ci95": {
+      "mcc": [
+        0.13068691685910605,
+        0.5819467931576371
+      ],
+      "sensitivity": [
+        0.6712222411299243,
+        0.9011066398390342
+      ],
+      "specificity": [
+        0.37310829573064913,
+        0.8095238095238095
+      ]
+    },
+    "replicates": 2000,
+    "seed": 20261020,
+    "undefined_replicates": 0,
+    "unit": "protein",
+    "valid_replicates": 2000
+  },
+  "confusion": {
+    "false_negative": 31,
+    "false_positive": 20,
+    "true_negative": 28,
+    "true_positive": 122
+  },
+  "metrics": {
+    "accuracy": 0.746268656716418,
+    "mcc": 0.35645167099466035,
+    "precision": 0.8591549295774648,
+    "roc_auc": 0.789624183006536,
+    "sensitivity": 0.7973856209150327,
+    "specificity": 0.5833333333333334
+  },
+  "null_reasons": {},
+  "schema": "glyco.esm35-linear-probe/v1",
+  "threshold": 0.5
+}
