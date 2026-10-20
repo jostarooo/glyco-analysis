@@ -1056,17 +1056,42 @@ def model_fingerprints(allow_download: bool) -> dict:
     return fingerprints
 
 
-def git_state() -> tuple[str, bool]:
+def git_state(out_dir: Path) -> tuple[str, bool]:
+    try:
+        relative_out = out_dir.resolve().relative_to(REPO_ROOT).as_posix()
+    except ValueError as error:
+        raise RuntimeError("output directory must be inside the repository") from error
+    excluded_output = f":(exclude){relative_out}"
     try:
         commit = subprocess.run(
-            ["git", "-C", str(REPO_ROOT), "rev-parse", "HEAD"],
+            [
+                "git",
+                "-C",
+                str(REPO_ROOT),
+                "log",
+                "-1",
+                "--format=%H",
+                "HEAD",
+                "--",
+                ".",
+                excluded_output,
+            ],
             check=True,
             capture_output=True,
             text=True,
             encoding="utf-8",
         ).stdout.strip()
         status = subprocess.run(
-            ["git", "-C", str(REPO_ROOT), "status", "--porcelain"],
+            [
+                "git",
+                "-C",
+                str(REPO_ROOT),
+                "status",
+                "--porcelain",
+                "--",
+                ".",
+                excluded_output,
+            ],
             check=True,
             capture_output=True,
             text=True,
@@ -1209,7 +1234,11 @@ def write_run(
             "uniprot_list_sha256": inputs.uniprot_list_sha256,
             "sequence_cache_sha256": inputs.sequence_cache_sha256,
         },
-        "source": {"git_commit": git_commit, "git_dirty": git_dirty},
+        "source": {
+            "git_commit": git_commit,
+            "git_commit_role": "pre_artifact_code_baseline",
+            "git_dirty": git_dirty,
+        },
         "model": {
             "id": MODEL_ID,
             "revision": MODEL_REVISION,
@@ -1294,7 +1323,7 @@ def parse_args(argv: Sequence[str] | None = None) -> ProbeConfig:
 def main(argv: Sequence[str] | None = None) -> int:
     config = parse_args(argv)
     try:
-        git_commit, git_dirty = git_state()
+        git_commit, git_dirty = git_state(config.out_dir)
     except RuntimeError as error:
         print(f"run error: {error}", file=sys.stderr)
         return 1

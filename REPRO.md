@@ -100,6 +100,12 @@ $cache = 'D:\wbworkspace\glyco-analysis\data\raw\uniprot'
 28 个蛋白，不是泛化置信区间。完整口径、预测和窗口审计表见
 `reports/esm35_linear_probe_v0/`。
 
+探针把产物拆成两次提交。第一次提交代码和校验逻辑，运行器在干净工作树上记录
+`source.git_commit_role=pre_artifact_code_baseline` 与 `git_dirty=false`；第二次只提交
+`reports/esm35_linear_probe_v0/` 下的生成文件。运行器查找最后一个改动产物目录之外文件的提交，
+所以从只改产物的提交上重跑仍会得到同一份 manifest，不会把产物提交误当成代码基线。
+校验器要求 manifest 的基线等于这个提交，并要求基线之后产物目录外没有源码改动。
+
 ### GitHub 发布
 
 本机到 `github.com` 的 git 通道是被重置的（`Recv failure: Connection was reset`，代理端口 5899 也不再监听），

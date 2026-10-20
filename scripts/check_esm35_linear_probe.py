@@ -9,6 +9,7 @@ import json
 import math
 import os
 import re
+import subprocess
 import sys
 from collections import Counter
 from dataclasses import dataclass
@@ -868,6 +869,94 @@ def main() -> int:
         "manifest determinism",
         "manifest contains a wall-clock field",
     )
+    try:
+        run_relative = run_dir.relative_to(REPO_ROOT).as_posix()
+        excluded_output = f":(exclude){run_relative}"
+        source = manifest.get("source") or {}
+        source_commit = source.get("git_commit")
+        check.check(
+            source.get("git_commit_role") == "pre_artifact_code_baseline",
+            "manifest source role",
+            str(source.get("git_commit_role")),
+        )
+        check.check(
+            source.get("git_dirty") is False,
+            "manifest source cleanliness",
+            str(source.get("git_dirty")),
+        )
+        expected_source = subprocess.run(
+            [
+                "git",
+                "-C",
+                str(REPO_ROOT),
+                "log",
+                "-1",
+                "--format=%H",
+                "HEAD",
+                "--",
+                ".",
+                excluded_output,
+            ],
+            check=True,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+        ).stdout.strip()
+        check.check(
+            source_commit == expected_source,
+            "manifest source commit",
+            f"manifest={source_commit} expected={expected_source}",
+        )
+        if isinstance(source_commit, str) and source_commit:
+            source_changes = subprocess.run(
+                [
+                    "git",
+                    "-C",
+                    str(REPO_ROOT),
+                    "diff",
+                    "--name-only",
+                    source_commit,
+                    "--",
+                    ".",
+                    excluded_output,
+                ],
+                check=True,
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+            ).stdout.splitlines()
+            check.check(
+                not source_changes,
+                "manifest source changes",
+                ", ".join(source_changes[:MAX_EXAMPLES]),
+            )
+        else:
+            check.check(False, "manifest source changes", "missing source commit")
+        untracked = subprocess.run(
+            [
+                "git",
+                "-C",
+                str(REPO_ROOT),
+                "ls-files",
+                "--others",
+                "--exclude-standard",
+                "--",
+                ".",
+                excluded_output,
+            ],
+            check=True,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+        ).stdout.splitlines()
+        check.check(
+            not untracked,
+            "manifest source untracked files",
+            ", ".join(untracked[:MAX_EXAMPLES]),
+        )
+    except (OSError, ValueError, subprocess.CalledProcessError) as error:
+        print(f"unreadable git provenance: {error}", file=sys.stderr)
+        return 2
     check.check(
         input_summary.source_rows == EXPECTED_SOURCE_ROWS,
         "source rows",
