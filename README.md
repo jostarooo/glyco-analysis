@@ -1,7 +1,8 @@
 # 糖基化分析系统：以蛋白质语言模型预测 N-糖基化位点、以图神经网络解析糖链、并用工具调用智能体把两者串成一个可对话的分析工作台。
 
 > 本科毕业设计（张驰，指导教师王老师）· 2026-10-27 第一次对齐
-> 代码状态：W1 —— 环境与六个接口已就绪，F1 数据集 v0 可复现（口径与哈希见 `reports/dataset_v0.md`）。
+> 代码状态：W1 —— 环境与六个接口已就绪，F1 数据集 v0 与 ESM-2 35M 线性探针可复现。
+> 数据口径见 `reports/dataset_v0.md`，探针结果见 `reports/esm35_linear_probe_v0/report.md`。
 
 ## 它解决什么问题
 
@@ -32,10 +33,19 @@ D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\build_dataset.py
 # 独立复算校验：不共享代码，从原始 JSON 缓存重推并逐字段对照（PASS 才退出 0）
 D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\check_dataset.py
 
+# ESM-2 35M 线性探针：冻结 35M 主干，只训练逐位点分类头
+D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\run_esm35_linear_probe.py --cache-dir D:\wbworkspace\glyco-analysis\data\raw\uniprot --out-dir reports\esm35_linear_probe_v0
+
+# 独立复算探针产物：重训每个折、重算指标并核对哈希
+D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\check_esm35_linear_probe.py --run-dir reports\esm35_linear_probe_v0 --cache-dir D:\wbworkspace\glyco-analysis\data\raw\uniprot
+
 # 同步到 GitHub：本机 git push 通道不通，发布走 REST API（需要 classic PAT 的 repo scope）
 # 先把 token 写入 %USERPROFILE%\.github-token，或设置 GH_TOKEN；别把 token 写进仓库
 D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\publish_github.py --private
 ```
+
+探针覆盖 201 个候选位点、29 个蛋白和 82 个唯一窗口。主指标 MCC 为 0.356452，
+29 蛋白重采样区间为 [0.130687, 0.581947]。这里的 0 表示 UniProt 未标注，不是实验验证的阴性。
 
 发布脚本会把本地历史逐 commit 重放到远端，并校验 commit SHA 与 tree SHA 都与本地一致，
 不一致就报错退出；空仓库的首次提交由脚本自己播种。详见 `REPRO.md` 第四节。
@@ -48,8 +58,8 @@ D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\publish_github.py
 
 ```
 glyco-analysis/
-├─ scripts/          可直接运行的脚本（env_check / check_endpoints / build_dataset / check_dataset / publish_github）
-├─ reports/          体检、数据集与发布记录（dataset_v0.md / candidates_30*.csv 等）
+├─ scripts/          可直接运行的脚本（环境、数据、探针、校验与发布）
+├─ reports/          体检、数据集、探针产物与发布记录
 ├─ docs/             设计与说明
 ├─ data/             本地数据（不入库，见 .gitignore）
 └─ REPRO.md          复现手册：可行性五关、术语表、本机配置

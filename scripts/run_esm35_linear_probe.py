@@ -800,28 +800,27 @@ def metrics_markdown(metrics: dict, proteins: int) -> str:
     bootstrap = metrics["bootstrap"]
     lines = [
         "<!-- BEGIN GENERATED METRICS -->",
-        "| metric | value |",
+        "| 指标 | 数值 |",
         "|---|---:|",
         f"| MCC | {format_metric(point['mcc'])} |",
-        f"| sensitivity | {format_metric(point['sensitivity'])} |",
-        f"| specificity | {format_metric(point['specificity'])} |",
-        f"| precision | {format_metric(point['precision'])} |",
-        f"| accuracy | {format_metric(point['accuracy'])} |",
+        f"| 灵敏度 | {format_metric(point['sensitivity'])} |",
+        f"| 特异度 | {format_metric(point['specificity'])} |",
+        f"| 精确率 | {format_metric(point['precision'])} |",
+        f"| 准确率 | {format_metric(point['accuracy'])} |",
         f"| ROC AUC | {format_metric(point['roc_auc'])} |",
-        f"| confusion | TN={confusion['true_negative']} FP={confusion['false_positive']} FN={confusion['false_negative']} TP={confusion['true_positive']} |",
+        f"| 混淆矩阵 | TN={confusion['true_negative']} FP={confusion['false_positive']} FN={confusion['false_negative']} TP={confusion['true_positive']} |",
         "",
         (
-            f"{bootstrap['replicates']} protein-bootstrap replicates over "
-            f"{proteins} proteins. This is a {proteins}-protein resampling interval, "
-            "not a generalisation guarantee."
+            f"按蛋白做 {bootstrap['replicates']} 次重采样，共 {proteins} 个蛋白。"
+            "该区间只描述这批蛋白，不代表泛化保证。"
         ),
-        f"Valid replicates: {bootstrap['valid_replicates']}; undefined: {bootstrap['undefined_replicates']}.",
+        f"有效重采样：{bootstrap['valid_replicates']}；未定义：{bootstrap['undefined_replicates']}。",
         "",
-        "| interval | 95% |",
+        "| 区间 | 95% |",
         "|---|---:|",
         f"| MCC | {format_interval(bootstrap['ci95']['mcc'])} |",
-        f"| sensitivity | {format_interval(bootstrap['ci95']['sensitivity'])} |",
-        f"| specificity | {format_interval(bootstrap['ci95']['specificity'])} |",
+        f"| 灵敏度 | {format_interval(bootstrap['ci95']['sensitivity'])} |",
+        f"| 特异度 | {format_interval(bootstrap['ci95']['specificity'])} |",
         "<!-- END GENERATED METRICS -->",
     ]
     return "\n".join(lines) + "\n"
@@ -840,41 +839,37 @@ def report_text(
     counts = manifest_base["counts"]
     environment = manifest_base["environment"]
     return (
-        "# ESM-2 35M frozen linear probe\n\n"
-        "This report applies only to the F1 v0 candidate table. Label 0 means "
-        "\"not annotated with a verified UniProt N-linked site\" and does not mean "
-        "\"verified negative\".\n\n"
-        "External context only: the paper's 0.781 is from a different dataset and "
-        "protocol. It is not this run's result and is not used in the generated "
-        "metrics block.\n\n"
-        "## Run contract\n\n"
-        f"- Model: `{model['id']}` at `{model['revision']}`\n"
-        f"- Candidate SHA256: `{inputs['candidates']['sha256']}`\n"
-        f"- UniProt release: `{inputs['uniprot_release']}`\n"
-        f"- Split: `{settings['split']}`\n"
-        f"- Representation: `{settings['representation']}`\n"
-        f"- Rows / proteins / unique windows: {counts['rows']} / "
+        "# ESM-2 35M 冻结主干线性探针\n\n"
+        "本报告只针对 F1 v0 候选位点表。label 0 表示 UniProt 未标注已验证的 "
+        "N-linked 位点，不代表实验验证为阴性。\n\n"
+        "## 运行口径\n\n"
+        f"- 模型：`{model['id']}`，revision `{model['revision']}`\n"
+        f"- 候选表 SHA256：`{inputs['candidates']['sha256']}`\n"
+        f"- UniProt release：`{inputs['uniprot_release']}`\n"
+        f"- 切分：`{settings['split']}`\n"
+        f"- 表征：`{settings['representation']}`\n"
+        f"- 行数、蛋白数、唯一窗口数：{counts['rows']} / "
         f"{counts['proteins']} / {counts['unique_windows']}\n"
-        f"- Classifier: `{settings['classifier']}` with C={settings['C']}, "
+        f"- 分类器：`{settings['classifier']}`，C={settings['C']}，"
         f"class_weight={settings['class_weight']}, solver={settings['solver']}\n"
-        f"- Threshold: {settings['threshold']}\n"
-        f"- Base commit at generation: `{source['git_commit']}` "
+        f"- 阈值：{settings['threshold']}\n"
+        f"- 生成时基线 commit：`{source['git_commit']}` "
         f"(dirty={str(source['git_dirty']).lower()})\n"
-        f"- Device and dtype: `{settings['device']}` / `{settings['dtype']}`\n\n"
-        "## Reproduce\n\n"
+        f"- 设备与精度：`{settings['device']}` / `{settings['dtype']}`\n\n"
+        "## 复现\n\n"
         "```powershell\n"
         ".venv\\Scripts\\python.exe scripts\\run_esm35_linear_probe.py "
         "--cache-dir <uniprot-cache> --out-dir reports\\esm35_linear_probe_v0\n"
         ".venv\\Scripts\\python.exe scripts\\check_esm35_linear_probe.py "
         "--run-dir reports\\esm35_linear_probe_v0 --cache-dir <uniprot-cache>\n"
         "```\n\n"
-        "## Environment\n\n"
+        "## 环境\n\n"
         f"- Python {environment['python']}\n"
         f"- torch {environment['torch']}\n"
         f"- transformers {environment['transformers']}\n"
         f"- scikit-learn {environment['scikit_learn']}\n"
         f"- NumPy {environment['numpy']}\n\n"
-        "## Result\n\n"
+        "## 结果\n\n"
         f"{metrics_markdown(metrics, proteins)}"
     )
 

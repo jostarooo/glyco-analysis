@@ -13,3 +13,11 @@
   Seen 1× —— 2026-10-19
 - **PowerShell 5.1 把多行代码经 here-string 传给 `python -c` 会剥掉内部引号**，报 SyntaxError。一次性 Python 脚本一律先写临时 `.py` 文件再执行。
   Seen 1× —— 2026-10-19
+- **长序列裁目标窗口后，token 下标不能再写 `pos`。** ESM 分词有 `[CLS]`，窗口内目标位置是 `1 + (pos - window_start)`；直接用原序列位置会静默读错残基。
+  Seen 1× —— 2026-10-20
+- **按蛋白留一法评估时，标准化器也只能在该折训练蛋白上 `fit`。** 先对全表 `fit` 会把测试蛋白分布带进训练，指标会虚高。
+  Seen 1× —— 2026-10-20
+- **manifest 在产物提交前生成会记录 `git_dirty=true`。** 先提交代码与文档，再从干净工作树重跑产物，最后单独提交产物，才能留下 `dirty=false`。
+  Seen 1× —— 2026-10-20
+- **Git worktree 不共享被 `.gitignore` 忽略的数据缓存。** 在 worktree 跑 checker 时必须显式传主仓库的 `--cache-dir`，否则默认相对路径找不到 UniProt 缓存。
+  Seen 1× —— 2026-10-20

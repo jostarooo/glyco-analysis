@@ -64,6 +64,37 @@ D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\check_dataset.py 
 30 个蛋白 / 201 个候选位点（label1 153），UniProt release 2026_03；复跑 0 次网络请求且
 三个产物 SHA256 不变，校验器 1854 条断言全过。抽样口径、数据质量指标与哈希表见 `reports/dataset_v0.md`。
 
+### F1 ESM-2 35M 线性探针（2026-10-20）
+
+探针固定 `facebook/esm2_t12_35M_UR50D` revision `6fbf070e65b0b7291e7bbcd451118c216cff79d8`，
+冻结主干，只训练 `StandardScaler + LogisticRegression(C=1.0)`。每个候选位点取目标残基居中的
+最多 1023 个残基窗口。长蛋白不截断目标，token 下标按 `1 + (pos - window_start)` 对齐。
+
+```powershell
+$python = 'D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe'
+$cache = 'D:\wbworkspace\glyco-analysis\data\raw\uniprot'
+
+& $python scripts\run_esm35_linear_probe.py --cache-dir $cache --out-dir reports\esm35_linear_probe_v0
+& $python scripts\check_esm35_linear_probe.py --run-dir reports\esm35_linear_probe_v0 --cache-dir $cache
+& $python -m unittest discover -s tests -p 'test_esm35_probe.py' -v
+```
+
+评估采用 leave-one-protein-out。29 个蛋白共 201 行，其中 153 行有已验证 N-linked 标注，
+48 行只是未标注。主结果如下：
+
+| 指标 | 数值 |
+|---|---:|
+| MCC | 0.356452 |
+| Sensitivity | 0.797386 |
+| Specificity | 0.583333 |
+| Precision | 0.859155 |
+| Accuracy | 0.746269 |
+| ROC AUC | 0.789624 |
+| 混淆矩阵 | TN=28, FP=20, FN=31, TP=122 |
+
+按蛋白做 2000 次重采样，MCC 的 95% 区间为 [0.130687, 0.581947]。该区间只描述这 29 个蛋白，
+不是泛化置信区间。完整口径、预测和窗口审计表见 `reports/esm35_linear_probe_v0/`。
+
 ### GitHub 发布
 
 本机到 `github.com` 的 git 通道是被重置的（`Recv failure: Connection was reset`，代理端口 5899 也不再监听），
@@ -96,3 +127,4 @@ D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\publish_github.py
 | 2026-10-18 | 体检 UniProt / GlyGen / GlyConnect / GlyTouCan / KEGG / PubChem | `scripts/check_endpoints.py`；UniProt 返回 1381，GlyGen 584 KB | ✅ 4/6；GlyConnect `500`，GlyTouCan `404` |
 | 2026-10-18 | 建 GitHub 私有仓库并把本地两次提交镜像上去 | `scripts/publish_github.py --private`；远端 HEAD 与 tree 均与本地逐字节一致，10 个文件 | ✅ 通过 |
 | 2026-10-19 | 构建 F1 数据集 v0（UniProt 实验标注 → 30 蛋白 / 201 候选位点，release 2026_03） | 复跑 0 次网络请求且三产物 SHA256 不变；`scripts/check_dataset.py` 独立复算 1854 断言全过 | ✅ 通过；口径见 `reports/dataset_v0.md` |
+| 2026-10-20 | 跑通 F1 ESM-2 35M 冻结主干线性探针 | 7 个单元测试通过；独立 checker 4492 条断言通过；MCC 0.356452，29 蛋白重采样区间 [0.130687, 0.581947] | ✅ 通过；产物见 `reports/esm35_linear_probe_v0/` |

@@ -444,28 +444,27 @@ def metrics_block(metrics: dict, proteins: int) -> str:
     bootstrap = metrics["bootstrap"]
     lines = [
         METRICS_BEGIN,
-        "| metric | value |",
+        "| 指标 | 数值 |",
         "|---|---:|",
         f"| MCC | {format_metric(point['mcc'])} |",
-        f"| sensitivity | {format_metric(point['sensitivity'])} |",
-        f"| specificity | {format_metric(point['specificity'])} |",
-        f"| precision | {format_metric(point['precision'])} |",
-        f"| accuracy | {format_metric(point['accuracy'])} |",
+        f"| 灵敏度 | {format_metric(point['sensitivity'])} |",
+        f"| 特异度 | {format_metric(point['specificity'])} |",
+        f"| 精确率 | {format_metric(point['precision'])} |",
+        f"| 准确率 | {format_metric(point['accuracy'])} |",
         f"| ROC AUC | {format_metric(point['roc_auc'])} |",
-        f"| confusion | TN={confusion['true_negative']} FP={confusion['false_positive']} FN={confusion['false_negative']} TP={confusion['true_positive']} |",
+        f"| 混淆矩阵 | TN={confusion['true_negative']} FP={confusion['false_positive']} FN={confusion['false_negative']} TP={confusion['true_positive']} |",
         "",
         (
-            f"{bootstrap['replicates']} protein-bootstrap replicates over "
-            f"{proteins} proteins. This is a {proteins}-protein resampling interval, "
-            "not a generalisation guarantee."
+            f"按蛋白做 {bootstrap['replicates']} 次重采样，共 {proteins} 个蛋白。"
+            "该区间只描述这批蛋白，不代表泛化保证。"
         ),
-        f"Valid replicates: {bootstrap['valid_replicates']}; undefined: {bootstrap['undefined_replicates']}.",
+        f"有效重采样：{bootstrap['valid_replicates']}；未定义：{bootstrap['undefined_replicates']}。",
         "",
-        "| interval | 95% |",
+        "| 区间 | 95% |",
         "|---|---:|",
         f"| MCC | {format_interval(bootstrap['ci95']['mcc'])} |",
-        f"| sensitivity | {format_interval(bootstrap['ci95']['sensitivity'])} |",
-        f"| specificity | {format_interval(bootstrap['ci95']['specificity'])} |",
+        f"| 灵敏度 | {format_interval(bootstrap['ci95']['sensitivity'])} |",
+        f"| 特异度 | {format_interval(bootstrap['ci95']['specificity'])} |",
         METRICS_END,
     ]
     return "\n".join(lines)
@@ -1013,14 +1012,9 @@ def main() -> int:
         "generated block differs from recomputed values",
     )
     check.check(
-        "not annotated" in report and "verified negative" in report,
-        "report label semantics",
-        "label-0 caveat is missing",
-    )
-    check.check(
-        "0.781" in report and "different dataset" in report,
-        "report external reference",
-        "paper reference is not labelled as external",
+        "未标注" in report and "实验验证为阴性" in report,
+        "报告 label 0 语义",
+        "缺少 label 0 语义说明",
     )
 
     if args.reembed:
