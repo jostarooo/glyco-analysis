@@ -421,49 +421,63 @@ def expected_folds(candidates: Sequence[Candidate]) -> list[Fold]:
 
 
 def point_metrics(labels: np.ndarray, predictions: np.ndarray, probabilities: np.ndarray):
+    from sklearn.metrics import (
+        accuracy_score,
+        confusion_matrix,
+        matthews_corrcoef,
+        precision_score,
+        recall_score,
+        roc_auc_score,
+    )
+
     labels = labels.astype(bool, copy=False)
     predictions = predictions.astype(bool, copy=False)
-    positive_predicted_positive = int(np.sum(labels & predictions))
-    positive_predicted_control = int(np.sum(labels & ~predictions))
-    control_predicted_positive = int(np.sum(~labels & predictions))
-    control_predicted_control = int(np.sum(~labels & ~predictions))
+    (
+        control_predicted_control,
+        control_predicted_positive,
+        positive_predicted_control,
+        positive_predicted_positive,
+    ) = (
+        int(value)
+        for value in confusion_matrix(labels, predictions, labels=[False, True]).ravel()
+    )
     null_reasons = {}
-    denominator = math.sqrt(
-        (positive_predicted_positive + control_predicted_positive)
-        * (positive_predicted_positive + positive_predicted_control)
-        * (control_predicted_control + control_predicted_positive)
-        * (control_predicted_control + positive_predicted_control)
+    has_positives = positive_predicted_positive + positive_predicted_control > 0
+    has_controls = control_predicted_control + control_predicted_positive > 0
+    has_predicted_positives = (
+        positive_predicted_positive + control_predicted_positive > 0
+    )
+    has_predicted_controls = (
+        positive_predicted_control + control_predicted_control > 0
     )
     mcc = (
-        (
-            positive_predicted_positive * control_predicted_control
-            - control_predicted_positive * positive_predicted_control
+        float(matthews_corrcoef(labels, predictions))
+        if (
+            has_positives
+            and has_controls
+            and has_predicted_positives
+            and has_predicted_controls
         )
-        / denominator
-        if denominator
         else None
     )
     positive_recall = (
-        positive_predicted_positive
-        / (positive_predicted_positive + positive_predicted_control)
-        if positive_predicted_positive + positive_predicted_control
+        float(recall_score(labels, predictions, zero_division=0))
+        if has_positives
         else None
     )
     control_specificity = (
-        control_predicted_control
-        / (control_predicted_control + control_predicted_positive)
-        if control_predicted_control + control_predicted_positive
+        float(recall_score(~labels, ~predictions, zero_division=0))
+        if has_controls
         else None
     )
     positive_precision = (
-        positive_predicted_positive
-        / (positive_predicted_positive + control_predicted_positive)
-        if positive_predicted_positive + control_predicted_positive
+        float(precision_score(labels, predictions, zero_division=0))
+        if has_predicted_positives
         else None
     )
     weak_label_accuracy = (
-        (positive_predicted_positive + control_predicted_control) / len(labels)
-        if len(labels)
+        float(accuracy_score(labels, predictions))
+        if len(labels) > 0
         else None
     )
     if mcc is None:
@@ -477,8 +491,6 @@ def point_metrics(labels: np.ndarray, predictions: np.ndarray, probabilities: np
     if weak_label_accuracy is None:
         null_reasons["weak_label_accuracy"] = "no rows"
     if np.unique(labels).size == 2:
-        from sklearn.metrics import roc_auc_score
-
         roc_auc = float(roc_auc_score(labels, probabilities))
     else:
         roc_auc = None
@@ -495,7 +507,7 @@ def point_metrics(labels: np.ndarray, predictions: np.ndarray, probabilities: np
             },
         },
         "metrics": {
-            "mcc": None if mcc is None else float(mcc),
+            "mcc": mcc,
             "positive_recall": positive_recall,
             "control_specificity": control_specificity,
             "positive_precision": positive_precision,
