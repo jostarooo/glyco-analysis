@@ -169,6 +169,8 @@ class Checker:
             print(f"  [{section}] {count}")
             for detail in self.examples[section]:
                 print(f"      {detail}")
+            if count > len(self.examples[section]):
+                print(f"      (showing first {len(self.examples[section])} examples)")
         return 1
 
 
@@ -948,6 +950,7 @@ def main() -> int:
     for accession in sorted(records):
         path = args.cache_dir / f"{accession}.json"
         cache_hash.update(accession.encode("ascii"))
+        # The separator prevents an accession from colliding with a digest or another accession.
         cache_hash.update(b"\0")
         cache_hash.update(bytes.fromhex(file_sha256(path)))
     check.check(

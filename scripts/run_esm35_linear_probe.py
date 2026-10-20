@@ -1,3 +1,8 @@
+"""The runner writes a complete run directory only after every artifact is available.
+
+``manifest.json`` is the completion marker and is written last.
+"""
+
 from __future__ import annotations
 
 import argparse
@@ -321,6 +326,7 @@ def read_candidates(candidates_path: Path, cache_dir: Path) -> InputData:
             raise InputError(f"cached UniProt record for {accession} has no sequence")
         records[accession] = record
         cache_hash.update(accession.encode("ascii"))
+        # The separator prevents an accession from colliding with a digest or another accession.
         cache_hash.update(b"\0")
         cache_hash.update(bytes.fromhex(sha256_bytes(body)))
 
