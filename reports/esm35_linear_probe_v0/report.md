@@ -1,30 +1,33 @@
-# ESM-2 35M frozen linear probe
+# ESM-2 35M 冻结主干线性探针
 
-This report applies only to the F1 v0 candidate table. Label 0 means "not annotated with a verified UniProt N-linked site" and does not mean "verified negative".
+本报告只针对 F1 v0 候选位点表的弱标签基准。正类是含 `ECO:0000269` 实验证据的 N-linked 位点；对照是同一张候选表中没有 N-linked 标注的 sequon。未标注不是实验阴性，因此本报告不估计生物特异性或真阴性率。
 
-External context only: the paper's 0.781 is from a different dataset and protocol. It is not this run's result and is not used in the generated metrics block.
+## 运行口径
 
-## Run contract
+- 模型：`facebook/esm2_t12_35M_UR50D`，revision `6fbf070e65b0b7291e7bbcd451118c216cff79d8`
+- 候选表 SHA256：`A584C3814226B7287807676F65D5CFFE2F5D47A53BC00476A4B9945CB0719F1C`
+- UniProt release：`2026_03`
+- 切分：`leave_one_protein_out`
+- 表征：`last_hidden_state_at_target_token`
+- 基准：`experimental_positive_vs_unannotated_control`
+- 候选来源行数：201
+- 评估行数：130 = 82 实验阳性 + 48 未标注对照
+- 排除仅含 `ECO:0000255` 的推断阳性：71 行
+- 因此不再进入评估的蛋白：P13611
+- 行数、蛋白数、唯一窗口数：130 / 28 / 51
+- 分类器：`LogisticRegression`，C=1.0，class_weight=none, solver=liblinear
+- 阈值：0.5
+- 生成时基线 commit：`99bb2f201e53bb27da9b511d6d6dcb7e29bd8bed` (dirty=false)
+- 设备与精度：`cuda` / `float32`
 
-- Model: `facebook/esm2_t12_35M_UR50D` at `6fbf070e65b0b7291e7bbcd451118c216cff79d8`
-- Candidate SHA256: `A584C3814226B7287807676F65D5CFFE2F5D47A53BC00476A4B9945CB0719F1C`
-- UniProt release: `2026_03`
-- Split: `leave_one_protein_out`
-- Representation: `last_hidden_state_at_target_token`
-- Rows / proteins / unique windows: 201 / 29 / 82
-- Classifier: `LogisticRegression` with C=1.0, class_weight=none, solver=liblinear
-- Threshold: 0.5
-- Base commit at generation: `f5c8758017c6f71706bad3b5b26e4cba2f1eb8c1` (dirty=true)
-- Device and dtype: `cuda` / `float32`
-
-## Reproduce
+## 复现
 
 ```powershell
-.venv\Scripts\python.exe scripts\run_esm35_linear_probe.py --cache-dir <uniprot-cache> --out-dir reports\esm35_linear_probe_v0
+.venv\Scripts\python.exe scripts\run_esm35_linear_probe.py --cache-dir <uniprot-cache> --out-dir reports\esm35_linear_probe_v0 --allow-download
 .venv\Scripts\python.exe scripts\check_esm35_linear_probe.py --run-dir reports\esm35_linear_probe_v0 --cache-dir <uniprot-cache>
 ```
 
-## Environment
+## 环境
 
 - Python 3.12.14
 - torch 2.9.1+cu128
@@ -32,25 +35,26 @@ External context only: the paper's 0.781 is from a different dataset and protoco
 - scikit-learn 1.9.1
 - NumPy 2.5.4
 
-## Result
+## 结果
 
 <!-- BEGIN GENERATED METRICS -->
-| metric | value |
+| 指标 | 数值 |
 |---|---:|
-| MCC | 0.356452 |
-| sensitivity | 0.797386 |
-| specificity | 0.583333 |
-| precision | 0.859155 |
-| accuracy | 0.746269 |
-| ROC AUC | 0.789624 |
-| confusion | TN=28 FP=20 FN=31 TP=122 |
+| MCC | 0.331975 |
+| 实验阳性召回率 | 0.731707 |
+| 未标注对照保持率 | 0.604167 |
+| 阳性预测精确率 | 0.759494 |
+| 弱标签一致率 | 0.684615 |
+| ROC AUC（实验阳性 vs 未标注对照） | 0.756098 |
+| 实验阳性计数 | 预测阳性=60 预测对照=22 |
+| 未标注对照计数 | 预测阳性=19 预测对照=29 |
 
-2000 protein-bootstrap replicates over 29 proteins. This is a 29-protein resampling interval, not a generalisation guarantee.
-Valid replicates: 2000; undefined: 0.
+按蛋白做 2000 次重采样，共 28 个蛋白。该区间只描述这批蛋白，不代表泛化保证。
+有效重采样：2000；未定义：0。
 
-| interval | 95% |
+| 区间 | 95% |
 |---|---:|
-| MCC | [0.130687, 0.581947] |
-| sensitivity | [0.671222, 0.901107] |
-| specificity | [0.373108, 0.809524] |
+| MCC | [0.060051, 0.602824] |
+| 实验阳性召回率 | [0.544111, 0.902778] |
+| 未标注对照保持率 | [0.437460, 0.820556] |
 <!-- END GENERATED METRICS -->

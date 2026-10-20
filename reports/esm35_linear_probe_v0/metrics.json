@@ -1,17 +1,18 @@
 {
+  "benchmark_id": "experimental_positive_vs_unannotated_control",
   "bootstrap": {
     "ci95": {
+      "control_specificity": [
+        0.4374599358974359,
+        0.8205555555555553
+      ],
       "mcc": [
-        0.13068691685910605,
-        0.5819467931576371
+        0.060051485549185504,
+        0.6028240460301272
       ],
-      "sensitivity": [
-        0.6712222411299243,
-        0.9011066398390342
-      ],
-      "specificity": [
-        0.37310829573064913,
-        0.8095238095238095
+      "positive_recall": [
+        0.5441111971104231,
+        0.9027777777777778
       ]
     },
     "replicates": 2000,
@@ -21,20 +22,24 @@
     "valid_replicates": 2000
   },
   "confusion": {
-    "false_negative": 31,
-    "false_positive": 20,
-    "true_negative": 28,
-    "true_positive": 122
+    "experimental_positive": {
+      "predicted_control": 22,
+      "predicted_positive": 60
+    },
+    "unannotated_control": {
+      "predicted_control": 29,
+      "predicted_positive": 19
+    }
   },
   "metrics": {
-    "accuracy": 0.746268656716418,
-    "mcc": 0.35645167099466035,
-    "precision": 0.8591549295774648,
-    "roc_auc": 0.789624183006536,
-    "sensitivity": 0.7973856209150327,
-    "specificity": 0.5833333333333334
+    "control_specificity": 0.6041666666666666,
+    "mcc": 0.33197492126736816,
+    "positive_precision": 0.759493670886076,
+    "positive_recall": 0.7317073170731707,
+    "roc_auc": 0.7560975609756098,
+    "weak_label_accuracy": 0.6846153846153846
   },
   "null_reasons": {},
-  "schema": "glyco.esm35-linear-probe/v1",
+  "schema": "glyco.esm35-linear-probe/v2",
   "threshold": 0.5
 }

@@ -1,37 +1,70 @@
 {
   "artifacts": {
     "embeddings.npy": {
-      "bytes": 386048,
-      "sha256": "EA568DC78E0BDF91B26258E2865941B96F467E4D777BBDE760715C33B62515FE"
+      "bytes": 249728,
+      "sha256": "5ECF1E340FB2A9DCDAC6E081D485930BEBB208C97803A8AA901AF500A88A5E36"
     },
     "folds.csv": {
-      "bytes": 1164,
-      "sha256": "2FAFF50FFE3E761F0411060E8D826F60F6D9FDFCB5DA374886A4AE624C87B910"
+      "bytes": 1097,
+      "sha256": "A091911FD8F479409EDEC46C0F9F785D633712BDB7180910390DC20B659D8ABA"
     },
     "metrics.json": {
-      "bytes": 873,
-      "sha256": "F7C1FE3182909AA4B7C4A6ED89BE17D7E4A9898A5CA9E92918AC10C981564CAA"
+      "bytes": 1079,
+      "sha256": "D09CF277944EACFEF082A2A07CCE8DD4F2225C424285A01F4B895160FA14AD61"
     },
     "predictions.csv": {
-      "bytes": 15369,
-      "sha256": "5BB2750259D888D72038B6D9E8391E1E057B1C543635EF930E2974152CD72982"
+      "bytes": 9980,
+      "sha256": "6AE04C4C908BCC67A57E579C6402540D7E598A4E206387155AD6FBA94385ECA7"
     },
     "report.md": {
-      "bytes": 1932,
-      "sha256": "D48B946229C64DFDE0AF35BBADD570844009E41D83C5CC8016757F8E7FEC7BF7"
+      "bytes": 2318,
+      "sha256": "1EB7484B9E655615F13210550E43E37FF995A6E26F52BECBCDE1381F50EC643D"
     },
     "windows.csv": {
-      "bytes": 24871,
-      "sha256": "C1F8061704A68E27CF6323FA00456C7C6E1C99CCFED3B8AAAE9B305E6C5AB3DA"
+      "bytes": 16009,
+      "sha256": "B2B1543EBB02DAECE0D3A8C62F980A10706ACDA59F23BD2C25D7B1529AAE93B8"
     }
   },
+  "benchmark": {
+    "control_definition": "candidate sequon with no UniProt N-linked annotation",
+    "excluded_inferred_evidence_codes": [
+      "ECO:0000255"
+    ],
+    "excluded_protein_accessions": [
+      "P13611"
+    ],
+    "id": "experimental_positive_vs_unannotated_control",
+    "inferred_positive_accessions": [
+      "O75144",
+      "P04114",
+      "P13611",
+      "P14867",
+      "P23470",
+      "P36268",
+      "Q14524",
+      "Q4G148",
+      "Q6UWL2",
+      "Q8IWA5",
+      "Q96FE5",
+      "Q9P232",
+      "Q9UNN8",
+      "Q9UNW1",
+      "Q9Y6L6"
+    ],
+    "positive_definition": "UniProt N-linked annotation containing ECO:0000269",
+    "positive_evidence_codes": [
+      "ECO:0000269"
+    ]
+  },
   "counts": {
-    "folds": 29,
-    "negative": 48,
-    "positive": 153,
-    "proteins": 29,
-    "rows": 201,
-    "unique_windows": 82
+    "excluded_inferred_positive": 71,
+    "folds": 28,
+    "positive": 82,
+    "proteins": 28,
+    "rows": 130,
+    "source_rows": 201,
+    "unannotated_control": 48,
+    "unique_windows": 51
   },
   "environment": {
     "numpy": "2.5.4",
@@ -78,7 +111,7 @@
     "max_position_embeddings": 1026,
     "revision": "6fbf070e65b0b7291e7bbcd451118c216cff79d8"
   },
-  "schema": "glyco.esm35-linear-probe/v1",
+  "schema": "glyco.esm35-linear-probe/v2",
   "settings": {
     "C": 1.0,
     "bootstrap_replicates": 2000,
@@ -96,8 +129,8 @@
     "window_radius": 511
   },
   "source": {
-    "git_commit": "f5c8758017c6f71706bad3b5b26e4cba2f1eb8c1",
-    "git_dirty": true
+    "git_commit": "99bb2f201e53bb27da9b511d6d6dcb7e29bd8bed",
+    "git_dirty": false
   },
   "status": "complete"
 }
