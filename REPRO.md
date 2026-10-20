@@ -76,7 +76,7 @@ SHA256 不变，校验器 1854 条断言全过。201 行中，82 行含 `ECO:000
 $python = 'D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe'
 $cache = 'D:\wbworkspace\glyco-analysis\data\raw\uniprot'
 
-& $python scripts\run_esm35_linear_probe.py --cache-dir $cache --out-dir reports\esm35_linear_probe_v0
+& $python scripts\run_esm35_linear_probe.py --cache-dir $cache --out-dir reports\esm35_linear_probe_v0 --allow-download
 & $python scripts\check_esm35_linear_probe.py --run-dir reports\esm35_linear_probe_v0 --cache-dir $cache
 & $python -m unittest discover -s tests -p 'test_esm35_probe.py' -v
 ```

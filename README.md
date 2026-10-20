@@ -34,7 +34,7 @@ D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\build_dataset.py
 D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\check_dataset.py
 
 # ESM-2 35M 线性探针：冻结 35M 主干，只训练逐位点分类头
-D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\run_esm35_linear_probe.py --cache-dir D:\wbworkspace\glyco-analysis\data\raw\uniprot --out-dir reports\esm35_linear_probe_v0
+D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\run_esm35_linear_probe.py --cache-dir D:\wbworkspace\glyco-analysis\data\raw\uniprot --out-dir reports\esm35_linear_probe_v0 --allow-download
 
 # 独立复算探针产物：重训每个折、重算指标并核对哈希
 D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\check_esm35_linear_probe.py --run-dir reports\esm35_linear_probe_v0 --cache-dir D:\wbworkspace\glyco-analysis\data\raw\uniprot
