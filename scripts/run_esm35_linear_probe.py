@@ -979,8 +979,8 @@ def report_text(
     return (
         "# ESM-2 35M 冻结主干线性探针\n\n"
         "本报告只针对 F1 v0 候选位点表的弱标签基准。正类是含 "
-        "`ECO:0000269` 实验证据的 N-linked 位点；对照是同一张候选表中 "
-        "没有 N-linked 标注的 sequon。未标注不是实验阴性，因此本报告不估计 "
+        "`ECO:0000269` 实验证据的 N-linked 位点；对照是同一张候选表中"
+        "没有 N-linked 标注的 sequon。未标注不是实验阴性，因此本报告不估计"
         "生物特异性或真阴性率。\n\n"
         "## 运行口径\n\n"
         f"- 模型：`{model['id']}`，revision `{model['revision']}`\n"
@@ -1105,6 +1105,7 @@ def write_run(
     *,
     device: str,
 ) -> Path:
+    commit, dirty = git_state()
     config.out_dir.mkdir(parents=True, exist_ok=True)
     invalidate_run(config.out_dir)
     artifact_paths = {
@@ -1170,7 +1171,6 @@ def write_run(
     )
     atomic_write_json(artifact_paths["metrics.json"], metrics)
 
-    commit, dirty = git_state()
     proteins = len({candidate.accession for candidate in candidates})
     manifest_base = {
         "schema": SCHEMA,
