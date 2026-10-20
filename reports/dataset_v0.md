@@ -1,7 +1,8 @@
 # F1 数据集 v0（2026-10-19）
 
 > 目的：给 F1（N-糖基化位点预测）准备第一个可复现数据集。一行 = 一个 N-X-S/T 候选位点，
-> 标签来自 UniProt 的**实验证据**，既不是模型预测，也不是论文里的数字。
+> 标注来自 UniProt，既不是模型预测，也不是论文里的数字。标注包含实验证据和推断证据，
+> 下游训练必须按证据类型区分。
 > 构建：`scripts/build_dataset.py`；独立校验：`scripts/check_dataset.py`（与构建器不共享代码，PASS 才退出 0）。
 
 ## 1. 来源与抽样
@@ -38,8 +39,10 @@ dataset_v0_stats.json    245A621104B4F056143FF4E249DBE371DD7EE7BA786156FACBA0101
 | 指标 | 值 |
 |---|---|
 | 蛋白 | 30 |
-| 候选位点行 | **201**（label1 153 / label0 48） |
-| 有至少一个阳性的蛋白 | 29 / 30 |
+| 候选位点行 | **201** |
+| label=1 | **153**（82 行含 `ECO:0000269`，71 行仅含 `ECO:0000255`） |
+| label=0 | **48**（有 sequon，无 N-linked 标注） |
+| 有实验阳性的蛋白 | 29 / 30 |
 | 模体外 N-linked 声明 | 1（见 §5） |
 
 - 201 = 全序列**所有** N-X-S/T 起点（含重叠 sequon）。非重叠扫描只会给出 200，
@@ -54,7 +57,7 @@ dataset_v0_stats.json    245A621104B4F056143FF4E249DBE371DD7EE7BA786156FACBA0101
 |---|---|
 | `pos` | **1-based**，与作者数据、UniProt feature 一致；该位残基 = `sequence[pos-1]` |
 | `motif` / `sequon` | 该位点起 3 字符（如 `NLS`）；候选集只收模体位点，故 `sequon` 恒为 1 |
-| `label` | 1 ⇔ UniProt 在该位有 N-linked 糖基化 feature（本样本全部为 `ECO:0000269` 实验证据）**且**该位残基为 N；否则 0 |
+| `label` | 1 ⇔ UniProt 在该位有 N-linked 糖基化 feature 且该位残基为 N；否则 0。label=1 包含 82 行 `ECO:0000269` 实验证据和 71 行仅含 `ECO:0000255` 的推断证据 |
 | `linkage` | label=1 时为 `N-linked`；label=0 留空 |
 | `n_features` | 该 pos 上原始 Glycosylation feature 条数（冗余度；同一位最大见过 28 条） |
 | `evidence` | 该 pos 全部证据码，去重排序后以 `;` 连接 |
@@ -64,6 +67,9 @@ dataset_v0_stats.json    245A621104B4F056143FF4E249DBE371DD7EE7BA786156FACBA0101
 
 - **label=0 只代表「有模体、UniProt 无实验标注」，不代表已证明不糖基化。**
   训练与评估都不能把 0 当负例真值；与作者数据对齐时必须交代这一口径。
+- **不能把 71 行 `ECO:0000255` 当作实验阳性。** ESM-2 35M 探针只保留 82 行
+  `ECO:0000269` 实验阳性和 48 行未标注对照，排除 71 行推断阳性。`P13611`
+  只有推断阳性，因此整个蛋白不进入探针评估。
 - UniProt 实验标注自身有噪声：本样本有 1 处模体外 N-linked 声明（`P01877` 327 位，
   残基是 D，既非 N 也不在 sequon 上）。它**不进候选集**，只作为数据质量指标统计
   （`off_sequon_n_linked_total=1`）。上游 LoRA-N-Gly 的 CSV 里约 2% 的行同样不满足

@@ -44,8 +44,10 @@ D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\check_esm35_linea
 D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\publish_github.py --private
 ```
 
-探针覆盖 201 个候选位点、29 个蛋白和 82 个唯一窗口。主指标 MCC 为 0.356452，
-29 蛋白重采样区间为 [0.130687, 0.581947]。这里的 0 表示 UniProt 未标注，不是实验验证的阴性。
+探针把 82 个含 `ECO:0000269` 的 N-linked 位点作为实验阳性，把 48 个没有 N-linked
+标注的候选 sequon 作为对照，并排除 71 个仅有 `ECO:0000255` 的推断阳性。评估覆盖
+130 行、28 个蛋白和 51 个唯一窗口。MCC 为 0.331975，按蛋白重采样 2000 次得到的
+95% 区间为 [0.060051, 0.602824]。对照组是未标注样本，不是实验验证的阴性。
 
 发布脚本会把本地历史逐 commit 重放到远端，并校验 commit SHA 与 tree SHA 都与本地一致，
 不一致就报错退出；空仓库的首次提交由脚本自己播种。详见 `REPRO.md` 第四节。
