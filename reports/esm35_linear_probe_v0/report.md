@@ -17,7 +17,7 @@
 - 行数、蛋白数、唯一窗口数：130 / 28 / 51
 - 分类器：`LogisticRegression`，C=1.0，class_weight=none, solver=liblinear
 - 阈值：0.5
-- 生成时基线 commit：`d443faf71e520c0f28da45b1d55e0875bae2d63f` (dirty=false)
+- 生成时基线 commit：`29f97a502b16dd0ad169de4fb69a4dd10dd76e49` (dirty=false)
 - 设备与精度：`cuda` / `float32`
 
 ## 复现

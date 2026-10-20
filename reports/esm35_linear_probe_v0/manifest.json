@@ -18,7 +18,7 @@
     },
     "report.md": {
       "bytes": 2318,
-      "sha256": "3A80C4932EAAB53E7C44B2397434A76D0049DCBD0B741DA634B863B3D271EE17"
+      "sha256": "302646057B97C161BF3B8356B3FFFCB5F7802FE4D5AEE8C79A6DE32D86943A34"
     },
     "windows.csv": {
       "bytes": 16009,
@@ -129,7 +129,8 @@
     "window_radius": 511
   },
   "source": {
-    "git_commit": "d443faf71e520c0f28da45b1d55e0875bae2d63f",
+    "git_commit": "29f97a502b16dd0ad169de4fb69a4dd10dd76e49",
+    "git_commit_role": "pre_artifact_code_baseline",
     "git_dirty": false
   },
   "status": "complete"
