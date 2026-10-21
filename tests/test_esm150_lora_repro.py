@@ -8,6 +8,8 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
+from unittest import mock
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -140,6 +142,142 @@ class MetricTests(unittest.TestCase):
             checker.metrics_from_predictions([], [])
         with self.assertRaisesRegex(checker.CheckError, "binary"):
             checker.metrics_from_predictions([1, 0], [1, 2])
+
+
+class AttentionBackendTests(unittest.TestCase):
+    class FakeAttention:
+        def __init__(self, position_embedding_type: str) -> None:
+            self.position_embedding_type = position_embedding_type
+
+        def forward(self, *_: object, **__: object) -> tuple[object, ...]:
+            return ()
+
+    def test_sdpa_patches_only_rotary_model_instances_and_is_idempotent(self):
+        from transformers.models.esm import modeling_esm
+
+        rotary = self.FakeAttention("rotary")
+        relative = self.FakeAttention("relative_key")
+        model = SimpleNamespace(
+            modules=lambda: [rotary, relative],
+            config=SimpleNamespace(num_hidden_layers=1),
+        )
+
+        with mock.patch.object(
+            modeling_esm,
+            "EsmSelfAttention",
+            self.FakeAttention,
+        ):
+            self.assertEqual(runner.install_sdpa_attention(model, 1), (1, 1))
+            self.assertEqual(runner.install_sdpa_attention(model, 1), (1, 1))
+
+        self.assertTrue(rotary._sdpa_attention_enabled)
+        self.assertFalse(hasattr(relative, "_sdpa_attention_enabled"))
+
+    def test_sdpa_fails_when_no_rotary_module_is_eligible(self):
+        from transformers.models.esm import modeling_esm
+
+        model = SimpleNamespace(
+            modules=lambda: [self.FakeAttention("relative_key")],
+            config=SimpleNamespace(num_hidden_layers=1),
+        )
+        with mock.patch.object(
+            modeling_esm,
+            "EsmSelfAttention",
+            self.FakeAttention,
+        ):
+            with self.assertRaisesRegex(runner.ReproError, "0 eligible"):
+                runner.install_sdpa_attention(model, 1)
+
+    def test_sdpa_rejects_an_unsupported_call_shape(self):
+        from transformers.models.esm import modeling_esm
+
+        rotary = self.FakeAttention("rotary")
+        model = SimpleNamespace(
+            modules=lambda: [rotary],
+            config=SimpleNamespace(num_hidden_layers=1),
+        )
+        with mock.patch.object(
+            modeling_esm,
+            "EsmSelfAttention",
+            self.FakeAttention,
+        ):
+            runner.install_sdpa_attention(model, 1)
+
+        with self.assertRaisesRegex(runner.ReproError, "unsupported call shape"):
+            rotary.forward(None, output_attentions=True)
+
+    def test_sdpa_rejects_a_layer_count_mismatch(self):
+        from transformers.models.esm import modeling_esm
+
+        model = SimpleNamespace(
+            modules=lambda: [self.FakeAttention("rotary")],
+            config=SimpleNamespace(num_hidden_layers=2),
+        )
+        with mock.patch.object(
+            modeling_esm,
+            "EsmSelfAttention",
+            self.FakeAttention,
+        ):
+            with self.assertRaisesRegex(runner.ReproError, "declares 2 layers"):
+                runner.install_sdpa_attention(model, 2)
+
+    def test_sdpa_rejects_cpu_before_model_loading(self):
+        with self.assertRaisesRegex(runner.ReproError, "requires a CUDA"):
+            runner.parse_args(
+                [
+                    "--test-csv",
+                    "test.csv",
+                    "--adapter-dir",
+                    "adapter",
+                    "--base-model-revision",
+                    "revision",
+                    "--out-dir",
+                    "reports/run",
+                    "--device",
+                    "cpu",
+                    "--attention-backend",
+                    "sdpa",
+                ]
+            )
+
+    def test_manifest_schema_one_is_rejected(self):
+        with self.assertRaisesRegex(checker.CheckError, "Unsupported manifest schema"):
+            checker.verify_manifest(mock.Mock(), {"schema_version": 1}, [])
+
+    def attention_manifest(self, requested: str = "cuda") -> dict[str, object]:
+        return {
+            "inference": {"attention_backend": "sdpa"},
+            "environment": {
+                "device": {
+                    "requested": requested,
+                    "execution_attention_backend": "sdpa",
+                    "execution_attention_kernel": "pytorch_sdpa_efficient_attention",
+                    "sdpa_module_count": 2,
+                    "sdpa_eligible_module_count": 2,
+                    "sdpa_expected_module_count": 2,
+                }
+            },
+        }
+
+    def test_attention_contract_accepts_complete_sdpa_metadata(self):
+        self.assertEqual(
+            checker.verify_attention_contract(self.attention_manifest()),
+            9,
+        )
+
+    def test_attention_contract_rejects_cpu_or_partial_sdpa_metadata(self):
+        with self.assertRaisesRegex(checker.CheckError, "CUDA device"):
+            checker.verify_attention_contract(self.attention_manifest("cpu"))
+
+        partial = self.attention_manifest()
+        partial["environment"]["device"]["sdpa_eligible_module_count"] = 1
+        with self.assertRaisesRegex(checker.CheckError, "eligible"):
+            checker.verify_attention_contract(partial)
+
+        missing = self.attention_manifest()
+        del missing["environment"]["device"]["sdpa_expected_module_count"]
+        with self.assertRaisesRegex(checker.CheckError, "layer count"):
+            checker.verify_attention_contract(missing)
 
 
 class AuditSampleTests(unittest.TestCase):

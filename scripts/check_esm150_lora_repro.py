@@ -267,13 +267,48 @@ def verify_metrics(
     return len(recomputed) + 2
 
 
+def verify_attention_contract(manifest: dict[str, Any]) -> int:
+    inference = manifest.get("inference", {})
+    attention_backend = inference.get("attention_backend")
+    if attention_backend not in {"eager", "sdpa"}:
+        raise CheckError(f"Unsupported attention backend: {attention_backend!r}")
+    device = manifest.get("environment", {}).get("device", {})
+    if device.get("execution_attention_backend") != attention_backend:
+        raise CheckError("Manifest attention backend does not match the device record")
+    assertions = 2
+    if attention_backend == "sdpa":
+        requested = device.get("requested")
+        if not isinstance(requested, str) or not requested.startswith("cuda"):
+            raise CheckError("SDPA manifest must record a CUDA device")
+        if (
+            device.get("execution_attention_kernel")
+            != "pytorch_sdpa_efficient_attention"
+        ):
+            raise CheckError("SDPA run is missing its selected attention kernel")
+        module_count = device.get("sdpa_module_count")
+        eligible_count = device.get("sdpa_eligible_module_count")
+        expected_count = device.get("sdpa_expected_module_count")
+        if not isinstance(module_count, int) or module_count < 1:
+            raise CheckError("SDPA run did not patch any attention modules")
+        if not isinstance(eligible_count, int):
+            raise CheckError("SDPA eligible module count must be an integer")
+        if not isinstance(expected_count, int):
+            raise CheckError("SDPA expected layer count must be an integer")
+        if eligible_count != module_count:
+            raise CheckError("SDPA run did not find every eligible attention module")
+        if expected_count != module_count:
+            raise CheckError("SDPA patch count does not match the model layer count")
+        assertions += 7
+    return assertions
+
+
 def verify_manifest(
     config: CheckConfig,
     manifest: dict[str, Any],
     test_rows: Sequence[dict[str, str]],
 ) -> int:
     assertions = 0
-    if manifest.get("schema_version") != 1:
+    if manifest.get("schema_version") != 2:
         raise CheckError("Unsupported manifest schema")
     if manifest.get("status") != "complete":
         raise CheckError("Manifest is not marked complete")
@@ -354,6 +389,7 @@ def verify_manifest(
                 f"{inference.get(key)!r} != {expected!r}"
             )
         assertions += 1
+    assertions += verify_attention_contract(manifest)
     return assertions
 
 
@@ -362,6 +398,7 @@ def load_recheck_matches(
     run_dir: Path,
     test_rows: Sequence[dict[str, str]],
     prediction_rows: Sequence[dict[str, str]],
+    manifest: dict[str, Any],
 ) -> tuple[list[dict[str, Any]], int]:
     if not config.recheck_inference:
         return [], 0
@@ -381,7 +418,14 @@ def load_recheck_matches(
             f"Recheck dependency mismatch: peft={peft.__version__}, "
             f"transformers={transformers.__version__}"
         )
-
+    requested_device = manifest.get("environment", {}).get("device", {}).get(
+        "requested"
+    )
+    if config.device != requested_device:
+        raise CheckError(
+            f"Recheck device {config.device!r} does not match manifest "
+            f"device {requested_device!r}"
+        )
     upstream_repo = config.adapter_dir.parents[3]
     if not (upstream_repo / "model" / "esm_model.py").is_file():
         raise CheckError(f"Cannot find upstream model module under {upstream_repo}")
@@ -429,8 +473,24 @@ def load_recheck_matches(
     if not config.device.startswith("cuda"):
         model.to(config.device)
     model.eval()
+    if manifest.get("inference", {}).get("attention_backend") == "sdpa":
+        from run_esm150_lora_repro import install_sdpa_attention
+
+        device = manifest.get("environment", {}).get("device", {})
+        expected_count = device.get("sdpa_expected_module_count")
+        recheck_module_count, recheck_eligible_count = install_sdpa_attention(
+            model,
+            expected_count,
+        )
+        if recheck_module_count != device.get("sdpa_module_count"):
+            raise CheckError("SDPA recheck patched a different number of modules")
+        if recheck_eligible_count != device.get("sdpa_eligible_module_count"):
+            raise CheckError("SDPA recheck found a different eligible module count")
 
     recomputed: list[dict[str, Any]] = []
+    assertions = 1
+    if manifest.get("inference", {}).get("attention_backend") == "sdpa":
+        assertions += 2
     with torch.inference_mode():
         for index in sample_indices:
             source = test_rows[index]
@@ -453,7 +513,6 @@ def load_recheck_matches(
                 }
             )
 
-    assertions = 0
     prediction_by_index = {
         int(row["row_index"]): row for row in prediction_rows
     }
@@ -536,6 +595,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             config.run_dir,
             test_rows,
             prediction_rows,
+            manifest,
         )
         assertions += recheck_assertions
     except Exception as error:
@@ -547,6 +607,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         "assertions": assertions,
         "rows": len(prediction_rows),
         "rechecked_rows": len(rechecked),
+        "inference_recheck": config.recheck_inference,
         "mcc": manifest["metrics"]["mcc"],
     }
     print(json.dumps(result, indent=2))

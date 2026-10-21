@@ -15,6 +15,7 @@ import warnings
 from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
 from pathlib import Path
+from types import MethodType
 from typing import Any, Iterable, Sequence
 
 
@@ -64,6 +65,7 @@ class RunConfig:
     compat_path: Path
     device: str
     batch_size: int
+    attention_backend: str
     offline: bool
 
 
@@ -321,6 +323,94 @@ def activate_compatibility_path(compat_path: Path) -> None:
     sys.path.insert(0, str(resolved))
 
 
+def install_sdpa_attention(
+    model: Any,
+    expected_layer_count: int,
+) -> tuple[int, int]:
+    import torch
+    from torch.nn.attention import SDPBackend, sdpa_kernel
+    from transformers.models.esm import modeling_esm
+
+    if expected_layer_count < 1:
+        raise ReproError("SDPA requires at least one expected attention layer")
+
+    def make_forward() -> Any:
+        def sdpa_forward(
+            self: Any,
+            hidden_states: Any,
+            attention_mask: Any = None,
+            head_mask: Any = None,
+            encoder_hidden_states: Any = None,
+            encoder_attention_mask: Any = None,
+            past_key_value: Any = None,
+            output_attentions: bool = False,
+        ) -> tuple[Any, ...]:
+            if (
+                head_mask is not None
+                or encoder_hidden_states is not None
+                or encoder_attention_mask is not None
+                or past_key_value is not None
+                or output_attentions
+                or self.is_decoder
+            ):
+                raise ReproError(
+                    "SDPA attention received an unsupported call shape"
+                )
+
+            query_layer = self.transpose_for_scores(self.query(hidden_states))
+            key_layer = self.transpose_for_scores(self.key(hidden_states))
+            value_layer = self.transpose_for_scores(self.value(hidden_states))
+            query_layer = query_layer * self.attention_head_size**-0.5
+            query_layer, key_layer = self.rotary_embeddings(
+                query_layer,
+                key_layer,
+            )
+
+            with sdpa_kernel(backends=[SDPBackend.EFFICIENT_ATTENTION]):
+                context_layer = torch.nn.functional.scaled_dot_product_attention(
+                    query_layer,
+                    key_layer,
+                    value_layer,
+                    attn_mask=attention_mask,
+                    dropout_p=self.dropout.p if self.training else 0.0,
+                    is_causal=False,
+                    scale=1.0,
+                )
+            context_layer = context_layer.permute(0, 2, 1, 3).contiguous()
+            new_context_layer_shape = context_layer.size()[:-2] + (
+                self.all_head_size,
+            )
+            context_layer = context_layer.view(new_context_layer_shape)
+            return (context_layer,)
+
+        return sdpa_forward
+
+    enabled = 0
+    eligible = 0
+    for module in model.modules():
+        if not isinstance(module, modeling_esm.EsmSelfAttention):
+            continue
+        if module.position_embedding_type != "rotary":
+            continue
+        eligible += 1
+        if getattr(module, "_sdpa_attention_enabled", False):
+            enabled += 1
+            continue
+        module.forward = MethodType(make_forward(), module)
+        module._sdpa_attention_enabled = True
+        enabled += 1
+    if eligible != expected_layer_count:
+        raise ReproError(
+            f"SDPA found {eligible} eligible attention modules; "
+            f"the model declares {expected_layer_count} layers"
+        )
+    if enabled != expected_layer_count:
+        raise ReproError(
+            f"SDPA patched {enabled} of {expected_layer_count} attention modules"
+        )
+    return enabled, eligible
+
+
 def load_model(
     config: RunConfig,
 ) -> tuple[Any, Any, dict[str, Any], list[str]]:
@@ -426,6 +516,15 @@ def load_model(
         if not config.device.startswith("cuda"):
             model.to(config.device)
         model.eval()
+        sdpa_module_count = 0
+        sdpa_eligible_module_count = 0
+        sdpa_expected_module_count = 0
+        if config.attention_backend == "sdpa":
+            sdpa_expected_module_count = int(model.config.num_hidden_layers)
+            sdpa_module_count, sdpa_eligible_module_count = install_sdpa_attention(
+                model,
+                sdpa_expected_module_count,
+            )
         load_warnings = [str(item.message) for item in captured]
 
     device_info: dict[str, Any] = {"requested": config.device}
@@ -439,9 +538,15 @@ def load_model(
                 "total_memory_bytes": properties.total_memory,
             }
         )
-    device_info["attention_implementation"] = getattr(
+    device_info["transformers_attention_implementation"] = getattr(
         model.config, "_attn_implementation", "unknown"
     )
+    device_info["execution_attention_backend"] = config.attention_backend
+    if config.attention_backend == "sdpa":
+        device_info["execution_attention_kernel"] = "pytorch_sdpa_efficient_attention"
+        device_info["sdpa_module_count"] = sdpa_module_count
+        device_info["sdpa_eligible_module_count"] = sdpa_eligible_module_count
+        device_info["sdpa_expected_module_count"] = sdpa_expected_module_count
     return model, tokenizer, {"versions": versions, "device": device_info}, load_warnings
 
 
@@ -479,6 +584,7 @@ def report_text(
     metrics: dict[str, Any],
     rows: Sequence[TestRow],
     load_warnings: Sequence[str],
+    attention_backend: str,
 ) -> str:
     confusion = metrics["confusion"]
     non_sequon = sum(
@@ -513,6 +619,7 @@ def report_text(
         f"- Non-sequon rows retained: `{non_sequon}`",
         f"- Unique sequences / encoder passes: `{len({row.sequence for row in rows})}`",
         f"- Longest sequence: `{max(len(row.sequence) for row in rows)}` residues",
+        f"- Attention path: `{attention_backend}` with full-sequence inference",
         "",
         "## Compatibility note",
         "",
@@ -521,6 +628,16 @@ def report_text(
         f"`transformers {EXPECTED_TRANSFORMERS_VERSION}` through an isolated overlay.",
         "",
     ]
+    if attention_backend == "sdpa":
+        lines.extend(
+            [
+                "The `sdpa` path keeps the full sequence and uses PyTorch's "
+                "memory-efficient scaled dot-product attention. It is an execution "
+                "optimization, not a truncation or windowing change; the manifest "
+                "records the selected backend.",
+                "",
+            ]
+        )
     if load_warnings:
         lines.extend(["Captured load warnings:", ""])
         lines.extend(f"- `{warning}`" for warning in load_warnings)
@@ -554,10 +671,17 @@ def parse_args(argv: Sequence[str] | None = None) -> RunConfig:
     )
     parser.add_argument("--device", default="cuda")
     parser.add_argument("--batch-size", type=int, default=1)
+    parser.add_argument(
+        "--attention-backend",
+        choices=("eager", "sdpa"),
+        default="eager",
+    )
     parser.add_argument("--allow-download", action="store_true")
     args = parser.parse_args(argv)
     if args.batch_size != 1:
         raise ReproError("The author benchmark used per-device evaluation batch size 1")
+    if args.attention_backend == "sdpa" and not args.device.startswith("cuda"):
+        raise ReproError("SDPA efficient attention requires a CUDA device")
     return RunConfig(
         test_csv=args.test_csv.resolve(),
         adapter_dir=args.adapter_dir.resolve(),
@@ -567,6 +691,7 @@ def parse_args(argv: Sequence[str] | None = None) -> RunConfig:
         compat_path=args.compat_path.resolve(),
         device=args.device,
         batch_size=args.batch_size,
+        attention_backend=args.attention_backend,
         offline=not args.allow_download,
     )
 
@@ -722,12 +847,17 @@ def main(argv: Sequence[str] | None = None) -> int:
         atomic_write_json(temporary_dir / "metrics.json", metrics)
         atomic_write_text(
             temporary_dir / "report.md",
-            report_text(metrics, rows, load_warnings),
+            report_text(
+                metrics,
+                rows,
+                load_warnings,
+                config.attention_backend,
+            ),
         )
 
         created_at = datetime.now(timezone.utc).isoformat()
         manifest = {
-            "schema_version": 1,
+            "schema_version": 2,
             "status": "complete",
             "created_at_utc": created_at,
             "command": [sys.executable, *sys.argv],
@@ -766,6 +896,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             "inference": {
                 "dtype": "float32",
                 "batch_size": config.batch_size,
+                "attention_backend": config.attention_backend,
                 "decision_rule": "argmax(logits)",
                 "encoding_strategy": "once_per_unique_sequence",
                 "full_sequence": True,
