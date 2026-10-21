@@ -1,0 +1,140 @@
+{
+  "schema_version": 2,
+  "status": "complete",
+  "created_at_utc": "2026-10-21T04:57:10.718523+00:00",
+  "command": [
+    "D:\\wbworkspace\\glyco-analysis\\.venv\\Scripts\\python.exe",
+    "scripts\\run_esm150_lora_repro.py",
+    "--test-csv",
+    "D:\\wbworkspace\\LoRA-N-Gly\\data\\N-GlycositeAltas\\test.csv",
+    "--adapter-dir",
+    "D:\\wbworkspace\\LoRA-N-Gly\\checkpoints\\N-linked\\ESM-150M\\checkpoint",
+    "--base-model-revision",
+    "a695f6045e2e32885fa60af20c13cb35398ce30c",
+    "--attention-backend",
+    "sdpa",
+    "--out-dir",
+    "D:\\Codex\\workspace\\glyco-analysis-esm150\\reports\\esm150_lora_repro_v0"
+  ],
+  "source": {
+    "git_commit": "c6577c0deb16c2aefaaa7e34e038e32078482c4e",
+    "git_dirty": false,
+    "git_commit_role": "pre_artifact_code_baseline"
+  },
+  "inputs": {
+    "test_csv": {
+      "path": "D:\\wbworkspace\\LoRA-N-Gly\\data\\N-GlycositeAltas\\test.csv",
+      "sha256": "D2533271159123EE1C8D537CBE7BDA115AB0E0A29D98A8DF7B7B4ACC69217D20",
+      "row_count": 2554,
+      "label_counts": {
+        "0": 1253,
+        "1": 1301
+      },
+      "protein_count": 939
+    },
+    "adapter": {
+      "path": "D:\\wbworkspace\\LoRA-N-Gly\\checkpoints\\N-linked\\ESM-150M\\checkpoint",
+      "model_sha256": "A4A5B486862724F459F60E8343AC135C340305D5A0F2E936EB5AD1DFD34788D4",
+      "config_sha256": "AA804C390EC28030741121B4663E82623F429AABF438A0713B8A5C0072334B6B",
+      "tensor_count": 376
+    },
+    "base_model": {
+      "id": "facebook/esm2_t30_150M_UR50D",
+      "revision": "a695f6045e2e32885fa60af20c13cb35398ce30c",
+      "snapshot": "D:\\hf\\hub\\models--facebook--esm2_t30_150M_UR50D\\snapshots\\a695f6045e2e32885fa60af20c13cb35398ce30c",
+      "weights_file": "model.safetensors",
+      "weights_sha256": "C3F1DA8AEA53BDDD32C246C86168C23B9FD72341FB9DB9A94436F855F5053566"
+    }
+  },
+  "environment": {
+    "versions": {
+      "python": "3.12.14",
+      "torch": "2.9.1+cu128",
+      "transformers": "4.50.3",
+      "peft": "0.14.0",
+      "tokenizers": "0.21.1",
+      "huggingface_hub": "0.26.3"
+    },
+    "device": {
+      "requested": "cuda",
+      "name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+      "capability": [
+        12,
+        0
+      ],
+      "total_memory_bytes": 8518041600,
+      "transformers_attention_implementation": "eager",
+      "execution_attention_backend": "sdpa",
+      "execution_attention_kernel": "pytorch_sdpa_efficient_attention",
+      "sdpa_module_count": 30,
+      "sdpa_eligible_module_count": 30,
+      "sdpa_expected_module_count": 30
+    }
+  },
+  "load_warnings": [
+    "Found missing adapter keys while loading the checkpoint: ['base_model.model.classifier.original_module.out_proj.lora_A.default.weight', 'base_model.model.classifier.original_module.out_proj.lora_B.default.weight']"
+  ],
+  "inference": {
+    "dtype": "float32",
+    "batch_size": 1,
+    "attention_backend": "sdpa",
+    "decision_rule": "argmax(logits)",
+    "encoding_strategy": "once_per_unique_sequence",
+    "full_sequence": true,
+    "truncation": false,
+    "windowing": false,
+    "row_count": 2554,
+    "unique_sequence_count": 963,
+    "encoder_forward_count": 963,
+    "elapsed_seconds": 115.16437700000006,
+    "audit_sample_indices": [
+      0,
+      1,
+      2,
+      3,
+      170,
+      340,
+      511,
+      681,
+      851,
+      934,
+      1942,
+      2508,
+      2509,
+      2510,
+      2511,
+      2553
+    ],
+    "audit_sample_coverage": {
+      "contains_non_sequon": true,
+      "contains_longest": true,
+      "contains_both_labels": true
+    }
+  },
+  "metrics": {
+    "mcc": 0.8483488428592927,
+    "reference_mcc": 0.848,
+    "mcc_delta_from_reference": 0.0003488428592927084,
+    "accuracy": 0.9236491777603759,
+    "precision": 0.9459677419354838,
+    "recall": 0.9016141429669485,
+    "specificity": 0.9465283320031923,
+    "confusion": {
+      "tp": 1173,
+      "fp": 67,
+      "tn": 1186,
+      "fn": 128
+    },
+    "row_count": 2554,
+    "decision_rule": "argmax(logits)",
+    "non_sequon_rows": 46,
+    "protein_count": 939,
+    "longest_sequence_length": 5179
+  },
+  "artifacts": {
+    "predictions.csv": "372112E11FE8BFB785508BFC3CAE932DA6622566C6E1DD5D035B88C6DBC7622E",
+    "audit_sample.csv": "591062CF58EDDE9A05BD3167B560E04BF631D55C8C056A1285142C6DB891D26E",
+    "metrics.json": "5BBFBFDDBC944AE7F07F92095A7C54B590440C95690196F127151C9FC4752D26",
+    "report.md": "5EBCE417E6906DF452861A20DF84712D4FCB95BBDFEE28DA355DCEBB1863EEB9"
+  }
+}
