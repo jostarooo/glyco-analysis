@@ -83,6 +83,19 @@ class RowContractTests(unittest.TestCase):
             with self.assertRaisesRegex(runner.ReproError, "outside sequence"):
                 runner.load_test_rows(path)
 
+    def test_sequence_grouping_preserves_rows_and_first_seen_order(self):
+        rows = [
+            runner.TestRow(0, 1, "P1", 2, "MNST"),
+            runner.TestRow(1, 0, "P2", 1, "AAAA"),
+            runner.TestRow(2, 1, "P3", 2, "MNST"),
+        ]
+
+        jobs = runner.group_rows_by_sequence(rows)
+
+        self.assertEqual([job.sequence for job in jobs], ["MNST", "AAAA"])
+        self.assertEqual([row.row_index for row in jobs[0].rows], [0, 2])
+        self.assertEqual([row.row_index for row in jobs[1].rows], [1])
+
 
 class DecisionRuleTests(unittest.TestCase):
     def test_softmax_is_stable_and_normalized(self):

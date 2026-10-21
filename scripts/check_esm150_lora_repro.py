@@ -339,9 +339,13 @@ def verify_manifest(
         "dtype": "float32",
         "batch_size": 1,
         "decision_rule": "argmax(logits)",
+        "encoding_strategy": "once_per_unique_sequence",
         "full_sequence": True,
         "truncation": False,
         "windowing": False,
+        "row_count": len(test_rows),
+        "unique_sequence_count": len({row["sequence"] for row in test_rows}),
+        "encoder_forward_count": len({row["sequence"] for row in test_rows}),
     }
     for key, expected in required_inference.items():
         if inference.get(key) != expected:

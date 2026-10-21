@@ -77,6 +77,12 @@ class TestRow:
 
 
 @dataclass(frozen=True)
+class SequenceJob:
+    sequence: str
+    rows: tuple[TestRow, ...]
+
+
+@dataclass(frozen=True)
 class Prediction:
     row_index: int
     label: int
@@ -192,6 +198,20 @@ def load_test_rows(path: Path) -> list[TestRow]:
     if not rows:
         raise ReproError("Test CSV contains no data rows")
     return rows
+
+
+def group_rows_by_sequence(rows: Sequence[TestRow]) -> list[SequenceJob]:
+    grouped: dict[str, list[TestRow]] = {}
+    sequence_order: list[str] = []
+    for row in rows:
+        if row.sequence not in grouped:
+            grouped[row.sequence] = []
+            sequence_order.append(row.sequence)
+        grouped[row.sequence].append(row)
+    return [
+        SequenceJob(sequence=sequence, rows=tuple(grouped[sequence]))
+        for sequence in sequence_order
+    ]
 
 
 def residue_and_motif(sequence: str, position: int) -> tuple[str, str, int]:
@@ -491,6 +511,7 @@ def report_text(
         f"- Positives / negatives: `{sum(row.label == 1 for row in rows)}` / "
         f"`{sum(row.label == 0 for row in rows)}`",
         f"- Non-sequon rows retained: `{non_sequon}`",
+        f"- Unique sequences / encoder passes: `{len({row.sequence for row in rows})}`",
         f"- Longest sequence: `{max(len(row.sequence) for row in rows)}` residues",
         "",
         "## Compatibility note",
@@ -592,56 +613,76 @@ def main(argv: Sequence[str] | None = None) -> int:
     model, tokenizer, environment, load_warnings = load_model(config)
     import torch
 
+    sequence_jobs = group_rows_by_sequence(rows)
+    position_model = model.base_model.model
     started = time.perf_counter()
-    predictions: list[Prediction] = []
-    sequence_cache: dict[str, dict[str, Any]] = {}
-    for completed, row in enumerate(rows, start=1):
-        encoded = sequence_cache.get(row.sequence)
-        if encoded is None:
-            encoded = tokenizer(row.sequence, return_tensors="pt")
-            sequence_cache[row.sequence] = encoded
-        input_ids = encoded["input_ids"].to(config.device)
-        attention_mask = encoded["attention_mask"].to(config.device)
-        token_length = int(input_ids.shape[1])
-        if row.position + 1 >= token_length:
-            raise ReproError(
-                f"Token position {row.position} does not map to a residue for CSV row "
-                f"{row.row_index}; token length is {token_length}"
-            )
-        with torch.inference_mode():
-            logits = model(
+    predictions_by_index: dict[int, Prediction] = {}
+    completed = 0
+    next_report = 100
+    with torch.inference_mode():
+        for job in sequence_jobs:
+            encoded = tokenizer(job.sequence, return_tensors="pt")
+            input_ids = encoded["input_ids"].to(config.device)
+            attention_mask = encoded["attention_mask"].to(config.device)
+            token_length = int(input_ids.shape[1])
+            hidden = position_model.esm(
                 input_ids=input_ids,
                 attention_mask=attention_mask,
-                pos=torch.tensor([row.position], dtype=torch.long, device=config.device),
-            ).logits[0]
-        logit_negative = float(logits[0].item())
-        logit_positive = float(logits[1].item())
-        if not math.isfinite(logit_negative) or not math.isfinite(logit_positive):
-            raise ReproError(f"Non-finite logit at CSV row {row.row_index}")
-        prob_negative, prob_positive = softmax_two(logit_negative, logit_positive)
-        residue, motif, is_sequon = residue_and_motif(row.sequence, row.position)
-        predictions.append(
-            Prediction(
-                row_index=row.row_index,
-                label=row.label,
-                protein_id=row.protein_id,
-                position=row.position,
-                sequence_sha256=sha256_text(row.sequence),
-                sequence_length=len(row.sequence),
-                token_length=token_length,
-                residue=residue,
-                motif=motif,
-                is_sequon=is_sequon,
-                logit_negative=logit_negative,
-                logit_positive=logit_positive,
-                prob_negative=prob_negative,
-                prob_positive=prob_positive,
-                predicted_label=binary_argmax(logit_negative, logit_positive),
-            )
-        )
-        if completed % 100 == 0 or completed == len(rows):
-            print(f"processed {completed}/{len(rows)} rows", file=sys.stderr, flush=True)
+                return_dict=True,
+            ).last_hidden_state
+            for row in job.rows:
+                if row.position + 1 >= token_length:
+                    raise ReproError(
+                        f"Token position {row.position} does not map to a residue for "
+                        f"CSV row {row.row_index}; token length is {token_length}"
+                    )
+                logits = position_model.classifier(
+                    hidden,
+                    torch.tensor(
+                        [row.position],
+                        dtype=torch.long,
+                        device=config.device,
+                    ),
+                )[0]
+                logit_negative = float(logits[0].item())
+                logit_positive = float(logits[1].item())
+                if not math.isfinite(logit_negative) or not math.isfinite(logit_positive):
+                    raise ReproError(f"Non-finite logit at CSV row {row.row_index}")
+                prob_negative, prob_positive = softmax_two(
+                    logit_negative,
+                    logit_positive,
+                )
+                residue, motif, is_sequon = residue_and_motif(
+                    row.sequence,
+                    row.position,
+                )
+                predictions_by_index[row.row_index] = Prediction(
+                    row_index=row.row_index,
+                    label=row.label,
+                    protein_id=row.protein_id,
+                    position=row.position,
+                    sequence_sha256=sha256_text(row.sequence),
+                    sequence_length=len(row.sequence),
+                    token_length=token_length,
+                    residue=residue,
+                    motif=motif,
+                    is_sequon=is_sequon,
+                    logit_negative=logit_negative,
+                    logit_positive=logit_positive,
+                    prob_negative=prob_negative,
+                    prob_positive=prob_positive,
+                    predicted_label=binary_argmax(logit_negative, logit_positive),
+                )
+            completed += len(job.rows)
+            if completed >= next_report or completed == len(rows):
+                print(
+                    f"processed {completed}/{len(rows)} rows",
+                    file=sys.stderr,
+                    flush=True,
+                )
+                next_report = (completed // 100 + 1) * 100
     elapsed = time.perf_counter() - started
+    predictions = [predictions_by_index[index] for index in range(len(rows))]
 
     metrics = confusion_and_metrics(
         [prediction.label for prediction in predictions],
@@ -726,9 +767,13 @@ def main(argv: Sequence[str] | None = None) -> int:
                 "dtype": "float32",
                 "batch_size": config.batch_size,
                 "decision_rule": "argmax(logits)",
+                "encoding_strategy": "once_per_unique_sequence",
                 "full_sequence": True,
                 "truncation": False,
                 "windowing": False,
+                "row_count": len(rows),
+                "unique_sequence_count": len(sequence_jobs),
+                "encoder_forward_count": len(sequence_jobs),
                 "elapsed_seconds": elapsed,
                 "audit_sample_indices": audit_indices,
                 "audit_sample_coverage": {
