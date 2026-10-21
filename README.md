@@ -1,8 +1,9 @@
 # 糖基化分析系统：以蛋白质语言模型预测 N-糖基化位点、以图神经网络解析糖链、并用工具调用智能体把两者串成一个可对话的分析工作台。
 
 > 本科毕业设计（张驰，指导教师王老师）· 2026-10-27 第一次对齐
-> 代码状态：W1 —— 环境与六个接口已就绪，F1 数据集 v0 与 ESM-2 35M 线性探针可复现。
-> 数据口径见 `reports/dataset_v0.md`，探针结果见 `reports/esm35_linear_probe_v0/report.md`。
+> 代码状态：W1 —— 环境、F1 数据集 v0、35M 线性探针与作者 150M LoRA 复算均已验证。
+> 数据口径见 `reports/dataset_v0.md`，探针结果见 `reports/esm35_linear_probe_v0/report.md`，
+> 150M 复算结论见 `reports/mcc_repro.md`。
 
 ## 它解决什么问题
 
@@ -39,6 +40,15 @@ D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\run_esm35_linear_
 # 独立复算探针产物：重训每个折、重算指标并核对哈希
 D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\check_esm35_linear_probe.py --run-dir reports\esm35_linear_probe_v0 --cache-dir D:\wbworkspace\glyco-analysis\data\raw\uniprot
 
+# ESM-2 150M 作者检查点全量复算：2554 行，FP32，全序列，batch size 1，SDPA
+$env:PYTHONPATH = 'D:\uv\pylibs\lora-n-gly-peft014'
+$env:HF_HOME = 'D:\hf'
+$env:HF_HUB_OFFLINE = '1'
+D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\run_esm150_lora_repro.py --test-csv D:\wbworkspace\LoRA-N-Gly\data\N-GlycositeAltas\test.csv --adapter-dir D:\wbworkspace\LoRA-N-Gly\checkpoints\N-linked\ESM-150M\checkpoint --base-model-revision a695f6045e2e32885fa60af20c13cb35398ce30c --attention-backend sdpa --out-dir reports\esm150_lora_repro_v0
+
+# 独立复算 2554 行产物，并重跑 16 行审计样本
+D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\check_esm150_lora_repro.py --run-dir reports\esm150_lora_repro_v0 --test-csv D:\wbworkspace\LoRA-N-Gly\data\N-GlycositeAltas\test.csv --adapter-dir D:\wbworkspace\LoRA-N-Gly\checkpoints\N-linked\ESM-150M\checkpoint --recheck-inference
+
 # 同步到 GitHub：本机 git push 通道不通，发布走 REST API（需要 classic PAT 的 repo scope）
 # 先把 token 写入 %USERPROFILE%\.github-token，或设置 GH_TOKEN；别把 token 写进仓库
 D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\publish_github.py --private
@@ -48,6 +58,11 @@ D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\publish_github.py
 标注的候选 sequon 作为对照，并排除 71 个仅有 `ECO:0000255` 的推断阳性。评估覆盖
 130 行、28 个蛋白和 51 个唯一窗口。MCC 为 0.331975，按蛋白重采样 2000 次得到的
 95% 区间为 [0.060051, 0.602824]。对照组是未标注样本，不是实验验证的阴性。
+
+作者 150M 检查点在完整 `test.csv` 上的复算 MCC 为 **0.848348842859**，与论文
+**0.848** 的差为 **+0.000348842859**。评估覆盖 2554 行、939 个蛋白和 963 条唯一序列，
+保留 46 条非 sequon 行，没有截断或滑窗。独立 checker 启用推理复核后核对 16 行，
+共 33294 条断言通过。
 
 发布脚本会把本地历史逐 commit 重放到远端，并校验 commit SHA 与 tree SHA 都与本地一致，
 不一致就报错退出；空仓库的首次提交由脚本自己播种。详见 `REPRO.md` 第四节。

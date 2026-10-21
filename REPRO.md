@@ -11,7 +11,7 @@
 |---|---|---|---|---|
 | 1 | **环境关** | Python 3.12 venv 可用；`torch.cuda.is_available()` 为真；在 GPU 上跑一次真实前向不报错 | ✅ 通过 | `reports/env_check.md` |
 | 2 | **数据关** | UniProt 人类糖蛋白检索返回 1381 条；GlyGen 单蛋白详情可取；其余接口状态有记录 | ✅ 通过（4/6 可用） | `reports/endpoint_check_2026-10-18.md` |
-| 3 | **复现关** | 作者 150M 检查点在作者 `test.csv` 上复算 MCC，与论文 0.848 对表并解释差异 | ⬜ 未开始 | `reports/mcc_repro.md` |
+| 3 | **复现关** | 作者 150M 检查点在作者 `test.csv` 上复算 MCC，与论文 0.848 对表并解释差异 | ✅ 通过 | `reports/mcc_repro.md` |
 | 4 | **本机训练关** | ESM2-150M + LoRA 能在 6.6 GiB 可用显存内跑通若干步且 loss 下降 | ⬜ 未开始 | `reports/local_train.md` |
 | 5 | **系统关** | 浏览器里能用真实后端结果完成一次"序列 → 位点 → 糖链"的端到端问答 | ⬜ 未开始 | 录屏 + `docs/demo.md` |
 
@@ -106,6 +106,64 @@ $cache = 'D:\wbworkspace\glyco-analysis\data\raw\uniprot'
 所以从只改产物的提交上重跑仍会得到同一份 manifest，不会把产物提交误当成代码基线。
 校验器要求 manifest 的基线等于这个提交，并要求基线之后产物目录外没有源码改动。
 
+### F1 ESM-2 150M LoRA 作者检查点复算（2026-10-21）
+
+复算对象是 `NancyFyong/LoRA-N-Gly` 发布的 150M PEFT adapter。输入是作者
+`test.csv` 的全部 2554 行，不删除非 canonical 或非 sequon 行。执行口径固定为
+FP32、完整序列、batch size 1、无截断、无滑窗、两个 logits 取 `argmax`。
+
+```powershell
+$env:PYTHONPATH = 'D:\uv\pylibs\lora-n-gly-peft014'
+$env:HF_HOME = 'D:\hf'
+$env:HUGGINGFACE_HUB_CACHE = 'D:\hf\hub'
+$env:HF_HUB_OFFLINE = '1'
+$python = 'D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe'
+$test = 'D:\wbworkspace\LoRA-N-Gly\data\N-GlycositeAltas\test.csv'
+$adapter = 'D:\wbworkspace\LoRA-N-Gly\checkpoints\N-linked\ESM-150M\checkpoint'
+
+& $python scripts\run_esm150_lora_repro.py --test-csv $test --adapter-dir $adapter `
+  --base-model-revision a695f6045e2e32885fa60af20c13cb35398ce30c `
+  --attention-backend sdpa --out-dir reports\esm150_lora_repro_v0
+
+& $python scripts\check_esm150_lora_repro.py --run-dir reports\esm150_lora_repro_v0 `
+  --test-csv $test --adapter-dir $adapter `
+  --base-model-revision a695f6045e2e32885fa60af20c13cb35398ce30c `
+  --recheck-inference
+
+& $python -m unittest discover -s tests -p 'test_*.py' -v
+```
+
+主结果如下：
+
+| 指标 | 数值 |
+|---|---:|
+| MCC | 0.848348842859 |
+| 论文 MCC | 0.848 |
+| 差值 | +0.000348842859 |
+| 准确率 | 0.923649177760 |
+| 精确率 | 0.945967741935 |
+| 召回率 | 0.901614142967 |
+| 特异度 | 0.946528332003 |
+| TP / FP / TN / FN | 1173 / 67 / 1186 / 128 |
+| 行数 / 蛋白数 / 唯一序列数 | 2554 / 939 / 963 |
+| 非 sequon 行 | 46 |
+| 最长序列 | 5179 aa |
+| 单次全量推理耗时 | 115.164377 秒 |
+
+运行使用 RTX 5060 Laptop、PyTorch 2.9.1+cu128 和 SDPA efficient attention。
+manifest 记录 30/30 个 rotary attention 模块被替换。这个耗时只描述本次单次运行，
+不是与 eager 或作者环境的受控加速比。
+
+独立 checker 核对 2554 行预测、指标、产物哈希和 16 行推理重建，结果为
+`PASS`、`33294` 条断言、`recheck_inference=true`。完整默认测试为 34 项通过；
+关闭 GPU 门控时 33 项通过、1 项跳过。
+
+产物保留了 PEFT 的一条 missing-key 告警。核对 `adapter_model.safetensors` 后确认，
+当前实际使用的 `classifier.modules_to_save.default.out_proj` 中，base weight、base bias、
+LoRA A 和 LoRA B 都与 checkpoint 的有效键逐元素一致。告警中的
+`classifier.original_module.out_proj` 是未激活的重复别名，不是漏载的有效权重。
+完整证据与哈希见 `reports/mcc_repro.md`。
+
 ### GitHub 发布
 
 本机到 `github.com` 的 git 通道是被重置的（`Recv failure: Connection was reset`，代理端口 5899 也不再监听），
@@ -127,8 +185,9 @@ D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\publish_github.py
 
 任何一项对不上就报错退出；发布记录写在 `reports/github_publish_<日期>.md`。
 
-2026-10-18 状态：**已发布** → https://github.com/jostarooo/glyco-analysis
-（private，`main` = `59c53b7`，与本地 `HEAD` 及 tree 逐字节一致，10 个文件）。
+2026-10-18 首次发布。2026-10-21 全量复现完成后再次镜像发布。远端
+https://github.com/jostarooo/glyco-analysis （private）的 `main` 与本地最终提交
+及 tree 逐字节一致，具体 SHA 和文件数见 `reports/github_publish_2026-10-21.md`。
 
 ## 五、复现记录
 
@@ -139,3 +198,4 @@ D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\publish_github.py
 | 2026-10-18 | 建 GitHub 私有仓库并把本地两次提交镜像上去 | `scripts/publish_github.py --private`；远端 HEAD 与 tree 均与本地逐字节一致，10 个文件 | ✅ 通过 |
 | 2026-10-19 | 构建 F1 数据集 v0（UniProt 实验标注 → 30 蛋白 / 201 候选位点，release 2026_03） | 复跑 0 次网络请求且三产物 SHA256 不变；`scripts/check_dataset.py` 独立复算 1854 断言全过 | ✅ 通过；口径见 `reports/dataset_v0.md` |
 | 2026-10-20 | 跑通 F1 ESM-2 35M 冻结主干线性探针 | 13 个单元测试通过；独立 checker 重嵌入并核对 4021 条断言；MCC 0.331975，28 蛋白重采样区间 [0.060051, 0.602824] | ✅ 通过；产物见 `reports/esm35_linear_probe_v0/` |
+| 2026-10-21 | 复算作者 ESM-2 150M LoRA 检查点 | 2554 行全量推理；checker 启用 16 行推理复核并通过 33294 条断言；MCC 0.848348842859，论文值 0.848，差 +0.000348842859 | ✅ 通过；产物见 `reports/esm150_lora_repro_v0/` |

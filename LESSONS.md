@@ -23,3 +23,9 @@
   Seen 1× —— 2026-10-20
 - **Git worktree 不共享被 `.gitignore` 忽略的数据缓存。** 在 worktree 跑 checker 时必须显式传主仓库的 `--cache-dir`，否则默认相对路径找不到 UniProt 缓存。
   Seen 1× —— 2026-10-20
+- **PEFT 的 missing adapter keys 告警不能直接判为无害或致命。** 必须检查当前 active adapter 路径并逐元素对照 checkpoint。150M 复算里 `classifier.original_module.out_proj` 是未激活别名，实际使用的 `classifier.modules_to_save.default.out_proj` 四个有效权重均一致。
+  Seen 1× —— 2026-10-21
+- **全序列 ESM-2 遇到超长蛋白时，执行后端本身会成为瓶颈。** 5179 aa 单序列在 eager 路径曾超过 12 分钟无输出；改用 CUDA SDPA 后同一验证组完成。该观察是单次测量，不写成普适加速比，最终 manifest 固定记录 `attention_backend` 与 30/30 模块计数。
+  Seen 1× —— 2026-10-21
+- **checker 的 artifact-only PASS 不等于重建了运行时状态。** SDPA 模块计数只有在 `--recheck-inference` 下才会重新构造并核对。最终交付必须保留 `inference_recheck=true`，不能只看 `status=PASS`。
+  Seen 1× —— 2026-10-21
