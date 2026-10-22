@@ -1,0 +1,92 @@
+{
+  "artifacts": {
+    "predictions.csv": {
+      "bytes": 36074,
+      "sha256": "C0706E87401CAA80EDE49238D8FFC0E3D2058B5C4920A5E1CC3B490F779BC8F0"
+    },
+    "report.md": {
+      "bytes": 1531,
+      "sha256": "F809D146ACE1EFE29C2054B3D545BB9993C8C77171F75105B673FBADD2695914"
+    }
+  },
+  "compatibility": {
+    "path": "D:\\uv\\pylibs\\lora-n-gly-peft014",
+    "pythonpath": "D:\\uv\\pylibs\\lora-n-gly-peft014",
+    "versions": {
+      "huggingface_hub": "0.26.3",
+      "peft": "0.14.0",
+      "python": "3.12.14",
+      "tokenizers": "0.21.1",
+      "torch": "2.9.1+cu128",
+      "transformers": "4.50.3"
+    }
+  },
+  "device": {
+    "actual": "cuda:0",
+    "capability": [
+      12,
+      0
+    ],
+    "execution_attention_backend": "sdpa",
+    "execution_attention_kernel": "pytorch_sdpa_efficient_attention",
+    "name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+    "requested": "cuda",
+    "sdpa_eligible_module_count": 30,
+    "sdpa_expected_module_count": 30,
+    "sdpa_module_count": 30,
+    "total_memory_bytes": 8518041600,
+    "transformers_attention_implementation": "eager"
+  },
+  "inference": {
+    "attention_backend": "sdpa",
+    "batch_size": 1,
+    "decision_rule": "argmax(logits)",
+    "dtype": "float32",
+    "encoder_forward_count": 29,
+    "encoding_strategy": "once_per_unique_sequence",
+    "full_sequence": true,
+    "positive_rule": "logit_positive > logit_negative",
+    "protein_count": 29,
+    "row_count": 201,
+    "truncation": false,
+    "unique_sequence_count": 29,
+    "windowing": false
+  },
+  "inputs": {
+    "adapter": {
+      "config_sha256": "AA804C390EC28030741121B4663E82623F429AABF438A0713B8A5C0072334B6B",
+      "model_sha256": "A4A5B486862724F459F60E8343AC135C340305D5A0F2E936EB5AD1DFD34788D4",
+      "path": "D:\\wbworkspace\\LoRA-N-Gly\\checkpoints\\N-linked\\ESM-150M\\checkpoint",
+      "tensor_count": 376
+    },
+    "base_model": {
+      "id": "facebook/esm2_t30_150M_UR50D",
+      "revision": "a695f6045e2e32885fa60af20c13cb35398ce30c",
+      "snapshot": "D:\\hf\\hub\\models--facebook--esm2_t30_150M_UR50D\\snapshots\\a695f6045e2e32885fa60af20c13cb35398ce30c",
+      "weights_file": "model.safetensors",
+      "weights_sha256": "C3F1DA8AEA53BDDD32C246C86168C23B9FD72341FB9DB9A94436F855F5053566"
+    },
+    "candidates_lora": {
+      "keys_sha256": "CCB02FF550D1CC1D9046F83A392E1E473CBE99ED4FD46D8F4FC2F4581BB2963A",
+      "label_counts": {
+        "0": 48,
+        "1": 153
+      },
+      "path": "D:\\wbworkspace\\glyco-analysis\\reports\\candidates_30_lora.csv",
+      "protein_count": 29,
+      "row_count": 201,
+      "sha256": "DBD51D28ABC0B0C74E78496E0A8F54CEBAA1C29F274B6E6B2716E39631A09FAB",
+      "unique_sequence_count": 29
+    }
+  },
+  "load_warnings": [
+    "Found missing adapter keys while loading the checkpoint: ['base_model.model.classifier.original_module.out_proj.lora_A.default.weight', 'base_model.model.classifier.original_module.out_proj.lora_B.default.weight']"
+  ],
+  "schema": "glyco.w1-esm150-candidates/v1",
+  "source": {
+    "git_commit": "0589784f32cec6b4f4e025af4aa3d73657b4512c",
+    "git_commit_role": "pre_artifact_code_baseline",
+    "git_dirty": false
+  },
+  "status": "complete"
+}
