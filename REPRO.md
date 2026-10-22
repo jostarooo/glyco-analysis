@@ -164,6 +164,57 @@ LoRA A 和 LoRA B 都与 checkpoint 的有效键逐元素一致。告警中的
 `classifier.original_module.out_proj` 是未激活的重复别名，不是漏载的有效权重。
 完整证据与哈希见 `reports/mcc_repro.md`。
 
+### F1 W1 三方法对拍（2026-10-22）
+
+本阶段把 sequon 规则、ESM-2 35M leave-one-protein-out 预测与作者 150M adapter
+放到同一张 201 行候选表上。指标只使用 82 个实验阳性和 48 个未标注对照，共
+130 行、28 个蛋白。71 个仅含 `ECO:0000255` 的推断阳性保留在展示表中，不进入
+任何指标分母。
+
+```powershell
+$env:PYTHONPATH = 'D:\uv\pylibs\lora-n-gly-peft014'
+$env:HF_HOME = 'D:\hf'
+$env:HUGGINGFACE_HUB_CACHE = 'D:\hf\hub'
+$env:HF_HUB_OFFLINE = '1'
+$python = 'D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe'
+$adapter = 'D:\wbworkspace\LoRA-N-Gly\checkpoints\N-linked\ESM-150M\checkpoint'
+
+& $python scripts\run_esm150_candidate_inference.py `
+  --candidates reports\candidates_30_lora.csv `
+  --adapter-dir $adapter `
+  --base-model-revision a695f6045e2e32885fa60af20c13cb35398ce30c `
+  --attention-backend sdpa `
+  --out-dir reports\esm150_w1_candidates_v0
+
+& $python scripts\run_w1_three_method.py `
+  --out-dir reports\w1_three_method_v0
+
+& $python scripts\check_w1_three_method.py `
+  --comparison-dir reports\w1_three_method_v0
+```
+
+实测结果如下：
+
+| 方法 | 判定规则 | TP / FP / TN / FN | MCC | ROC AUC |
+|---|---|---:|---:|---:|
+| sequon 规则 | 201 行全部判阳性 | 82 / 48 / 0 / 0 | 0.000000 | 不适用 |
+| ESM-2 35M OOF | 已存概率大于等于 0.5 | 60 / 19 / 29 / 22 | 0.331975 | 0.756098 |
+| ESM-2 150M adapter | 正类 logit 大于负类 logit | 71 / 48 / 0 / 11 | -0.232614 | 0.618140 |
+
+150M 推理覆盖 201 行、29 个蛋白和 29 条唯一序列。manifest 固定了 base model
+revision、adapter SHA256、376 个 adapter tensor、FP32、batch size 1、完整序列、
+无截断、无滑窗和 30/30 个 SDPA 模块。运行前工作树干净，manifest 记录
+`git_dirty=false`。
+
+不一致位点按六个方向分层，生成 `review_top10.csv`。10 行在生成时都是
+`PENDING_MANUAL_REVIEW`，需要后续查独立文献或 curator 证据。完整表、指标和哈希见
+`reports/w1_three_method_v0/`。
+
+当前 checker 核对输入哈希、201 行连接、130 行指标、10 行复核选择与产物哈希，
+返回 `status=PASS`。这个 checker 没有二次重建 201 行 GPU logits，因此
+`inference_recheck=false`。完整默认测试为 53 项通过，关闭 GPU 门控时 52 项通过、
+1 项跳过。
+
 ### GitHub 发布
 
 本机到 `github.com` 的 git 通道是被重置的（`Recv failure: Connection was reset`，代理端口 5899 也不再监听），
@@ -199,3 +250,4 @@ https://github.com/jostarooo/glyco-analysis （private）的 `main` 与本地最
 | 2026-10-19 | 构建 F1 数据集 v0（UniProt 实验标注 → 30 蛋白 / 201 候选位点，release 2026_03） | 复跑 0 次网络请求且三产物 SHA256 不变；`scripts/check_dataset.py` 独立复算 1854 断言全过 | ✅ 通过；口径见 `reports/dataset_v0.md` |
 | 2026-10-20 | 跑通 F1 ESM-2 35M 冻结主干线性探针 | 13 个单元测试通过；独立 checker 重嵌入并核对 4021 条断言；MCC 0.331975，28 蛋白重采样区间 [0.060051, 0.602824] | ✅ 通过；产物见 `reports/esm35_linear_probe_v0/` |
 | 2026-10-21 | 复算作者 ESM-2 150M LoRA 检查点 | 2554 行全量推理；checker 启用 16 行推理复核并通过 33294 条断言；MCC 0.848348842859，论文值 0.848，差 +0.000348842859 | ✅ 通过；产物见 `reports/esm150_lora_repro_v0/` |
+| 2026-10-22 | W1 三方法对拍与 10 个不一致位点选取 | 201 行推理；130 行指标；71 行仅展示；53 项测试通过、1 项 GPU 门控跳过；checker 返回 PASS | ✅ 通过；产物见 `reports/w1_three_method_v0/` |

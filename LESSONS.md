@@ -17,8 +17,8 @@
   Seen 1× —— 2026-10-20
 - **按蛋白留一法评估时，标准化器也只能在该折训练蛋白上 `fit`。** 先对全表 `fit` 会把测试蛋白分布带进训练，指标会虚高。
   Seen 1× —— 2026-10-20
-- **运行记录要在命令入口读取 Git 状态。** 完成标记的删除和产物覆盖都会让工作树变脏；只在 `write_run()` 开头读取仍可能晚于入口清理。先在 `main()` 读取 `git_commit` 与 `git_dirty`，再从干净工作树运行，才能留下 `dirty=false`。
-  Seen 1× —— 2026-10-20
+- **运行记录要在任何写入前读取 Git 状态。** 完成标记的删除、产物覆盖和临时 staging 目录都会让工作树变脏；即使 `write_run()` 开头读取，也可能晚于入口清理或 staging 创建。先读取 `git_commit` 与 `git_dirty`，再创建任何输出路径，才能留下 `dirty=false`。
+  Seen 2× —— 2026-10-20、2026-10-22
 - **UniProt N-linked 标注不等于实验阳性。** 201 行 label=1 中有 82 行含 `ECO:0000269`，71 行仅含 `ECO:0000255` 推断证据。训练和评估要在输入边界分流，不能把推断行混进实验阳性。
   Seen 1× —— 2026-10-20
 - **Git worktree 不共享被 `.gitignore` 忽略的数据缓存。** 在 worktree 跑 checker 时必须显式传主仓库的 `--cache-dir`，否则默认相对路径找不到 UniProt 缓存。
@@ -29,3 +29,5 @@
   Seen 1× —— 2026-10-21
 - **checker 的 artifact-only PASS 不等于重建了运行时状态。** SDPA 模块计数只有在 `--recheck-inference` 下才会重新构造并核对。最终交付必须保留 `inference_recheck=true`，不能只看 `status=PASS`。
   Seen 1× —— 2026-10-21
+- **改动 venv 后必须跑一次完整 import smoke test。** 2026-10-22 的一次 `uv` 操作后，`certifi` 与 `accelerate` 从 venv 缺失，150M 推理在模型加载前连续失败；补包并以固定兼容路径导入 `torch`、`transformers`、`peft`、`accelerate`、`tokenizers` 和 `huggingface_hub` 后恢复。
+  Seen 1× —— 2026-10-22

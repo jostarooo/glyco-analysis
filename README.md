@@ -1,9 +1,9 @@
 # 糖基化分析系统：以蛋白质语言模型预测 N-糖基化位点、以图神经网络解析糖链、并用工具调用智能体把两者串成一个可对话的分析工作台。
 
 > 本科毕业设计（张驰，指导教师王老师）· 2026-10-27 第一次对齐
-> 代码状态：W1 —— 环境、F1 数据集 v0、35M 线性探针与作者 150M LoRA 复算均已验证。
+> 代码状态：W1 —— 环境、F1 数据集 v0、35M 线性探针、作者 150M LoRA 复算与 W1 三方法对拍均已验证。
 > 数据口径见 `reports/dataset_v0.md`，探针结果见 `reports/esm35_linear_probe_v0/report.md`，
-> 150M 复算结论见 `reports/mcc_repro.md`。
+> 150M 复算结论见 `reports/mcc_repro.md`，候选位点对拍见 `reports/w1_three_method_v0/report.md`。
 
 ## 它解决什么问题
 
@@ -49,6 +49,11 @@ D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\run_esm150_lora_r
 # 独立复算 2554 行产物，并重跑 16 行审计样本
 D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\check_esm150_lora_repro.py --run-dir reports\esm150_lora_repro_v0 --test-csv D:\wbworkspace\LoRA-N-Gly\data\N-GlycositeAltas\test.csv --adapter-dir D:\wbworkspace\LoRA-N-Gly\checkpoints\N-linked\ESM-150M\checkpoint --recheck-inference
 
+# W1 三方法对拍：201 个候选位点跑作者 150M adapter，再与 35M OOF 和 sequon 规则合并
+D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\run_esm150_candidate_inference.py --candidates reports\candidates_30_lora.csv --adapter-dir D:\wbworkspace\LoRA-N-Gly\checkpoints\N-linked\ESM-150M\checkpoint --base-model-revision a695f6045e2e32885fa60af20c13cb35398ce30c --attention-backend sdpa --out-dir reports\esm150_w1_candidates_v0
+D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\run_w1_three_method.py --out-dir reports\w1_three_method_v0
+D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\check_w1_three_method.py --comparison-dir reports\w1_three_method_v0
+
 # 同步到 GitHub：本机 git push 通道不通，发布走 REST API（需要 classic PAT 的 repo scope）
 # 先把 token 写入 %USERPROFILE%\.github-token，或设置 GH_TOKEN；别把 token 写进仓库
 D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\publish_github.py --private
@@ -63,6 +68,13 @@ D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\publish_github.py
 **0.848** 的差为 **+0.000348842859**。评估覆盖 2554 行、939 个蛋白和 963 条唯一序列，
 保留 46 条非 sequon 行，没有截断或滑窗。独立 checker 启用推理复核后核对 16 行，
 共 33294 条断言通过。
+
+W1 三方法对拍在同一批 201 个候选位点上保留了 71 个仅含 `ECO:0000255` 的推断阳性，
+但所有指标只使用 130 行诚实子集。ESM-2 35M 的 leave-one-protein-out MCC 为
+**0.331975**，作者 150M adapter 的全序列 MCC 为 **-0.232614**，sequon 规则固定全判阳性，
+MCC 为 **0.000000**。35M 使用窗口化 OOF，150M 使用全序列 adapter 推理，因此差异不能
+只归因于模型大小。对拍另生成 10 个待人工复核的不一致位点，状态保持
+`PENDING_MANUAL_REVIEW`。
 
 发布脚本会把本地历史逐 commit 重放到远端，并校验 commit SHA 与 tree SHA 都与本地一致，
 不一致就报错退出；空仓库的首次提交由脚本自己播种。详见 `REPRO.md` 第四节。
