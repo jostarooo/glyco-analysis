@@ -1391,6 +1391,7 @@ def build_manifest(
     metrics: Mapping[str, Any],
     review: Sequence[ReviewRow],
     artifact_hashes: Mapping[str, Mapping[str, object]],
+    source_state: Mapping[str, object],
 ) -> dict[str, object]:
     selected_ids = [
         f"{item.compared.site.key[0]}:{item.compared.site.key[1]}" for item in review
@@ -1407,7 +1408,7 @@ def build_manifest(
     return {
         "schema": SCHEMA,
         "status": "complete",
-        "source": _git_state(),
+        "source": dict(source_state),
         "inputs": {
             "candidates": {
                 **path_record(config.candidates),
@@ -1499,6 +1500,7 @@ def write_comparison_run(
     out_dir = config.out_dir.resolve()
     if out_dir.exists():
         raise ComparisonError(f"output directory already exists: {out_dir}")
+    source_state = _git_state()
     parent = out_dir.parent
     parent.mkdir(parents=True, exist_ok=True)
     staging = parent / f".{out_dir.name}.tmp-{os.getpid()}-{uuid.uuid4().hex}"
@@ -1551,6 +1553,7 @@ def write_comparison_run(
             metric_payload,
             review,
             artifact_hashes,
+            source_state,
         )
         write_text(staging / "manifest.json", json_text(manifest))
         os.replace(staging, out_dir)

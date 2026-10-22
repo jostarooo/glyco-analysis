@@ -592,6 +592,30 @@ class EndToEndTests(unittest.TestCase):
             set(runner.STRATA_ORDER),
         )
 
+    def test_git_state_is_captured_before_staging_directory_exists(self):
+        with SyntheticRun() as fixture:
+            def capture_clean_state():
+                self.assertEqual(
+                    list(fixture.root.glob(".comparison.tmp-*")),
+                    [],
+                )
+                return {"git_commit": "0" * 40, "git_dirty": False}
+
+            with fixture.patch_expected_hashes(), mock.patch.object(
+                runner,
+                "_git_state",
+                side_effect=capture_clean_state,
+            ):
+                fixture.generate()
+
+            manifest = json.loads(
+                (fixture.out_dir / "manifest.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual(
+                manifest["source"],
+                {"git_commit": "0" * 40, "git_dirty": False},
+            )
+
     def test_35m_key_boundary_rejects_inferred_key(self):
         with SyntheticRun() as fixture:
             fixture.mutate_35_to_inferred_key()
