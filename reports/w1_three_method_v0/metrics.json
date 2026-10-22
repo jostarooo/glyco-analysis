@@ -1,0 +1,156 @@
+{
+  "benchmark": {
+    "controls_are_not_confirmed_negatives": true,
+    "evaluation_rows": 130,
+    "experimental_positive": 82,
+    "id": "experimental_positive_vs_unannotated_control",
+    "inferred_display_only": 71,
+    "inferred_excluded_from_metrics": true,
+    "label_source": "UniProt N-linked annotation",
+    "proteins": 28,
+    "source_rows": 201,
+    "unannotated_control": 48
+  },
+  "benchmark_reference": {
+    "confusion": {
+      "fn": 0,
+      "fp": 0,
+      "tn": 48,
+      "tp": 82
+    },
+    "evaluation_rows": 130,
+    "id": "uniprot_annotation",
+    "independent_of_benchmark": false,
+    "mcc_defined": true,
+    "metrics": {
+      "control_specificity": 1.0,
+      "mcc": 1.0,
+      "positive_precision": 1.0,
+      "positive_recall": 1.0,
+      "roc_auc": null,
+      "weak_label_accuracy": 1.0
+    },
+    "null_reasons": {
+      "roc_auc": "method_has_no_continuous_score"
+    },
+    "role": "label_source_and_reference_ceiling"
+  },
+  "comparability_caveat": "35M scores are windowed leave-one-protein-out OOF estimates; 150M scores are full-sequence author-adapter inference. A difference cannot be attributed to model size alone.",
+  "disagreement_counts": {
+    "all_agree": 58,
+    "both_models_call_unannotated_control_positive": 19,
+    "both_models_oppose_experimental_positive": 9,
+    "esm150_calls_unannotated_control_positive": 29,
+    "esm150_opposes_experimental_positive": 2,
+    "esm35_calls_unannotated_control_positive": 0,
+    "esm35_opposes_experimental_positive": 13
+  },
+  "display_only": {
+    "esm150_predicted_positive": 63,
+    "esm35": "not_available_by_construction",
+    "inferred_positive_rows": 71,
+    "uniprot_annotation_positive": 71
+  },
+  "methods": {
+    "esm150_author_adapter": {
+      "confusion": {
+        "fn": 11,
+        "fp": 48,
+        "tn": 0,
+        "tp": 71
+      },
+      "evaluation_rows": 130,
+      "independent_of_benchmark": true,
+      "mcc_defined": true,
+      "metrics": {
+        "control_specificity": 0.0,
+        "mcc": -0.2326143775812488,
+        "positive_precision": 0.5966386554621849,
+        "positive_recall": 0.8658536585365854,
+        "roc_auc": 0.618140243902439,
+        "weak_label_accuracy": 0.5461538461538461
+      },
+      "null_reasons": {},
+      "prediction_rule": "logit_positive > logit_negative",
+      "score_kind": "probability"
+    },
+    "esm35_oof": {
+      "confusion": {
+        "fn": 22,
+        "fp": 19,
+        "tn": 29,
+        "tp": 60
+      },
+      "evaluation_rows": 130,
+      "independent_of_benchmark": true,
+      "mcc_defined": true,
+      "metrics": {
+        "control_specificity": 0.6041666666666666,
+        "mcc": 0.33197492126736816,
+        "positive_precision": 0.759493670886076,
+        "positive_recall": 0.7317073170731707,
+        "roc_auc": 0.7560975609756098,
+        "weak_label_accuracy": 0.6846153846153846
+      },
+      "null_reasons": {},
+      "prediction_rule": "stored probability >= 0.5",
+      "score_kind": "probability"
+    },
+    "sequon_rule": {
+      "confusion": {
+        "fn": 0,
+        "fp": 48,
+        "tn": 0,
+        "tp": 82
+      },
+      "evaluation_rows": 130,
+      "independent_of_benchmark": true,
+      "mcc_defined": false,
+      "metrics": {
+        "control_specificity": 0.0,
+        "mcc": 0.0,
+        "positive_precision": 0.6307692307692307,
+        "positive_recall": 1.0,
+        "roc_auc": null,
+        "weak_label_accuracy": 0.6307692307692307
+      },
+      "null_reasons": {
+        "roc_auc": "method_has_no_continuous_score"
+      },
+      "prediction_rule": "always positive; every row is an N-X-S/T sequon",
+      "score_kind": "fixed_binary"
+    }
+  },
+  "review_policy": {
+    "fill_policy": "remaining_honest_disagreements_by_global_confidence",
+    "limit": 10,
+    "pool": "honest_130",
+    "selected_row_ids": [
+      "P04114:2982",
+      "Q6UWL2:470",
+      "Q8TAV3:177",
+      "P04114:3358",
+      "Q6UWL2:503",
+      "P04114:3465",
+      "Q6UWL2:542",
+      "P19827:285",
+      "P04114:185",
+      "Q6UWL2:308"
+    ],
+    "strata_order": [
+      "both_models_oppose_experimental_positive",
+      "both_models_call_unannotated_control_positive",
+      "esm35_opposes_experimental_positive",
+      "esm150_opposes_experimental_positive",
+      "esm35_calls_unannotated_control_positive",
+      "esm150_calls_unannotated_control_positive"
+    ],
+    "version": "w1-disagreement-v1",
+    "within_stratum_sort": [
+      "ranking_confidence_desc",
+      "accession_asc",
+      "pos_asc"
+    ]
+  },
+  "schema": "glyco.w1-three-method/v1"
+}

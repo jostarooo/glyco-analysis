@@ -1,0 +1,181 @@
+{
+  "artifacts": {
+    "comparison.csv": {
+      "bytes": 40015,
+      "sha256": "26F8042F3A3E8475F28DDCDD154C23264E570749E3FA6F456DAB146DEC94F85B"
+    },
+    "metrics.json": {
+      "bytes": 4547,
+      "sha256": "22C11FD5F6A14AC24667CD6F8C0C2FC3F12FB62E085B892B63112EF746E0A713"
+    },
+    "report.md": {
+      "bytes": 3604,
+      "sha256": "AA1BE8AB1E0A38D552A6B4F31BAB6F21C7BEC30CD506C83FF3B8FA80CB37A4D9"
+    },
+    "review_top10.csv": {
+      "bytes": 6144,
+      "sha256": "872DBD927E6C85FABAD814132DC35A4BD5878753CF221F4E0F074E38C4100D8A"
+    }
+  },
+  "author_replay_prediction_input": false,
+  "benchmark": {
+    "controls_are_not_confirmed_negatives": true,
+    "evaluation_rows": 130,
+    "experimental_positive": 82,
+    "id": "experimental_positive_vs_unannotated_control",
+    "inferred_display_only": 71,
+    "inferred_excluded_from_metrics": true,
+    "label_source": "UniProt N-linked annotation",
+    "p13611_only_inferred": true,
+    "proteins": 28,
+    "source_rows": 201,
+    "unannotated_control": 48
+  },
+  "comparability_caveat": "35M scores are windowed leave-one-protein-out OOF estimates; 150M scores are full-sequence author-adapter inference. A difference cannot be attributed to model size alone.",
+  "comparison": {
+    "display_only": 71,
+    "evaluated": 130,
+    "rows": 201
+  },
+  "esm150_inference_manifest_sha256": "62EE1FB69D93A83FABB49F43845A00FF9C56F818EBF2CD84125BD1421A024337",
+  "inputs": {
+    "candidates": {
+      "bytes": 23482,
+      "evidence_counts": {
+        "experimental_positive": 82,
+        "inferred_positive": 71,
+        "unannotated_control": 48
+      },
+      "path": "reports/candidates_30.csv",
+      "proteins": 29,
+      "rows": 201,
+      "sha256": "A584C3814226B7287807676F65D5CFFE2F5D47A53BC00476A4B9945CB0719F1C"
+    },
+    "esm150": {
+      "manifest.json": {
+        "bytes": 3174,
+        "path": "reports/esm150_w1_candidates_v0/manifest.json",
+        "sha256": "62EE1FB69D93A83FABB49F43845A00FF9C56F818EBF2CD84125BD1421A024337"
+      },
+      "predictions.csv": {
+        "bytes": 36074,
+        "path": "reports/esm150_w1_candidates_v0/predictions.csv",
+        "sha256": "C0706E87401CAA80EDE49238D8FFC0E3D2058B5C4920A5E1CC3B490F779BC8F0"
+      },
+      "report.md": {
+        "bytes": 1531,
+        "path": "reports/esm150_w1_candidates_v0/report.md",
+        "sha256": "F809D146ACE1EFE29C2054B3D545BB9993C8C77171F75105B673FBADD2695914"
+      },
+      "run_dir": {
+        "path": "reports/esm150_w1_candidates_v0"
+      }
+    },
+    "esm35": {
+      "manifest.json": {
+        "bytes": 3900,
+        "path": "reports/esm35_linear_probe_v0/manifest.json",
+        "sha256": "927606335B13157BB8BBEEB3D790D0BB9AD649992D825BEEC3F4A53CE0697D9F"
+      },
+      "metrics.json": {
+        "bytes": 1079,
+        "path": "reports/esm35_linear_probe_v0/metrics.json",
+        "sha256": "D09CF277944EACFEF082A2A07CCE8DD4F2225C424285A01F4B895160FA14AD61"
+      },
+      "predictions.csv": {
+        "bytes": 9980,
+        "path": "reports/esm35_linear_probe_v0/predictions.csv",
+        "sha256": "6AE04C4C908BCC67A57E579C6402540D7E598A4E206387155AD6FBA94385ECA7"
+      },
+      "run_dir": {
+        "path": "reports/esm35_linear_probe_v0"
+      }
+    }
+  },
+  "methods": {
+    "esm150_author_adapter": {
+      "independent_of_benchmark": true,
+      "input_context": "full sequence",
+      "model": "facebook/esm2_t30_150M_UR50D + author adapter",
+      "prediction_rule": "logit_positive > logit_negative",
+      "source": {
+        "bytes": 36074,
+        "path": "reports/esm150_w1_candidates_v0/predictions.csv",
+        "sha256": "C0706E87401CAA80EDE49238D8FFC0E3D2058B5C4920A5E1CC3B490F779BC8F0"
+      }
+    },
+    "esm35_oof": {
+      "independent_of_benchmark": true,
+      "prediction_rule": "stored probability >= 0.5",
+      "source": {
+        "bytes": 9980,
+        "path": "reports/esm35_linear_probe_v0/predictions.csv",
+        "sha256": "6AE04C4C908BCC67A57E579C6402540D7E598A4E206387155AD6FBA94385ECA7"
+      },
+      "split": "leave_one_protein_out"
+    },
+    "sequon_rule": {
+      "independent_of_benchmark": true,
+      "prediction_rule": "always positive for the 201-sequon table",
+      "source": "candidates_30.csv sequon column"
+    }
+  },
+  "metric_summary": {
+    "esm150_author_adapter": {
+      "evaluation_rows": 130,
+      "mcc": -0.2326143775812488,
+      "mcc_defined": true,
+      "roc_auc": 0.618140243902439
+    },
+    "esm35_oof": {
+      "evaluation_rows": 130,
+      "mcc": 0.33197492126736816,
+      "mcc_defined": true,
+      "roc_auc": 0.7560975609756098
+    },
+    "sequon_rule": {
+      "evaluation_rows": 130,
+      "mcc": 0.0,
+      "mcc_defined": false,
+      "roc_auc": null
+    }
+  },
+  "no_author_replay_prediction_input": true,
+  "review": {
+    "fill_policy": "remaining_honest_disagreements_by_global_confidence",
+    "limit": 10,
+    "policy_version": "w1-disagreement-v1",
+    "pool": "honest_130",
+    "selected_row_ids": [
+      "P04114:2982",
+      "Q6UWL2:470",
+      "Q8TAV3:177",
+      "P04114:3358",
+      "Q6UWL2:503",
+      "P04114:3465",
+      "Q6UWL2:542",
+      "P19827:285",
+      "P04114:185",
+      "Q6UWL2:308"
+    ],
+    "strata_order": [
+      "both_models_oppose_experimental_positive",
+      "both_models_call_unannotated_control_positive",
+      "esm35_opposes_experimental_positive",
+      "esm150_opposes_experimental_positive",
+      "esm35_calls_unannotated_control_positive",
+      "esm150_calls_unannotated_control_positive"
+    ],
+    "within_stratum_sort": [
+      "ranking_confidence_desc",
+      "accession_asc",
+      "pos_asc"
+    ]
+  },
+  "schema": "glyco.w1-three-method/v1",
+  "source": {
+    "git_commit": "d1d33d58467274515505b2c0295435a6fa800ac4",
+    "git_dirty": false
+  },
+  "status": "complete"
+}
