@@ -468,6 +468,49 @@ class SyntheticRun:
         }
         write_json(self.esm35 / "manifest.json", self.esm35_manifest)
 
+    def apply_manual_review(
+        self,
+        statuses: dict[str, str],
+        notes: dict[str, str],
+        *,
+        base_commit: str,
+        reviewed_at: str,
+    ) -> None:
+        review_path = self.out_dir / "review_top10.csv"
+        rows = checker.read_csv_exact(review_path, checker.REVIEW_COLUMNS)
+        for row in rows:
+            row_id = row["row_id"]
+            row["review_status"] = statuses[row_id]
+            row["reviewer_note"] = notes[row_id]
+        write_csv(review_path, checker.REVIEW_COLUMNS, rows)
+
+        report_path = self.out_dir / "report.md"
+        statuses_in_report = sorted({row["review_status"] for row in rows})
+        report_path.write_text(
+            report_path.read_text(encoding="utf-8")
+            + "\nManual review statuses: "
+            + ", ".join(statuses_in_report)
+            + "\n",
+            encoding="utf-8",
+        )
+
+        manifest_path = self.out_dir / "manifest.json"
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        manifest["manual_review"] = {
+            "base_commit": base_commit,
+            "reviewed_at": reviewed_at,
+            "status_counts": checker.manual_review_counts(rows),
+        }
+        for name, path in (
+            ("review_top10.csv", review_path),
+            ("report.md", report_path),
+        ):
+            manifest["artifacts"][name] = {
+                "bytes": path.stat().st_size,
+                "sha256": checker.sha256_file(path),
+            }
+        write_json(manifest_path, manifest)
+
 
 class MetricTests(unittest.TestCase):
     def test_confusion_mcc_and_undefined_mcc(self):
@@ -629,6 +672,100 @@ class EndToEndTests(unittest.TestCase):
 
 
 class CheckerHelperTests(unittest.TestCase):
+    def test_manual_review_status_and_note_contract(self):
+        checker.validate_review_outcome("PENDING_MANUAL_REVIEW", "")
+        for status in checker.REVIEW_STATUS_VALUES[1:]:
+            checker.validate_review_outcome(status, "independent evidence")
+        with self.assertRaisesRegex(checker.CheckError, "pending manual review"):
+            checker.validate_review_outcome("PENDING_MANUAL_REVIEW", "note")
+        for status in checker.REVIEW_STATUS_VALUES[1:]:
+            with self.assertRaisesRegex(checker.CheckError, "empty reviewer note"):
+                checker.validate_review_outcome(status, "   ")
+        with self.assertRaisesRegex(checker.CheckError, "unknown manual review"):
+            checker.validate_review_outcome("REVIEWED", "note")
+
+    def test_manual_review_summary_must_match_status_counts(self):
+        rows = [
+            {
+                "review_status": "SUPPORTED_EXPERIMENTAL_POSITIVE",
+                "reviewer_note": "curated evidence",
+            }
+            for _ in range(6)
+        ] + [
+            {
+                "review_status": "MISSED_ANNOTATION_CANDIDATE",
+                "reviewer_note": "annotation candidate",
+            }
+            for _ in range(3)
+        ] + [
+            {
+                "review_status": "NO_INDEPENDENT_EVIDENCE_FOUND",
+                "reviewer_note": "no evidence found",
+            }
+        ]
+        manifest = {
+            "manual_review": {
+                "base_commit": "a" * 40,
+                "reviewed_at": "2026-10-23",
+                "status_counts": checker.manual_review_counts(rows),
+            }
+        }
+        checker.verify_manual_review(manifest, rows)
+        manifest["manual_review"]["status_counts"][
+            "MISSED_ANNOTATION_CANDIDATE"
+        ] = 2
+        with self.assertRaisesRegex(checker.CheckError, "status counts mismatch"):
+            checker.verify_manual_review(manifest, rows)
+
+    def test_reviewed_statuses_pass_end_to_end_checker(self):
+        with SyntheticRun() as fixture:
+            with fixture.patch_expected_hashes():
+                fixture.generate()
+                review = checker.read_csv_exact(
+                    fixture.out_dir / "review_top10.csv",
+                    checker.REVIEW_COLUMNS,
+                )
+                statuses = {
+                    row["row_id"]: "SUPPORTED_EXPERIMENTAL_POSITIVE"
+                    for row in review
+                }
+                notes = {
+                    row_id: f"independent evidence for {row_id}"
+                    for row_id in statuses
+                }
+                fixture.apply_manual_review(
+                    statuses,
+                    notes,
+                    base_commit="b" * 40,
+                    reviewed_at="2026-10-23",
+                )
+                stdout = io.StringIO()
+                with redirect_stdout(stdout):
+                    status = checker.main(
+                        [
+                            "--comparison-dir",
+                            str(fixture.out_dir),
+                            "--candidates",
+                            str(fixture.candidates),
+                            "--candidates-lora",
+                            str(fixture.candidates_lora),
+                            "--esm35-run-dir",
+                            str(fixture.esm35),
+                            "--esm150-run-dir",
+                            str(fixture.esm150),
+                            "--adapter-dir",
+                            str(fixture.adapter),
+                            "--compat-path",
+                            str(fixture.compat),
+                        ]
+                    )
+        self.assertEqual(status, 0, stdout.getvalue())
+        self.assertIn('"status": "PASS"', stdout.getvalue())
+        self.assertIn(
+            '"SUPPORTED_EXPERIMENTAL_POSITIVE": 10',
+            stdout.getvalue(),
+        )
+
     def test_artifact_hash_tampering_is_detected(self):
         with tempfile.TemporaryDirectory() as temporary:
             run_dir = Path(temporary)

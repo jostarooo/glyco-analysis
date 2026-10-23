@@ -159,6 +159,15 @@ REVIEW_COLUMNS = (
     "review_status",
     "reviewer_note",
 )
+REVIEW_STATUS_VALUES = (
+    "PENDING_MANUAL_REVIEW",
+    "SUPPORTED_EXPERIMENTAL_POSITIVE",
+    "MISSED_ANNOTATION_CANDIDATE",
+    "NO_INDEPENDENT_EVIDENCE_FOUND",
+)
+REVIEW_STATUS_SET = frozenset(REVIEW_STATUS_VALUES)
+MANUAL_REVIEW_DATE = re.compile(r"\d{4}-\d{2}-\d{2}\Z")
+MANUAL_REVIEW_KEYS = frozenset({"base_commit", "reviewed_at", "status_counts"})
 ARTIFACT_NAMES = (
     "comparison.csv",
     "review_top10.csv",
@@ -941,6 +950,16 @@ def _manual_review_question(row: Mapping[str, str]) -> str:
     )
 
 
+def validate_review_outcome(status: str, note: str) -> None:
+    if status not in REVIEW_STATUS_SET:
+        raise CheckError(f"unknown manual review status: {status!r}")
+    if status == "PENDING_MANUAL_REVIEW":
+        if note != "":
+            raise CheckError("pending manual review row has a reviewer note")
+    elif not note.strip():
+        raise CheckError(f"reviewed row has an empty reviewer note: {status}")
+
+
 def expected_review_row(
     rank: int,
     stratum: str,
@@ -986,6 +1005,53 @@ def expected_review_row(
         "review_status": "PENDING_MANUAL_REVIEW",
         "reviewer_note": "",
     }
+
+
+def manual_review_counts(review_rows: Sequence[Mapping[str, str]]) -> dict[str, int]:
+    counts = {status: 0 for status in REVIEW_STATUS_VALUES}
+    for row in review_rows:
+        status = row["review_status"]
+        if status not in REVIEW_STATUS_SET:
+            raise CheckError(f"unknown manual review status: {status!r}")
+        counts[status] += 1
+    return {status: count for status, count in counts.items() if count}
+
+
+def verify_manual_review(
+    manifest: Mapping[str, Any],
+    review_rows: Sequence[Mapping[str, str]],
+) -> None:
+    counts = manual_review_counts(review_rows)
+    summary = manifest.get("manual_review")
+    if counts == {"PENDING_MANUAL_REVIEW": REVIEW_LIMIT} and summary is None:
+        return
+    if not isinstance(summary, Mapping):
+        raise CheckError("manifest missing manual review summary")
+    if set(summary) != MANUAL_REVIEW_KEYS:
+        raise CheckError("manifest manual review keys mismatch")
+    base_commit = summary.get("base_commit")
+    if not isinstance(base_commit, str) or not re.fullmatch(
+        r"[0-9a-f]{40}",
+        base_commit,
+    ):
+        raise CheckError("manifest manual review base commit is invalid")
+    reviewed_at = summary.get("reviewed_at")
+    if not isinstance(reviewed_at, str) or not MANUAL_REVIEW_DATE.fullmatch(
+        reviewed_at
+    ):
+        raise CheckError("manifest manual review date is invalid")
+    status_counts = summary.get("status_counts")
+    if not isinstance(status_counts, Mapping):
+        raise CheckError("manifest manual review status counts are invalid")
+    parsed_counts: dict[str, int] = {}
+    for status, count in status_counts.items():
+        if status not in REVIEW_STATUS_SET:
+            raise CheckError(f"manifest has unknown manual review status: {status!r}")
+        if isinstance(count, bool) or not isinstance(count, int) or count < 0:
+            raise CheckError("manifest manual review status count is invalid")
+        parsed_counts[status] = count
+    if parsed_counts != counts:
+        raise CheckError("manifest manual review status counts mismatch")
 
 
 def recompute_metrics(rows: Sequence[Mapping[str, str]]) -> dict[str, object]:
@@ -1208,13 +1274,20 @@ def verify_comparison(
     for rank, ((stratum, row_id), actual) in enumerate(zip(selected, review), start=1):
         source = by_id[row_id]
         expected = expected_review_row(rank, stratum, source)
-        if actual != expected:
-            differences = [
-                name for name in REVIEW_COLUMNS if actual.get(name) != expected[name]
-            ]
+        differences = [
+            name
+            for name in REVIEW_COLUMNS
+            if name not in {"review_status", "reviewer_note"}
+            and actual.get(name) != expected[name]
+        ]
+        if differences:
             raise CheckError(
                 f"review row mismatch at rank {rank}: {differences[:8]}"
             )
+        validate_review_outcome(
+            actual["review_status"],
+            actual["reviewer_note"],
+        )
         ranks[row_id] = str(rank)
     if len(ranks) != REVIEW_LIMIT:
         raise CheckError("review row IDs are not unique")
@@ -1235,6 +1308,7 @@ def verify_comparison(
     }
     if manifest_review != expected_manifest_review:
         raise CheckError("manifest review policy/selection mismatch")
+    verify_manual_review(manifest, review)
 
     if manifest.get("esm150_inference_manifest_sha256") is None:
         raise CheckError("manifest missing 150M inference-manifest hash")
@@ -1291,8 +1365,12 @@ def verify_comparison(
     for _, row_id in selected:
         if row_id not in report:
             raise CheckError(f"report omits selected row: {row_id}")
+    for row in review:
+        status = row["review_status"]
+        if status != "PENDING_MANUAL_REVIEW" and status not in report:
+            raise CheckError(f"report omits manual review status: {status}")
 
-    return comparison, metrics, manifest
+    return comparison, metrics, manifest, review
 
 
 def verify_input_provenance(
@@ -1382,7 +1460,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             config.candidates_lora,
             config.logit_tolerance,
         )
-        _, metrics, manifest = verify_comparison(
+        _, metrics, manifest, review = verify_comparison(
             config.comparison_dir,
             sites,
             votes35,
@@ -1407,6 +1485,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                 "evaluated_rows": 130,
                 "inferred_display_only": 71,
                 "review_rows": 10,
+                "manual_review_status_counts": manual_review_counts(review),
                 "metric_methods": sorted(metrics["methods"]),
                 "inference_recheck": False,
             },
