@@ -9,12 +9,12 @@
       "sha256": "22C11FD5F6A14AC24667CD6F8C0C2FC3F12FB62E085B892B63112EF746E0A713"
     },
     "report.md": {
-      "bytes": 3604,
-      "sha256": "AA1BE8AB1E0A38D552A6B4F31BAB6F21C7BEC30CD506C83FF3B8FA80CB37A4D9"
+      "bytes": 5235,
+      "sha256": "11BBF9A654871454728A112AC318452F5A2B77590BC9D1C256561F6137AAF0E4"
     },
     "review_top10.csv": {
-      "bytes": 6144,
-      "sha256": "872DBD927E6C85FABAD814132DC35A4BD5878753CF221F4E0F074E38C4100D8A"
+      "bytes": 8088,
+      "sha256": "936BB2DB398027E4CFC04F465EBED6CBAC30478FA9884589F118B8D9F2824780"
     }
   },
   "author_replay_prediction_input": false,
@@ -90,6 +90,15 @@
       "run_dir": {
         "path": "reports/esm35_linear_probe_v0"
       }
+    }
+  },
+  "manual_review": {
+    "base_commit": "eb42aaedd79ef498620d5534d67fe45236d55afd",
+    "reviewed_at": "2026-10-23",
+    "status_counts": {
+      "MISSED_ANNOTATION_CANDIDATE": 3,
+      "NO_INDEPENDENT_EVIDENCE_FOUND": 1,
+      "SUPPORTED_EXPERIMENTAL_POSITIVE": 6
     }
   },
   "methods": {

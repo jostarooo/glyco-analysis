@@ -193,6 +193,10 @@ $adapter = 'D:\wbworkspace\LoRA-N-Gly\checkpoints\N-linked\ESM-150M\checkpoint'
   --comparison-dir reports\w1_three_method_v0
 ```
 
+重跑生成器会把 `review_top10.csv` 的复核状态重置为 `PENDING_MANUAL_REVIEW`。2026-10-23
+的复核结果已提交在 `reports/w1_three_method_v0/`，复现该结果时不要覆盖已提交的
+`review_top10.csv` 和 `report.md`，只运行 checker。
+
 实测结果如下：
 
 | 方法 | 判定规则 | TP / FP / TN / FN | MCC | ROC AUC |
@@ -207,13 +211,14 @@ revision、adapter SHA256、376 个 adapter tensor、FP32、batch size 1、完�
 `git_dirty=false`。
 
 不一致位点按六个方向分层，生成 `review_top10.csv`。10 行在生成时都是
-`PENDING_MANUAL_REVIEW`，需要后续查独立文献或 curator 证据。完整表、指标和哈希见
+`PENDING_MANUAL_REVIEW`。2026-10-23 完成人工复核：6 个实验阳性得到独立证据支持，
+3 个未标注对照成为漏注释候选，1 个未找到独立证据。逐位点证据写入
+`review_top10.csv` 的 `reviewer_note`，评估标签和指标保持不变。完整表、指标和哈希见
 `reports/w1_three_method_v0/`。
 
 当前 checker 核对输入哈希、201 行连接、130 行指标、10 行复核选择与产物哈希，
 返回 `status=PASS`。这个 checker 没有二次重建 201 行 GPU logits，因此
-`inference_recheck=false`。完整默认测试为 53 项通过，关闭 GPU 门控时 52 项通过、
-1 项跳过。
+`inference_recheck=false`。完整默认测试为 56 项，其中 55 项通过、1 项 GPU 门控跳过。
 
 ### GitHub 发布
 
@@ -251,3 +256,4 @@ https://github.com/jostarooo/glyco-analysis （private）的 `main` 与本地最
 | 2026-10-20 | 跑通 F1 ESM-2 35M 冻结主干线性探针 | 13 个单元测试通过；独立 checker 重嵌入并核对 4021 条断言；MCC 0.331975，28 蛋白重采样区间 [0.060051, 0.602824] | ✅ 通过；产物见 `reports/esm35_linear_probe_v0/` |
 | 2026-10-21 | 复算作者 ESM-2 150M LoRA 检查点 | 2554 行全量推理；checker 启用 16 行推理复核并通过 33294 条断言；MCC 0.848348842859，论文值 0.848，差 +0.000348842859 | ✅ 通过；产物见 `reports/esm150_lora_repro_v0/` |
 | 2026-10-22 | W1 三方法对拍与 10 个不一致位点选取 | 201 行推理；130 行指标；71 行仅展示；53 项测试通过、1 项 GPU 门控跳过；checker 返回 PASS | ✅ 通过；产物见 `reports/w1_three_method_v0/` |
+| 2026-10-23 | W1 10 个不一致位点人工复核 | GlyGen 缓存证据逐条核对；6 个实验阳性得到独立支持、3 个漏注释候选、1 个未找到独立证据；checker 返回 PASS；56 项测试中 55 项通过、1 项 GPU 门控跳过 | ✅ 通过；证据写入 `review_top10.csv` 与 `report.md` |
