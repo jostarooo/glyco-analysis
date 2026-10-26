@@ -1,40 +1,42 @@
-# W1 ESM-2 150M candidate inference
+# W1 ESM-2 150M 候选位点推理报告
 
-## Scope
+## 结论
 
-This artifact applies the pinned author PEFT adapter to every row of the 201-row W1 candidate table. The model receives the full protein sequence, emits two logits at the target residue, and predicts by `argmax(logits)`.
+本产物使用固定的作者 PEFT 参数高效微调适配器，对 W1 候选表的 201 行逐行推理。模型读取完整蛋白序列，在目标残基输出两个分数（`logit`），并按 `argmax(logits)` 得到预测标签。
 
-The copied `label` column is retained for traceability only. It is not a model input, and this run contains no benchmark or inferred-vs-experimental performance metrics.
+复制过来的 `label` 列只用于追溯，不进入模型输入。本次推理不计算基准评测指标，也不比较推断证据与实验证据的表现。
 
-## Input
+## 输入
 
-- Candidates: `D:\wbworkspace\glyco-analysis\reports\candidates_30_lora.csv`
-- Candidate SHA256: `DBD51D28ABC0B0C74E78496E0A8F54CEBAA1C29F274B6E6B2716E39631A09FAB`
-- Rows: `201`
-- Accessions: `29`
-- Unique sequences: `29`
-- Label counts: `1=153`, `0=48`
-- Ordered-key SHA256: `CCB02FF550D1CC1D9046F83A392E1E473CBE99ED4FD46D8F4FC2F4581BB2963A`
+- 候选表：`06-核心数据\candidates_30_lora.csv`
+- 候选表 SHA256：`DBD51D28ABC0B0C74E78496E0A8F54CEBAA1C29F274B6E6B2716E39631A09FAB`
+- 行数：`201`
+- 蛋白数：`29`
+- 唯一序列数：`29`
+- 标签计数：`1=153`，`0=48`
+- 有序键 SHA256：`CCB02FF550D1CC1D9046F83A392E1E473CBE99ED4FD46D8F4FC2F4581BB2963A`
 
-## Pinned model
+## 固定模型
 
-- Adapter SHA256: `A4A5B486862724F459F60E8343AC135C340305D5A0F2E936EB5AD1DFD34788D4`
-- Adapter tensors: `376`
-- Base model: `facebook/esm2_t30_150M_UR50D`
-- Base revision: `a695f6045e2e32885fa60af20c13cb35398ce30c`
-- Base weights SHA256: `C3F1DA8AEA53BDDD32C246C86168C23B9FD72341FB9DB9A94436F855F5053566`
+- 适配器 SHA256：`A4A5B486862724F459F60E8343AC135C340305D5A0F2E936EB5AD1DFD34788D4`
+- 适配器张量数：`376`
+- 基座模型：`facebook/esm2_t30_150M_UR50D`
+- 基座版本（`revision`）：`a695f6045e2e32885fa60af20c13cb35398ce30c`
+- 基座权重 SHA256：`C3F1DA8AEA53BDDD32C246C86168C23B9FD72341FB9DB9A94436F855F5053566`
 
-## Inference settings
+## 推理设置
 
-- Precision: FP32
-- Batch size: 1
-- Sequence coverage: full sequence
-- Truncation: none
-- Windowing: none
-- Attention backend: `sdpa`
-- Decision rule: positive iff `logit_positive > logit_negative`
-- Encoder forward count: 29, one per unique sequence
+- 精度：FP32
+- 批大小：1
+- 序列覆盖：完整序列
+- 截断：无
+- 滑窗：无
+- 注意力后端：`sdpa`
+- 判定规则：当且仅当 `logit_positive > logit_negative` 时判为阳性
+- 编码器前向次数：29，每条唯一序列执行一次
 
-## Completion
+## 完成标记
 
-`predictions.csv` and this report are hashed into `manifest.json`. The manifest is written last and marks the run complete.
+`predictions.csv` 与本报告都被写入 `manifest.json` 的哈希记录。`manifest.json` 最后写入，并把本次运行标记为完成。
+
+作者适配器只用于本机复现，本交付包不分发模型权重。

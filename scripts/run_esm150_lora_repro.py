@@ -591,61 +591,69 @@ def report_text(
         residue_and_motif(row.sequence, row.position)[2] == 0 for row in rows
     )
     lines = [
-        "# ESM-2 150M LoRA author-checkpoint reproduction",
+        "# ESM-2 150M LoRA 作者检查点复算",
         "",
-        "## Scope",
+        "## 结论",
         "",
-        "The run evaluates every row of the author's `test.csv` in original order. "
-        "No non-canonical or non-sequon rows are removed. The model uses the full "
-        "protein sequence, the author's PEFT adapter, two logits, and `argmax`.",
+        "作者发布的 ESM-2 150M PEFT adapter 在作者 `test.csv` 的全部行上复算，"
+        f"得到 MCC `{metrics['mcc']:.12f}`。论文报告值为 `{REFERENCE_MCC:.3f}`，"
+        f"差值为 `{metrics['mcc_delta_from_reference']:+.12f}`。",
         "",
-        "## Result",
+        "该差值按测量值记录。现有证据不能把差异单独归因到硬件、依赖版本或随机性，"
+        "因此本报告不给出未经实验支持的原因。",
         "",
-        f"- MCC: `{metrics['mcc']:.12f}`",
-        f"- Reference MCC: `{REFERENCE_MCC:.3f}`",
-        f"- Difference from reference: `{metrics['mcc_delta_from_reference']:+.12f}`",
-        f"- Accuracy: `{metrics['accuracy']:.12f}`",
-        f"- Precision: `{metrics['precision']:.12f}`",
-        f"- Recall: `{metrics['recall']:.12f}`",
-        f"- Specificity: `{metrics['specificity']:.12f}`",
-        f"- TP / FP / TN / FN: `{confusion['tp']}` / `{confusion['fp']}` / "
+        "## 运行范围",
+        "",
+        "本次运行按原始顺序评估作者 `test.csv` 的每一行，不删除非 canonical 或非 "
+        "sequon 行。模型读取完整蛋白序列，使用作者 PEFT adapter 输出的两个 logit，"
+        "按 `argmax` 得到预测标签。",
+        "",
+        "## 指标",
+        "",
+        f"- MCC：`{metrics['mcc']:.12f}`",
+        f"- 论文 MCC：`{REFERENCE_MCC:.3f}`",
+        f"- 与论文差值：`{metrics['mcc_delta_from_reference']:+.12f}`",
+        f"- 准确率：`{metrics['accuracy']:.12f}`",
+        f"- 精确率：`{metrics['precision']:.12f}`",
+        f"- 召回率：`{metrics['recall']:.12f}`",
+        f"- 特异度：`{metrics['specificity']:.12f}`",
+        f"- TP / FP / TN / FN：`{confusion['tp']}` / `{confusion['fp']}` / "
         f"`{confusion['tn']}` / `{confusion['fn']}`",
         "",
-        "## Data audit",
+        "## 数据审计",
         "",
-        f"- Rows: `{len(rows)}`",
-        f"- Positives / negatives: `{sum(row.label == 1 for row in rows)}` / "
+        f"- 行数：`{len(rows)}`",
+        f"- 阳性 / 阴性：`{sum(row.label == 1 for row in rows)}` / "
         f"`{sum(row.label == 0 for row in rows)}`",
-        f"- Non-sequon rows retained: `{non_sequon}`",
-        f"- Unique sequences / encoder passes: `{len({row.sequence for row in rows})}`",
-        f"- Longest sequence: `{max(len(row.sequence) for row in rows)}` residues",
-        f"- Attention path: `{attention_backend}` with full-sequence inference",
+        f"- 保留的非 sequon 行：`{non_sequon}`",
+        f"- 唯一序列数 / encoder forward 数：`{len({row.sequence for row in rows})}`",
+        f"- 最长序列：`{max(len(row.sequence) for row in rows)}` aa",
+        f"- 注意力路径：`{attention_backend}`，使用完整序列推理",
         "",
-        "## Compatibility note",
+        "## 兼容性说明",
         "",
-        "The author adapter was saved with an older PEFT layout. The reproduction "
-        f"uses the author-pinned stack `peft {EXPECTED_PEFT_VERSION}` and "
-        f"`transformers {EXPECTED_TRANSFORMERS_VERSION}` through an isolated overlay.",
+        "作者 adapter 使用较旧的 PEFT 布局保存。本次复算通过独立兼容路径加载作者"
+        f"固定的 `peft {EXPECTED_PEFT_VERSION}` 与 "
+        f"`transformers {EXPECTED_TRANSFORMERS_VERSION}`。",
         "",
     ]
     if attention_backend == "sdpa":
         lines.extend(
             [
-                "The `sdpa` path keeps the full sequence and uses PyTorch's "
-                "memory-efficient scaled dot-product attention. It is an execution "
-                "optimization, not a truncation or windowing change; the manifest "
-                "records the selected backend.",
+                "`sdpa` 路径保留完整序列，并使用 PyTorch 的内存高效缩放点积注意力。"
+                "它是执行优化，不改变截断或滑窗口径。`manifest.json` 记录了本次运行"
+                "选择的注意力后端。",
                 "",
             ]
         )
     if load_warnings:
-        lines.extend(["Captured load warnings:", ""])
+        lines.extend(["加载告警：", ""])
         lines.extend(f"- `{warning}`" for warning in load_warnings)
         lines.append("")
     lines.extend(
         [
-            "The difference is reported as measured. Any attribution must be supported "
-            "by the manifest, row predictions, and checker result.",
+            "本报告只陈述实测差值。任何原因归因都必须同时得到 `manifest.json`、"
+            "逐行预测和 checker 结果的证据支持。",
             "",
         ]
     )

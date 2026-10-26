@@ -922,17 +922,17 @@ def compute_metrics(compared: Sequence[ComparedSite]) -> dict[str, object]:
 
     method_metadata = {
         "sequon_rule": {
-            "prediction_rule": "always positive; every row is an N-X-S/T sequon",
+            "prediction_rule": "201 行 sequon 表全部判为阳性",
             "independent_of_benchmark": True,
             "score_kind": "fixed_binary",
         },
         "esm35_oof": {
-            "prediction_rule": "stored probability >= 0.5",
+            "prediction_rule": "已存概率大于等于 0.5",
             "independent_of_benchmark": True,
             "score_kind": "probability",
         },
         "esm150_author_adapter": {
-            "prediction_rule": "logit_positive > logit_negative",
+            "prediction_rule": "正类 logit 大于负类 logit",
             "independent_of_benchmark": True,
             "score_kind": "probability",
         },
@@ -997,9 +997,8 @@ def compute_metrics(compared: Sequence[ComparedSite]) -> dict[str, object]:
         },
         "disagreement_counts": pattern_counts,
         "comparability_caveat": (
-            "35M scores are windowed leave-one-protein-out OOF estimates; "
-            "150M scores are full-sequence author-adapter inference. A difference "
-            "cannot be attributed to model size alone."
+            "35M 使用窗口化留一蛋白 OOF 估计；150M 使用全序列作者 adapter 推理。"
+            "两者的差异不能只归因于模型大小。"
         ),
     }
 
@@ -1055,21 +1054,20 @@ def _review_sort_key(row: ComparedSite) -> tuple[float, str, int]:
 
 def _selection_criteria(stratum: str) -> str:
     return (
-        f"stratum={stratum}; descending max(2*abs(prob-0.5)) among "
-        "models disagreeing with the UniProt label; ties by accession,pos"
+        f"分层={stratum}；在模型判断与 UniProt 标签不一致的样本中，"
+        "按 max(2*abs(prob-0.5)) 降序；并列时按 accession、pos 升序。"
     )
 
 
 def _manual_review_question(site: AnnotationSite) -> str:
     if site.evaluation_label == 1:
         return (
-            "Does independent literature or a curated resource support N-linked "
-            "glycosylation at this site despite the model disagreement?"
+            "尽管模型判断与该位点不一致，是否有独立文献或人工整理资源支持"
+            "该位点发生 N-连接糖基化？"
         )
     return (
-        "Is there a missed UniProt annotation or a plausible biological reason "
-        "for the model-positive call, and does any evidence justify an "
-        "annotation update?"
+        "模型判阳的该位点是否存在漏注释，或有合理的生物学解释？"
+        "现有证据是否足以支持更新注释？"
     )
 
 
@@ -1237,34 +1235,51 @@ def report_text(
 ) -> str:
     benchmark = metrics["benchmark"]
     lines = [
-        "# W1 three-method comparison",
+        "# W1 三方法对拍",
         "",
-        "## Evaluation boundary",
+        "## 结论",
         "",
-        f"- Source candidates: {benchmark['source_rows']} rows.",
+        "三种方法在同一批 201 个候选位点上判定。指标只使用 130 行可诚实评估的样本，"
+        f"其中实验阳性 {benchmark['experimental_positive']} 行、未标注对照 "
+        f"{benchmark['unannotated_control']} 行。仅含推断证据的 "
+        f"{benchmark['inferred_display_only']} 行保留展示，不进入指标分母。",
+        "",
+        "ESM-2 35M 的 MCC 为 `0.331975`，作者 ESM-2 150M adapter 的 MCC 为 "
+        "`-0.232614`，sequon 规则的 MCC 为 `0.000000`。35M 使用窗口化 "
+        "leave-one-protein-out，150M 使用完整序列 adapter 推理，所以两者差异"
+        "同时包含模型规模、训练方式、adapter 和输入上下文差异，不能只归因于"
+        "模型大小。",
+        "",
+        "## 评估边界",
+        "",
+        f"- 候选来源：{benchmark['source_rows']} 行。",
         (
-            f"- Honest metrics population: {benchmark['evaluation_rows']} rows "
-            f"({benchmark['experimental_positive']} experimental positives + "
-            f"{benchmark['unannotated_control']} unannotated controls), "
-            f"spanning {benchmark['proteins']} proteins."
+            f"- 诚实指标池：{benchmark['evaluation_rows']} 行，"
+            f"由 {benchmark['experimental_positive']} 个实验阳性和 "
+            f"{benchmark['unannotated_control']} 个未标注对照组成，"
+            f"覆盖 {benchmark['proteins']} 个蛋白。"
         ),
         (
-            f"- Display-only inferred positives: {benchmark['inferred_display_only']} "
-            "rows. They remain in `comparison.csv` with a blank evaluation label "
-            "and are excluded from every metric denominator."
+            f"- 仅展示的推断阳性：{benchmark['inferred_display_only']} 行。"
+            "这些行保留在 `comparison.csv`，评估标签为空，不进入任何指标分母。"
         ),
-        "- The controls are unannotated sequons, not confirmed biological negatives.",
+        "- 对照是未标注 sequon，不是实验确认的生物学阴性。",
         (
-            "- UniProt N-linked annotation is the benchmark label source and "
-            "reference ceiling, not a method."
+            "- UniProt N-linked 标注是本 benchmark 的标签来源和参考上限，"
+            "不是参与对拍的方法。"
         ),
         "",
-        "## Methods",
+        "## 方法",
         "",
-        "| method | decision rule | MCC | positive recall | control specificity | "
-        "positive precision | weak-label accuracy | ROC AUC |",
+        "| 方法 | 判定规则 | MCC | 阳性召回率 | 未标注对照保持率 | "
+        "阳性精确率 | 弱标签一致率 | ROC AUC |",
         "|---|---|---:|---:|---:|---:|---:|---:|",
     ]
+    method_labels = {
+        "sequon_rule": "sequon 规则",
+        "esm35_oof": "ESM-2 35M OOF",
+        "esm150_author_adapter": "ESM-2 150M 作者 adapter",
+    }
     for method_id in ("sequon_rule", "esm35_oof", "esm150_author_adapter"):
         method = metrics["methods"][method_id]
         values = method["metrics"]
@@ -1272,8 +1287,8 @@ def report_text(
             "| "
             + " | ".join(
                 (
+                    method_labels[method_id],
                     method_id,
-                    str(method["prediction_rule"]),
                     _format_metric(values["mcc"]),
                     _format_metric(values["positive_recall"]),
                     _format_metric(values["control_specificity"]),
@@ -1287,34 +1302,29 @@ def report_text(
     lines.extend(
         [
             "",
-            (
-                "The 35M scores are windowed leave-one-protein-out OOF estimates; "
-                "the 150M scores are full-sequence author-adapter inference. A "
-                "difference therefore combines model size, training procedure, "
-                "adapter, and input-context differences and cannot be attributed "
-                "to model size alone."
-            ),
+            "表中第二行是机器方法标识，保留原文便于对应 CSV 和 JSON 文件。",
             "",
-            "## Disagreement strata",
+            "## 分歧分层",
             "",
         ]
     )
     for name in (*STRATA_ORDER, "all_agree"):
         lines.append(
-            f"- `{name}`: {metrics['disagreement_counts'][name]} honest rows"
+            f"- `{name}`：{metrics['disagreement_counts'][name]} 行诚实样本"
         )
     lines.extend(
         [
             "",
-            "## Review sample",
+            "## 复核样本",
             "",
             (
-                "Selection policy: `w1-disagreement-v1`, honest 130-row pool only, "
-                "round-robin across the six priority strata, then descending "
-                "confidence margin within each stratum and accession,pos ties."
+                "选择策略为 `w1-disagreement-v1`：只从 130 行诚实样本池中选取，"
+                "先在六个优先分层之间轮转，再按每层内的置信度差值降序，"
+                "最后按 accession 与 pos 打破并列。"
             ),
             "",
-            "| rank | row_id | stratum | evidence | ESM-35M | ESM-150M | margin | status |",
+            "| 排名 | 位点 | 分歧分层 | UniProt 证据 | ESM-35M 概率 | "
+            "ESM-150M 概率 | 置信差值 | 复核状态 |",
             "|---:|---|---|---|---:|---:|---:|---|",
         ]
     )
@@ -1327,7 +1337,7 @@ def report_text(
                     str(item.rank),
                     f"{site.key[0]}:{site.key[1]}",
                     item.stratum,
-                    site.raw_evidence or "(none)",
+                    site.raw_evidence or "（无）",
                     _format_metric(item.compared.esm35.probability),
                     _format_metric(item.compared.esm150.probability),
                     _format_metric(item.ranking_confidence),
@@ -1339,14 +1349,17 @@ def report_text(
     lines.extend(
         [
             "",
-            "Selected row IDs: "
+            "入选位点："
             + ", ".join(
                 f"`{item.compared.site.key[0]}:{item.compared.site.key[1]}`"
                 for item in review
             )
             + ".",
             "",
-            "No author-replay prediction input was read or used.",
+            "运行器默认写入 `PENDING_MANUAL_REVIEW`。人工复核时只修改 "
+            "`review_status` 与 `reviewer_note`，原始行序和数值字段保持不变。",
+            "",
+            "本次复核未读取或使用作者回放预测作为输入。",
             "",
         ]
     )
@@ -1443,18 +1456,18 @@ def build_manifest(
         },
         "methods": {
             "sequon_rule": {
-                "prediction_rule": "always positive for the 201-sequon table",
+                "prediction_rule": "201 行 sequon 表全部判为阳性",
                 "source": "candidates_30.csv sequon column",
                 "independent_of_benchmark": True,
             },
             "esm35_oof": {
-                "prediction_rule": "stored probability >= 0.5",
+                "prediction_rule": "已存概率大于等于 0.5",
                 "source": path_record(config.esm35_run_dir / "predictions.csv"),
                 "split": "leave_one_protein_out",
                 "independent_of_benchmark": True,
             },
             "esm150_author_adapter": {
-                "prediction_rule": "logit_positive > logit_negative",
+                "prediction_rule": "正类 logit 大于负类 logit",
                 "source": path_record(config.esm150_run_dir / "predictions.csv"),
                 "model": "facebook/esm2_t30_150M_UR50D + author adapter",
                 "input_context": "full sequence",

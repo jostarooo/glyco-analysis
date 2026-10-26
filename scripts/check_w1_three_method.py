@@ -940,13 +940,12 @@ def select_review_keys(rows: Sequence[Mapping[str, str]]) -> list[tuple[str, str
 def _manual_review_question(row: Mapping[str, str]) -> str:
     if row["evaluation_label"] == "1":
         return (
-            "Does independent literature or a curated resource support N-linked "
-            "glycosylation at this site despite the model disagreement?"
+            "尽管模型判断与该位点不一致，是否有独立文献或人工整理资源支持"
+            "该位点发生 N-连接糖基化？"
         )
     return (
-        "Is there a missed UniProt annotation or a plausible biological reason "
-        "for the model-positive call, and does any evidence justify an "
-        "annotation update?"
+        "模型判阳的该位点是否存在漏注释，或有合理的生物学解释？"
+        "现有证据是否足以支持更新注释？"
     )
 
 
@@ -998,8 +997,8 @@ def expected_review_row(
         "disagreement_pattern": row["disagreement_pattern"],
         "ranking_confidence": repr(confidence),
         "selection_criteria": (
-            f"stratum={stratum}; descending max(2*abs(prob-0.5)) among "
-            "models disagreeing with the UniProt label; ties by accession,pos"
+            f"分层={stratum}；在模型判断与 UniProt 标签不一致的样本中，"
+            "按 max(2*abs(prob-0.5)) 降序；并列时按 accession、pos 升序。"
         ),
         "manual_review_question": _manual_review_question(row),
         "review_status": "PENDING_MANUAL_REVIEW",
@@ -1064,19 +1063,19 @@ def recompute_metrics(rows: Sequence[Mapping[str, str]]) -> dict[str, object]:
     rule_predictions = [int(row["sequence_rule_prediction"]) for row in honest]
     methods = {
         "sequon_rule": {
-            "prediction_rule": "always positive; every row is an N-X-S/T sequon",
+            "prediction_rule": "201 行 sequon 表全部判为阳性",
             "independent_of_benchmark": True,
             "score_kind": "fixed_binary",
             **binary_metrics(labels, rule_predictions, None),
         },
         "esm35_oof": {
-            "prediction_rule": "stored probability >= 0.5",
+            "prediction_rule": "已存概率大于等于 0.5",
             "independent_of_benchmark": True,
             "score_kind": "probability",
             **binary_metrics(labels, predictions35, probabilities35),
         },
         "esm150_author_adapter": {
-            "prediction_rule": "logit_positive > logit_negative",
+            "prediction_rule": "正类 logit 大于负类 logit",
             "independent_of_benchmark": True,
             "score_kind": "probability",
             **binary_metrics(labels, predictions150, probabilities150),
@@ -1125,9 +1124,8 @@ def recompute_metrics(rows: Sequence[Mapping[str, str]]) -> dict[str, object]:
         },
         "disagreement_counts": patterns,
         "comparability_caveat": (
-            "35M scores are windowed leave-one-protein-out OOF estimates; "
-            "150M scores are full-sequence author-adapter inference. A difference "
-            "cannot be attributed to model size alone."
+            "35M 使用窗口化留一蛋白 OOF 估计；150M 使用全序列作者 adapter 推理。"
+            "两者的差异不能只归因于模型大小。"
         ),
     }
 
@@ -1353,11 +1351,11 @@ def verify_comparison(
 
     report = (comparison_dir / "report.md").read_text(encoding="utf-8")
     required_report_text = (
-        "unannotated sequons, not confirmed biological negatives",
-        "not a method",
-        "cannot be attributed to model size alone",
+        "未标注 sequon，不是实验确认的生物学阴性",
+        "不是参与对拍的方法",
+        "不能只归因于模型大小",
         "PENDING_MANUAL_REVIEW",
-        "No author-replay prediction input was read or used.",
+        "本次复核未读取或使用作者回放预测作为输入",
     )
     for text in required_report_text:
         if text not in report:

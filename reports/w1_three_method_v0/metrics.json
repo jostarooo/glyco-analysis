@@ -35,7 +35,7 @@
     },
     "role": "label_source_and_reference_ceiling"
   },
-  "comparability_caveat": "35M scores are windowed leave-one-protein-out OOF estimates; 150M scores are full-sequence author-adapter inference. A difference cannot be attributed to model size alone.",
+  "comparability_caveat": "35M 使用窗口化留一蛋白 OOF 估计；150M 使用全序列作者 adapter 推理。两者的差异不能只归因于模型大小。",
   "disagreement_counts": {
     "all_agree": 58,
     "both_models_call_unannotated_control_positive": 19,
@@ -71,7 +71,7 @@
         "weak_label_accuracy": 0.5461538461538461
       },
       "null_reasons": {},
-      "prediction_rule": "logit_positive > logit_negative",
+      "prediction_rule": "正类 logit 大于负类 logit",
       "score_kind": "probability"
     },
     "esm35_oof": {
@@ -93,7 +93,7 @@
         "weak_label_accuracy": 0.6846153846153846
       },
       "null_reasons": {},
-      "prediction_rule": "stored probability >= 0.5",
+      "prediction_rule": "已存概率大于等于 0.5",
       "score_kind": "probability"
     },
     "sequon_rule": {
@@ -117,7 +117,7 @@
       "null_reasons": {
         "roc_auc": "method_has_no_continuous_score"
       },
-      "prediction_rule": "always positive; every row is an N-X-S/T sequon",
+      "prediction_rule": "201 行 sequon 表全部判为阳性",
       "score_kind": "fixed_binary"
     }
   },

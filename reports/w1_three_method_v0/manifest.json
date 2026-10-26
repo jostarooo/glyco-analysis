@@ -5,16 +5,16 @@
       "sha256": "26F8042F3A3E8475F28DDCDD154C23264E570749E3FA6F456DAB146DEC94F85B"
     },
     "metrics.json": {
-      "bytes": 4547,
-      "sha256": "22C11FD5F6A14AC24667CD6F8C0C2FC3F12FB62E085B892B63112EF746E0A713"
+      "bytes": 4505,
+      "sha256": "CDD9B997F94569806B78DC9124B8001CFD8B2C8510A4ABD04D33A52A71B73B4F"
     },
     "report.md": {
-      "bytes": 5235,
-      "sha256": "11BBF9A654871454728A112AC318452F5A2B77590BC9D1C256561F6137AAF0E4"
+      "bytes": 5565,
+      "sha256": "BC630BC9FFE9D90C05DB71F891423E1A66FFC82CC19C4D191349A3AC0B52A2C5"
     },
     "review_top10.csv": {
-      "bytes": 8088,
-      "sha256": "936BB2DB398027E4CFC04F465EBED6CBAC30478FA9884589F118B8D9F2824780"
+      "bytes": 8211,
+      "sha256": "C0B32AFCB6991C408461A801A04074D8428D716535402934BAB79C23C3B699F2"
     }
   },
   "author_replay_prediction_input": false,
@@ -31,13 +31,13 @@
     "source_rows": 201,
     "unannotated_control": 48
   },
-  "comparability_caveat": "35M scores are windowed leave-one-protein-out OOF estimates; 150M scores are full-sequence author-adapter inference. A difference cannot be attributed to model size alone.",
+  "comparability_caveat": "35M 使用窗口化留一蛋白 OOF 估计；150M 使用全序列作者 adapter 推理。两者的差异不能只归因于模型大小。",
   "comparison": {
     "display_only": 71,
     "evaluated": 130,
     "rows": 201
   },
-  "esm150_inference_manifest_sha256": "62EE1FB69D93A83FABB49F43845A00FF9C56F818EBF2CD84125BD1421A024337",
+  "esm150_inference_manifest_sha256": "8CD37C52C147B9DB4B2F3C372A4EC60134C3FF0C8B571EDA9D6C4306197B4BCA",
   "inputs": {
     "candidates": {
       "bytes": 23482,
@@ -55,7 +55,7 @@
       "manifest.json": {
         "bytes": 3174,
         "path": "reports/esm150_w1_candidates_v0/manifest.json",
-        "sha256": "62EE1FB69D93A83FABB49F43845A00FF9C56F818EBF2CD84125BD1421A024337"
+        "sha256": "8CD37C52C147B9DB4B2F3C372A4EC60134C3FF0C8B571EDA9D6C4306197B4BCA"
       },
       "predictions.csv": {
         "bytes": 36074,
@@ -63,9 +63,9 @@
         "sha256": "C0706E87401CAA80EDE49238D8FFC0E3D2058B5C4920A5E1CC3B490F779BC8F0"
       },
       "report.md": {
-        "bytes": 1531,
+        "bytes": 1660,
         "path": "reports/esm150_w1_candidates_v0/report.md",
-        "sha256": "F809D146ACE1EFE29C2054B3D545BB9993C8C77171F75105B673FBADD2695914"
+        "sha256": "19E7330F6B0E8CA0B4AC6629AA202757ADC8825497B59541EE2857F773469C84"
       },
       "run_dir": {
         "path": "reports/esm150_w1_candidates_v0"
@@ -75,7 +75,7 @@
       "manifest.json": {
         "bytes": 3900,
         "path": "reports/esm35_linear_probe_v0/manifest.json",
-        "sha256": "927606335B13157BB8BBEEB3D790D0BB9AD649992D825BEEC3F4A53CE0697D9F"
+        "sha256": "29ED13315741C43CCE3BF77F7CA7268C1B545BBAC388D1E57EBEC44B6598AD46"
       },
       "metrics.json": {
         "bytes": 1079,
@@ -106,7 +106,7 @@
       "independent_of_benchmark": true,
       "input_context": "full sequence",
       "model": "facebook/esm2_t30_150M_UR50D + author adapter",
-      "prediction_rule": "logit_positive > logit_negative",
+      "prediction_rule": "正类 logit 大于负类 logit",
       "source": {
         "bytes": 36074,
         "path": "reports/esm150_w1_candidates_v0/predictions.csv",
@@ -115,7 +115,7 @@
     },
     "esm35_oof": {
       "independent_of_benchmark": true,
-      "prediction_rule": "stored probability >= 0.5",
+      "prediction_rule": "已存概率大于等于 0.5",
       "source": {
         "bytes": 9980,
         "path": "reports/esm35_linear_probe_v0/predictions.csv",
@@ -125,7 +125,7 @@
     },
     "sequon_rule": {
       "independent_of_benchmark": true,
-      "prediction_rule": "always positive for the 201-sequon table",
+      "prediction_rule": "201 行 sequon 表全部判为阳性",
       "source": "candidates_30.csv sequon column"
     }
   },

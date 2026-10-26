@@ -415,7 +415,7 @@ class OutputArtifactTests(unittest.TestCase):
                     self.assertEqual(artifact["bytes"], path.stat().st_size)
 
                 report = (out_dir / "report.md").read_text(encoding="utf-8")
-                self.assertIn("traceability only", report)
+                self.assertIn("只用于追溯", report)
                 self.assertNotIn("MCC", report)
                 self.assertNotIn("ROC AUC", report)
                 self.assertFalse(

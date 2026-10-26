@@ -675,7 +675,7 @@ class CheckerHelperTests(unittest.TestCase):
     def test_manual_review_status_and_note_contract(self):
         checker.validate_review_outcome("PENDING_MANUAL_REVIEW", "")
         for status in checker.REVIEW_STATUS_VALUES[1:]:
-            checker.validate_review_outcome(status, "independent evidence")
+            checker.validate_review_outcome(status, "独立证据")
         with self.assertRaisesRegex(checker.CheckError, "pending manual review"):
             checker.validate_review_outcome("PENDING_MANUAL_REVIEW", "note")
         for status in checker.REVIEW_STATUS_VALUES[1:]:
@@ -684,23 +684,35 @@ class CheckerHelperTests(unittest.TestCase):
         with self.assertRaisesRegex(checker.CheckError, "unknown manual review"):
             checker.validate_review_outcome("REVIEWED", "note")
 
+    def test_manual_review_text_is_chinese(self):
+        positive_question = checker._manual_review_question(
+            {"evaluation_label": "1"}
+        )
+        control_question = checker._manual_review_question(
+            {"evaluation_label": "0"}
+        )
+        self.assertIn("独立文献", positive_question)
+        self.assertIn("漏注释", control_question)
+        self.assertNotIn("Does independent", positive_question)
+        self.assertNotIn("Is there", control_question)
+
     def test_manual_review_summary_must_match_status_counts(self):
         rows = [
             {
                 "review_status": "SUPPORTED_EXPERIMENTAL_POSITIVE",
-                "reviewer_note": "curated evidence",
+                "reviewer_note": "已整理证据",
             }
             for _ in range(6)
         ] + [
             {
                 "review_status": "MISSED_ANNOTATION_CANDIDATE",
-                "reviewer_note": "annotation candidate",
+                "reviewer_note": "注释候选",
             }
             for _ in range(3)
         ] + [
             {
                 "review_status": "NO_INDEPENDENT_EVIDENCE_FOUND",
-                "reviewer_note": "no evidence found",
+                "reviewer_note": "未找到证据",
             }
         ]
         manifest = {
@@ -730,7 +742,7 @@ class CheckerHelperTests(unittest.TestCase):
                     for row in review
                 }
                 notes = {
-                    row_id: f"independent evidence for {row_id}"
+                    row_id: f"{row_id} 有独立证据"
                     for row_id in statuses
                 }
                 fixture.apply_manual_review(
