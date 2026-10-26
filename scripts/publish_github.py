@@ -423,7 +423,7 @@ def write_report(root: Path, result: dict) -> Path:
     reports = root / "reports"
     reports.mkdir(exist_ok=True)
     path = reports / f"github_publish_{dt.date.today().isoformat()}.md"
-    visibility = "private" if result["private"] else "public"
+    visibility = "私有" if result["private"] else "公开"
     exact = "是" if result["exact_history"] else "否（内容一致，SHA 不同）"
     lines = [
         "# GitHub 发布记录",
@@ -432,13 +432,13 @@ def write_report(root: Path, result: dict) -> Path:
         f"- 分支：{result['branch']}",
         f"- 本地 HEAD：`{result['local_head']}`",
         f"- 远端 HEAD：`{result['remote_head']}`",
-        f"- HEAD tree：`{result['tree']}`",
-        f"- 逐 commit SHA 完全一致：{exact}",
+        f"- HEAD 目录树：`{result['tree']}`",
+        f"- 逐提交 SHA 完全一致：{exact}",
         f"- 远端文件数：{result['files']}",
         "",
         "## 提交镜像",
         "",
-        "| 本地 | 远端 | 文件数 | SHA 一致 |",
+        "| 本地提交 | 远端提交 | 文件数 | SHA 一致 |",
         "| --- | --- | --- | --- |",
     ]
     for item in result["commits"]:
