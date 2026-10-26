@@ -26,9 +26,10 @@
 | 独立核验脚本（`checker`） | 重新计算指标并核对产物，不依赖生成器自报 |
 | 运行时复核（`runtime recheck`） | 重新加载模型前向若干审计样本，验证推理路径仍可运行 |
 | 留一蛋白折外预测（`OOF`） | 每次留出一个蛋白做测试，汇总各折的折外预测 |
-| 参数高效微调（`PEFT`） | 参数高效微调方法，本项目用它加载作者 LoRA 检查点 |
+| 参数高效微调（`PEFT`） | 只更新少量参数即可适配大模型的微调方法；本项目用它加载作者 LoRA 检查点 |
 | 受试者工作特征曲线下面积（`ROC AUC`） | 按概率排序计算的正负样本区分度；0.5 接近随机 |
 | 混淆矩阵计数（`TP` / `FP` / `TN` / `FN`） | 真阳性、假阳性、真阴性、假阴性 |
+| 模型上下文协议（`MCP`） | 把外部工具按统一协议提供给智能体调用的接口标准 |
 | 缺少支持证据 | 没有找到支持证据，不等于已经证明该位点不糖基化 |
 
 ## 它解决什么问题
@@ -91,7 +92,7 @@ D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\run_esm150_candid
 D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\run_w1_three_method.py --out-dir reports\w1_three_method_v0
 D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\check_w1_three_method.py --comparison-dir reports\w1_three_method_v0
 
-# 同步到 GitHub：本机 git push 通道不通，发布走 REST API（需要 classic PAT 的 repo scope）
+# 同步到 GitHub：本机 git push 通道不通，发布走 REST API（需要经典 PAT 的 `repo` 权限范围）
 # 先把 token 写入 %USERPROFILE%\.github-token，或设置 GH_TOKEN；别把 token 写进仓库
 D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\publish_github.py --private
 ```

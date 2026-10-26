@@ -595,7 +595,7 @@ def report_text(
         "",
         "## 结论",
         "",
-        "作者发布的 ESM-2 150M PEFT adapter 在作者 `test.csv` 的全部行上复算，"
+        "作者发布的 ESM-2 150M PEFT 参数高效微调适配器在作者 `test.csv` 的全部行上复算，"
         f"得到 MCC `{metrics['mcc']:.12f}`。论文报告值为 `{REFERENCE_MCC:.3f}`，"
         f"差值为 `{metrics['mcc_delta_from_reference']:+.12f}`。",
         "",
@@ -604,8 +604,8 @@ def report_text(
         "",
         "## 运行范围",
         "",
-        "本次运行按原始顺序评估作者 `test.csv` 的每一行，不删除非 canonical 或非 "
-        "sequon 行。模型读取完整蛋白序列，使用作者 PEFT adapter 输出的两个 logit，"
+        "本次运行按原始顺序评估作者 `test.csv` 的每一行，不删除非规范残基或非 "
+        "sequon 行。模型读取完整蛋白序列，使用作者 PEFT 适配器输出的两个分数（`logit`），"
         "按 `argmax` 得到预测标签。",
         "",
         "## 指标",
@@ -626,13 +626,13 @@ def report_text(
         f"- 阳性 / 阴性：`{sum(row.label == 1 for row in rows)}` / "
         f"`{sum(row.label == 0 for row in rows)}`",
         f"- 保留的非 sequon 行：`{non_sequon}`",
-        f"- 唯一序列数 / encoder forward 数：`{len({row.sequence for row in rows})}`",
+        f"- 唯一序列数 / 编码器前向次数：`{len({row.sequence for row in rows})}`",
         f"- 最长序列：`{max(len(row.sequence) for row in rows)}` aa",
         f"- 注意力路径：`{attention_backend}`，使用完整序列推理",
         "",
         "## 兼容性说明",
         "",
-        "作者 adapter 使用较旧的 PEFT 布局保存。本次复算通过独立兼容路径加载作者"
+        "作者适配器使用较旧的 PEFT 布局保存。本次复算通过独立兼容路径加载作者"
         f"固定的 `peft {EXPECTED_PEFT_VERSION}` 与 "
         f"`transformers {EXPECTED_TRANSFORMERS_VERSION}`。",
         "",
@@ -653,7 +653,7 @@ def report_text(
     lines.extend(
         [
             "本报告只陈述实测差值。任何原因归因都必须同时得到 `manifest.json`、"
-            "逐行预测和 checker 结果的证据支持。",
+            "逐行预测和核验脚本结果的证据支持。",
             "",
         ]
     )

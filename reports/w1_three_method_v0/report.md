@@ -16,7 +16,7 @@ ESM-2 35M 的 MCC 为 `0.331975`，作者 ESM-2 150M 适配器的 MCC 为 `-0.23
 
 ## 方法
 
-| 方法 | 判定规则 | MCC | 阳性召回率 | 未标注对照保持率 | 阳性精确率 | 弱标签一致率 | ROC AUC |
+| 方法 | 判定规则 | MCC | 阳性召回率 | 未标注样本保持率 | 阳性精确率 | 弱标签一致率 | ROC AUC |
 |---|---|---:|---:|---:|---:|---:|---:|
 | sequon 规则 | `sequon_rule`：201 行全部判为阳性 | 0.000000 | 1.000000 | 0.000000 | 0.630769 | 0.630769 | 不适用 |
 | ESM-2 35M 折外预测 | `esm35_oof`：已存概率大于等于 0.5 | 0.331975 | 0.731707 | 0.604167 | 0.759494 | 0.684615 | 0.756098 |
@@ -34,9 +34,21 @@ ESM-2 35M 的 MCC 为 `0.331975`，作者 ESM-2 150M 适配器的 MCC 为 `-0.23
 - `esm150_calls_unannotated_control_positive`：29 行诚实样本
 - `all_agree`：58 行诚实样本
 
+机器分层标识的中文含义如下。
+
+| 机器标识 | 中文含义 |
+|---|---|
+| `both_models_oppose_experimental_positive` | 两个模型都反对实验阳性标签 |
+| `both_models_call_unannotated_control_positive` | 两个模型都把未标注对照判为阳性 |
+| `esm35_opposes_experimental_positive` | ESM-35M 反对实验阳性标签 |
+| `esm150_opposes_experimental_positive` | ESM-150M 反对实验阳性标签 |
+| `esm35_calls_unannotated_control_positive` | ESM-35M 把未标注对照判为阳性 |
+| `esm150_calls_unannotated_control_positive` | ESM-150M 把未标注对照判为阳性 |
+| `all_agree` | 参与比较的方法结果一致 |
+
 ## 复核样本
 
-选择策略为 `w1-disagreement-v1`：只从 130 行诚实样本池中选取，先在六个优先分层之间轮转，再按每层内的置信度差值降序，最后按 accession 与 pos 打破并列。
+选择策略为 `w1-disagreement-v1`：只从 130 行诚实样本池中选取，先在六个优先分层之间轮转，再按每层内的置信度差值降序，最后按蛋白登录号与位点位置打破并列。
 
 | 排名 | 位点 | 分歧分层 | UniProt 证据 | ESM-35M 概率 | ESM-150M 概率 | 置信差值 | 复核状态 |
 |---:|---|---|---|---:|---:|---:|---|
@@ -59,8 +71,17 @@ ESM-2 35M 的 MCC 为 `0.331975`，作者 ESM-2 150M 适配器的 MCC 为 `-0.23
 
 ### 人工复核结论
 
+复核状态的中文含义如下。
+
+| 机器状态 | 中文含义 |
+|---|---|
+| `SUPPORTED_EXPERIMENTAL_POSITIVE` | 实验阳性有独立证据支持 |
+| `MISSED_ANNOTATION_CANDIDATE` | 漏注释候选，需注释员复核 |
+| `NO_INDEPENDENT_EVIDENCE_FOUND` | 未找到独立证据，不等于实验阴性 |
+| `PENDING_MANUAL_REVIEW` | 等待人工复核 |
+
 6 个实验阳性有独立证据支持：`P04114:2982`、`Q8TAV3:177`、`P04114:3358`、`P04114:3465`、`P19827:285`、`P04114:185`。证据包括 PubMed 32125861、20805301、26787547、14760718、19159218、16335952、23090970、9425062、9677337、29671580、37074911、29741879，GlyConnect 57 与 284，PDB 9BD1、9BD8、9BDE 与 9BDT，UniCarbKB GLY_000040，GPTwiki，PDC000471，以及 GlyGen GLY_000143 与 GLY_000481。
 
 3 个未标注对照是注释复核候选：`Q6UWL2:308`（GlyGen 已报告，PubMed 24190977 与 GLY_000143，另有经 PubMed 37074911 关联的 PDC000471）、`Q6UWL2:503`、`Q6UWL2:542`。后两者只有 DOI `10.1101/2023.09.13.557529` 与数据提交 `GLY_000888` 的候选级证据，属于注释员复核候选，不是已确认的漏注释。本轮的基准评测标签与指标保持不变。
 
-`Q6UWL2:470` 的复核状态为 `NO_INDEPENDENT_EVIDENCE_FOUND`。没有找到该模型阳性对照的精确位点记录，也没有独立文献或结构证据支持。这是缺少支持证据（absence of evidence），不是确认的生物学阴性。
+`Q6UWL2:470` 的复核状态为 `NO_INDEPENDENT_EVIDENCE_FOUND`。没有找到该模型阳性对照的精确位点记录，也没有独立文献或结构证据支持。这是缺少支持证据，不是确认的生物学阴性。

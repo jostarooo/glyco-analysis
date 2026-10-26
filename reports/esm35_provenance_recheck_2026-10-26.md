@@ -39,10 +39,10 @@ PASS
 原因是运行清单固定记录生成时的基线 `29f97a5`，而当前工作树已经包含后续文档、
 脚本和未跟踪文件。实际报错类别为：
 
-- `manifest source commit`：运行清单记录 `29f97a5`，本次交付提交前 HEAD 为 `489d96b`
-- `manifest source changes`：后续提交修改了 `README.md`、`REPRO.md` 和 `LESSONS.md`
+- 运行清单来源提交（`manifest source commit`）：运行清单记录 `29f97a5`，本次交付提交前 HEAD 为 `489d96b`
+- 后续来源改动（`manifest source changes`）：后续提交修改了 `README.md`、`REPRO.md` 和 `LESSONS.md`
   等文件
-- `manifest source untracked files`：工作树还包含交付复核文档和构建脚本
+- 未跟踪来源文件（`manifest source untracked files`）：工作树还包含交付复核文档和构建脚本
 
 这说明来源追溯记录的边界有效，不是模型预测失败。正式交付不得为了消除这条报错
 而改写运行清单的生成基线，也不得把当前 HEAD 的核验脚本结果写成新的 35M 全量运行。

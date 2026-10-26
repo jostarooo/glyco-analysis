@@ -1244,10 +1244,10 @@ def report_text(
         f"{benchmark['unannotated_control']} 行。仅含推断证据的 "
         f"{benchmark['inferred_display_only']} 行保留展示，不进入指标分母。",
         "",
-        "ESM-2 35M 的 MCC 为 `0.331975`，作者 ESM-2 150M adapter 的 MCC 为 "
+        "ESM-2 35M 的 MCC 为 `0.331975`，作者 ESM-2 150M 适配器的 MCC 为 "
         "`-0.232614`，sequon 规则的 MCC 为 `0.000000`。35M 使用窗口化 "
-        "leave-one-protein-out，150M 使用完整序列 adapter 推理，所以两者差异"
-        "同时包含模型规模、训练方式、adapter 和输入上下文差异，不能只归因于"
+        "留一蛋白交叉验证，150M 使用完整序列适配器推理，所以两者差异"
+        "同时包含模型规模、训练方式、适配器和输入上下文差异，不能只归因于"
         "模型大小。",
         "",
         "## 评估边界",
@@ -1265,20 +1265,20 @@ def report_text(
         ),
         "- 对照是未标注 sequon，不是实验确认的生物学阴性。",
         (
-            "- UniProt N-linked 标注是本 benchmark 的标签来源和参考上限，"
+            "- UniProt N-连接糖基化标注是本基准评测的标签来源和参考上限，"
             "不是参与对拍的方法。"
         ),
         "",
         "## 方法",
         "",
-        "| 方法 | 判定规则 | MCC | 阳性召回率 | 未标注对照保持率 | "
+        "| 方法 | 判定规则 | MCC | 阳性召回率 | 未标注样本保持率 | "
         "阳性精确率 | 弱标签一致率 | ROC AUC |",
         "|---|---|---:|---:|---:|---:|---:|---:|",
     ]
     method_labels = {
         "sequon_rule": "sequon 规则",
-        "esm35_oof": "ESM-2 35M OOF",
-        "esm150_author_adapter": "ESM-2 150M 作者 adapter",
+        "esm35_oof": "ESM-2 35M 折外预测",
+        "esm150_author_adapter": "ESM-2 150M 作者适配器",
     }
     for method_id in ("sequon_rule", "esm35_oof", "esm150_author_adapter"):
         method = metrics["methods"][method_id]
@@ -1302,7 +1302,7 @@ def report_text(
     lines.extend(
         [
             "",
-            "表中第二行是机器方法标识，保留原文便于对应 CSV 和 JSON 文件。",
+            "表中第二列是机器方法标识，保留原文便于对应 CSV 和 JSON 文件。",
             "",
             "## 分歧分层",
             "",
@@ -1315,12 +1315,24 @@ def report_text(
     lines.extend(
         [
             "",
+            "机器分层标识的中文含义如下。",
+            "",
+            "| 机器标识 | 中文含义 |",
+            "|---|---|",
+            "| `both_models_oppose_experimental_positive` | 两个模型都反对实验阳性标签 |",
+            "| `both_models_call_unannotated_control_positive` | 两个模型都把未标注对照判为阳性 |",
+            "| `esm35_opposes_experimental_positive` | ESM-35M 反对实验阳性标签 |",
+            "| `esm150_opposes_experimental_positive` | ESM-150M 反对实验阳性标签 |",
+            "| `esm35_calls_unannotated_control_positive` | ESM-35M 把未标注对照判为阳性 |",
+            "| `esm150_calls_unannotated_control_positive` | ESM-150M 把未标注对照判为阳性 |",
+            "| `all_agree` | 参与比较的方法结果一致 |",
+            "",
             "## 复核样本",
             "",
             (
                 "选择策略为 `w1-disagreement-v1`：只从 130 行诚实样本池中选取，"
                 "先在六个优先分层之间轮转，再按每层内的置信度差值降序，"
-                "最后按 accession 与 pos 打破并列。"
+                "最后按蛋白登录号与位点位置打破并列。"
             ),
             "",
             "| 排名 | 位点 | 分歧分层 | UniProt 证据 | ESM-35M 概率 | "
@@ -1358,6 +1370,15 @@ def report_text(
             "",
             "运行器默认写入 `PENDING_MANUAL_REVIEW`。人工复核时只修改 "
             "`review_status` 与 `reviewer_note`，原始行序和数值字段保持不变。",
+            "",
+            "复核状态的中文含义如下。",
+            "",
+            "| 机器状态 | 中文含义 |",
+            "|---|---|",
+            "| `SUPPORTED_EXPERIMENTAL_POSITIVE` | 实验阳性有独立证据支持 |",
+            "| `MISSED_ANNOTATION_CANDIDATE` | 漏注释候选，需注释员复核 |",
+            "| `NO_INDEPENDENT_EVIDENCE_FOUND` | 未找到独立证据，不等于实验阴性 |",
+            "| `PENDING_MANUAL_REVIEW` | 等待人工复核 |",
             "",
             "本次复核未读取或使用作者回放预测作为输入。",
             "",

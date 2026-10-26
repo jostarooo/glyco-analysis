@@ -3,7 +3,7 @@
 > 目的：给 F1（N-糖基化位点预测）准备第一个可复现数据集。一行 = 一个 N-X-S/T 候选位点，
 > 标注来自 UniProt，既不是模型预测，也不是论文里的数字。标注包含实验证据和推断证据，
 > 下游训练必须按证据类型区分。
-> 构建：`scripts/build_dataset.py`；独立校验：`scripts/check_dataset.py`（与构建器不共享代码，PASS 才退出 0）。
+> 构建：`scripts/build_dataset.py`；独立校验：`scripts/check_dataset.py`（与构建器不共享代码，通过（`PASS`）才退出 0）。
 
 ## 1. 来源与抽样
 
@@ -11,9 +11,9 @@
 |---|---|
 | 来源 | UniProtKB REST：`(organism_id:9606) AND (reviewed:true) AND (ft_carbohyd_exp:*)` |
 | 发布版本（`Release`） | **2026_03**（响应头 `X-UniProt-Release`，可追溯） |
-| 候选池 | 1381 条 reviewed 人类蛋白 |
-| 抽样 | 清单**先排序**，再 `random.Random(20261020).sample(pool, 30)`；seed / 条数 / 样本身份全部落进 `dataset_v0_stats.json` |
-| 原始缓存 | `data/raw/uniprot/`（不入库）；`fetched_at` 取自缓存文件 mtime，因此重跑逐字节一致 |
+| 候选池 | 1381 条已审阅（`reviewed`）人类蛋白 |
+| 抽样 | 清单**先排序**，再 `random.Random(20261020).sample(pool, 30)`；随机种子（`seed`）、条数和样本身份全部落进 `dataset_v0_stats.json` |
+| 原始缓存 | `data/raw/uniprot/`（不入库）；`fetched_at` 取自缓存文件的修改时间（`mtime`），因此重跑逐字节一致 |
 
 抽样前必须先对清单排序：UniProt 返回顺序不是字符串序（`A6NMZ7` 排在 `A6NH11` 前），
 不排序时样本会随上游返回顺序漂移（实测两种顺序下 30 条里只有 2 条相同）。
@@ -55,13 +55,13 @@ dataset_v0_stats.json    245A621104B4F056143FF4E249DBE371DD7EE7BA786156FACBA0101
 
 | 列 | 口径 |
 |---|---|
-| `pos` | **1-based**，与作者数据、UniProt feature 一致；该位残基 = `sequence[pos-1]` |
+| `pos` | **从 1 开始编号（`1-based`）**，与作者数据和 UniProt 功能位点一致；该位残基 = `sequence[pos-1]` |
 | `motif` / `sequon` | 该位点起 3 字符（如 `NLS`）；候选集只收模体位点，故 `sequon` 恒为 1 |
 | `label` | 1 ⇔ UniProt 在该位有 N-linked 糖基化 feature 且该位残基为 N；否则 0。label=1 包含 82 行 `ECO:0000269` 实验证据和 71 行仅含 `ECO:0000255` 的推断证据 |
 | `linkage` | `label=1` 时为 N-连接（`N-linked`）；`label=0` 留空 |
 | `n_features` | 该 pos 上原始 Glycosylation feature 条数（冗余度；同一位最大见过 28 条） |
 | `evidence` | 该 pos 全部证据码，去重排序后以 `;` 连接 |
-| `uniprot_release` / `fetched_at` | `2026_03`；缓存文件 mtime（UTC） |
+| `uniprot_release` / `fetched_at` | `2026_03`；缓存文件的修改时间（UTC） |
 
 ## 5. 数据质量与注意事项
 
@@ -85,21 +85,21 @@ dataset_v0_stats.json    245A621104B4F056143FF4E249DBE371DD7EE7BA786156FACBA0101
 $env:PYTHONUTF8='1'
 cd D:\wbworkspace\glyco-analysis
 & .\.venv\Scripts\python.exe scripts\build_dataset.py    # 首次联网 31 次请求；复跑 0 次
-& .\.venv\Scripts\python.exe scripts\check_dataset.py    # 独立复算，PASS 才退出 0
+& .\.venv\Scripts\python.exe scripts\check_dataset.py    # 独立复算，通过（PASS）才退出 0
 ```
 
 - 2026-10-19 实测：第二次运行“网络请求 0 次，缓存命中 31 次”，三个产物 SHA256 与
   第一次完全相同；校验器结论 `PASS`（1854 条断言全过）。
-- 校验器修复记录：当天首跑 FAIL 1 条（`P40879#165` 被判为「多出的候选位点」），
-  定性为校验器的重叠匹配 bug（普通 `finditer` 非重叠扫描吞掉 `NNSS` 的第 2 个起点），
-  改为前瞻写法后 PASS。构建器的候选集口径（枚举全部重叠起点）是正确口径。
+- 校验器修复记录：当天首跑失败（`FAIL`）1 条（`P40879#165` 被判为「多出的候选位点」），
+  定性为校验器的重叠匹配缺陷（普通 `finditer` 非重叠扫描吞掉 `NNSS` 的第 2 个起点），
+  改为前瞻写法后通过（`PASS`）。构建器的候选集口径（枚举全部重叠起点）是正确口径。
 
 ## 7. 与作者数据形状对照 / 下一步
 
 | 项 | 作者 `test.csv` | 本数据集 |
 |---|---|---|
 | 列 | `label,id,pos,sequence` | 同（`candidates_30_lora.csv`） |
-| pos | 1-based | 1-based |
+| pos | 从 1 开始编号 | 从 1 开始编号 |
 | 行 | 2554 | 201 |
 
 下一步：10/22 用作者 150M 检查点在作者 `test.csv` 上复算 MCC（对表 0.848），

@@ -38,6 +38,14 @@ GITHUB_RECORD_DIR = "reports"
 GITHUB_RECORD_GLOB = "github_publish_*.md"
 GITHUB_RECORD_DESTINATION = "04-GitHub 发布记录"
 
+UNTRANSLATED_PROSE_MARKERS = (
+    "Seen ",
+    "1-based",
+    "classic PAT",
+    "repo scope",
+    "missing keys",
+)
+
 PROJECT_DOCUMENT_COPIES = {
     "README.md": "07-项目文档/项目README.md",
     "REPRO.md": "07-项目文档/REPRO.md",
@@ -233,6 +241,13 @@ def validate_markdown(root: Path) -> None:
                 continue
             if in_code_block:
                 continue
+            visible_prose = re.sub(r"`[^`]*`", "", stripped)
+            for marker in UNTRANSLATED_PROSE_MARKERS:
+                if marker in visible_prose:
+                    failures.append(
+                        f"{relative}:{line_number}: untranslated prose marker "
+                        f"{marker!r}: {stripped}"
+                    )
             if (
                 len(stripped) >= 24
                 and stripped[0].isascii()

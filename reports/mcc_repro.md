@@ -83,7 +83,7 @@
 
 ## 适配器告警审计
 
-加载检查点时 PEFT 报告两条缺失键（`missing keys`）：
+加载检查点时 PEFT 报告两条缺失键：
 
 ```text
 base_model.model.classifier.original_module.out_proj.lora_A.default.weight
@@ -109,8 +109,8 @@ base_model.model.classifier.original_module.out_proj.lora_B.default.weight
 | `predictions.csv` | `372112E11FE8BFB785508BFC3CAE932DA6622566C6E1DD5D035B88C6DBC7622E` |
 | `audit_sample.csv` | `591062CF58EDDE9A05BD3167B560E04BF631D55C8C056A1285142C6DB891D26E` |
 | `metrics.json` | `5BBFBFDDBC944AE7F07F92095A7C54B590440C95690196F127151C9FC4752D26` |
-| `report.md` | `9784D7109D96FD64D913417ECE973B4989F115AFA2D2A780B8B86886EB657D8D` |
-| `manifest.json` | `9748C26F9AD47C97AE998132DDF71003DEC53770B233017078D3902E8CDCCDC8` |
+| `report.md` | `642E883334C4DDFE81036443A5344EDB0DCE62AD7FD0EFF9DB55EEFCFBB60680` |
+| `manifest.json` | `AC5CC29BE9D356FC058CAEB2FACBD50C63A64162173FE2861F3569DAFBABBA1F` |
 
 自动产物位于 `reports/esm150_lora_repro_v0/`。复现命令和核验脚本命令见
 `REPRO.md` 第四节的 F1 150M 小节。

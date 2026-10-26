@@ -9,10 +9,10 @@
 
 | # | 关卡 | 判据（可测） | 当前状态 | 产物 |
 |---|---|---|---|---|
-| 1 | **环境关** | Python 3.12 venv 可用；`torch.cuda.is_available()` 为真；在 GPU 上跑一次真实前向不报错 | ✅ 通过 | `reports/env_check.md` |
+| 1 | **环境关** | Python 3.12 虚拟环境可用；`torch.cuda.is_available()` 为真；在 GPU 上跑一次真实模型前向不报错 | ✅ 通过 | `reports/env_check.md` |
 | 2 | **数据关** | UniProt 人类糖蛋白检索返回 1381 条；GlyGen 单蛋白详情可取；其余接口状态有记录 | ✅ 通过（4/6 可用） | `reports/endpoint_check_2026-10-18.md` |
 | 3 | **复现关** | 作者 150M 检查点在作者 `test.csv` 上复算 MCC，与论文 0.848 对表并解释差异 | ✅ 通过 | `reports/mcc_repro.md` |
-| 4 | **本机训练关** | ESM2-150M + LoRA 能在 6.6 GiB 可用显存内跑通若干步且 loss 下降 | ⬜ 未开始 | `reports/local_train.md` |
+| 4 | **本机训练关** | ESM2-150M + LoRA 能在 6.6 GiB 可用显存内跑通若干步且损失下降 | ⬜ 未开始 | `reports/local_train.md` |
 | 5 | **系统关** | 浏览器里能用真实后端结果完成一次"序列 → 位点 → 糖链"的端到端问答 | ⬜ 未开始 | 录屏 + `docs/demo.md` |
 
 ## 二、术语表
@@ -26,7 +26,7 @@
 | **LoRA** | 低秩适配：冻结主干，只训少量低秩矩阵；显存友好 |
 | **MCC** | 马修斯相关系数，类别不平衡下比准确率可靠；1 最好，0 等于随机 |
 | **RGCN** | 关系图卷积网络，按边类型分别做卷积；糖链的糖苷键类型天然适合 |
-| **MCP** | Model Context Protocol，把工具以标准协议暴露给智能体 |
+| **MCP** | 模型上下文协议（Model Context Protocol），把工具按统一协议提供给智能体调用 |
 | **提交编号（`commit`）** | 每周视频开头必须展示的 `git log -1 --oneline` 输出，用来证明演示版本 |
 
 ## 三、本机配置（2026-10-18 实测）
@@ -58,7 +58,7 @@
 
 ```powershell
 D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\build_dataset.py    # 生成 reports/candidates_30*.csv
-D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\check_dataset.py    # 独立复算校验，PASS 才退出 0
+D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\check_dataset.py    # 独立复算校验，通过（PASS）才退出 0
 ```
 
 30 个蛋白 / 201 个候选位点，UniProt 发布版本 2026_03；复跑 0 次网络请求且三个产物
@@ -89,7 +89,7 @@ $cache = 'D:\wbworkspace\glyco-analysis\data\raw\uniprot'
 |---|---:|
 | MCC | 0.331975 |
 | 实验阳性召回率 | 0.731707 |
-| 未标注对照保持率 | 0.604167 |
+| 未标注样本保持率 | 0.604167 |
 | 阳性预测精确率 | 0.759494 |
 | 弱标签一致率 | 0.684615 |
 | ROC AUC | 0.756098 |
@@ -103,13 +103,13 @@ $cache = 'D:\wbworkspace\glyco-analysis\data\raw\uniprot'
 探针把产物拆成两次提交。第一次提交代码和校验逻辑，运行器在干净工作树上记录
 `source.git_commit_role=pre_artifact_code_baseline` 与 `git_dirty=false`；第二次只提交
 `reports/esm35_linear_probe_v0/` 下的生成文件。运行器查找最后一个改动产物目录之外文件的提交，
-所以从只改产物的提交上重跑仍会得到同一份 manifest，不会把产物提交误当成代码基线。
-校验器要求 manifest 的基线等于这个提交，并要求基线之后产物目录外没有源码改动。
+所以从只改产物的提交上重跑仍会得到同一份运行清单（`manifest`），不会把产物提交误当成代码基线。
+校验器要求运行清单的基线等于这个提交，并要求基线之后产物目录外没有源码改动。
 
 ### F1 ESM-2 150M LoRA 作者检查点复算（2026-10-21）
 
 复算对象是 `NancyFyong/LoRA-N-Gly` 发布的 150M PEFT 参数高效微调适配器。输入是作者
-`test.csv` 的全部 2554 行，不删除非规范序列或非 sequon 行。执行口径固定为
+`test.csv` 的全部 2554 行，不删除非规范残基或非 sequon 行。执行口径固定为
 FP32、完整序列、批大小为 1、无截断、无滑窗、两个输出分数（`logit`）取 `argmax`。
 
 ```powershell
@@ -229,7 +229,7 @@ $adapter = 'D:\wbworkspace\LoRA-N-Gly\checkpoints\N-linked\ESM-150M\checkpoint'
 而 `api.github.com` 可达，所以发布固定走 `scripts/publish_github.py`：
 
 ```powershell
-# classic PAT，必须有 repo scope；不要把 token 写进仓库
+# 经典 PAT，必须包含 repo 权限范围；不要把访问令牌（token）写进仓库
 $env:GH_TOKEN = '<classic-pat>'      # 或写入 %USERPROFILE%\.github-token
 D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\publish_github.py --private
 ```
@@ -244,9 +244,10 @@ D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\publish_github.py
 
 任何一项对不上就报错退出；发布记录写在 `reports/github_publish_<日期>.md`。
 
-2026-10-18 首次发布。2026-10-21 全量复现完成后再次镜像发布。远端
-https://github.com/jostarooo/glyco-analysis （私有仓库）的 `main` 与本地最终提交
-及 tree 逐字节一致，具体 SHA 和文件数见 `reports/github_publish_2026-10-21.md`。
+2026-10-18 首次发布，2026-10-21 全量复现完成后再次镜像发布，2026-10-26 文档中文化
+和最终校验完成后再次镜像发布。远端 https://github.com/jostarooo/glyco-analysis
+（私有仓库）的 `main` 与本地最终提交及目录树逐字节一致；最终 SHA 和文件数见
+交付包中的 `04-GitHub 发布记录\github_publish_2026-10-26.md`。
 
 ## 五、复现记录
 
@@ -255,8 +256,8 @@ https://github.com/jostarooo/glyco-analysis （私有仓库）的 `main` 与本�
 | 2026-10-18 | 建 uv + Python 3.12 venv、装 cu128 torch、设 D 盘缓存 | `scripts/env_check.py`：CUDA 可用，sm_120，512×512 真前向最大误差 4.768e-05 | ✅ 通过 |
 | 2026-10-18 | 体检 UniProt / GlyGen / GlyConnect / GlyTouCan / KEGG / PubChem | `scripts/check_endpoints.py`；UniProt 返回 1381，GlyGen 584 KB | ✅ 4/6；GlyConnect `500`，GlyTouCan `404` |
 | 2026-10-18 | 建 GitHub 私有仓库并把本地两次提交镜像上去 | `scripts/publish_github.py --private`；远端 HEAD 与目录树均与本地逐字节一致，10 个文件 | ✅ 通过 |
-| 2026-10-19 | 构建 F1 数据集 v0（UniProt 实验标注 → 30 蛋白 / 201 候选位点，release 2026_03） | 复跑 0 次网络请求且三产物 SHA256 不变；`scripts/check_dataset.py` 独立复算 1854 断言全过 | ✅ 通过；口径见 `reports/dataset_v0.md` |
-| 2026-10-20 | 跑通 F1 ESM-2 35M 冻结主干线性探针 | 13 个单元测试通过；独立核验脚本重嵌入并核对 4021 条断言；MCC 0.331975，28 蛋白重采样区间 [0.060051, 0.602824] | ✅ 通过；产物见 `reports/esm35_linear_probe_v0/` |
+| 2026-10-19 | 构建 F1 数据集 v0（UniProt 实验标注 → 30 蛋白 / 201 候选位点，发布版本 `2026_03`） | 复跑 0 次网络请求且三产物 SHA256 不变；`scripts/check_dataset.py` 独立复算 1854 断言全过 | ✅ 通过；口径见 `reports/dataset_v0.md` |
+| 2026-10-20 | 跑通 F1 ESM-2 35M 冻结主干线性探针 | 13 个单元测试通过；独立核验脚本重嵌入并核对 4026 条断言；MCC 0.331975，28 蛋白重采样区间 [0.060051, 0.602824] | ✅ 通过；产物见 `reports/esm35_linear_probe_v0/` |
 | 2026-10-21 | 复算作者 ESM-2 150M LoRA 检查点 | 2554 行全量推理；核验脚本启用 16 行推理复核并通过 33294 条断言；MCC 0.848348842859，论文值 0.848，差 +0.000348842859 | ✅ 通过；产物见 `reports/esm150_lora_repro_v0/` |
 | 2026-10-22 | W1 三方法对拍与 10 个不一致位点选取 | 201 行推理；130 行指标；71 行仅展示；53 项测试通过、1 项 GPU 门控跳过；核验脚本返回 PASS | ✅ 通过；产物见 `reports/w1_three_method_v0/` |
 | 2026-10-23 | W1 10 个不一致位点人工复核 | GlyGen 缓存证据逐条核对；6 个实验阳性得到独立支持、3 个漏注释候选、1 个未找到独立证据；核验脚本返回 PASS；56 项测试中 55 项通过、1 项 GPU 门控跳过 | ✅ 通过；证据写入 `review_top10.csv` 与 `report.md` |
