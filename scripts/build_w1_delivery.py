@@ -329,6 +329,10 @@ def verify_checksums(root: Path) -> tuple[int, int, int]:
 
 
 def sync_delivery() -> None:
+    copy_file(REPO_ROOT / "REPRO.md", DELIVERY_ROOT / "REPRO.md")
+    copy_file(REPO_ROOT / "REPRO.md", DELIVERY_ROOT / "07-项目文档/REPRO.md")
+    copy_file(REPO_ROOT / "README.md", DELIVERY_ROOT / "07-项目文档/项目README.md")
+
     for source_relative, destination_relative in REPORT_COPIES.items():
         source = REPO_ROOT / source_relative
         require(source.is_file(), f"Missing report source: {source}")

@@ -4,6 +4,8 @@
 > 代码状态：W1 的环境、数据集 v0、35M 线性探针、作者 150M LoRA 复算、三方法对拍和 10 个分歧位点人工复核均已完成。
 > 数据口径见 `reports/dataset_v0.md`，探针结果见 `reports/esm35_linear_probe_v0/report.md`，
 > 150M 复算结论见 `reports/mcc_repro.md`，候选位点对拍见 `reports/w1_three_method_v0/report.md`。
+>
+> W1 交付状态（2026-10-27）：材料已齐，周视频已补入；周视频展示的实验基线为 `db8f1d8`，之后只追加交付状态同步文档。交付包为 68 个文件、67/67 条校验一致，正式周目录为 76 个文件、75/75 条校验一致，不一致、缺失和格式错误均为 0。交付总表保持 `进行中`，待 2026-10-27 20:00 正式提交后改为 `已交`。
 
 ## 教师建议阅读顺序
 
@@ -55,7 +57,7 @@ D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\check_esm150_lora
 D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe -m unittest discover -s tests -p "test_*.py" -v
 ```
 
-`scripts/build_w1_delivery.py --sync` 会把仓库内的报告、源代码和正式周附件同步到交付目录，随后重算 `SHA256SUMS.txt`。脚本会保留“视频待补入”状态，不会把目录误标成已完成。
+`scripts/build_w1_delivery.py --sync` 会把仓库内的报告、源代码、README、REPRO 和正式周附件同步到交付目录，随后重算 `SHA256SUMS.txt`。当前视频已补入，交付包和正式周目录的校验状态均为 `PASS`；以后修改文档或重新生成交付物时再运行该命令。
 
 ## 现在能跑什么
 
@@ -124,8 +126,8 @@ MCC 为 **0.000000**。35M 使用窗口化折外预测，150M 使用全序列 Lo
 
 W1 正式交付目录为 `D:\毕设交付\W01_2026-10-27`。完整离线复核包位于
 `D:\毕设交付\W1_完整交付_v1`，包含中文报告、核心数据、人工复核、源代码和逐文件
-SHA256 清单。视频放入 `01-视频\2026-10-27_W01_周视频.mp4` 后重新运行
-`scripts/build_w1_delivery.py --sync`，再把交付总表状态改为 `已交`。
+SHA256 清单。周视频已补入 `01-视频\2026-10-27_W01_周视频.mp4`，两套目录的校验已通过；
+当前交付总表仍保持 `进行中`，正式提交时只需将其改为 `已交`，不需要重新录制或重做实验结果。
 
 ## 目录
 
