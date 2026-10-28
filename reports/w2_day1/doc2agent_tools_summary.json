@@ -1,0 +1,90 @@
+{
+  "total_tools": 70,
+  "class_counts": {
+    "api_error": 2,
+    "bad_request": 12,
+    "http_424": 1,
+    "not_found": 2,
+    "ok": 43,
+    "param_error": 6,
+    "server_error": 1,
+    "unreachable": 1,
+    "wrapper_bug": 2
+  },
+  "directly_ok": 43,
+  "self_reported_ok": 0,
+  "service_alive": 61,
+  "service_alive_rate": 0.8714,
+  "unreachable": 1,
+  "not_exercised": 8,
+  "unaccounted": 0,
+  "wrapper_or_param_broken": 8,
+  "by_group": {
+    "WURCSFramework": {
+      "total": 3,
+      "ok": 3,
+      "alive": 3
+    },
+    "composition": {
+      "total": 1,
+      "ok": 0,
+      "alive": 1
+    },
+    "glycam": {
+      "total": 1,
+      "ok": 1,
+      "alive": 1
+    },
+    "glycanformatconverter": {
+      "total": 1,
+      "ok": 0,
+      "alive": 1
+    },
+    "glycanimage": {
+      "total": 1,
+      "ok": 0,
+      "alive": 0
+    },
+    "glycosmos-otherapis": {
+      "total": 3,
+      "ok": 1,
+      "alive": 3
+    },
+    "glygen": {
+      "total": 2,
+      "ok": 2,
+      "alive": 2
+    },
+    "glytoucandata": {
+      "total": 2,
+      "ok": 2,
+      "alive": 2
+    },
+    "kegg": {
+      "total": 7,
+      "ok": 2,
+      "alive": 4
+    },
+    "o-glcnac": {
+      "total": 1,
+      "ok": 0,
+      "alive": 0
+    },
+    "pubchem": {
+      "total": 5,
+      "ok": 4,
+      "alive": 4
+    },
+    "swaggerProteinAPI": {
+      "total": 35,
+      "ok": 28,
+      "alive": 34
+    },
+    "unilectin": {
+      "total": 8,
+      "ok": 0,
+      "alive": 6
+    }
+  },
+  "checked_at": "2026-10-28T14:32:28+0800"
+}

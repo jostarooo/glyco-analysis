@@ -1,0 +1,136 @@
+# W2 Day 1: PyG RGCN decision, GlycanML recompute, and Doc2Agent inventory
+
+Date: 2026-10-28
+Project: 20-毕设糖基化分析系统
+Type: decision and experiment record
+Status: in progress
+
+## Conclusions
+
+| Line | Conclusion | Evidence |
+|---|---|---|
+| F2 route | Continue with a PyG self-implemented RGCN; do not introduce TorchDrug. | RTX 5060 / sm_120 smoke passed; full three-seed recompute completed; local/upstream environment conflicts remain |
+| F2 target | This round maps to the GlycanML paper Table 3 single-task RGCN row, not Table 2. Paper targets: Immunogenicity AUPRC `0.780 ± 0.006`; Glycosylation Macro-F1 `0.948 ± 0.004`. | `reports/w2_day1/glycanml_paper.txt` lines 1568-1574 |
+| F2 measured | Immunogenicity test AUPRC **`0.7748635136784087 ± 0.009111853148723878`**; Glycosylation test Macro-F1 **`0.9377928560029268 ± 0.0038891301525018625`**. | `reports/w2_day1/glycanml_rgcn_recompute.json` |
+| GlycanML data | All five downstream CSVs downloaded and MD5-verified; upstream `glycan_link` URL incorrectly points to `glycan_properties.csv`; local fix records `PASS_URL_FIX`. | `reports/w2_day1/glycanml_data_check.json` |
+| F3 tools | 70 wrappers: `43/70` directly ok; service-alive rate `61/70 = 0.8714`; `20/50` tasks have all wrapper statuses ok; `30/50` have at least one non-ok step. | `doc2agent_tools_summary.json`, `doc2agent_tasks_summary.json` |
+| F3 model pilot | **Blocked; not a model result.** Qwen3 8B and 4B each attempted one task and received Ollama HTTP 500; 4B recorded llama-server `0xc0000409` stack buffer overflow. | `f3_qwen3_8b_pilot/summary.json`, `f3_qwen3_4b_pilot/summary.json` |
+
+## W1 closure
+
+- W1 was formally submitted on 2026-10-27; the official video is the newly recorded `第一周展示视频.mp4` (6:00), with the 10/26 video retained for reference.
+- The delivery table W01 is `已交`, commit `6d19f1e`.
+- GitHub is not equal to "synced": remote `main` was the web-README snapshot chain `e301353 → 21089ea → db8f1d8`, while local reached `6d19f1e → 1060ace`. Histories diverged; `scripts/publish_github.py` rewrites remote `main`, so this run did not publish. Explicit user authorization is required before any future sync.
+
+## F2: GlycanML data contract
+
+Upstream URL and MD5 expectations were parsed from five dataset classes and written under `data/raw/glycanml/`:
+
+| Dataset | Rows | Status | Note |
+|---|---:|---|---|
+| `glycan_classification` | 13209 | `PASS` | URL and MD5 both match |
+| `glycan_interaction` | 1392 | `PASS` | URL and MD5 both match |
+| `glycan_immunogenicity` | 1320 | `PASS` | URL and MD5 both match |
+| `glycan_properties` | 11950 | `PASS` | URL and MD5 both match |
+| `glycan_link` | 1683 | `PASS_URL_FIX` | Upstream URL points at the properties CSV; local used the correct CSV; MD5 matches |
+
+Only two tasks were recomputed:
+
+| Task | File | Type | Split | Label distribution |
+|---|---|---|---|---|
+| Immunogenicity | `glycan_immunogenicity.csv` | binary | train / valid / test = `1026 / 149 / 145` | `0:684, 1:636` |
+| Glycosylation | `glycan_link.csv` | 3-class N / O / free | `1356 / 163 / 164` | `N:937, O:668, free:78` |
+
+Fixed validation: all CSV rows are parsed; the one-hot split must hit exactly one column; labels must match the declared `TASKS` mapping; row and split counts are checked. Graph parsing mirrors the upstream `Glycan.from_iupac` vocabulary: active units `127`, relations `84`, embedding rows `143`. Upstream already emits both directions per branch, so the graph **does not add `ToUndirected`, self loops, or edge deduplication**.
+
+## F2: model and training configuration
+
+| Item | Value |
+|---|---|
+| embedding | `[143, 128]` |
+| message passing | 3 layers; each computes per-relation mean in blocks of 84 relations, concatenates relation channels, then applies a linear map plus self projection and ReLU |
+| pooling | mean + max over the concatenated three layer outputs |
+| head | `768 → 768 → num_classes` |
+| optimizer | Adam, `lr=0.0005`, `weight_decay=0.001` |
+| scheduler | `CosineAnnealingLR`, `T_max=100` |
+| batch | 64 |
+| epochs | 50 |
+| seeds | `0, 1, 2` |
+| device | `cuda:0` (RTX 5060 Laptop GPU, sm_120) |
+| selection | Immunogenicity selects checkpoint by validation AUROC; Glycosylation by validation accuracy |
+
+Notes: the code constant `BATCH_SIZE = 256` is not the effective run; the artifact records `training.batch_size=64`. The batch-64 two-epoch memory test passed; batch 256 triggered CUDA allocation OOM, so the full run used 64. `torchdrug_installed=false`, so no bitwise TorchDrug numeric delta was measured; this implementation is structurally related, not a clone. Upstream `link_RGCN.yaml` sets `num_class: 2` while the CSV has three classes; the recompute follows the CSV.
+
+## F2: paper target and measured result
+
+| Task | Paper target (Table 3 RGCN row) | Measured | Interpretation |
+|---|---|---|---|
+| Immunogenicity | AUPRC `0.780 ± 0.006` | **`0.7748635136784087 ± 0.009111853148723878`** | paper mean lies within one measured standard deviation; no claim of full reproduction |
+| Glycosylation | Macro-F1 `0.948 ± 0.004` | **`0.9377928560029268 ± 0.0038891301525018625`** | below paper by about `0.010`; no claim of full reproduction |
+
+Additional metrics:
+
+- Immunogenicity test AUROC: `0.9730666666666666 ± 0.0012858201014657124`; test accuracy: `0.9241379310344827 ± 0.006896551724137945`.
+- Glycosylation test accuracy: `0.9613821138211381 ± 0.003520428470668453`.
+- Per-seed test AUPRC: `0.7832559324152325 / 0.7651717289430979 / 0.7761628796768958`.
+- Per-seed test Macro-F1: `0.9407962109575013 / 0.9333997727074045 / 0.9391825843438747`.
+
+The difference is attributed to implementation and training-detail divergence, not a one-dimensional "0.01 is failure": the self-implemented relation layer uses blocked per-relation means, and TorchDrug's relation conv was not run locally; the model is related but not a loadable checkpoint. Ablations can later compare graph versus sequence, but this absolute gap is not yet a model-capability conclusion.
+
+## F3: Doc2Agent tool and task inventory
+
+Direct import plus minimal sample call over 70 upstream wrappers:
+
+| Class | Count | Meaning |
+|---|---:|---|
+| `ok` | 43 | direct call succeeded |
+| `bad_request` | 12 | HTTP 400/422 |
+| `param_error` | 6 | Python assertion or parameter error before HTTP |
+| `api_error` | 2 | HTTP 2xx but payload contains an error field |
+| `not_found` | 2 | HTTP 404 |
+| `wrapper_bug` | 2 | Python-level exception before HTTP |
+| `http_424` | 1 | HTTP 424; service reachable but function failed |
+| `server_error` | 1 | HTTP 5xx |
+| `unreachable` | 1 | SSL error |
+
+`service_alive_rate=0.8714` means the service responded, not that the call succeeded; the stricter `directly_ok=43/70` is the direct-success ratio. `not_exercised=8` aggregates `param_error + wrapper_bug + dependency_missing`; this round has no `dependency_missing`.
+
+Task-level join of 50 expected trajectories to wrapper status:
+
+| Item | Result |
+|---|---:|
+| total tasks | 50 |
+| 1-step / 2-step / 3-step | `30 / 17 / 3` |
+| all wrappers ok | 20 |
+| at least one non-ok wrapper | 30 |
+| upstream Claude baseline | 18/50, GPT-4o grading |
+| upstream Qwen3 baseline | 15/50, GPT-4o grading |
+
+`all_wrappers_ok=20` is a wrapper-feasibility ceiling, not model success. All three 3-step tasks contain a non-ok wrapper, so strict expected trajectories cannot complete on the current wrapper set. Fix or bypass the pre-HTTP wrappers first, then decide whether agents need substitute tools.
+
+## F3: why the Qwen3 pilot is not comparable
+
+| Model | Tasks | Result | Interpretation |
+|---|---:|---|---|
+| Qwen3 8B | 1 | Ollama HTTP 500 | no usable action returned; zero tool calls |
+| Qwen3 4B | 1 | HTTP 500; llama-server exit `0xc0000409` | stack buffer overflow; no usable action returned |
+
+These zeros prove local runtime failure only. They do not prove that the models cannot select tools and must not be described as "0 capability". The upstream Claude 18/50 and Qwen3 15/50 baselines use GPT-4o grading; the local script scores tool trajectories and call status and does not run that grader, so **the numbers are not comparable**. The `qwen3:0.6b` download also did not finish, so no 50-task run was started.
+
+## Verification status
+
+| Check | Status |
+|---|---|
+| GlycanML download and MD5 | PASS (`glycan_link` records upstream URL fix) |
+| PyG `RGCNConv` GPU smoke | PASS |
+| F2 full training, 3 seeds × 50 epochs | PASS, artifact written |
+| Doc2Agent tool and task inventory | artifacts generated; not all endpoints succeed |
+| W1 regression tests | pending this run |
+| GitHub sync | not run; remote and local diverged, awaiting explicit user authorization |
+
+## Next steps
+
+1. Run W1 default regression and `git diff --check`, then commit W2 Day 1 code and reports.
+2. Use `qwen3:0.6b` for an F3 chain smoke only. If it passes, reduce `num_ctx` / `max_rounds` and try a small batch; never compare 0.6B directly with upstream 18/50 or 15/50.
+3. Fix or bypass the 8 pre-HTTP Doc2Agent wrappers, then reclassify the 50 tasks as tool-feasible, needing substitution, or service-failed.
+4. Before F2 ablations, freeze the parser, split, metric, and seed contract from this report.

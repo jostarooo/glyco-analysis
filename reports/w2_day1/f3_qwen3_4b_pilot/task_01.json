@@ -1,0 +1,19 @@
+{
+  "task_id": 1,
+  "question": "How does the structural representation of the complex glycan 'α-D-Manp-(1→3)[α-D-Manp-(1→6)]-β-D-Manp-(1→4)-β-D-GlcpNAc-(1→4)-β-D-GlcpNAc-(1→4)-β-D-Glcp-(1→O)Cer' change when converted from IUPAC Extended format to WURCS format, using the GlyTouCan database?",
+  "expected_tools": [
+    "convert_iupac_extended_to_wurcs"
+  ],
+  "tool_calls": [],
+  "final_answer": "",
+  "errors": [
+    "ollama: RuntimeError: HTTP 500: {\"error\":\"llama-server process has terminated: exit status 0xc0000409: The system detected an overrun of a stack-based buffer in this application. This overrun could potentially allow a malicious user to gain control of this application.: GGML_ASSERT(\"}"
+  ],
+  "elapsed_seconds": 9.239,
+  "exact_sequence": false,
+  "all_expected_called": false,
+  "any_expected_called": false,
+  "expected_steps": 1,
+  "called_steps": 0,
+  "call_successes": 0
+}

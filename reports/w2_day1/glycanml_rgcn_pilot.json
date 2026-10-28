@@ -1,0 +1,212 @@
+{
+  "status": "PASS",
+  "benchmark": "GlycanML Table 3 RGCN F2 recompute",
+  "mode": "full",
+  "seeds": [
+    0
+  ],
+  "vocab": {
+    "active_units": 127,
+    "relation_ids": 84,
+    "embedding_rows": 143
+  },
+  "parser": {
+    "source": "GlycanML/module/custom_data/glycan.py",
+    "edge_semantics": "per-branch all ordered unit pairs; each resolved relation is emitted in both directions",
+    "to_undirected": false,
+    "self_loops": false,
+    "deduplicate_edges": false
+  },
+  "model": {
+    "embedding": [
+      143,
+      128
+    ],
+    "layers": 3,
+    "hidden_dim": 128,
+    "relation_channels": 84,
+    "pooling": [
+      "mean",
+      "max"
+    ],
+    "mlp": [
+      768,
+      768
+    ]
+  },
+  "training": {
+    "optimizer": "Adam",
+    "lr": 0.0005,
+    "weight_decay": 0.001,
+    "batch_size": 256,
+    "epochs": 1,
+    "scheduler": "CosineAnnealingLR",
+    "T_max": 100,
+    "deterministic_seed_control": true
+  },
+  "tasks": {
+    "immunogenicity": {
+      "csv": "D:\\wbworkspace\\glyco-analysis\\data\\raw\\glycanml\\glycan_immunogenicity.csv",
+      "target_column": "immunogenicity",
+      "num_classes": 1,
+      "class_mapping": {
+        "0": 0,
+        "1": 1
+      },
+      "rows": 1320,
+      "split_counts": {
+        "train": 1026,
+        "valid": 149,
+        "test": 145
+      },
+      "label_counts": {
+        "0": 684,
+        "1": 636
+      },
+      "nodes": 9634,
+      "edges": 16628,
+      "min_nodes": 3,
+      "max_nodes": 24,
+      "selection_metric": "auroc",
+      "report_metric": "auprc",
+      "device": "cuda:0",
+      "cuda_fallback_reason": null,
+      "per_seed": [
+        {
+          "seed": 0,
+          "best_epoch": 1,
+          "last_train_loss": 0.5725977491681804,
+          "validation_selection": {
+            "metric": "auroc",
+            "value": 0.6671380090497738
+          },
+          "validation": {
+            "auroc": 0.6671380090497738,
+            "auprc": 0.15993629986103775,
+            "accuracy": 0.6778523489932886
+          },
+          "test": {
+            "auroc": 0.5668,
+            "auprc": 0.26326577350385305,
+            "accuracy": 0.5172413793103449
+          },
+          "device": "cuda:0"
+        }
+      ],
+      "aggregate": {
+        "validation_auroc": {
+          "mean": 0.6671380090497738,
+          "std": 0.0,
+          "n": 1
+        },
+        "validation_auprc": {
+          "mean": 0.15993629986103775,
+          "std": 0.0,
+          "n": 1
+        },
+        "validation_accuracy": {
+          "mean": 0.6778523489932886,
+          "std": 0.0,
+          "n": 1
+        },
+        "test_auroc": {
+          "mean": 0.5668,
+          "std": 0.0,
+          "n": 1
+        },
+        "test_auprc": {
+          "mean": 0.26326577350385305,
+          "std": 0.0,
+          "n": 1
+        },
+        "test_accuracy": {
+          "mean": 0.5172413793103449,
+          "std": 0.0,
+          "n": 1
+        }
+      }
+    },
+    "glycosylation": {
+      "csv": "D:\\wbworkspace\\glyco-analysis\\data\\raw\\glycanml\\glycan_link.csv",
+      "target_column": "link",
+      "num_classes": 3,
+      "class_mapping": {
+        "N": 0,
+        "O": 1,
+        "free": 2
+      },
+      "rows": 1683,
+      "split_counts": {
+        "train": 1356,
+        "valid": 163,
+        "test": 164
+      },
+      "label_counts": {
+        "0": 937,
+        "1": 668,
+        "2": 78
+      },
+      "nodes": 15206,
+      "edges": 27044,
+      "min_nodes": 3,
+      "max_nodes": 30,
+      "selection_metric": "accuracy",
+      "report_metric": "macro_f1",
+      "device": "cuda:0",
+      "cuda_fallback_reason": null,
+      "per_seed": [
+        {
+          "seed": 0,
+          "best_epoch": 1,
+          "last_train_loss": 0.6295165570787976,
+          "validation_selection": {
+            "metric": "accuracy",
+            "value": 0.8282208588957055
+          },
+          "validation": {
+            "accuracy": 0.8282208588957055,
+            "macro_f1": 0.570498738914653
+          },
+          "test": {
+            "accuracy": 0.8170731707317073,
+            "macro_f1": 0.5728132387706856
+          },
+          "device": "cuda:0"
+        }
+      ],
+      "aggregate": {
+        "validation_accuracy": {
+          "mean": 0.8282208588957055,
+          "std": 0.0,
+          "n": 1
+        },
+        "validation_macro_f1": {
+          "mean": 0.570498738914653,
+          "std": 0.0,
+          "n": 1
+        },
+        "test_accuracy": {
+          "mean": 0.8170731707317073,
+          "std": 0.0,
+          "n": 1
+        },
+        "test_macro_f1": {
+          "mean": 0.5728132387706856,
+          "std": 0.0,
+          "n": 1
+        }
+      }
+    }
+  },
+  "torchdrug_comparison": {
+    "reference": "GlycanML GlycanRGCN (TorchDrug) + GlycanPropertyPrediction",
+    "torchdrug_installed": false,
+    "measured_numeric_delta": null,
+    "notes": [
+      "No TorchDrug runtime is installed in this environment, so no numeric delta was measured.",
+      "This script implements the requested per-relation mean channels; it is structurally related to, but not a bitwise clone of, TorchDrug's RelationalGraphConv.",
+      "The upstream link_RGCN.yaml specifies num_class: 2 while the CSV contains N, O, and free; this benchmark intentionally uses three classes as required for the Table 3 recomputation.",
+      "The upstream dataset docstring also contains stale split statistics; this script validates the actual CSV one-hot counts."
+    ]
+  }
+}

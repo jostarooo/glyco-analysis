@@ -17,7 +17,7 @@ author/committer stamps; the run fails loudly unless the remote commit SHA
 equals the local one.
 
 Usage:
-    .venv\\Scripts\\python.exe scripts\\publish_github.py --private
+    .venv\\Scripts\\python.exe scripts\\publish_github.py
     .venv\\Scripts\\python.exe scripts\\publish_github.py --repo glyco-analysis
 """
 

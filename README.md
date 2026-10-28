@@ -1,9 +1,11 @@
 # 糖基化分析系统：以蛋白质语言模型预测 N-糖基化位点、以图神经网络解析糖链、并用工具调用智能体把两者串成一个可对话的分析工作台
 
-> 2026-10-27 第一次对齐
+> 2026-10-27 第一次对齐；2026-10-28 W1 交付闭环与 W2 启动
 > 代码状态：W1 的环境、数据集 v0、35M 线性探针、作者 150M LoRA 复算、三方法对拍和 10 个分歧位点人工复核均已完成。
 > 数据口径见 `reports/dataset_v0.md`，探针结果见 `reports/esm35_linear_probe_v0/report.md`，
 > 150M 复算结论见 `reports/mcc_repro.md`，候选位点对拍见 `reports/w1_three_method_v0/report.md`。
+>
+> W1 已于 2026-10-27 正式提交（2026-10-28 核记）。正式周视频为 `02-进度报告\第一周展示视频.mp4`（6 分 00 秒），交付包为 68 个内容文件、68/68 条校验一致，正式周目录为 76 个文件、75/75 条校验一致。
 
 ## 教师建议阅读顺序
 
@@ -94,7 +96,7 @@ D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\check_w1_three_me
 
 # 同步到 GitHub：本机 git push 通道不通，发布走 REST API（需要经典 PAT 的 `repo` 权限范围）
 # 先把 token 写入 %USERPROFILE%\.github-token，或设置 GH_TOKEN；别把 token 写进仓库
-D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\publish_github.py --private
+D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\publish_github.py
 ```
 
 探针把 82 个含 `ECO:0000269` 的 N-连接糖基化位点作为实验阳性，把 48 个没有 N-连接
@@ -116,11 +118,16 @@ MCC 为 **0.000000**。35M 使用窗口化折外预测，150M 使用全序列 Lo
 `review_top10.csv`，评估标签和指标保持不变。
 
 发布脚本会把本地历史逐提交重放到远端，并校验提交 SHA 与目录树 SHA 都与本地一致，
-不一致就报错退出；空仓库的首次提交由脚本自己播种。详见 `REPRO.md` 第四节。
+不一致就报错退出；空仓库的首次提交由脚本自己播种。脚本会重写远端 `main`，运行前必须确认这次发布是用户要求的。详见 `REPRO.md` 第四节。
 
-远端：https://github.com/jostarooo/glyco-analysis （私有仓库，`main`）
+远端：https://github.com/jostarooo/glyco-analysis （公开仓库）。截至 2026-10-28 W2 Day 1 提交，`main` 为 `e301353` 的网页 README 快照；本地 `6d19f1e` 及其后的提交尚未镜像，两边历史已分叉。
 
 环境事实见 `REPRO.md`，复现用的三个上游仓库在 `D:\wbworkspace\`（LoRA-N-Gly / GlycanML / Doc2Agent）。
+
+W1 正式交付目录为 `D:\毕设交付\W01_2026-10-27`。完整离线复核包位于
+`D:\毕设交付\W1_完整交付_v1`，包含中文报告、核心数据、人工复核、源代码和逐文件
+SHA256 清单。新录的 6 分 00 秒展示视频是正式周视频，3 分 34 秒的 10/26
+版本保留备查。交付总表已改为 `已交`。
 
 ## 目录
 

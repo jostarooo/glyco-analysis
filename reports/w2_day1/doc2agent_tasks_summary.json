@@ -1,0 +1,55 @@
+{
+  "total_tasks": 50,
+  "single_step": 30,
+  "multi_step": 20,
+  "step_distribution": {
+    "1": 30,
+    "2": 17,
+    "3": 3
+  },
+  "all_wrappers_ok": 20,
+  "has_non_ok_wrapper": 30,
+  "unknown_tools": {},
+  "site_counts": {
+    "WURCS-RDF → glytoucandata": 1,
+    "WURCSFramework": 1,
+    "WURCSFramework → glycanimage": 1,
+    "WURCSFramework → glytoucandata": 1,
+    "composition → glytoucandata → glygen": 1,
+    "glycam → glycanimage": 1,
+    "glycanformatconverter": 1,
+    "glycanformatconverter → glycanimage → WURCSFramework": 1,
+    "glycanimage": 1,
+    "glycanimage → WURCSFramework": 1,
+    "glycosmos-otherapis": 2,
+    "glycosmos-otherapis → WURCSFramework": 1,
+    "glycosmos-otherapis → glytoucandata": 1,
+    "glygen": 3,
+    "glygen → swaggerProteinAPI": 1,
+    "glytoucandata → glycanimage": 1,
+    "kegg": 1,
+    "pubchem": 4,
+    "swaggerProteinAPI": 17,
+    "swaggerProteinAPI → unilectin": 1,
+    "swaggerProteinAPI → unknown": 1,
+    "unilectin": 4,
+    "unilectin → glygen": 2,
+    "unilectin → swaggerProteinAPI": 1
+  },
+  "upstream_baselines": {
+    "claude_logs": {
+      "available": true,
+      "successful_tasks": 18,
+      "total_tasks": 50,
+      "success_rate": 0.36,
+      "grader_model": "gpt-4o"
+    },
+    "qwen3_logs": {
+      "available": true,
+      "successful_tasks": 15,
+      "total_tasks": 50,
+      "success_rate": 0.3,
+      "grader_model": "gpt-4o"
+    }
+  }
+}
