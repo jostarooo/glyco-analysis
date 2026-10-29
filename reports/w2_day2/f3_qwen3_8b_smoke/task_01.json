@@ -1,0 +1,30 @@
+{
+  "task_id": 1,
+  "question": "How does the structural representation of the complex glycan 'α-D-Manp-(1→3)[α-D-Manp-(1→6)]-β-D-Manp-(1→4)-β-D-GlcpNAc-(1→4)-β-D-GlcpNAc-(1→4)-β-D-Glcp-(1→O)Cer' change when converted from IUPAC Extended format to WURCS format, using the GlyTouCan database?",
+  "expected_tools": [
+    "convert_iupac_extended_to_wurcs"
+  ],
+  "tool_calls": [
+    {
+      "tool": "convert_iupac_extended_to_wurcs",
+      "arguments": {
+        "iupacextended": "α-D-Manp-(1→3)[α-D-Manp-(1→6)]-β-D-Manp-(1→4)-β-D-GlcpNAc-(1→4)-β-D-GlcpNAc-(1→4)-β-D-Glcp-(1→O)Cer"
+      },
+      "status": "ok",
+      "error": "",
+      "result": {
+        "message": "Accession not found.",
+        "WURCS": "WURCS=2.0/4,6,5/[a2122h-1b_1-5][a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-2-2-3-4-4/a4-b1_b4-c1_c4-d1_d3-e1_d6-f1"
+      }
+    }
+  ],
+  "final_answer": "The structural representation of the complex glycan in WURCS format is: WURCS=2.0/4,6,5/[a2122h-1b_1-5][a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-2-2-3-4-4/a4-b1_b4-c1_c4-d1_d3-e1_d6-f1. This WURCS representation corresponds to the provided IUPAC Extended format and can be used to query or retrieve detailed information from the GlyTouCan database.",
+  "errors": [],
+  "elapsed_seconds": 56.938,
+  "exact_sequence": true,
+  "all_expected_called": true,
+  "any_expected_called": true,
+  "expected_steps": 1,
+  "called_steps": 1,
+  "call_successes": 1
+}

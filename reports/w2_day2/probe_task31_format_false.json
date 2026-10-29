@@ -1,0 +1,6 @@
+{
+  "format": false,
+  "status": 200,
+  "seconds": 69.01,
+  "body": "{\"model\":\"qwen3:8b\",\"created_at\":\"2026-10-29T05:04:52.2945806Z\",\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"action\\\": \\\"call_tool\\\", \\\"tool\\\": \\\"obtain_glytoucan_id_from_wurcs\\\", \\\"arguments\\\": {\\\"wurcs\\\": \\\"WURCS=2.0/3,9,8/[axxxxh-1x_1-5_2*NCC/3=O][axxxxh-1x_1-5][a1221m-1x_1-5]/1-1-1-1-2-2-2-2-3/a?|b?|c?|d?|e?|f?|g?|h?|i?}-{a?|b?|c?|d?|e?|f?|g?|h?|i?_a?|b?|c?|d?|e?|f?|g?|h?|i?}-{a?|b?|c?|d?|e?|f?|g?|h?|i?_a?|b?|c?|d?|e?|f?|g?|h?|i?}-{a?|b?|c?|d?|e\"},\"done\":true,\"done_reason\":\"length\",\"total_duration\":68991845100,\"load_duration\":15084389000,\"prompt_eval_count\":3169,\"prompt_eval_cached_count\":0,\"prompt_eval_duration\":25836902000,\"eval_count\":256,\"eval_duration\":28020968000}"
+}

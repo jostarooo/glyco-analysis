@@ -1,7 +1,8 @@
 """Run the Doc2Agent 50-task tool-use smoke test with a local Qwen3 model.
 
 This runner measures tool selection and execution. It does not reproduce the
-upstream GPT-4o answer-quality grader.
+upstream GPT-4o answer-quality grader. Thinking is disabled by default to avoid
+long Qwen3 reasoning traces; raise `--num-predict` for long WURCS inputs.
 """
 
 from __future__ import annotations
@@ -22,8 +23,18 @@ ROOT = Path(__file__).resolve().parents[1]
 DOC2AGENT_ROOT = Path(r"D:\wbworkspace\Doc2Agent")
 DEFAULT_TASKS = DOC2AGENT_ROOT / "test_glycan" / "glycan_tasks_classified.jsonl"
 DEFAULT_TOOLS = DOC2AGENT_ROOT / "test_glycan" / "MCPTools"
-DEFAULT_OUT = ROOT / "reports" / "w2_day1" / "f3_qwen3_8b"
+DEFAULT_OUT = ROOT / "reports" / "w2_day2" / "f3_qwen3_8b"
 OLLAMA_URL = "http://127.0.0.1:11434/api/chat"
+
+
+@dataclass(frozen=True)
+class OllamaConfig:
+    model: str
+    seed: int
+    num_ctx: int
+    num_predict: int
+    think: bool
+    request_timeout: float
 
 
 @dataclass
@@ -130,7 +141,10 @@ def parse_json_object(text: str) -> dict[str, Any]:
         end = text.rfind("}")
         if start < 0 or end <= start:
             return {}
-        value = json.loads(text[start : end + 1])
+        try:
+            value = json.loads(text[start : end + 1])
+        except json.JSONDecodeError:
+            return {}
         return value if isinstance(value, dict) else {}
 
 
@@ -174,21 +188,26 @@ def truncate_payload(value: Any, limit: int = 6000) -> Any:
     return {"truncated": True, "preview": text[:limit]}
 
 
-def call_ollama(model: str, messages: list[dict[str, str]], seed: int) -> tuple[str, float]:
+def call_ollama(
+    messages: list[dict[str, str]], config: OllamaConfig
+) -> tuple[str, float]:
     payload = {
-        "model": model,
+        "model": config.model,
         "messages": messages,
         "stream": False,
         "format": "json",
+        "think": config.think,
         "options": {
             "temperature": 0,
-            "seed": seed,
-            "num_ctx": 16384,
-            "num_predict": 768,
+            "seed": config.seed,
+            "num_ctx": config.num_ctx,
+            "num_predict": config.num_predict,
         },
     }
     started = time.perf_counter()
-    response = requests.post(OLLAMA_URL, json=payload, timeout=300)
+    response = requests.post(
+        OLLAMA_URL, json=payload, timeout=config.request_timeout
+    )
     if not response.ok:
         raise RuntimeError(f"HTTP {response.status_code}: {response.text[:500]}")
     elapsed = time.perf_counter() - started
@@ -198,8 +217,7 @@ def call_ollama(model: str, messages: list[dict[str, str]], seed: int) -> tuple[
 def run_task(
     task: dict[str, Any],
     tools: dict[str, Tool],
-    model: str,
-    seed: int,
+    config: OllamaConfig,
     max_rounds: int,
     system: str,
 ) -> TaskRun:
@@ -217,7 +235,7 @@ def run_task(
     ]
     for _ in range(max_rounds):
         try:
-            content, _ = call_ollama(model, messages, seed)
+            content, _ = call_ollama(messages, config)
         except Exception as exc:
             run.errors.append(f"ollama: {type(exc).__name__}: {exc}")
             break
@@ -287,7 +305,11 @@ def main() -> int:
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--limit", type=int, default=0)
     parser.add_argument("--task-ids", default="")
-    parser.add_argument("--max-rounds", type=int, default=3)
+    parser.add_argument("--max-rounds", type=int, default=6)
+    parser.add_argument("--num-ctx", type=int, default=8192)
+    parser.add_argument("--num-predict", type=int, default=256)
+    parser.add_argument("--request-timeout", type=float, default=180)
+    parser.add_argument("--enable-thinking", action="store_true")
     parser.add_argument("--tasks", type=Path, default=DEFAULT_TASKS)
     parser.add_argument("--tools", type=Path, default=DEFAULT_TOOLS)
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT)
@@ -303,13 +325,21 @@ def main() -> int:
     if not tasks:
         raise SystemExit("No tasks selected")
 
+    config = OllamaConfig(
+        model=args.model,
+        seed=args.seed,
+        num_ctx=args.num_ctx,
+        num_predict=args.num_predict,
+        think=args.enable_thinking,
+        request_timeout=args.request_timeout,
+    )
     args.out.mkdir(parents=True, exist_ok=True)
     system = system_prompt(compact_tool_catalog(tools))
     runs = []
     started = time.perf_counter()
     for task in tasks:
         print(f"task {task['task_id']:02d}/{len(tasks):02d}", flush=True)
-        run = run_task(task, tools, args.model, args.seed, args.max_rounds, system)
+        run = run_task(task, tools, config, args.max_rounds, system)
         payload = {
             "task_id": run.task_id,
             "question": run.question,
@@ -327,10 +357,14 @@ def main() -> int:
         )
 
     summary = {
-        "model": args.model,
-        "seed": args.seed,
+        "model": config.model,
+        "seed": config.seed,
         "tasks_run": len(runs),
         "max_rounds": args.max_rounds,
+        "num_ctx": config.num_ctx,
+        "num_predict": config.num_predict,
+        "think": config.think,
+        "request_timeout_seconds": config.request_timeout,
         "tools_available": len(tools),
         "exact_sequence": sum(run["exact_sequence"] for run in runs),
         "all_expected_called": sum(run["all_expected_called"] for run in runs),

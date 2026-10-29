@@ -1,0 +1,51 @@
+{
+  "task_id": 37,
+  "question": "Determine the molecular mass of the glycan specified by the composition 'Hex(3)HexNAc(2)' to validate its molecular weight. First, convert this glycan composition text to the WURCS format using the `convert_composition_text_to_wurcs_format` tool. Next, calculate the molecular mass of the glycan using the WURCS format obtained by the `calculate_mass_from_wurcs` tool.",
+  "expected_tools": [
+    "convert_composition_text_to_wurcs_format",
+    "calculate_mass_from_wurcs"
+  ],
+  "tool_calls": [
+    {
+      "tool": "convert_composition_text_to_wurcs_format",
+      "arguments": {
+        "text": "Hex(3)HexNAc(2)"
+      },
+      "status": "ok",
+      "error": "",
+      "result": [
+        {
+          "id": "G14669DU",
+          "wurcs": "WURCS=2.0/2,5,4/[axxxxh-1x_1-5_2*NCC/3=O][axxxxh-1x_1-5]/1-1-2-2-2/a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?_a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?_a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?_a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?"
+        }
+      ]
+    },
+    {
+      "tool": "calculate_mass_from_wurcs",
+      "arguments": {
+        "wurcs": "WURCS=2.0/2,5,4/[axxxxh-1x_1-5_2*NCC/3=O][axxxxh-1x_1-5]/1-1-2-2-2/a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?_a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?_a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?_a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?"
+      },
+      "status": "ok",
+      "error": "",
+      "result": {
+        "status_code": 200,
+        "url": "https://api.glycosmos.org/wurcsframework/1.2.14/wurcs2mass",
+        "data": [
+          {
+            "input": "WURCS=2.0/2,5,4/[axxxxh-1x_1-5_2*NCC/3=O][axxxxh-1x_1-5]/1-1-2-2-2/a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?_a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?_a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?_a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?",
+            "mass": 910.32778
+          }
+        ]
+      }
+    }
+  ],
+  "final_answer": "The molecular mass of the glycan specified by the composition 'Hex(3)HexNAc(2)' is 910.32778 g/mol.",
+  "errors": [],
+  "elapsed_seconds": 9.266,
+  "exact_sequence": true,
+  "all_expected_called": true,
+  "any_expected_called": true,
+  "expected_steps": 2,
+  "called_steps": 2,
+  "call_successes": 2
+}

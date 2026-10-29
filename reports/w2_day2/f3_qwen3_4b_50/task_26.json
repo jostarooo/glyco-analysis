@@ -1,0 +1,30 @@
+{
+  "task_id": 26,
+  "question": "Investigate the post-translational modifications specifically phosphorylation occurring in phosphoglycerate kinase 1 (PGK1) protein across both Homo sapiens (human) and Mus musculus (mouse). Use the UniProt accession numbers 'P00558' for human and 'P52480' for mouse, and filter results from the data sources PRIDE and PTMExchange with a PTM confidence score of Gold.",
+  "expected_tools": [
+    "search_proteomics_peptide_ptm"
+  ],
+  "tool_calls": [
+    {
+      "tool": "search_proteomics_ptm",
+      "arguments": {
+        "accession": "P00558",
+        "taxid": "9606",
+        "offset": 0,
+        "size": 100,
+        "datasource": "PRIDE",
+        "ptm_confidence": "Gold"
+      },
+      "status": "unknown_tool"
+    }
+  ],
+  "final_answer": "The tool 'search_proteomics_ptm' is not available in the provided catalog. Please use an appropriate tool from the catalog to investigate the post-translational modifications, specifically phosphorylation, occurring in phosphoglycerate kinase 1 (PGK1) protein across both Homo sapiens (human) and Mus musculus (mouse) using the UniProt accession numbers 'P00558' for human and 'P52480' for mouse, and filter results from the data sources PRIDE and PTMExchange with a PTM confidence score of Gold.",
+  "errors": [],
+  "elapsed_seconds": 3.06,
+  "exact_sequence": false,
+  "all_expected_called": false,
+  "any_expected_called": false,
+  "expected_steps": 1,
+  "called_steps": 1,
+  "call_successes": 0
+}

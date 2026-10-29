@@ -1,0 +1,39 @@
+{
+  "task_id": 9,
+  "question": "Investigate the potential isotopic variants and their prevalence in PubChem for a given glycan-related substructure represented by the SMILES string 'C(C1C(C(C(C(O1)O)O)O)O)O', ensuring match isotopes and match charges, and retrieve a maximum of 50 records in JSON format within a 60-second search duration.",
+  "expected_tools": [
+    "structure_search_substructure"
+  ],
+  "tool_calls": [
+    {
+      "tool": "structure_search_substructure",
+      "arguments": {
+        "smiles": "C(C1C(C(C(C(O1)O)O)O)O",
+        "MatchIsotopes?": true,
+        "MatchCharges?": true,
+        "RingsNotEmbedded?": false,
+        "SingleDoubleBondsMatch?": true,
+        "ChainsMatchRings?": true,
+        "StripHydrogen?": false,
+        "Stereo?": true,
+        "MaxSeconds?": 60,
+        "MaxRecords?": 50,
+        "output_format": "json"
+      },
+      "status": "error",
+      "error": "TypeError: structure_search_substructure() got an unexpected keyword argument 'MatchIsotopes?'",
+      "result": null
+    }
+  ],
+  "final_answer": "The structure_search_substructure tool encountered an error due to unexpected keyword arguments. Please check the parameters and try again.",
+  "errors": [
+    "structure_search_substructure: TypeError: structure_search_substructure() got an unexpected keyword argument 'MatchIsotopes?'"
+  ],
+  "elapsed_seconds": 2.951,
+  "exact_sequence": true,
+  "all_expected_called": true,
+  "any_expected_called": true,
+  "expected_steps": 1,
+  "called_steps": 1,
+  "call_successes": 0
+}

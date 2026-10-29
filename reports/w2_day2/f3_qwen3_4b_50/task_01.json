@@ -1,0 +1,25 @@
+{
+  "task_id": 1,
+  "question": "How does the structural representation of the complex glycan 'α-D-Manp-(1→3)[α-D-Manp-(1→6)]-β-D-Manp-(1→4)-β-D-GlcpNAc-(1→4)-β-D-GlcpNAc-(1→4)-β-D-Glcp-(1→O)Cer' change when converted from IUPAC Extended format to WURCS format, using the GlyTouCan database?",
+  "expected_tools": [
+    "convert_iupac_extended_to_wurcs"
+  ],
+  "tool_calls": [
+    {
+      "tool": "convert_iupac_extended_to_wurcs_format",
+      "arguments": {
+        "iupacextended": "α-D-Manp-(1→3)[α-D-Manp-(1→6)]-β-D-Manp-(1→4)-β-D-GlcpNAc-(1→4)-β-D-GlcpNAc-(1→4)-β-D-Glcp-(1→O)Cer"
+      },
+      "status": "unknown_tool"
+    }
+  ],
+  "final_answer": "The structural representation of the complex glycan in WURCS format can be determined by converting the IUPAC Extended format to WURCS using the GlycanFormatConverter API. However, the specific WURCS notation for the given glycan is not available in the provided tool catalog. To obtain the WURCS representation, the 'convert_iupac_extended_to_wurcs_format' tool should be used with the provided IUPAC Extended format string.",
+  "errors": [],
+  "elapsed_seconds": 9.63,
+  "exact_sequence": false,
+  "all_expected_called": false,
+  "any_expected_called": false,
+  "expected_steps": 1,
+  "called_steps": 1,
+  "call_successes": 0
+}

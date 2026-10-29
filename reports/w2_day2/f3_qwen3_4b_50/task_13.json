@@ -1,0 +1,60 @@
+{
+  "task_id": 13,
+  "question": "What are the Molecular Weight and Canonical SMILES of the compounds with PubChem IDs 5090, 7859, and 3615, typically found in glycan-related processes?",
+  "expected_tools": [
+    "compound_property_tables"
+  ],
+  "tool_calls": [
+    {
+      "tool": "compound_property_tables",
+      "arguments": {
+        "cid": "5090",
+        "property_tags": "molecular_weight,canonical_smiles"
+      },
+      "status": "ok",
+      "error": "",
+      "result": {
+        "status_code": 400,
+        "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/5090/property/molecular_weight%2Ccanonical_smiles/CSV",
+        "data": "Status: 400\nCode: PUGREST.BadRequest\nMessage: Invalid property\n"
+      }
+    },
+    {
+      "tool": "compound_property_tables",
+      "arguments": {
+        "cid": "7859",
+        "property_tags": "molecular_weight,canonical_smiles"
+      },
+      "status": "ok",
+      "error": "",
+      "result": {
+        "status_code": 400,
+        "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/7859/property/molecular_weight%2Ccanonical_smiles/CSV",
+        "data": "Status: 400\nCode: PUGREST.BadRequest\nMessage: Invalid property\n"
+      }
+    },
+    {
+      "tool": "compound_property_tables",
+      "arguments": {
+        "cid": "3615",
+        "property_tags": "molecular_weight,canonical_smiles"
+      },
+      "status": "ok",
+      "error": "",
+      "result": {
+        "status_code": 400,
+        "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/3615/property/molecular_weight%2Ccanonical_smiles/CSV",
+        "data": "Status: 400\nCode: PUGREST.BadRequest\nMessage: Invalid property\n"
+      }
+    }
+  ],
+  "final_answer": "The requested properties (molecular weight and canonical SMILES) could not be retrieved for the compounds with PubChem IDs 5090, 7859, and 3615. The error indicates an invalid property specification. Please check the property tags or use a different approach to obtain the required information.",
+  "errors": [],
+  "elapsed_seconds": 6.305,
+  "exact_sequence": false,
+  "all_expected_called": true,
+  "any_expected_called": true,
+  "expected_steps": 1,
+  "called_steps": 3,
+  "call_successes": 3
+}

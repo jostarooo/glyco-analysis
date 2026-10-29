@@ -1,0 +1,110 @@
+{
+  "task_id": 21,
+  "question": "How does the glycan composition 'Neu5Ac(1)Hex(3)HexNAc(2)Fuc(1)' translate into WURCS format, and what is its corresponding unique identifier in the Glycosmos database?",
+  "expected_tools": [
+    "convert_composition_text_to_wurcs_format"
+  ],
+  "tool_calls": [
+    {
+      "tool": "convert_composition_to_wurcs",
+      "arguments": {
+        "composition": "Neu5Ac(1)Hex(3)HexNAc(2)Fuc(1)"
+      },
+      "status": "ok",
+      "error": "",
+      "result": {
+        "status_code": 500,
+        "url": "https://api.glycosmos.org/glycancompositionconverter/1.0.0/composition2wurcs/Neu5Ac%281%29Hex%283%29HexNAc%282%29Fuc%281%29",
+        "data": {
+          "message": "500 Internal Server Error"
+        }
+      }
+    },
+    {
+      "tool": "convert_composition_to_wurcs",
+      "arguments": {
+        "composition": "Neu5Ac(1)Hex(3)HexNAc(2)Fuc(1)"
+      },
+      "status": "ok",
+      "error": "",
+      "result": {
+        "status_code": 500,
+        "url": "https://api.glycosmos.org/glycancompositionconverter/1.0.0/composition2wurcs/Neu5Ac%281%29Hex%283%29HexNAc%282%29Fuc%281%29",
+        "data": {
+          "message": "500 Internal Server Error"
+        }
+      }
+    },
+    {
+      "tool": "convert_composition_to_wurcs",
+      "arguments": {
+        "composition": "Neu5Ac(1)Hex(3)HexNAc(2)Fuc(1)"
+      },
+      "status": "ok",
+      "error": "",
+      "result": {
+        "status_code": 500,
+        "url": "https://api.glycosmos.org/glycancompositionconverter/1.0.0/composition2wurcs/Neu5Ac%281%29Hex%283%29HexNAc%282%29Fuc%281%29",
+        "data": {
+          "message": "500 Internal Server Error"
+        }
+      }
+    },
+    {
+      "tool": "convert_composition_to_wurcs",
+      "arguments": {
+        "composition": "Neu5Ac(1)Hex(3)HexNAc(2)Fuc(1)"
+      },
+      "status": "ok",
+      "error": "",
+      "result": {
+        "status_code": 500,
+        "url": "https://api.glycosmos.org/glycancompositionconverter/1.0.0/composition2wurcs/Neu5Ac%281%29Hex%283%29HexNAc%282%29Fuc%281%29",
+        "data": {
+          "message": "500 Internal Server Error"
+        }
+      }
+    },
+    {
+      "tool": "convert_composition_to_wurcs",
+      "arguments": {
+        "composition": "Neu5Ac(1)Hex(3)HexNAc(2)Fuc(1)"
+      },
+      "status": "ok",
+      "error": "",
+      "result": {
+        "status_code": 500,
+        "url": "https://api.glycosmos.org/glycancompositionconverter/1.0.0/composition2wurcs/Neu5Ac%281%29Hex%283%29HexNAc%282%29Fuc%281%29",
+        "data": {
+          "message": "500 Internal Server Error"
+        }
+      }
+    },
+    {
+      "tool": "convert_composition_to_wurcs",
+      "arguments": {
+        "composition": "Neu5Ac(1)Hex(3)HexNAc(2)Fuc(1)"
+      },
+      "status": "ok",
+      "error": "",
+      "result": {
+        "status_code": 500,
+        "url": "https://api.glycosmos.org/glycancompositionconverter/1.0.0/composition2wurcs/Neu5Ac%281%29Hex%283%29HexNAc%282%29Fuc%281%29",
+        "data": {
+          "message": "500 Internal Server Error"
+        }
+      }
+    }
+  ],
+  "final_answer": "",
+  "errors": [
+    "max_rounds_reached"
+  ],
+  "elapsed_seconds": 48.733,
+  "exact_sequence": false,
+  "all_expected_called": false,
+  "any_expected_called": false,
+  "expected_steps": 1,
+  "called_steps": 6,
+  "call_successes": 6
+}

@@ -1,0 +1,20 @@
+{
+  "task_id": 50,
+  "question": "How do different lectins from specific species interact with proteins that have known glycosylation sites, and what are these sites? First, retrieve lectins from the species Saccharomyces cerevisiae using the UniLectin3D database, then fetch detailed protein information including glycosylation sites for these lectins using their UniProt IDs. Specifically, use the get_lectins tool with parameters getcolumns=\"pdb,uniprot\", wherecolumn=\"species\", isvalue=\"Saccharomyces cerevisiae\", and limit=100, then utilize the protein_detail tool for each UniProt ID.",
+  "expected_tools": [
+    "get_lectins",
+    "protein_detail"
+  ],
+  "tool_calls": [],
+  "final_answer": "",
+  "errors": [
+    "ollama: ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=11434): Max retries exceeded with url: /api/chat (Caused by NewConnectionError(\"HTTPConnection(host='127.0.0.1', port=11434): Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。\"))"
+  ],
+  "elapsed_seconds": 2.04,
+  "exact_sequence": false,
+  "all_expected_called": false,
+  "any_expected_called": false,
+  "expected_steps": 2,
+  "called_steps": 0,
+  "call_successes": 0
+}

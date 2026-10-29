@@ -1,0 +1,20 @@
+{
+  "model": "qwen3:8b",
+  "seed": 0,
+  "tasks_run": 1,
+  "max_rounds": 6,
+  "num_ctx": 8192,
+  "num_predict": 256,
+  "think": false,
+  "request_timeout_seconds": 180.0,
+  "tools_available": 70,
+  "exact_sequence": 1,
+  "all_expected_called": 1,
+  "any_expected_called": 1,
+  "tasks_with_tool_call": 1,
+  "tasks_with_final_answer": 1,
+  "tool_call_successes": 1,
+  "tool_calls": 1,
+  "elapsed_seconds": 56.941,
+  "grader": "not_run_upstream_requires_gpt4o_api_key"
+}

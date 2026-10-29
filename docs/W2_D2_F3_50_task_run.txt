@@ -1,0 +1,62 @@
+W2 Day 2：Doc2Agent 50 题运行记录
+日期：2026-10-29
+目标：把 F3 从 Day 1 的“运行时阻塞”推进到一次可重跑的 50 题工具调用运行，并保留可核对证据。
+
+一、结论先行
+- 4B 完整批次已跑完：reports/w2_day2/f3_qwen3_4b_50 下 50 个 task_*.json + summary.json；task_id 1..50 无缺口。
+- 工具轨迹完全匹配（exact_sequence）19/50；所有期望工具都至少调用一次（all_expected_called）34/50；任一期望工具被调用（any_expected_called）41/50。
+- 50/50 题都产生了至少一次工具调用；39/50 产生了最终回答；共 110 次工具调用，其中 78 次 status=ok。
+- 这是运行层和工具轨迹指标，不是答案正确率，也不是上游 GPT-4o 的通过率。grader 未运行，原因是上游评分需要 GPT-4o API key。
+
+二、运行时问题与修复边界
+- Day 1 的 4B/8B HTTP 500 不能直接解释为模型能力差。今天先在同一 runner 路径上复现，再缩小请求条件。
+- 4B 探测（thinking 开启）分别使用 4096、8192、16384 context，HTTP 200，耗时 8.619 s、17.360 s、262.097 s；这组数字不是受控性能基准，只能说明 16K 配置在该请求上出现了极高的运行时成本。
+- 8B 在 8192 context、thinking 开启时 300.032 s 读超时；关闭 thinking 后，task 1 冒烟在 56.941 s 内完成并通过。
+- 8B 的长 WURCS task 31 在 num_predict=256 时被截断；提高到 768 后完成 3 次工具调用，但该单题运行没有最终回答，不能算答题通过。
+- 结论只到运行时条件这一层：修改 context、输出上限和 thinking 开关可以绕开本次阻塞；没有把 Ollama/llama.cpp 进程里的具体内部缺陷说成已定位。8B 批量过程中 server 曾退出，重启后恢复，因此 8B 的 50 题正式成绩必须重跑后才可报告。
+- runner 现在显式记录 num_ctx、num_predict、think、request_timeout 和 max_rounds；截断的嵌套 JSON 会返回空对象并记为 invalid_action，不再让整批任务因单个坏响应中止。
+
+三、正式运行配置
+- 模型：qwen3:4b
+- 任务：Day 1 已盘点的 Doc2Agent 50 题
+- max_rounds：4
+- num_ctx：8192
+- num_predict：512
+- think：false
+- request_timeout：180 s
+- Ollama：127.0.0.1:11434，0.33.3
+- 用时：506.686 s
+- 输出目录：reports/w2_day2/f3_qwen3_4b_50
+
+四、4B 结果明细
+- exact_sequence：19 题（task 4, 6, 9, 10, 12, 14, 20, 23, 27, 28, 35, 37, 38, 39, 42, 45, 46, 48, 49）
+- all_expected_called：34 题
+- any_expected_called：41 题
+- 无最终回答：11 题（task 5, 19, 24, 25, 27, 30, 31, 33, 34, 40, 44）
+- 达到 max_rounds：9 题（task 5, 19, 24, 25, 30, 33, 34, 40, 44）
+- 工具失败/异常 32 次，按类型计：TypeError 14、AssertionError 8、unknown_tool 5、NameError 1、OSError 1、HTTPError 1、SSLError 1、ValueError 1。
+- 工具失败包含上游 wrapper 的既有问题，不能把全部 32 次都归因于 Qwen3。典型包括 generate_glycan_image、UniProt 查询参数与远程 API 响应。
+
+五、8B 证据边界
+- 有效的 8B 证据只有两个：f3_qwen3_8b_smoke（task 1）和 f3_qwen3_8b_task31_768（长 WURCS 输出修复）。
+- f3_qwen3_8b_50_incomplete 是非权威的过程目录，里面混有中断批次和旧 task_*.json；不得把该目录当成“8B 完成 50 题”的成绩。
+- 本轮没有重新跑完整 8B 50 题；8B 的完整结果只能等新的独立目录和完整 summary 出来后再报告。
+
+六、不可比口径
+- 上游 Claude 18/50、Qwen3 15/50 是由 GPT-4o 评分的答案通过率；本轮 grader 未运行，不能与本轮 exact_sequence 19/50 或 all_expected_called 34/50 直接比较。
+- 本轮可以回答的是：50 道任务在本地 Qwen3 4B + Doc2Agent 工具目录上的可执行性、工具轨迹覆盖和调用失败分布。
+- 下一步若要比较答案质量，必须在相同 grader、相同题集、相同输出协议下重跑，并保留 grader 原始输出。
+
+七、复现与核验
+PowerShell 示例（Python 3.12 环境）：
+
+$base = 'C:\Users\jostaro\AppData\Roaming\uv\python\cpython-3.12.14-windows-x86_64-none\python.exe'
+$env:PYTHONPATH = 'D:\wbworkspace\glyco-analysis\.venv\Lib\site-packages'
+& $base scripts/run_doc2agent_qwen3.py --model qwen3:4b --max-rounds 4 --num-ctx 8192 --num-predict 512 --request-timeout 180 --out reports/w2_day2/f3_qwen3_4b_50
+
+聚合核验：
+
+& $base scripts/summarize_doc2agent_run.py --run-dir reports/w2_day2/f3_qwen3_4b_50 --expected-tasks 50 --check-summary reports/w2_day2/f3_qwen3_4b_50/summary.json
+
+脚本源码：scripts/run_doc2agent_qwen3.py、scripts/summarize_doc2agent_run.py
+测试：tests/test_doc2agent_runner.py

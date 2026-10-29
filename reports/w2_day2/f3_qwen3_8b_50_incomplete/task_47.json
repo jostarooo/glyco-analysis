@@ -1,0 +1,20 @@
+{
+  "task_id": 47,
+  "question": "Identify active glycan compounds based on assay results and obtain detailed chemical properties.\n1. Use the `assay_description` tool with `aid=1750` to retrieve information about a specific glycan assay that targets enzyme inhibition.\n2. From the assay results, extract a list of compound IDs (CIDs) for those compounds marked as 'Active' or meeting a specific IC50 threshold.\n3. Use the `compound_property_tables` tool with the extracted CIDs and `property_tags=\"MolecularFormula,MolecularWeight,CanonicalSMILES\"` to obtain detailed chemical property data for each compound.",
+  "expected_tools": [
+    "assay_description",
+    "compound_property_tables"
+  ],
+  "tool_calls": [],
+  "final_answer": "",
+  "errors": [
+    "ollama: ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=11434): Max retries exceeded with url: /api/chat (Caused by NewConnectionError(\"HTTPConnection(host='127.0.0.1', port=11434): Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。\"))"
+  ],
+  "elapsed_seconds": 2.022,
+  "exact_sequence": false,
+  "all_expected_called": false,
+  "any_expected_called": false,
+  "expected_steps": 2,
+  "called_steps": 0,
+  "call_successes": 0
+}

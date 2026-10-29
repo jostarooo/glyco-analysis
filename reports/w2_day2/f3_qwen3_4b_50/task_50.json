@@ -1,0 +1,35 @@
+{
+  "task_id": 50,
+  "question": "How do different lectins from specific species interact with proteins that have known glycosylation sites, and what are these sites? First, retrieve lectins from the species Saccharomyces cerevisiae using the UniLectin3D database, then fetch detailed protein information including glycosylation sites for these lectins using their UniProt IDs. Specifically, use the get_lectins tool with parameters getcolumns=\"pdb,uniprot\", wherecolumn=\"species\", isvalue=\"Saccharomyces cerevisiae\", and limit=100, then utilize the protein_detail tool for each UniProt ID.",
+  "expected_tools": [
+    "get_lectins",
+    "protein_detail"
+  ],
+  "tool_calls": [
+    {
+      "tool": "get_lectins",
+      "arguments": {
+        "getcolumns": "pdb,uniprot",
+        "wherecolumn": "species",
+        "isvalue": "Saccharomyces cerevisiae",
+        "limit": 100
+      },
+      "status": "ok",
+      "error": "",
+      "result": {
+        "status_code": 400,
+        "url": "https://unilectin.unige.ch/api/getlectins",
+        "data": "ERROR: Server Error 1052 (23000): Column 'pdb' in field list is ambiguous"
+      }
+    }
+  ],
+  "final_answer": "The query to retrieve lectins from Saccharomyces cerevisiae using the UniLectin3D database encountered an error due to an ambiguous column 'pdb' in the field list. The specific error is: 'ERROR: Server Error 1052 (23000): Column 'pdb' in field list is ambiguous'. This indicates that the column name 'pdb' is not unambiguously defined in the database schema, which prevents the successful retrieval of the requested data. To resolve this, the query parameters need to be adjusted to avoid ambiguous column names or ensure they are properly defined in the database context.",
+  "errors": [],
+  "elapsed_seconds": 4.308,
+  "exact_sequence": false,
+  "all_expected_called": false,
+  "any_expected_called": true,
+  "expected_steps": 2,
+  "called_steps": 1,
+  "call_successes": 1
+}
