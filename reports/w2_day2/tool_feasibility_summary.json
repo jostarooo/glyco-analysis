@@ -1,0 +1,74 @@
+{
+  "status": "PASS",
+  "classification_scope": "wrapper-level feasibility; not answer correctness",
+  "total_tasks": 50,
+  "category_counts": {
+    "current_tools_direct": 20,
+    "needs_replacement_tool": 25,
+    "service_failure": 5
+  },
+  "category_labels_zh": {
+    "current_tools_direct": "当前工具可直接完成",
+    "needs_replacement_tool": "需要替代工具",
+    "service_failure": "服务失败"
+  },
+  "tasks_with_all_expected_wrappers_ok": 20,
+  "tasks_with_any_blocker": 30,
+  "service_failure_classes": [
+    "http_424",
+    "server_error",
+    "timeout",
+    "unreachable"
+  ],
+  "blocked_tool_counts": {
+    "compound_property_tables": 3,
+    "convert_composition_text_to_wurcs_format": 2,
+    "convert_composition_to_wurcs": 1,
+    "convert_gws_format_to_wurcs_format": 2,
+    "convert_iupac_extended_to_wurcs": 2,
+    "find": 1,
+    "generate_glycan_image": 6,
+    "get_feature_by_locations": 2,
+    "get_fungal_lectins": 2,
+    "get_human_lectome": 1,
+    "get_lectins": 2,
+    "get_ligands": 1,
+    "get_natural_variants_by_hgvs_expression": 1,
+    "get_predicted_lectins": 1,
+    "get_proteins": 2,
+    "get_trefoil_lectins": 1,
+    "search_uniprot_entries_by_taxonomy_and_genomic_coordinates": 1
+  },
+  "blocked_class_counts": {
+    "api_error": 4,
+    "bad_request": 11,
+    "http_424": 2,
+    "param_error": 10,
+    "server_error": 1,
+    "unreachable": 2,
+    "wrapper_bug": 1
+  },
+  "official_f3_run": {
+    "model": "qwen3:4b",
+    "tasks_run": 50,
+    "tool_task_files": 50,
+    "exact_sequence": 19,
+    "all_expected_called": 34,
+    "any_expected_called": 41,
+    "tasks_with_final_answer": 39,
+    "tool_calls": 110,
+    "tool_call_successes": 78,
+    "grader": "not_run_upstream_requires_gpt4o_api_key"
+  },
+  "validation": {
+    "expected_tasks": 50,
+    "unique_task_ids": 50,
+    "category_sum_equals_total": true,
+    "three_category_names_only": true
+  },
+  "sources": {
+    "reports/w2_day1/doc2agent_tasks.csv": "72e4cfe73c4d86281beffa5b69097736d03682aab334d06041fb57728e7f4cdf",
+    "reports/w2_day1/doc2agent_tools.csv": "0863a18b4c9e573c833e885c933e910461639b023f2bf4e379a1bec5598a1ebc",
+    "reports/w2_day2/f3_qwen3_4b_50/summary.json": "4ead0e26a15760a34450c55859679a5c5aeee4dd913014826540b77e5b7c66f4"
+  }
+}
