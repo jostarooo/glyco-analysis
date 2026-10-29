@@ -3,11 +3,21 @@
 > 目标：任何人拿到这台机器或一台同类机器，能照本文件把三条线跑起来，并知道每个数字是怎么来的。
 > 本文件随进度更新，**每次改动都写清日期与验证方式**。
 
-## 零、W1 当前交付状态（2026-10-27 交付，2026-10-28 核记）
+## 零、当前交付状态
+
+### W1（2026-10-27 交付，2026-10-28 核记）
 
 截至 2026-10-27 交付：W1 的代码与实验产物基线为 `db8f1d8`，正式周视频（`02-进度报告\第一周展示视频.mp4`，6 分 00 秒）展示 `6d19f1e`。交付包为 68 个内容文件、68/68 条校验一致（连同清单共 69 个文件），正式周目录为 76 个文件、75/75 条校验一致，不一致、缺失和格式错误均为 0。已于 2026-10-27 正式提交，交付总表已改 `已交`（2026-10-28 核记）。
 
 本节的“当前状态”只描述交付材料，不覆盖各运行清单中记录的生成时基线。例如 35M 探针的生成基线仍是 `29f97a5`，不会被改写为交付当天的 HEAD。
+
+### W2（交付日 2026-11-03，2026-10-29 核心实验收口）
+
+W2 核心实验已完成。交接基线为 `8fc1da68b29a2cd865b3b5c056996b14607b9479`，W2 已提交单元为 `e776c5f`、`8fc1da6` 和 `6b77fa7`。截至本记录，W2 尚未执行远端发布，远端同步状态未确认。
+
+GlycanML 五个 CSV 共 30675065 字节，MD5 全部通过。F2 按论文 Table 3 使用 seeds 0/1/2、50 epochs、batch 64 完成复算：免疫原性 AUPRC 为 0.7748635136784087 ± 0.009111853148723878，论文为 0.780 ± 0.006；糖基化 Macro-F1 为 0.9377928560029268 ± 0.0038891301525018625，论文为 0.948 ± 0.004。TorchDrug 未安装，本轮是 PyG 自实现，不是逐位克隆。
+
+Doc2Agent 70 个 wrapper 中 43 个直接返回 `ok`，服务存活 61 个。50 道任务中 20 道可由当前工具直接完成，25 道需要替代工具，5 道受服务失败阻断。Qwen3 4B 正式批次完成 50 题，`exact_sequence=19`、`all_expected_called=34`、`any_expected_called=41`、`tasks_with_final_answer=39`，110 次工具调用中 78 次成功。这些是轨迹指标，不是答案正确率。
 
 ## 一、可行性五关（项目级，W1 只验收第 1 至第 3 关）
 
@@ -48,6 +58,11 @@
 | Python | 3.12.14（uv 管理）· venv 在 `D:\wbworkspace\glyco-analysis\.venv` |
 | PyTorch | **2.9.1+cu128** · `torch.version.cuda=12.8` · cuDNN 91002 · bf16 可用 |
 | 环境变量 | `HF_HOME=D:\hf` · `HUGGINGFACE_HUB_CACHE=D:\hf\hub` · `HF_ENDPOINT=https://hf-mirror.com` · `TORCH_HOME=D:\torch` · `UV_CACHE_DIR=D:\uv\cache` |
+
+2026-10-29 的 W2 收口环境另有两条限制：
+
+- 项目 `.venv\Scripts\python.exe` 的 uv 启动器暂时找不到基础 Python。深度学习测试改用 `C:\Users\jostaro\AppData\Roaming\uv\python\cpython-3.12.14-windows-x86_64-none\python.exe`，并设置 `PYTHONPATH=D:\wbworkspace\glyco-analysis\.venv\Lib\site-packages`。
+- 不运行 `uv run`。本轮不重装 torch，也不重跑 F2 三种子训练或 Qwen3 4B 50 题。
 
 ## 四、三条线的复现入口
 
@@ -251,11 +266,41 @@ D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\publish_github.py
 任何一项对不上就报错退出；发布记录写在 `reports/github_publish_<日期>.md`。脚本会重写远端 `main`，运行前必须确认这次发布是用户要求的。
 
 2026-10-18 首次发布，2026-10-21 全量复现完成后再次镜像发布，2026-10-26 文档中文化
-和最终校验完成后再次镜像发布。截至 2026-10-28 W2 Day 1 提交，远端
+和最终校验完成后再次镜像发布。截至 2026-10-28 W1 核记，远端
 https://github.com/jostarooo/glyco-analysis 为公开仓库，`main` 为 `e301353` 的网页 README 快照；
 本地文档提交 `6d19f1e` 及其后的提交尚未镜像到远端，两边历史已经分叉。10/26 的发布记录是当时快照，
 不再代表当前远端状态。
+2026-10-29 W2 收口没有重新联网核实远端，也没有执行 push 或发布脚本。W2 的 `e776c5f`、`8fc1da6`、`6b77fa7` 及后续文档提交都只存在于本地。
 后续交付记录中的历史 SHA 是当日发布快照，不代表当前交付状态；当前状态以本文第零节和交付总表为准。
+
+### F2 GlycanML Table 3
+
+```powershell
+$python = 'C:\Users\jostaro\AppData\Roaming\uv\python\cpython-3.12.14-windows-x86_64-none\python.exe'
+$env:PYTHONPATH = 'D:\wbworkspace\glyco-analysis\.venv\Lib\site-packages'
+$env:PYTHONUTF8 = '1'
+
+& $python scripts\check_glycanml_data.py
+& $python scripts\check_pyg_rgcn.py
+
+# 正式训练较慢。除复核需要外，不重跑下面这条命令。
+& $python scripts\train_glycanml_rgcn_pyg.py --seeds 0,1,2 --epochs 50 --batch-size 64 --out reports\w2_day1\glycanml_rgcn_recompute.json
+```
+
+F2 数据与结果分别以 `reports/w2_day1/glycanml_data_check.json` 和 `reports/w2_day1/glycanml_rgcn_recompute.json` 为准。`glycan_link` 的上游 URL 错指 `glycan_properties.csv`，该缺陷记录在 `docs/W2_D1_PyG_RGCN.txt`。上游 YAML 的 `num_class: 2` 与 CSV 的 N、O、free 三类不一致，训练按三类执行。
+
+### F3 Doc2Agent 与 Qwen3 4B
+
+```powershell
+D:\python\python.exe scripts\summarize_doc2agent_run.py `
+  --run-dir reports\w2_day2\f3_qwen3_4b_50 `
+  --expected-tasks 50 `
+  --check-summary reports\w2_day2\f3_qwen3_4b_50\summary.json
+
+D:\python\python.exe scripts\classify_doc2agent_feasibility.py
+```
+
+正式 F3 批次是 `qwen3:4b` 的 50 题结果。`reports/w2_day2/f3_qwen3_8b_50_incomplete/` 是中断目录，不是成绩。上游 Claude 18/50 和 Qwen3 15/50 均由 GPT-4o 评分，本轮没有相同评分器，不能直接比较。
 
 ## 五、复现记录
 
@@ -272,3 +317,5 @@ https://github.com/jostarooo/glyco-analysis 为公开仓库，`main` 为 `e30135
 | 2026-10-26 | 交付文档中文化与 150M 运行时复核 | 三份生成报告改为中文并重算运行清单；150M 核验脚本以 `--recheck-inference` 运行；完整默认测试 57 项，56 项通过、1 项 GPU 门控跳过 | ✅ 150M 核验脚本 `PASS`，33294 断言，16 行重算；单独启用 GPU 门控后该项通过 |
 | 2026-10-26 | 周视频补入与交付状态同步 | 旧版周视频 3 分 34 秒（正式版自 2026-10-27 起为 6 分 00 秒新视频）；交付包与正式周目录完成 SHA256 校验；全部文档状态改为“材料已齐、等待正式提交” | ✅ 当时两套目录均为 `PASS`；2026-10-28 补记时已重算为 68/68 与 75/75 |
 | 2026-10-27 | 交付日提交 | 用户放入改编版进度报告、6 分 00 秒正式周视频与日志总结，完成正式提交 | ✅ 用户确认已提交；交付总表改 `已交`；交付包清单重算 68/68（2026-10-28 核记） |
+| 2026-10-28 | W2 Day 1：PyG RGCN、GlycanML 数据、Doc2Agent 盘点 | 5 个 CSV MD5 通过；F2 三种子完成；70 个 wrapper 与 50 道任务盘点完成 | ✅ 提交 `e776c5f`；产物见 `reports/w2_day1/` |
+| 2026-10-29 | W2 Day 2：Qwen3 4B 50 题与可行性分类 | 50 个 task JSON 与 summary 重算一致；三分类 20/25/5 合计 50 | ✅ 运行提交 `8fc1da6`，分类提交 `6b77fa7`；产物见 `reports/w2_day2/` |

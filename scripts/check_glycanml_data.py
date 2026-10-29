@@ -85,6 +85,9 @@ def main() -> int:
                 actual, size, elapsed = spec["md5"], target.stat().st_size, 0.0
                 working_url = upstream_url
                 status = "PASS_CACHED"
+                if upstream_url.rsplit("/", 1)[-1] != f"{name}.csv":
+                    working_url = upstream_url.rsplit("/", 1)[0] + f"/{name}.csv"
+                    status = "PASS_URL_FIX"
             else:
                 actual, size, elapsed = download(upstream_url, target)
                 working_url = upstream_url
@@ -129,7 +132,9 @@ def main() -> int:
         "total_bytes": sum(r.get("bytes", 0) for r in results),
     }
     (OUT_DIR / "glycanml_data_check.json").write_text(
-        json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+        json.dumps(summary, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+        newline="\n",
     )
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     return 0 if summary["status"] == "PASS" else 1

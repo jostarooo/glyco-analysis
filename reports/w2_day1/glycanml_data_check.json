@@ -1,6 +1,8 @@
 {
   "status": "PASS",
-  "upstream_url_issues": [],
+  "upstream_url_issues": [
+    "glycan_link"
+  ],
   "datasets": [
     {
       "dataset": "glycan_classification",
@@ -1063,9 +1065,9 @@
     },
     {
       "dataset": "glycan_link",
-      "status": "PASS_CACHED",
+      "status": "PASS_URL_FIX",
       "url": "https://torchglycan.s3.us-east-2.amazonaws.com/downstream/glycan_properties.csv",
-      "working_url": "https://torchglycan.s3.us-east-2.amazonaws.com/downstream/glycan_properties.csv",
+      "working_url": "https://torchglycan.s3.us-east-2.amazonaws.com/downstream/glycan_link.csv",
       "expected_md5": "5a5471b0ffb295efee49c8570be6f063",
       "actual_md5": "5a5471b0ffb295efee49c8570be6f063",
       "bytes": 247205,

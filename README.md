@@ -1,18 +1,20 @@
 # 糖基化分析系统：以蛋白质语言模型预测 N-糖基化位点、以图神经网络解析糖链、并用工具调用智能体把两者串成一个可对话的分析工作台
 
-> 2026-10-27 第一次对齐；2026-10-28 W1 交付闭环与 W2 启动
+> 2026-10-27 第一次对齐；2026-10-28 W1 交付闭环与 W2 启动；2026-10-29 W2 核心实验收口
 > 代码状态：W1 的环境、数据集 v0、35M 线性探针、作者 150M LoRA 复算、三方法对拍和 10 个分歧位点人工复核均已完成。
 > 数据口径见 `reports/dataset_v0.md`，探针结果见 `reports/esm35_linear_probe_v0/report.md`，
 > 150M 复算结论见 `reports/mcc_repro.md`，候选位点对拍见 `reports/w1_three_method_v0/report.md`。
 >
 > W1 已于 2026-10-27 正式提交（2026-10-28 核记）。正式周视频为 `02-进度报告\第一周展示视频.mp4`（6 分 00 秒），交付包为 68 个内容文件、68/68 条校验一致，正式周目录为 76 个文件、75/75 条校验一致。
+>
+> W2 核心实验已完成并提交到本地 `main`。PyG RGCN 按 GlycanML 论文 Table 3 完成 3 种子复算，免疫原性 AUPRC 为 0.7748635136784087 ± 0.009111853148723878，糖基化 Macro-F1 为 0.9377928560029268 ± 0.0038891301525018625；Doc2Agent 70 个 wrapper 中 43 个直接成功，Qwen3 4B 完成 50 题轨迹批次。W2 交付前证据提交到 `6b77fa7`，远端同步状态未确认，本轮没有发布。
 
 ## 教师建议阅读顺序
 
-1. 先读 `reports/weekly/W01_2026-10-27_progress.md`，了解本周完成项、指标和剩余动作。
-2. 再读 `reports/w1_three_method_v0/report.md`，核对三种方法、130 行评估池和 10 个分歧位点。
-3. 接着读 `reports/esm150_lora_repro_v0/report.md`，核对作者 `test.csv` 上的 MCC 复算。
-4. 需要复查原始证据时读 `reports/mcc_repro.md` 和 `reports/esm150_lora_recheck_2026-10-26.md`。
+1. 先读 `reports/weekly/W02_2026-11-03_progress.md`，了解 F2 Table 3、Doc2Agent 盘点、F3 轨迹结果和 W3 计划。
+2. 再读 `reports/w2_day2/f2_f3_comparison.md`，核对论文值与本地值、轨迹指标和答案正确率的边界。
+3. 接着读 `reports/weekly/W01_2026-10-27_progress.md`，核对 W1 交付、130 行评估池和三方法对拍。
+4. 需要复查原始证据时读 `reports/w2_day1/`、`reports/w2_day2/`、`reports/mcc_repro.md` 和 `reports/esm150_lora_recheck_2026-10-26.md`。
 5. 需要重跑时读 `REPRO.md`；其中的命令与 `scripts/` 内脚本一一对应。
 
 文档、标题、表头和人工复核说明均使用中文。代码标识、JSON 与 CSV 字段名、状态枚举、模型名、路径、命令和原始软件告警保留英文，确保机器复核和哈希追溯不被破坏。
@@ -45,8 +47,8 @@ N-糖，挂上的糖链会不会影响它做受体？"
 | 线 | 做什么 | 底座 |
 |---|---|---|
 | **F1 位点预测** | 给定蛋白序列，预测 N-X-S/T 位点是否真被糖基化 | ESM-2（35M 线性探针 / 150M LoRA） |
-| **F2 糖链模型** | 给定糖链结构，预测其性质、判断单糖/糖苷键贡献 | RGCN（PyG 自实现） |
-| **F3 工具调用智能体** | 把 F1/F2 与数据库查询包装成工具，用中文任务驱动 | Doc2Agent 路线 + MCP |
+| **F2 糖链模型** | 给定糖链结构，预测其性质；本轮完成免疫原性与糖基化两任务 | RGCN（PyG 自实现，对齐 GlycanML Table 3） |
+| **F3 工具调用智能体** | 把 F1/F2 与数据库查询包装成工具，用中文任务驱动 | Doc2Agent 路线 + MCP；本轮完成 Qwen3 4B 50 题轨迹基线 |
 
 ## 交付前检查
 
@@ -97,6 +99,12 @@ D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\check_w1_three_me
 # 同步到 GitHub：本机 git push 通道不通，发布走 REST API（需要经典 PAT 的 `repo` 权限范围）
 # 先把 token 写入 %USERPROFILE%\.github-token，或设置 GH_TOKEN；别把 token 写进仓库
 D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\publish_github.py
+
+# W2 工具可行性分类：50 题各一个主分类
+D:\python\python.exe scripts\classify_doc2agent_feasibility.py
+
+# W2 F3 聚合复核：50 个 task JSON 与 summary 必须一致
+D:\python\python.exe scripts\summarize_doc2agent_run.py --run-dir reports\w2_day2\f3_qwen3_4b_50 --expected-tasks 50 --check-summary reports\w2_day2\f3_qwen3_4b_50\summary.json
 ```
 
 探针把 82 个含 `ECO:0000269` 的 N-连接糖基化位点作为实验阳性，把 48 个没有 N-连接
@@ -120,7 +128,7 @@ MCC 为 **0.000000**。35M 使用窗口化折外预测，150M 使用全序列 Lo
 发布脚本会把本地历史逐提交重放到远端，并校验提交 SHA 与目录树 SHA 都与本地一致，
 不一致就报错退出；空仓库的首次提交由脚本自己播种。脚本会重写远端 `main`，运行前必须确认这次发布是用户要求的。详见 `REPRO.md` 第四节。
 
-远端：https://github.com/jostarooo/glyco-analysis （公开仓库）。截至 2026-10-28 W2 Day 1 提交，`main` 为 `e301353` 的网页 README 快照；本地 `6d19f1e` 及其后的提交尚未镜像，两边历史已分叉。
+远端：https://github.com/jostarooo/glyco-analysis （公开仓库）。截至 2026-10-28 W1 核记，`main` 为 `e301353` 的网页 README 快照；本地 `6d19f1e` 及其后的 W2 提交尚未镜像，两边历史已分叉。2026-10-29 W2 收口未重新联网核实远端，也未执行发布。
 
 环境事实见 `REPRO.md`，复现用的三个上游仓库在 `D:\wbworkspace\`（LoRA-N-Gly / GlycanML / Doc2Agent）。
 
@@ -128,6 +136,9 @@ W1 正式交付目录为 `D:\毕设交付\W01_2026-10-27`。完整离线复核�
 `D:\毕设交付\W1_完整交付_v1`，包含中文报告、核心数据、人工复核、源代码和逐文件
 SHA256 清单。新录的 6 分 00 秒展示视频是正式周视频，3 分 34 秒的 10/26
 版本保留备查。交付总表已改为 `已交`。
+
+W2 正式交付目录为 `D:\毕设交付\W02_2026-11-03`。交付材料只包含周报、核心证据、
+验证记录和 SHA256 清单，不放源代码、模型权重或全部中间 task JSON。视频待用户录制后放入。
 
 ## 目录
 
