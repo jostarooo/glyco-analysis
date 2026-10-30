@@ -2,7 +2,7 @@
 
 交付日：2026-11-03
 
-建议控制总时长 4 分 20 秒。录制前关闭无关窗口，提前打开仓库根目录和交付目录。
+建议控制总时长 4 分 30 秒。录制前关闭无关窗口，提前打开仓库根目录、W3 复测证据和交付目录。
 
 ## 0:00 至 0:20 展示最新 commit
 
@@ -12,13 +12,13 @@
 
 ```powershell
 git -C D:\wbworkspace\glyco-analysis rev-parse HEAD
-git -C D:\wbworkspace\glyco-analysis log -1 --oneline
+git -C D:\wbworkspace\glyco-analysis log -1 --format="%H %s"
 git -C D:\wbworkspace\glyco-analysis status --short
 ```
 
 旁白：
 
-“这是第二周周视频。录制前仓库最新提交是屏幕上的完整 SHA，短 SHA 为屏幕第二行。工作树没有未提交改动。本周没有 push，也没有改写远端。”
+“这是第二周周视频。录制前仓库最新提交是屏幕上的完整 SHA，第二行是同一个 SHA 和提交标题。工作树没有未提交改动。本周没有 push，也没有改写远端。”
 
 注意：录制时必须重新执行这两条命令，不能照读本文件里的旧 SHA。
 
@@ -28,7 +28,7 @@ git -C D:\wbworkspace\glyco-analysis status --short
 
 旁白：
 
-“第一周已于 10 月 27 日提交。第二周的目标是把三条线从能跑推进到可对照、可解释。五项核心任务是 PyG RGCN 路线、GlycanML 数据核验、F2 Table 3 三种子复算、Doc2Agent 工具与任务盘点，以及 Qwen3 4B 的 50 题轨迹基线。”
+“第一周已于 10 月 27 日提交。第二周的目标是把三条线从能跑推进到可对照、可解释。五项核心任务是 PyG RGCN 路线、GlycanML 数据核验、F2 Table 3 三种子复算、Doc2Agent 工具与任务盘点，以及 Qwen3 4B 的 50 题轨迹基线。10 月 30 日又补做了阻断工具的任务级复测。”
 
 ## 0:45 至 1:45 F2 Table 3
 
@@ -44,17 +44,19 @@ git -C D:\wbworkspace\glyco-analysis status --short
 
 画面可短暂切到 `reports/w2_day2/f2_f3_comparison.md` 的 Table 3 对照表。
 
-## 1:45 至 2:30 Doc2Agent 工具盘点
+## 1:45 至 2:55 Doc2Agent 盘点与 W3 修正
 
-画面：打开 `reports/w2_day1/doc2agent_tools_summary.json`，再打开 `reports/w2_day2/tool_feasibility_summary.json`。
+画面：先打开 `reports/w2_day1/doc2agent_tools_summary.json` 和 W2 历史分类，再切到 `reports/w3_day1/tool_blocker_recheck_summary.json` 与 `task_feasibility_revised.csv`。
 
 旁白：
 
-“Doc2Agent 共盘点 70 个 wrapper，43 个直接成功，服务存活 61 个。50 道任务里，20 道当前的期望工具全部正常，25 道需要替代工具，5 道被服务失败阻断，三类合计正好 50。”
+“Doc2Agent 共盘点 70 个 wrapper，43 个直接成功，服务存活 61 个。W2 当天用通用探针把 50 道任务分成 20 道直接完成、25 道需要替代工具、5 道服务失败，三类合计 50。”
 
-“服务失败主要是 `get_proteins` 不可达、`convert_composition_to_wurcs` 返回 500、`convert_composition_text_to_wurcs_format` 返回 424。其他阻断集中在糖链图片、compound property tables 和 WURCS 格式转换。”
+“W3 用任务问题里的真实参数重测了 17 个阻断工具。17 个服务都可到达，默认传输成功 16 个。13 个工具在合法参数下直接通过，1 个任务需要拆成两次查询，2 个仍有接口契约问题，1 个是 TLS 证书校验失败。最新分类因此修正为 43 道可直接完成、5 道需要替代工具、2 道服务失败。”
 
-## 2:30 至 3:30 F3 50 题轨迹
+“这里有两个容易误判的点。`get_proteins` 的默认调用在证书校验处失败，但关闭校验的诊断请求返回 HTTP 200，所以它不是站点死亡，也不能把关闭 TLS 校验当成生产修复。`get_ligands` 返回 HTTP 200 和空数组，服务可达，但 task 48 仍没有可用数据，不能算直接完成。”
+
+## 2:55 至 3:40 F3 50 题轨迹
 
 画面：打开 `reports/w2_day2/f3_qwen3_4b_50/summary.json`。
 
@@ -66,23 +68,23 @@ git -C D:\wbworkspace\glyco-analysis status --short
 
 “8B 的中断目录不是成绩，目录里只有部分调试结果，没有完整 50 题结果。”
 
-## 3:30 至 4:00 验证与交付物
+## 3:40 至 4:15 验证与交付物
 
-画面：打开 `reports/w2_day2/unittest_2026-10-29.txt` 末尾和 `D:\毕设交付\W02_2026-11-03\03-附件材料\W02_核心证据\2026-10-29_W02_验证记录.md`。
+画面：打开 `reports/w3_day1/unittest_2026-10-30.txt` 末尾和 `D:\毕设交付\W02_2026-11-03\03-附件材料\W02_核心证据\2026-10-30_W03_验证记录.md`。
 
 旁白：
 
-“固定回归现在是 65 项，64 项通过，1 项 GPU 门控跳过。新增的 4 项是工具可行性分类测试。F3 summary checker 返回 PASS，GlycanML 五个 CSV 的 MD5 全部通过，`git diff --check` 没有输出。”
+“固定回归现在是 79 项，78 项通过，1 项 GPU 门控跳过。新增测试覆盖证书校验、HTTP 错误、空结果、WURCS 内容和任务分类。F3 summary checker 返回 PASS，GlycanML 五个 CSV 的 MD5 全部通过，`git diff --check` 没有输出。”
 
 “交付目录只放周报、核心证据、验证记录和 SHA256 清单，不放源代码、模型权重和全部 50 个中间 task JSON。”
 
-## 4:00 至 4:20 W3 计划与提交
+## 4:15 至 4:30 W3 下一步与提交
 
 画面：打开周报的 W3 计划。
 
 旁白：
 
-“第三周先修高频阻断工具，补 GPT-4o 同口径答案评分，再做 F2 的受控消融，最终形成论文值、本地值、差异和解释四列对照。视频录制完成后，我会在 11 月 3 日 20 点前提交，并把交付总表 W02 改为已交。”
+“下一步先修 `get_lectins` 的 PDB 字段、task 28 的组合查询、task 48 的空配体数据和 `get_proteins` 的证书链，再补 GPT-4o 同口径答案评分。F2 继续做受控消融，最终形成论文值、本地值、差异和解释四列对照。视频录制完成后，我会在 11 月 3 日 20 点前提交，并把交付总表 W02 改为已交。”
 
 结束画面停留在最新 commit、交付目录和 W02 状态。
 

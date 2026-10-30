@@ -9,8 +9,15 @@ The authoritative 50-task result is `f3_qwen3_4b_50`. It contains 50 task JSON f
 The `probe_*.json` files record the runtime investigation. They show why the runner must expose context, output-cap, timeout, and thinking controls. They are not an answer-quality benchmark.
 
 `tool_feasibility.csv` assigns one primary blocker category to each of the 50
-tasks. `tool_feasibility_summary.json` records the 20 direct, 25 replacement,
-and 5 service-failure totals and binds them to the source-file hashes.
+tasks. `tool_feasibility_summary.json` records the original W2 counts of 20
+direct, 25 replacement, and 5 service-failure tasks and binds them to the
+source-file hashes. These files remain unchanged as the historical W2 result.
+
+The 2026-10-30 task-grounded recheck in `reports/w3_day1/` revises the current
+classification to 43 direct, 5 replacement, and 2 service-failure tasks. The
+revision distinguishes invalid generic probe arguments, wrapper contract
+failures, TLS verification failure, and unavailable service. Use
+`task_feasibility_revised.csv` when reporting the current tool status.
 
 `f2_f3_comparison.md` explains the Table 3 comparison and the limits of the F3
 trajectory metrics. `unittest_2026-10-29.txt` and

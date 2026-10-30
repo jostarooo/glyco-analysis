@@ -1,0 +1,320 @@
+{
+  "status": "PASS",
+  "scope": "tool-level recheck and task-level feasibility; not an answer-quality score",
+  "generated_at": "2026-10-30T04:54:06.395301+00:00",
+  "total_blocked_tools": 17,
+  "recheck_class_counts": {
+    "api_contract_failure": 2,
+    "passes_but_task_needs_redesign": 1,
+    "passes_with_valid_args": 13,
+    "tls_verification_failure": 1
+  },
+  "service_reachable": 17,
+  "default_transport_ok": 16,
+  "task_fit_counts": {
+    "blocked": 3,
+    "direct": 12,
+    "empty_result": 1,
+    "requires_redesign": 1
+  },
+  "probe_accepted_tools": [
+    "compound_property_tables",
+    "get_feature_by_locations",
+    "search_uniprot_entries_by_taxonomy_and_genomic_coordinates",
+    "get_fungal_lectins",
+    "get_trefoil_lectins",
+    "generate_glycan_image",
+    "get_natural_variants_by_hgvs_expression",
+    "convert_gws_format_to_wurcs_format",
+    "get_human_lectome",
+    "get_predicted_lectins",
+    "get_ligands",
+    "convert_composition_to_wurcs",
+    "find",
+    "convert_iupac_extended_to_wurcs"
+  ],
+  "probe_accepted_note": "This is a probe-level list. It includes an empty-result tool and a task that needs query redesign. Use task_fit_counts and task_feasibility_revised.csv for task usability.",
+  "persistent_blockers": [
+    {
+      "tool": "get_lectins",
+      "class": "api_contract_failure",
+      "root_cause": "ERROR: Server Error 1052 (23000): Column 'pdb' in field list is ambiguous"
+    },
+    {
+      "tool": "convert_composition_text_to_wurcs_format",
+      "class": "api_contract_failure",
+      "root_cause": "[{\"message\": \"Accession not found.\", \"wurcs\": \"WURCS=2.0/4,7,6/[Aad21122h-2x_2-6_5*NCC/3=O][axxxxh-1x_1-5_2*NCC/3=O][axxxxh-1x_1-5][a1221m-1x_1-5]/1-2-2-3-3-3-4/a?|b?|c?|d?|e?|f?|g?}-{a?|b?|c?|d?|e?|f?|g?_a?|b?|c?|d?|e?|f?|g?}-{a?|b?|c?|d?|e?|f?|g?_a?|b?|c?|d?|e?|f?|g?}-{a?|b?|c?|d?|e?|f?|g?_a?|b?|c?|d?|e?|f?|g?}-{a?|b?|c?|d?|e?|f?|g?_a?|b?|c?|d?|e?|f?|g?}-{a?|b?|c?|d?|e?|f?|g?_a?|b?|c?|d?|e?|f?|g?}-{a?|b?|c?|d?|e?|f?|g?\"}]"
+    },
+    {
+      "tool": "get_proteins",
+      "class": "tls_verification_failure",
+      "root_cause": "SSLError: HTTPSConnectionPool(host='oglcnac.mcw.edu', port=443): Max retries exceeded with url: /api/v1/proteins/?query_protein=P08047 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)'))); verify=False HTTP 200; JSON=dict; usable=true; diagnostic only"
+    }
+  ],
+  "w2_task_reclassification": {
+    "original_counts": {
+      "current_tools_direct": 20,
+      "needs_replacement_tool": 25,
+      "service_failure": 5
+    },
+    "revised_counts": {
+      "current_tools_direct": 43,
+      "needs_replacement_tool": 5,
+      "service_failure": 2
+    },
+    "changed_tasks": 24,
+    "corrections": [
+      {
+        "task_id": "1",
+        "original_category": "needs_replacement_tool",
+        "revised_category": "current_tools_direct",
+        "blocking_tool": "convert_iupac_extended_to_wurcs",
+        "original_class": "api_error",
+        "recheck_class": "passes_with_valid_args",
+        "reason": "All expected blocker tools return usable content with task-grounded arguments.",
+        "evidence": "reports/w3_day1/tool_blocker_recheck.csv"
+      },
+      {
+        "task_id": "3",
+        "original_category": "needs_replacement_tool",
+        "revised_category": "current_tools_direct",
+        "blocking_tool": "compound_property_tables",
+        "original_class": "param_error",
+        "recheck_class": "passes_with_valid_args",
+        "reason": "All expected blocker tools return usable content with task-grounded arguments.",
+        "evidence": "reports/w3_day1/tool_blocker_recheck.csv"
+      },
+      {
+        "task_id": "6",
+        "original_category": "needs_replacement_tool",
+        "revised_category": "current_tools_direct",
+        "blocking_tool": "get_feature_by_locations",
+        "original_class": "bad_request",
+        "recheck_class": "passes_with_valid_args",
+        "reason": "All expected blocker tools return usable content with task-grounded arguments.",
+        "evidence": "reports/w3_day1/tool_blocker_recheck.csv"
+      },
+      {
+        "task_id": "10",
+        "original_category": "needs_replacement_tool",
+        "revised_category": "current_tools_direct",
+        "blocking_tool": "search_uniprot_entries_by_taxonomy_and_genomic_coordinates",
+        "original_class": "bad_request",
+        "recheck_class": "passes_with_valid_args",
+        "reason": "All expected blocker tools return usable content with task-grounded arguments.",
+        "evidence": "reports/w3_day1/tool_blocker_recheck.csv"
+      },
+      {
+        "task_id": "11",
+        "original_category": "needs_replacement_tool",
+        "revised_category": "current_tools_direct",
+        "blocking_tool": "convert_gws_format_to_wurcs_format",
+        "original_class": "api_error",
+        "recheck_class": "passes_with_valid_args",
+        "reason": "All expected blocker tools return usable content with task-grounded arguments.",
+        "evidence": "reports/w3_day1/tool_blocker_recheck.csv"
+      },
+      {
+        "task_id": "12",
+        "original_category": "needs_replacement_tool",
+        "revised_category": "current_tools_direct",
+        "blocking_tool": "get_fungal_lectins",
+        "original_class": "bad_request",
+        "recheck_class": "passes_with_valid_args",
+        "reason": "All expected blocker tools return usable content with task-grounded arguments.",
+        "evidence": "reports/w3_day1/tool_blocker_recheck.csv"
+      },
+      {
+        "task_id": "13",
+        "original_category": "needs_replacement_tool",
+        "revised_category": "current_tools_direct",
+        "blocking_tool": "compound_property_tables",
+        "original_class": "param_error",
+        "recheck_class": "passes_with_valid_args",
+        "reason": "All expected blocker tools return usable content with task-grounded arguments.",
+        "evidence": "reports/w3_day1/tool_blocker_recheck.csv"
+      },
+      {
+        "task_id": "14",
+        "original_category": "needs_replacement_tool",
+        "revised_category": "current_tools_direct",
+        "blocking_tool": "get_trefoil_lectins",
+        "original_class": "param_error",
+        "recheck_class": "passes_with_valid_args",
+        "reason": "All expected blocker tools return usable content with task-grounded arguments.",
+        "evidence": "reports/w3_day1/tool_blocker_recheck.csv"
+      },
+      {
+        "task_id": "15",
+        "original_category": "needs_replacement_tool",
+        "revised_category": "current_tools_direct",
+        "blocking_tool": "get_feature_by_locations",
+        "original_class": "bad_request",
+        "recheck_class": "passes_with_valid_args",
+        "reason": "All expected blocker tools return usable content with task-grounded arguments.",
+        "evidence": "reports/w3_day1/tool_blocker_recheck.csv"
+      },
+      {
+        "task_id": "16",
+        "original_category": "needs_replacement_tool",
+        "revised_category": "current_tools_direct",
+        "blocking_tool": "generate_glycan_image",
+        "original_class": "param_error",
+        "recheck_class": "passes_with_valid_args",
+        "reason": "All expected blocker tools return usable content with task-grounded arguments.",
+        "evidence": "reports/w3_day1/tool_blocker_recheck.csv"
+      },
+      {
+        "task_id": "18",
+        "original_category": "needs_replacement_tool",
+        "revised_category": "current_tools_direct",
+        "blocking_tool": "get_natural_variants_by_hgvs_expression",
+        "original_class": "bad_request",
+        "recheck_class": "passes_with_valid_args",
+        "reason": "All expected blocker tools return usable content with task-grounded arguments.",
+        "evidence": "reports/w3_day1/tool_blocker_recheck.csv"
+      },
+      {
+        "task_id": "21",
+        "original_category": "service_failure",
+        "revised_category": "needs_replacement_tool",
+        "blocking_tool": "convert_composition_text_to_wurcs_format",
+        "original_class": "http_424",
+        "recheck_class": "api_contract_failure",
+        "reason": "The exact composition returns WURCS but no GlyTouCan identifier, which task 21 asks for.",
+        "evidence": "reports/w3_day1/tool_blocker_recheck.csv"
+      },
+      {
+        "task_id": "23",
+        "original_category": "needs_replacement_tool",
+        "revised_category": "current_tools_direct",
+        "blocking_tool": "get_fungal_lectins",
+        "original_class": "bad_request",
+        "recheck_class": "passes_with_valid_args",
+        "reason": "All expected blocker tools return usable content with task-grounded arguments.",
+        "evidence": "reports/w3_day1/tool_blocker_recheck.csv"
+      },
+      {
+        "task_id": "31",
+        "original_category": "service_failure",
+        "revised_category": "current_tools_direct",
+        "blocking_tool": "convert_composition_to_wurcs",
+        "original_class": "server_error",
+        "recheck_class": "passes_with_valid_args",
+        "reason": "All expected blocker tools return usable content with task-grounded arguments.",
+        "evidence": "reports/w3_day1/tool_blocker_recheck.csv"
+      },
+      {
+        "task_id": "32",
+        "original_category": "needs_replacement_tool",
+        "revised_category": "current_tools_direct",
+        "blocking_tool": "convert_iupac_extended_to_wurcs | generate_glycan_image",
+        "original_class": "api_error | param_error",
+        "recheck_class": "passes_with_valid_args | passes_with_valid_args",
+        "reason": "All expected blocker tools return usable content with task-grounded arguments.",
+        "evidence": "reports/w3_day1/tool_blocker_recheck.csv"
+      },
+      {
+        "task_id": "34",
+        "original_category": "needs_replacement_tool",
+        "revised_category": "current_tools_direct",
+        "blocking_tool": "generate_glycan_image",
+        "original_class": "param_error",
+        "recheck_class": "passes_with_valid_args",
+        "reason": "All expected blocker tools return usable content with task-grounded arguments.",
+        "evidence": "reports/w3_day1/tool_blocker_recheck.csv"
+      },
+      {
+        "task_id": "35",
+        "original_category": "needs_replacement_tool",
+        "revised_category": "current_tools_direct",
+        "blocking_tool": "generate_glycan_image",
+        "original_class": "param_error",
+        "recheck_class": "passes_with_valid_args",
+        "reason": "All expected blocker tools return usable content with task-grounded arguments.",
+        "evidence": "reports/w3_day1/tool_blocker_recheck.csv"
+      },
+      {
+        "task_id": "36",
+        "original_category": "needs_replacement_tool",
+        "revised_category": "current_tools_direct",
+        "blocking_tool": "convert_gws_format_to_wurcs_format",
+        "original_class": "api_error",
+        "recheck_class": "passes_with_valid_args",
+        "reason": "All expected blocker tools return usable content with task-grounded arguments.",
+        "evidence": "reports/w3_day1/tool_blocker_recheck.csv"
+      },
+      {
+        "task_id": "37",
+        "original_category": "service_failure",
+        "revised_category": "current_tools_direct",
+        "blocking_tool": "convert_composition_text_to_wurcs_format",
+        "original_class": "http_424",
+        "recheck_class": "api_contract_failure",
+        "reason": "Task 37 needs WURCS only; its exact composition returns G14669DU and WURCS.",
+        "evidence": "reports/w3_day1/tool_blocker_recheck.csv"
+      },
+      {
+        "task_id": "40",
+        "original_category": "needs_replacement_tool",
+        "revised_category": "current_tools_direct",
+        "blocking_tool": "get_human_lectome",
+        "original_class": "bad_request",
+        "recheck_class": "passes_with_valid_args",
+        "reason": "All expected blocker tools return usable content with task-grounded arguments.",
+        "evidence": "reports/w3_day1/tool_blocker_recheck.csv"
+      },
+      {
+        "task_id": "41",
+        "original_category": "needs_replacement_tool",
+        "revised_category": "current_tools_direct",
+        "blocking_tool": "get_predicted_lectins",
+        "original_class": "bad_request",
+        "recheck_class": "passes_with_valid_args",
+        "reason": "All expected blocker tools return usable content with task-grounded arguments.",
+        "evidence": "reports/w3_day1/tool_blocker_recheck.csv"
+      },
+      {
+        "task_id": "42",
+        "original_category": "needs_replacement_tool",
+        "revised_category": "current_tools_direct",
+        "blocking_tool": "generate_glycan_image",
+        "original_class": "param_error",
+        "recheck_class": "passes_with_valid_args",
+        "reason": "All expected blocker tools return usable content with task-grounded arguments.",
+        "evidence": "reports/w3_day1/tool_blocker_recheck.csv"
+      },
+      {
+        "task_id": "44",
+        "original_category": "needs_replacement_tool",
+        "revised_category": "current_tools_direct",
+        "blocking_tool": "generate_glycan_image",
+        "original_class": "param_error",
+        "recheck_class": "passes_with_valid_args",
+        "reason": "All expected blocker tools return usable content with task-grounded arguments.",
+        "evidence": "reports/w3_day1/tool_blocker_recheck.csv"
+      },
+      {
+        "task_id": "47",
+        "original_category": "needs_replacement_tool",
+        "revised_category": "current_tools_direct",
+        "blocking_tool": "compound_property_tables",
+        "original_class": "param_error",
+        "recheck_class": "passes_with_valid_args",
+        "reason": "All expected blocker tools return usable content with task-grounded arguments.",
+        "evidence": "reports/w3_day1/tool_blocker_recheck.csv"
+      }
+    ]
+  },
+  "validation": {
+    "unique_tools": 17,
+    "all_tools_classified": true,
+    "unique_tasks": 50,
+    "three_categories_only": true,
+    "task_total_preserved": true
+  },
+  "sources": {
+    "reports/w2_day2/tool_feasibility.csv": "db4c79f9e5bcd3df7528dd6ceb8c0408e2f1ffc28509bb6bae7f807c64e08a17",
+    "reports/w2_day2/tool_feasibility_summary.json": "ec28fa7607304395f7dbe4fb403fa0181bdbc7c93e514b31fd5c8acf34050229"
+  }
+}

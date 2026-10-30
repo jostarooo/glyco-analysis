@@ -1,18 +1,18 @@
 # 糖基化分析系统：以蛋白质语言模型预测 N-糖基化位点、以图神经网络解析糖链、并用工具调用智能体把两者串成一个可对话的分析工作台
 
-> 2026-10-27 第一次对齐；2026-10-28 W1 交付闭环与 W2 启动；2026-10-29 W2 核心实验收口
+> 2026-10-27 第一次对齐；2026-10-28 W1 交付闭环与 W2 启动；2026-10-29 W2 核心实验收口；2026-10-30 W3 阻断工具修正
 > 代码状态：W1 的环境、数据集 v0、35M 线性探针、作者 150M LoRA 复算、三方法对拍和 10 个分歧位点人工复核均已完成。
 > 数据口径见 `reports/dataset_v0.md`，探针结果见 `reports/esm35_linear_probe_v0/report.md`，
 > 150M 复算结论见 `reports/mcc_repro.md`，候选位点对拍见 `reports/w1_three_method_v0/report.md`。
 >
 > W1 已于 2026-10-27 正式提交（2026-10-28 核记）。正式周视频为 `02-进度报告\第一周展示视频.mp4`（6 分 00 秒），交付包为 68 个内容文件、68/68 条校验一致，正式周目录为 76 个文件、75/75 条校验一致。
 >
-> W2 核心实验已完成并提交到本地 `main`。PyG RGCN 按 GlycanML 论文 Table 3 完成 3 种子复算，免疫原性 AUPRC 为 0.7748635136784087 ± 0.009111853148723878，糖基化 Macro-F1 为 0.9377928560029268 ± 0.0038891301525018625；Doc2Agent 70 个 wrapper 中 43 个直接成功，Qwen3 4B 完成 50 题轨迹批次。W2 交付前证据提交到 `6b77fa7`，远端同步状态未确认，本轮没有发布。
+> W2 核心实验已完成并提交到本地 `main`。PyG RGCN 按 GlycanML 论文 Table 3 完成 3 种子复算，免疫原性 AUPRC 为 0.7748635136784087 ± 0.009111853148723878，糖基化 Macro-F1 为 0.9377928560029268 ± 0.0038891301525018625；Doc2Agent 70 个 wrapper 中 43 个直接成功，Qwen3 4B 完成 50 题轨迹批次。W3 Day 1 用任务参数重测 17 个阻断工具，50 题最新分类为当前工具可直接完成 43、需要替代工具 5、服务失败 2。W2 原始 20/25/5 分类保留为历史证据，远端同步状态未确认，本轮没有发布。
 
 ## 教师建议阅读顺序
 
-1. 先读 `reports/weekly/W02_2026-11-03_progress.md`，了解 F2 Table 3、Doc2Agent 盘点、F3 轨迹结果和 W3 计划。
-2. 再读 `reports/w2_day2/f2_f3_comparison.md`，核对论文值与本地值、轨迹指标和答案正确率的边界。
+1. 先读 `reports/weekly/W02_2026-11-03_progress.md`，了解 F2 Table 3、Doc2Agent 盘点、F3 轨迹结果和 W3 修正。
+2. 再读 `reports/w2_day2/f2_f3_comparison.md` 与 `docs/W3_D1_tool_blocker_triage.txt`，核对论文值、轨迹指标边界和 W3 阻断工具分类。
 3. 接着读 `reports/weekly/W01_2026-10-27_progress.md`，核对 W1 交付、130 行评估池和三方法对拍。
 4. 需要复查原始证据时读 `reports/w2_day1/`、`reports/w2_day2/`、`reports/mcc_repro.md` 和 `reports/esm150_lora_recheck_2026-10-26.md`。
 5. 需要重跑时读 `REPRO.md`；其中的命令与 `scripts/` 内脚本一一对应。
@@ -105,6 +105,11 @@ D:\python\python.exe scripts\classify_doc2agent_feasibility.py
 
 # W2 F3 聚合复核：50 个 task JSON 与 summary 必须一致
 D:\python\python.exe scripts\summarize_doc2agent_run.py --run-dir reports\w2_day2\f3_qwen3_4b_50 --expected-tasks 50 --check-summary reports\w2_day2\f3_qwen3_4b_50\summary.json
+
+# W3 阻断工具任务级复测：生成独立证据，不改写 W2 原始分类
+$env:PYTHONPATH='D:\wbworkspace\glyco-analysis\.venv\Lib\site-packages'
+$env:PYTHONUTF8='1'
+& 'C:\Users\jostaro\AppData\Roaming\uv\python\cpython-3.12.14-windows-x86_64-none\python.exe' scripts\retest_doc2agent_blockers.py
 ```
 
 探针把 82 个含 `ECO:0000269` 的 N-连接糖基化位点作为实验阳性，把 48 个没有 N-连接
@@ -138,7 +143,8 @@ SHA256 清单。新录的 6 分 00 秒展示视频是正式周视频，3 分 34 
 版本保留备查。交付总表已改为 `已交`。
 
 W2 正式交付目录为 `D:\毕设交付\W02_2026-11-03`。交付材料只包含周报、核心证据、
-验证记录和 SHA256 清单，不放源代码、模型权重或全部中间 task JSON。视频待用户录制后放入。
+验证记录和 SHA256 清单，不放源代码、模型权重或全部中间 task JSON。W3 阻断工具
+复测、50 题修正分类和验证日志已加入核心证据。视频待用户录制后放入。
 
 ## 目录
 

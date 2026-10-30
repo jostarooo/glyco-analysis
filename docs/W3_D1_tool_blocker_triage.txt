@@ -1,0 +1,166 @@
+W3 Day 1 Doc2Agent 阻断工具复测
+日期：2026-10-30
+仓库：D:\wbworkspace\glyco-analysis
+分支：main
+复测前 HEAD：59ebbb2
+
+一、今天解决什么问题
+
+W2 的 50 题可行性分类使用了通用 wrapper 探测。通用探测能发现坏入口，却分不清
+三种情况：
+
+1. 探测参数本身不合法。
+2. wrapper 或上游接口的契约有问题。
+3. 服务真的不可达或持续返回 5xx。
+
+这会把“模型没传对参数”误写成“服务失败”。本轮不重跑 F2 训练，不重跑 Qwen3 4B
+的 50 题，只重测 W2 的 17 个阻断工具，并生成逐题修正证据。
+
+二、复测口径
+
+每个工具只使用可以从 W2 任务问题或 wrapper 文档还原出的参数。对于无法表达原任务
+的入口，另加控制探针，确认服务能否接受同一数据域内的合法请求。复测只看工具是否
+可达、HTTP 状态、返回内容是否符合预期，不评价模型回答正确率。
+
+三类任务的最终口径：
+
+- current_tools_direct：当前工具能用任务参数产出任务需要的结构或数据。
+- needs_replacement_tool：工具可达，但接口、数据或任务表达仍需要一个替代入口，
+  或者需要重构查询。
+- service_failure：默认调用仍在传输层或服务层失败。
+
+三、17 个阻断工具的复测结果
+
+总计 17 个工具，服务可达 17 个，默认传输成功 16 个。
+
+| 复测类别 | 数量 | 含义 |
+|---|---:|---|
+| passes_with_valid_args | 13 | 合法参数下可直接工作 |
+| passes_but_task_needs_redesign | 1 | 单次工具可用，但原任务需要拆成多次查询 |
+| api_contract_failure | 2 | 接口返回 200 或 400，但结果不满足任务契约 |
+| tls_verification_failure | 1 | 默认证书校验失败，服务本身可达 |
+
+13 个合法参数下可工作的入口：
+
+compound_property_tables
+get_feature_by_locations
+search_uniprot_entries_by_taxonomy_and_genomic_coordinates
+get_fungal_lectins
+get_trefoil_lectins
+generate_glycan_image
+get_natural_variants_by_hgvs_expression
+convert_gws_format_to_wurcs_format
+get_human_lectome
+get_predicted_lectins
+get_ligands
+convert_composition_to_wurcs
+convert_iupac_extended_to_wurcs
+
+需要拆查询的入口是 find。任务 28 同时要求 flavonoids 和 exact_mass=286.2，KEGG
+的 find 接口一次只接受一种查询方式。合法 exact_mass 控制探针返回了 KEGG 行，所以
+这不是服务死亡，而是任务需要两条查询或一个组合工具。
+
+持续阻断的三个入口：
+
+- get_lectins 使用 pdb 列时触发上游 SQL 错误：
+  Column 'pdb' in field list is ambiguous。去掉 pdb 的 lectin 查询正常。
+- convert_composition_text_to_wurcs_format 对任务 21 的复杂组成返回了 WURCS，
+  但返回体写着 Accession not found，没有 GlyTouCan ID。标准组成控制探针能返回
+  WURCS 和 G14669DU。
+- get_proteins 默认调用的证书校验失败。verify=False 的诊断请求返回 HTTP 200 和
+  可用 JSON，所以服务是活的，不能写成不可达。生产代码不能靠关闭 TLS 校验修复。
+
+补充证据：
+
+- generate_glycan_image 的 PNG 和 SVG 分支都返回 200，SVG 返回完整 svg 标记。
+- convert_iupac_extended_to_wurcs 对任务 1 的完整输入返回 WURCS，但没有 accession；
+  对任务 32 的截断输入返回 G22768VO 和 WURCS。任务 1 只要求 WURCS，因此两者都能
+  继续后续步骤。
+- get_ligands 返回 HTTP 200 和空数组。这是可达但没有可用数据，不是服务失败。
+
+四、50 题分类修正
+
+W2 原始分类：
+
+当前工具可直接完成 20
+需要替代工具 25
+服务失败 5
+
+W3 逐题修正后：
+
+当前工具可直接完成 43
+需要替代工具 5
+服务失败 2
+
+三类合计 50，改变 24 题。
+
+修正为可直接完成的 23 题：
+
+1、3、6、10、11、12、13、14、15、16、18、23、31、32、34、35、36、37、40、
+41、42、44、47
+
+修正原因分别是：
+
+- 21 道原“需要替代工具”题的唯一阻断工具在合法参数下通过：
+  1、3、6、10、11、12、13、14、15、16、18、23、32、34、35、36、40、41、
+  42、44、47。
+- 任务 31 的 convert_composition_to_wurcs 连续三次返回 WURCS，W2 的 500 不再复现。
+- 任务 37 只需要 WURCS。它的精确组成返回 G14669DU 和 WURCS，因此不需要把
+  “没有 accession”误判为阻断。
+
+保留为需要替代工具的 5 题是 5、21、28、48、50：
+
+- 5 和 50 使用 get_lectins 的 pdb 列，仍触发上游 SQL 错误。
+- 21 要求 GlyTouCan 唯一标识，但转换结果没有 ID。
+- 28 需要把关键词查询和精确质量查询拆开。
+- 48 的合法配体查询返回空数组，当前任务仍没有可用配体数据。
+
+保留为服务失败的 2 题是 20 和 46。两题都依赖 get_proteins，默认调用仍在 TLS
+证书校验处失败。这里记录的是默认传输失败，不是 oglcnac.mcw.edu 整个站点死亡。
+
+五、W2 数字的处理
+
+W2 原始 CSV 和 summary 保留不动，作为当天的历史证据。W3 的修正另写文件，避免
+静默覆盖原分类。F2 的 Table 3 结果和 F3 的 Qwen3 4B 轨迹数字不变：
+
+- 免疫原性 AUPRC：0.7748635136784087 ± 0.009111853148723878。
+- 糖基化 Macro-F1：0.9377928560029268 ± 0.0038891301525018625。
+- Qwen3 4B：exact_sequence=19/50，all_expected_called=34/50，
+  any_expected_called=41/50，tasks_with_final_answer=39/50。
+- 工具调用 110 次，成功 78 次。
+
+这些 F3 数字是工具轨迹指标，不是答案正确率。上游 Claude 18/50 和 Qwen3 15/50
+使用 GPT-4o 评分，本轮没有同口径评分器，不能直接比较高下。8B 中断目录也不是
+50 题成绩。
+
+六、证据与复现
+
+逐工具证据：
+reports/w3_day1/tool_blocker_recheck.csv
+
+逐题修正证据：
+reports/w3_day1/task_feasibility_revised.csv
+reports/w3_day1/task_feasibility_corrections.csv
+
+汇总和校验：
+reports/w3_day1/tool_blocker_recheck_summary.json
+
+summary 中的 probe_accepted_tools 是探针级列表，包含返回空数组的 get_ligands 和需要
+拆查询的 find。任务可用性以 task_fit_counts 和 task_feasibility_revised.csv 为准，
+不能把 probe_accepted_tools 的条数当成“全部可直接完成”的题数。
+
+复现命令：
+
+$env:PYTHONPATH='D:\wbworkspace\glyco-analysis\.venv\Lib\site-packages'
+$env:PYTHONUTF8='1'
+& 'C:\Users\jostaro\AppData\Roaming\uv\python\cpython-3.12.14-windows-x86_64-none\python.exe' `
+  D:\wbworkspace\glyco-analysis\scripts\retest_doc2agent_blockers.py
+
+七、边界和下一步
+
+1. 本轮是一次 2026-10-30 的现场复测，外部 API 以后可能变化，不能把今天的
+   HTTP 200 当成永久承诺。
+2. W2 的 F3 轨迹指标没有重算，W3 只修正工具可行性分类。
+3. 下一步先修 get_lectins 的字段映射、get_proteins 的证书链和 task 28 的组合查询，
+   再考虑用新的工具目录重跑 F3。
+4. 重新跑 F3 前，仍需补上与上游一致的 GPT-4o 答案评分器，才能报告答案正确率。

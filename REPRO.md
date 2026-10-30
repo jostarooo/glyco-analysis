@@ -17,7 +17,7 @@ W2 核心实验已完成。交接基线为 `8fc1da68b29a2cd865b3b5c056996b14607b
 
 GlycanML 五个 CSV 共 30675065 字节，MD5 全部通过。F2 按论文 Table 3 使用 seeds 0/1/2、50 epochs、batch 64 完成复算：免疫原性 AUPRC 为 0.7748635136784087 ± 0.009111853148723878，论文为 0.780 ± 0.006；糖基化 Macro-F1 为 0.9377928560029268 ± 0.0038891301525018625，论文为 0.948 ± 0.004。TorchDrug 未安装，本轮是 PyG 自实现，不是逐位克隆。
 
-Doc2Agent 70 个 wrapper 中 43 个直接返回 `ok`，服务存活 61 个。50 道任务中 20 道可由当前工具直接完成，25 道需要替代工具，5 道受服务失败阻断。Qwen3 4B 正式批次完成 50 题，`exact_sequence=19`、`all_expected_called=34`、`any_expected_called=41`、`tasks_with_final_answer=39`，110 次工具调用中 78 次成功。这些是轨迹指标，不是答案正确率。
+Doc2Agent 70 个 wrapper 中 43 个直接返回 `ok`，服务存活 61 个。W2 当天用通用探针把 50 道任务分为 20 道可直接完成、25 道需要替代工具、5 道受服务失败阻断。2026-10-30 W3 用任务参数重测 17 个阻断工具后，最新分类为 43/5/2，W2 原始 CSV 和 summary 保留为历史证据。Qwen3 4B 正式批次完成 50 题，`exact_sequence=19`、`all_expected_called=34`、`any_expected_called=41`、`tasks_with_final_answer=39`，110 次工具调用中 78 次成功。这些是轨迹指标，不是答案正确率。
 
 ## 一、可行性五关（项目级，W1 只验收第 1 至第 3 关）
 
@@ -298,6 +298,11 @@ D:\python\python.exe scripts\summarize_doc2agent_run.py `
   --check-summary reports\w2_day2\f3_qwen3_4b_50\summary.json
 
 D:\python\python.exe scripts\classify_doc2agent_feasibility.py
+
+$env:PYTHONPATH='D:\wbworkspace\glyco-analysis\.venv\Lib\site-packages'
+$env:PYTHONUTF8='1'
+& 'C:\Users\jostaro\AppData\Roaming\uv\python\cpython-3.12.14-windows-x86_64-none\python.exe' `
+  scripts\retest_doc2agent_blockers.py
 ```
 
 正式 F3 批次是 `qwen3:4b` 的 50 题结果。`reports/w2_day2/f3_qwen3_8b_50_incomplete/` 是中断目录，不是成绩。上游 Claude 18/50 和 Qwen3 15/50 均由 GPT-4o 评分，本轮没有相同评分器，不能直接比较。
@@ -319,3 +324,4 @@ D:\python\python.exe scripts\classify_doc2agent_feasibility.py
 | 2026-10-27 | 交付日提交 | 用户放入改编版进度报告、6 分 00 秒正式周视频与日志总结，完成正式提交 | ✅ 用户确认已提交；交付总表改 `已交`；交付包清单重算 68/68（2026-10-28 核记） |
 | 2026-10-28 | W2 Day 1：PyG RGCN、GlycanML 数据、Doc2Agent 盘点 | 5 个 CSV MD5 通过；F2 三种子完成；70 个 wrapper 与 50 道任务盘点完成 | ✅ 提交 `e776c5f`；产物见 `reports/w2_day1/` |
 | 2026-10-29 | W2 Day 2：Qwen3 4B 50 题与可行性分类 | 50 个 task JSON 与 summary 重算一致；三分类 20/25/5 合计 50 | ✅ 运行提交 `8fc1da6`，分类提交 `6b77fa7`；产物见 `reports/w2_day2/` |
+| 2026-10-30 | W3 Day 1：17 个阻断工具任务级复测 | 服务可达 17/17；工具体 13/1/2/1；50 题修正为 43/5/2 | 本地 W3 提交见当日 Git 历史；产物见 `reports/w3_day1/`，边界见 `docs/W3_D1_tool_blocker_triage.txt` |

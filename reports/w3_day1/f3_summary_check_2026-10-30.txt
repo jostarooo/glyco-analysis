@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "metrics": {
+    "tasks_run": 50,
+    "exact_sequence": 19,
+    "all_expected_called": 34,
+    "any_expected_called": 41,
+    "tasks_with_tool_call": 50,
+    "tasks_with_final_answer": 39,
+    "tool_call_successes": 78,
+    "tool_calls": 110
+  }
+}

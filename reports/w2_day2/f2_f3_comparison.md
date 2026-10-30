@@ -14,6 +14,8 @@
 | 50 道任务与期望工具 | `reports/w2_day1/doc2agent_tasks.csv`、`reports/w2_day1/doc2agent_tasks_summary.json` |
 | F3 Qwen3 4B 正式批次 | `reports/w2_day2/f3_qwen3_4b_50/summary.json` 与 50 个 `task_*.json` |
 | 本题工具可行性分类 | `reports/w2_day2/tool_feasibility.csv`、`reports/w2_day2/tool_feasibility_summary.json` |
+| 2026-10-30 任务级阻断复测 | `reports/w3_day1/tool_blocker_recheck.csv`、`reports/w3_day1/tool_blocker_recheck_summary.json` |
+| 2026-10-30 逐题修正分类 | `reports/w3_day1/task_feasibility_revised.csv`、`reports/w3_day1/task_feasibility_corrections.csv` |
 
 ## F2 对齐 GlycanML Table 3
 
@@ -64,7 +66,20 @@
 | 需要替代工具 | 25 | 1、3、5、6、10、11、12、13、14、15、16、18、23、28、32、34、35、36、40、41、42、44、47、48、50 |
 | 服务失败 | 5 | 20、21、31、37、46 |
 
-70 个 wrapper 中 43 个直接返回 `ok`，服务存活为 61/70，即 0.8714。`get_proteins` 不可达、`convert_composition_to_wurcs` 返回 500、`convert_composition_text_to_wurcs_format` 返回 424 等失败使对应题目进入服务失败类；包装器契约、参数或返回格式问题使另外 25 题需要替代工具。当前工具可直接完成只表示期望 wrapper 都返回 `ok`，不表示模型一定理解问题或答案正确。
+70 个 wrapper 中 43 个直接返回 `ok`，服务存活为 61/70，即 0.8714。W2 当天把 `get_proteins` 探测失败、`convert_composition_to_wurcs` 返回 500、`convert_composition_text_to_wurcs_format` 返回 424 等行为归入服务失败类；包装器契约、参数或返回格式问题使另外 25 题需要替代工具。当前工具可直接完成只表示期望 wrapper 都返回 `ok`，不表示模型一定理解问题或答案正确。W3 已证明 `get_proteins` 是 TLS 校验问题，不是站点不可达。
+
+### 2026-10-30 W3 任务级修正
+
+上面的 20/25/5 是 W2 当天的历史分类，原始 CSV 和 summary 不改写。W3 用任务问题中的参数重测 17 个阻断工具后，最新分类为 43/5/2：
+
+| 最新分类 | 题数 | task_id |
+|---|---:|---|
+| 当前工具可直接完成 | 43 | 原 20 题，加上 1、3、6、10、11、12、13、14、15、16、18、23、31、32、34、35、36、37、40、41、42、44、47 |
+| 需要替代工具 | 5 | 5、21、28、48、50 |
+| 服务失败 | 2 | 20、46 |
+| 合计 | 50 | `reports/w3_day1/task_feasibility_revised.csv` |
+
+17 个阻断工具中，服务可达 17 个，默认传输成功 16 个。13 个工具在合法参数下直接通过，1 个任务需要拆查询，2 个仍有接口契约问题，1 个默认 TLS 校验失败。`get_ligands` 返回 HTTP 200 和空数组，因此不能把“可达”写成“任务可用”。`get_proteins` 的 `verify=False` 诊断请求返回 HTTP 200，因此 task 20、46 记录为默认传输失败，不记录为服务死亡，也不把关闭 TLS 校验当作生产修复。
 
 ## 对 W3 的直接含义
 
