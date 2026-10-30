@@ -59,3 +59,9 @@ F3 的 `exact_sequence=19`、`all_expected_called=34`、
 
 本轮没有重跑 F2 训练，没有重跑 Qwen3 4B 50 题，没有 push，没有重写远端，也没有
 运行发布脚本。
+
+## 提交后换行修正
+
+首次提交后对提交内容运行 `git diff --check HEAD^ HEAD`，发现数据复核 JSON 使用
+CRLF 换行，Git 将每行的回车标记为行尾空白。JSON 内容未变，已统一为 LF 换行并
+追加一个修正提交，随后重新生成 W02 核心证据和根级 SHA256 清单。
