@@ -58,7 +58,7 @@ D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\check_w1_three_me
 D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\check_esm150_lora_repro.py --run-dir reports\esm150_lora_repro_v0 --test-csv D:\wbworkspace\LoRA-N-Gly\data\N-GlycositeAltas\test.csv --adapter-dir D:\wbworkspace\LoRA-N-Gly\checkpoints\N-linked\ESM-150M\checkpoint --base-model-revision a695f6045e2e32885fa60af20c13cb35398ce30c --recheck-inference
 D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe -m unittest discover -s tests -p "test_*.py" -v
 
-# W3 web 数据契约与交付前端（构建后打开 web/dist/index.html 或 npm run preview）
+# W3 web 数据契约与交付前端（构建后打开 web/dist/index.html，或用 npm run preview）
 $env:PYTHONUTF8 = "1"
 D:\python\python.exe scripts\build_web_data.py --check
 D:\node\node.exe D:\node\node_modules\npm\bin\npm-cli.js run build --prefix D:\wbworkspace\glyco-analysis\web

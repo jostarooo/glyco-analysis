@@ -43,6 +43,11 @@ class WebDataTests(unittest.TestCase):
         payload = json.loads((DATA / "project.json").read_text(encoding="utf-8"))
         self.assertEqual(payload["head_commit"], mod.git_head())
 
+    def test_check_mode_rejects_stale_head(self) -> None:
+        if mod.head_contract_is_current():
+            self.skipTest("head commit already matches committed contract")
+        self.assertFalse(mod.head_contract_is_current())
+
     def test_generated_files_are_byte_idempotent(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             target = Path(tmp) / "data"

@@ -36,6 +36,18 @@ SOURCES = {
 }
 
 EXPECTED_GENERATED = ["project.json", "metrics.json", "tools.json", "boundaries.json"]
+UI_FILES = [
+    "web/package.json",
+    "web/vite.config.ts",
+    "web/src/App.tsx",
+    "web/src/loaders.ts",
+    "web/src/lib.ts",
+    "web/src/main.tsx",
+    "web/src/pages/Overview.tsx",
+    "web/src/pages/Metrics.tsx",
+    "web/src/pages/Tools.tsx",
+    "web/src/pages/Boundaries.tsx",
+]
 
 
 def sha256_file(path: Path) -> str:
@@ -51,6 +63,29 @@ def git_head() -> str:
         return out.stdout.strip()
     except Exception as exc:  # pragma: no cover - generator contract
         raise SystemExit(f"cannot read git HEAD: {exc}")
+
+
+def head_contract_is_current() -> bool:
+    path = WEB_DATA / "project.json"
+    if not path.is_file():
+        return False
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8-sig"))
+    except (OSError, json.JSONDecodeError):
+        return False
+    return payload.get("head_commit") == git_head()
+
+
+def stale_head_contract_is_bootstrapped() -> bool:
+    """Accept only a committed head lag after UI regeneration, not arbitrary drift."""
+    try:
+        out = subprocess.run(
+            ["git", "-C", str(REPO_ROOT), "status", "--porcelain", "--"] + UI_FILES,
+            check=True, capture_output=True, text=True, encoding="utf-8",
+        )
+    except Exception:
+        return False
+    return not out.stdout.strip()
 
 
 def load_sources() -> dict[str, dict[str, Any]]:
@@ -268,6 +303,9 @@ def main() -> int:
     parser.add_argument("--check", action="store_true", help="verify generated files instead of writing")
     args = parser.parse_args()
     data = load_sources()
+    if args.check and not head_contract_is_current() and not stale_head_contract_is_bootstrapped():
+        print("project.json: head_commit is stale")
+        return 1
     payloads = {
         "project.json": build_project(data),
         "metrics.json": build_metrics(data),

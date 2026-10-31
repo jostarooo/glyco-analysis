@@ -335,7 +335,9 @@ D:\node\node.exe D:\node\node_modules\npm\bin\npm-cli.js run preview
 记录每个源的相对路径、字节数和 SHA256，并在 `project.json` 写入当时 `git rev-parse HEAD`。
 生成器不写运行时间，连续两跑输出必须字节一致；`--check` 在文件缺失、过期或被手改时退出 1。
 `web/` 界面只读展示这些数据，不写死指标、不使用 Mock。构建命令为 `web/` 下的 `npm run build`，
-预览命令为 `npm run preview`。本节是 REPRO.md 第 5 关系统关的第一个交付前端，端到端问答仍未完成。
+预览命令为 `npm run preview`；路由已用 hash 模式，`web/dist/index.html` 可直接离线打开。
+提交后如果有文档类改动，`project.json` 中的 HEAD 短哈希会等到下一次数据契约生成时刷新；
+这种滞后只允许出现在提交后的 UI 文件上，直接手改契约仍会被拒绝。本节是 REPRO.md 第 5 关系统关的第一个交付前端，端到端问答仍未完成。
 ### W3 可重算 F1/F2/F3 记分卡
 
 ```powershell
