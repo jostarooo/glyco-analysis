@@ -73,7 +73,9 @@ def head_contract_is_current() -> bool:
         payload = json.loads(path.read_text(encoding="utf-8-sig"))
     except (OSError, json.JSONDecodeError):
         return False
-    return payload.get("head_commit") == git_head()
+    if payload.get("head_commit") == git_head():
+        return True
+    return stale_head_contract_is_bootstrapped()
 
 
 def stale_head_contract_is_bootstrapped() -> bool:
@@ -303,7 +305,7 @@ def main() -> int:
     parser.add_argument("--check", action="store_true", help="verify generated files instead of writing")
     args = parser.parse_args()
     data = load_sources()
-    if args.check and not head_contract_is_current() and not stale_head_contract_is_bootstrapped():
+    if args.check and not head_contract_is_current():
         print("project.json: head_commit is stale")
         return 1
     payloads = {

@@ -43,7 +43,7 @@
     }
   ],
   "generated_by": "scripts/build_web_data.py",
-  "head_commit": "123922f660960137efbc37e21c543c5a702ecf4f",
+  "head_commit": "b22f4ecc9c159b6aaa637e1de3ce2b0c3f08c736",
   "project": {
     "one_liner": "以蛋白质语言模型预测 N-糖基化位点、以图神经网络解析糖链、并用工具调用智能体把两者串成一个可对话的分析工作台",
     "title": "毕设糖基化分析系统",
