@@ -19,12 +19,14 @@ GlycanML 五个 CSV 共 30675065 字节，MD5 全部通过。F2 按论文 Table 
 
 Doc2Agent 70 个 wrapper 中 43 个直接返回 `ok`，服务存活 61 个。W2 当天用通用探针把 50 道任务分为 20 道可直接完成、25 道需要替代工具、5 道受服务失败阻断。2026-10-30 W3 用任务参数重测 17 个阻断工具后，最新分类为 43/5/2，W2 原始 CSV 和 summary 保留为历史证据。Qwen3 4B 正式批次完成 50 题，`exact_sequence=19`、`all_expected_called=34`、`any_expected_called=41`、`tasks_with_final_answer=39`，110 次工具调用中 78 次成功。这些是轨迹指标，不是答案正确率。
 
-### W3（交付日 2026-11-10，2026-10-31 记分卡收口）
+### W3（交付日 2026-11-10，2026-10-31 记分卡与 web 界面收口）
 
 W3 Day 1 的本地基线是 `985d8975799f254bad18f05a8fcf68682ff75a72`。2026-10-31
 新增可重算记分卡，把 F1 MCC、F2 Table 3 两项指标、F3 五项轨迹计数和工具可行性
 统一到 `reports/w3_day2/scorecard.json`、`scorecard.csv`、`scorecard.md`。
 `scripts/build_w3_scorecard.py --check` 会从固定源产物重算并拒绝缺失、过期或被手改的输出。
+W3 Day 3 新增 `web/` 交付界面，由 `scripts/build_web_data.py` 从 12 个真实产物生成数据契约，
+构建与预览验证通过，提交 `797e560`。
 本轮没有重跑 F2 训练，没有重跑 Qwen3 4B 50 题，也没有执行发布。
 
 ## 一、可行性五关（项目级，W1 只验收第 1 至第 3 关）
