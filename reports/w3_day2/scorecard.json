@@ -1,0 +1,440 @@
+{
+  "boundaries": [
+    "F2 对齐 GlycanML Table 3；本地是 PyG 自实现，不是 TorchDrug 逐位克隆。",
+    "F3 指标是工具轨迹与输出存在性，不是 GPT-4o 评分的答案正确率。",
+    "get_proteins 的 TLS 校验失败不等于服务死亡，不能关闭生产 TLS 校验。",
+    "get_ligands 的 HTTP 200 空数组不代表任务可用。"
+  ],
+  "feasibility": {
+    "changed_tasks": 24,
+    "comparison_note": "这是任务可用性分类，不是模型答案正确率。TLS 失败不等于服务死亡，HTTP 200 空数组也不等于任务可用。",
+    "counts": {
+      "current_tools_direct": 43,
+      "needs_replacement_tool": 5,
+      "service_failure": 2
+    },
+    "default_transport_ok": 16,
+    "original_counts": {
+      "current_tools_direct": 20,
+      "needs_replacement_tool": 25,
+      "service_failure": 5
+    },
+    "rechecked_tools": 17,
+    "service_reachable": 17,
+    "task_ids": {
+      "current_tools_direct": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        47,
+        49
+      ],
+      "needs_replacement_tool": [
+        5,
+        21,
+        28,
+        48,
+        50
+      ],
+      "service_failure": [
+        20,
+        46
+      ]
+    },
+    "total_tasks": 50
+  },
+  "metrics": [
+    {
+      "comparison": {
+        "delta_local_minus_reference": 0.0003488428592927084,
+        "kind": "comparable",
+        "reference_id": "ref.f1.esm150_lora.mcc",
+        "scope_note": "作者检查点复算；差值方向为本地减参考。"
+      },
+      "local": {
+        "denominator": null,
+        "denominator_locator": null,
+        "locator": "/mcc",
+        "n": null,
+        "source": "f1_metrics",
+        "std": null,
+        "std_locator": null,
+        "value": 0.8483488428592927
+      },
+      "metric": "MCC",
+      "metric_id": "f1.esm150_lora.mcc",
+      "reference": {
+        "citation": "REPRO.md 第四节，作者 ESM-2 150M LoRA 复算表",
+        "denominator": null,
+        "label": "LoRA-N-Gly 论文 MCC",
+        "n": null,
+        "reference_id": "ref.f1.esm150_lora.mcc",
+        "std": null,
+        "track": "F1",
+        "unit": "mcc",
+        "value": 0.848
+      },
+      "subject": "ESM-2 150M LoRA 作者检查点",
+      "track": "F1",
+      "unit": "mcc"
+    },
+    {
+      "comparison": {
+        "delta_local_minus_reference": -0.00513648632159136,
+        "kind": "comparable",
+        "reference_id": "ref.f2.immunogenicity.auprc",
+        "scope_note": "论文 Table 3 RGCN 数值对照；本地为 PyG 自实现，不是 TorchDrug 逐位克隆。"
+      },
+      "local": {
+        "denominator": null,
+        "denominator_locator": null,
+        "locator": "/tasks/immunogenicity/aggregate/test_auprc/mean",
+        "n": 3,
+        "source": "f2_recompute",
+        "std": 0.009111853148723878,
+        "std_locator": "/tasks/immunogenicity/aggregate/test_auprc/std",
+        "value": 0.7748635136784087
+      },
+      "metric": "AUPRC",
+      "metric_id": "f2.immunogenicity.auprc",
+      "reference": {
+        "citation": "reports/w2_day2/f2_f3_comparison.md，F2 对齐 GlycanML Table 3",
+        "denominator": null,
+        "label": "GlycanML Table 3 RGCN 免疫原性 AUPRC",
+        "n": null,
+        "reference_id": "ref.f2.immunogenicity.auprc",
+        "std": 0.006,
+        "track": "F2",
+        "unit": "auprc",
+        "value": 0.78
+      },
+      "subject": "GlycanML 免疫原性",
+      "track": "F2",
+      "unit": "auprc"
+    },
+    {
+      "comparison": {
+        "delta_local_minus_reference": -0.01020714399707312,
+        "kind": "comparable",
+        "reference_id": "ref.f2.glycosylation.macro_f1",
+        "scope_note": "论文 Table 3 RGCN 数值对照；本地为 PyG 自实现，不是 TorchDrug 逐位克隆。"
+      },
+      "local": {
+        "denominator": null,
+        "denominator_locator": null,
+        "locator": "/tasks/glycosylation/aggregate/test_macro_f1/mean",
+        "n": 3,
+        "source": "f2_recompute",
+        "std": 0.0038891301525018625,
+        "std_locator": "/tasks/glycosylation/aggregate/test_macro_f1/std",
+        "value": 0.9377928560029268
+      },
+      "metric": "Macro-F1",
+      "metric_id": "f2.glycosylation.macro_f1",
+      "reference": {
+        "citation": "reports/w2_day2/f2_f3_comparison.md，F2 对齐 GlycanML Table 3",
+        "denominator": null,
+        "label": "GlycanML Table 3 RGCN 糖基化 Macro-F1",
+        "n": null,
+        "reference_id": "ref.f2.glycosylation.macro_f1",
+        "std": 0.004,
+        "track": "F2",
+        "unit": "macro_f1",
+        "value": 0.948
+      },
+      "subject": "GlycanML 糖基化",
+      "track": "F2",
+      "unit": "macro_f1"
+    },
+    {
+      "comparison": {
+        "kind": "not_comparable",
+        "reason": "工具轨迹或输出存在性，不是答案正确率。上游 Claude 18/50、Qwen3 15/50 使用 GPT-4o 评分，本轮未运行同一评分器，不能生成差值。",
+        "reference_ids": [
+          "ref.f3.claude.answer_accuracy",
+          "ref.f3.qwen3.answer_accuracy"
+        ]
+      },
+      "local": {
+        "denominator": 50,
+        "denominator_locator": "/tasks_run",
+        "locator": "/exact_sequence",
+        "n": null,
+        "source": "f3_summary",
+        "std": null,
+        "std_locator": null,
+        "value": 19
+      },
+      "metric": "精确工具序列",
+      "metric_id": "f3.qwen3_4b.exact_sequence",
+      "reference": null,
+      "subject": "Qwen3 4B，50 道任务",
+      "track": "F3",
+      "unit": "count"
+    },
+    {
+      "comparison": {
+        "kind": "not_comparable",
+        "reason": "工具轨迹或输出存在性，不是答案正确率。上游 Claude 18/50、Qwen3 15/50 使用 GPT-4o 评分，本轮未运行同一评分器，不能生成差值。",
+        "reference_ids": [
+          "ref.f3.claude.answer_accuracy",
+          "ref.f3.qwen3.answer_accuracy"
+        ]
+      },
+      "local": {
+        "denominator": 50,
+        "denominator_locator": "/tasks_run",
+        "locator": "/all_expected_called",
+        "n": null,
+        "source": "f3_summary",
+        "std": null,
+        "std_locator": null,
+        "value": 34
+      },
+      "metric": "全部期望工具已调用",
+      "metric_id": "f3.qwen3_4b.all_expected_called",
+      "reference": null,
+      "subject": "Qwen3 4B，50 道任务",
+      "track": "F3",
+      "unit": "count"
+    },
+    {
+      "comparison": {
+        "kind": "not_comparable",
+        "reason": "工具轨迹或输出存在性，不是答案正确率。上游 Claude 18/50、Qwen3 15/50 使用 GPT-4o 评分，本轮未运行同一评分器，不能生成差值。",
+        "reference_ids": [
+          "ref.f3.claude.answer_accuracy",
+          "ref.f3.qwen3.answer_accuracy"
+        ]
+      },
+      "local": {
+        "denominator": 50,
+        "denominator_locator": "/tasks_run",
+        "locator": "/any_expected_called",
+        "n": null,
+        "source": "f3_summary",
+        "std": null,
+        "std_locator": null,
+        "value": 41
+      },
+      "metric": "任一期望工具已调用",
+      "metric_id": "f3.qwen3_4b.any_expected_called",
+      "reference": null,
+      "subject": "Qwen3 4B，50 道任务",
+      "track": "F3",
+      "unit": "count"
+    },
+    {
+      "comparison": {
+        "kind": "not_comparable",
+        "reason": "工具轨迹或输出存在性，不是答案正确率。上游 Claude 18/50、Qwen3 15/50 使用 GPT-4o 评分，本轮未运行同一评分器，不能生成差值。",
+        "reference_ids": [
+          "ref.f3.claude.answer_accuracy",
+          "ref.f3.qwen3.answer_accuracy"
+        ]
+      },
+      "local": {
+        "denominator": 50,
+        "denominator_locator": "/tasks_run",
+        "locator": "/tasks_with_final_answer",
+        "n": null,
+        "source": "f3_summary",
+        "std": null,
+        "std_locator": null,
+        "value": 39
+      },
+      "metric": "存在最终回答",
+      "metric_id": "f3.qwen3_4b.tasks_with_final_answer",
+      "reference": null,
+      "subject": "Qwen3 4B，50 道任务",
+      "track": "F3",
+      "unit": "count"
+    },
+    {
+      "comparison": {
+        "kind": "not_comparable",
+        "reason": "工具轨迹或输出存在性，不是答案正确率。上游 Claude 18/50、Qwen3 15/50 使用 GPT-4o 评分，本轮未运行同一评分器，不能生成差值。",
+        "reference_ids": [
+          "ref.f3.claude.answer_accuracy",
+          "ref.f3.qwen3.answer_accuracy"
+        ]
+      },
+      "local": {
+        "denominator": 110,
+        "denominator_locator": "/tool_calls",
+        "locator": "/tool_call_successes",
+        "n": null,
+        "source": "f3_summary",
+        "std": null,
+        "std_locator": null,
+        "value": 78
+      },
+      "metric": "工具调用成功数",
+      "metric_id": "f3.qwen3_4b.tool_call_successes",
+      "reference": null,
+      "subject": "Qwen3 4B，50 道任务",
+      "track": "F3",
+      "unit": "count"
+    }
+  ],
+  "policy": {
+    "delta_sign": "local_minus_reference",
+    "f2_comparison": "paper_table_row_not_bitwise_clone",
+    "f3_comparison": "trajectory_metrics_not_answer_accuracy",
+    "timestamp_policy": "no_wall_clock_timestamp"
+  },
+  "references": [
+    {
+      "citation": "REPRO.md 第四节，作者 ESM-2 150M LoRA 复算表",
+      "denominator": null,
+      "label": "LoRA-N-Gly 论文 MCC",
+      "n": null,
+      "reference_id": "ref.f1.esm150_lora.mcc",
+      "std": null,
+      "track": "F1",
+      "unit": "mcc",
+      "value": 0.848
+    },
+    {
+      "citation": "reports/w2_day2/f2_f3_comparison.md，F2 对齐 GlycanML Table 3",
+      "denominator": null,
+      "label": "GlycanML Table 3 RGCN 免疫原性 AUPRC",
+      "n": null,
+      "reference_id": "ref.f2.immunogenicity.auprc",
+      "std": 0.006,
+      "track": "F2",
+      "unit": "auprc",
+      "value": 0.78
+    },
+    {
+      "citation": "reports/w2_day2/f2_f3_comparison.md，F2 对齐 GlycanML Table 3",
+      "denominator": null,
+      "label": "GlycanML Table 3 RGCN 糖基化 Macro-F1",
+      "n": null,
+      "reference_id": "ref.f2.glycosylation.macro_f1",
+      "std": 0.004,
+      "track": "F2",
+      "unit": "macro_f1",
+      "value": 0.948
+    },
+    {
+      "citation": "reports/w2_day2/f2_f3_comparison.md，上游目录记录与 GPT-4o 评分边界",
+      "denominator": 50,
+      "label": "上游 Claude 答案准确率，GPT-4o 评分",
+      "n": null,
+      "reference_id": "ref.f3.claude.answer_accuracy",
+      "std": null,
+      "track": "F3",
+      "unit": "count",
+      "value": 18
+    },
+    {
+      "citation": "reports/w2_day2/f2_f3_comparison.md，上游目录记录与 GPT-4o 评分边界",
+      "denominator": 50,
+      "label": "上游 Qwen3 答案准确率，GPT-4o 评分",
+      "n": null,
+      "reference_id": "ref.f3.qwen3.answer_accuracy",
+      "std": null,
+      "track": "F3",
+      "unit": "count",
+      "value": 15
+    }
+  ],
+  "schema_version": "w3-scorecard-v1",
+  "sources": [
+    {
+      "byte_count": 473,
+      "path": "reports/esm150_lora_repro_v0/metrics.json",
+      "role": "f1_metrics",
+      "sha256": "5bbfbfddbc944ae7f07f92095a7c54b590440c95690196f127151c9fc4752d26"
+    },
+    {
+      "byte_count": 8125,
+      "path": "reports/w2_day1/glycanml_rgcn_recompute.json",
+      "role": "f2_recompute",
+      "sha256": "546e5bb7bff0986bc4185d2671aec2ad2b92e7e4bc285e4c7a3d6aca8ac301b8"
+    },
+    {
+      "byte_count": 497,
+      "path": "reports/w2_day2/f3_qwen3_4b_50/summary.json",
+      "role": "f3_summary",
+      "sha256": "4ead0e26a15760a34450c55859679a5c5aeee4dd913014826540b77e5b7c66f4"
+    },
+    {
+      "byte_count": 7547,
+      "path": "reports/w2_day2/f2_f3_comparison.md",
+      "role": "reference_mirror",
+      "sha256": "e0b2abd858ee4a34bba577018ed3ccff8729605388b27d8def3e41392812ed17"
+    },
+    {
+      "byte_count": 2265,
+      "path": "reports/w2_day2/tool_feasibility_summary.json",
+      "role": "w2_tool_summary",
+      "sha256": "ec28fa7607304395f7dbe4fb403fa0181bdbc7c93e514b31fd5c8acf34050229"
+    },
+    {
+      "byte_count": 9616,
+      "path": "reports/w3_day1/task_feasibility_revised.csv",
+      "role": "feasibility_csv",
+      "sha256": "13e3c3cecf1c9dffdac3f1b9c552bed68a53b140b6889d752e8fc05abc4985ba"
+    },
+    {
+      "byte_count": 14326,
+      "path": "reports/w3_day1/tool_blocker_recheck_summary.json",
+      "role": "w3_recheck_summary",
+      "sha256": "89e784ef12e60d59a20ea31524c97310ab75b7911e32e60eb5c1c7ea710f6675"
+    },
+    {
+      "byte_count": 1771,
+      "path": "reports/w3_day2/reference_values.json",
+      "role": "reference_catalog",
+      "sha256": "2305b04608c052bdfefde29bc299c0aa150162ab8521e1a2c652aeeb0ee64f6e"
+    }
+  ],
+  "status": "PASS",
+  "validations": {
+    "f1_row_count": 2554,
+    "f2_seeds": 3,
+    "f3_tasks": 50,
+    "feasibility_total": 50,
+    "metric_rows": 8
+  }
+}

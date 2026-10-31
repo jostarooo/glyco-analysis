@@ -1,0 +1,60 @@
+{
+  "schema_version": "w3-scorecard-references-v1",
+  "references": [
+    {
+      "reference_id": "ref.f1.esm150_lora.mcc",
+      "track": "F1",
+      "label": "LoRA-N-Gly 论文 MCC",
+      "value": 0.848,
+      "std": null,
+      "n": null,
+      "denominator": null,
+      "unit": "mcc",
+      "citation": "REPRO.md 第四节，作者 ESM-2 150M LoRA 复算表"
+    },
+    {
+      "reference_id": "ref.f2.immunogenicity.auprc",
+      "track": "F2",
+      "label": "GlycanML Table 3 RGCN 免疫原性 AUPRC",
+      "value": 0.78,
+      "std": 0.006,
+      "n": null,
+      "denominator": null,
+      "unit": "auprc",
+      "citation": "reports/w2_day2/f2_f3_comparison.md，F2 对齐 GlycanML Table 3"
+    },
+    {
+      "reference_id": "ref.f2.glycosylation.macro_f1",
+      "track": "F2",
+      "label": "GlycanML Table 3 RGCN 糖基化 Macro-F1",
+      "value": 0.948,
+      "std": 0.004,
+      "n": null,
+      "denominator": null,
+      "unit": "macro_f1",
+      "citation": "reports/w2_day2/f2_f3_comparison.md，F2 对齐 GlycanML Table 3"
+    },
+    {
+      "reference_id": "ref.f3.claude.answer_accuracy",
+      "track": "F3",
+      "label": "上游 Claude 答案准确率，GPT-4o 评分",
+      "value": 18,
+      "std": null,
+      "n": null,
+      "denominator": 50,
+      "unit": "count",
+      "citation": "reports/w2_day2/f2_f3_comparison.md，上游目录记录与 GPT-4o 评分边界"
+    },
+    {
+      "reference_id": "ref.f3.qwen3.answer_accuracy",
+      "track": "F3",
+      "label": "上游 Qwen3 答案准确率，GPT-4o 评分",
+      "value": 15,
+      "std": null,
+      "n": null,
+      "denominator": 50,
+      "unit": "count",
+      "citation": "reports/w2_day2/f2_f3_comparison.md，上游目录记录与 GPT-4o 评分边界"
+    }
+  ]
+}

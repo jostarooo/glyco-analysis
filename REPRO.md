@@ -19,6 +19,14 @@ GlycanML 五个 CSV 共 30675065 字节，MD5 全部通过。F2 按论文 Table 
 
 Doc2Agent 70 个 wrapper 中 43 个直接返回 `ok`，服务存活 61 个。W2 当天用通用探针把 50 道任务分为 20 道可直接完成、25 道需要替代工具、5 道受服务失败阻断。2026-10-30 W3 用任务参数重测 17 个阻断工具后，最新分类为 43/5/2，W2 原始 CSV 和 summary 保留为历史证据。Qwen3 4B 正式批次完成 50 题，`exact_sequence=19`、`all_expected_called=34`、`any_expected_called=41`、`tasks_with_final_answer=39`，110 次工具调用中 78 次成功。这些是轨迹指标，不是答案正确率。
 
+### W3（交付日 2026-11-10，2026-10-31 记分卡收口）
+
+W3 Day 1 的本地基线是 `985d8975799f254bad18f05a8fcf68682ff75a72`。2026-10-31
+新增可重算记分卡，把 F1 MCC、F2 Table 3 两项指标、F3 五项轨迹计数和工具可行性
+统一到 `reports/w3_day2/scorecard.json`、`scorecard.csv`、`scorecard.md`。
+`scripts/build_w3_scorecard.py --check` 会从固定源产物重算并拒绝缺失、过期或被手改的输出。
+本轮没有重跑 F2 训练，没有重跑 Qwen3 4B 50 题，也没有执行发布。
+
 ## 一、可行性五关（项目级，W1 只验收第 1 至第 3 关）
 
 五关按顺序过，前一关没过不进下一关。每关都留一个可检查的产物。
@@ -307,6 +315,21 @@ $env:PYTHONUTF8='1'
 
 正式 F3 批次是 `qwen3:4b` 的 50 题结果。`reports/w2_day2/f3_qwen3_8b_50_incomplete/` 是中断目录，不是成绩。上游 Claude 18/50 和 Qwen3 15/50 均由 GPT-4o 评分，本轮没有相同评分器，不能直接比较。
 
+### W3 可重算 F1/F2/F3 记分卡
+
+```powershell
+$env:PYTHONUTF8 = '1'
+D:\python\python.exe scripts\build_w3_scorecard.py
+D:\python\python.exe scripts\build_w3_scorecard.py --check
+D:\python\python.exe -m unittest tests\test_w3_scorecard.py -v
+```
+
+`reference_values.json` 是人工核对的版本化输入，生成器不覆盖它。生成器会重新读取
+八个固定证据源并记录相对路径、字节数和 SHA256；F1 混淆矩阵、MCC、F2 三种子聚合、
+F3 计数上限、工具可行性题号集合和 Markdown 参考锚点都必须在同一轮校验中成立。
+连续两跑必须字节一致且第二次不更新 mtime，手改任一输出后 `--check` 必须退出 1。
+验证记录见 `reports/w3_day2/validation_2026-10-31.md`。
+
 ## 五、复现记录
 
 | 日期 | 做了什么 | 验证方式 | 结果 |
@@ -325,3 +348,4 @@ $env:PYTHONUTF8='1'
 | 2026-10-28 | W2 Day 1：PyG RGCN、GlycanML 数据、Doc2Agent 盘点 | 5 个 CSV MD5 通过；F2 三种子完成；70 个 wrapper 与 50 道任务盘点完成 | ✅ 提交 `e776c5f`；产物见 `reports/w2_day1/` |
 | 2026-10-29 | W2 Day 2：Qwen3 4B 50 题与可行性分类 | 50 个 task JSON 与 summary 重算一致；三分类 20/25/5 合计 50 | ✅ 运行提交 `8fc1da6`，分类提交 `6b77fa7`；产物见 `reports/w2_day2/` |
 | 2026-10-30 | W3 Day 1：17 个阻断工具任务级复测 | 服务可达 17/17；工具体 13/1/2/1；50 题修正为 43/5/2 | 本地 W3 提交见当日 Git 历史；产物见 `reports/w3_day1/`，边界见 `docs/W3_D1_tool_blocker_triage.txt` |
+| 2026-10-31 | W3 Day 2：F1/F2/F3 可重算记分卡 | 8 条指标与 43/5/2 从固定源重算；连续两跑字节一致；手改输出后 `--check` 返回 1；全量测试 99 项，98 项通过、1 项 GPU 门控跳过 | ✅ 生成与检查通过；产物见 `reports/w3_day2/`，验证见 `reports/w3_day2/validation_2026-10-31.md` |

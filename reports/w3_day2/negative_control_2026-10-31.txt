@@ -1,0 +1,6 @@
+CONTROL: append one byte to a temporary copy of scorecard.csv
+COMMAND: D:\python\python.exe D:\wbworkspace\glyco-analysis\scripts\build_w3_scorecard.py --repo-root D:\wbworkspace\glyco-analysis --out-dir D:\Codex\workspace\tmpyh9rzfac --check
+EXIT_CODE: 1
+STDOUT:
+STDERR:
+SCORECARD CHECK ERROR: scorecard outputs missing or stale: scorecard.csv
