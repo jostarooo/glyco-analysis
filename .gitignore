@@ -33,3 +33,7 @@ reports/github_publish_*.md
 
 # 会话内工作清单
 .audit/
+
+# web frontend
+web/node_modules/
+web/dist/

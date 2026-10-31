@@ -1,0 +1,679 @@
+{
+  "benchmark_pool": {
+    "controls_are_not_confirmed_negatives": true,
+    "evaluation_rows": 130,
+    "experimental_positive": 82,
+    "id": "experimental_positive_vs_unannotated_control",
+    "inferred_display_only": 71,
+    "inferred_excluded_from_metrics": true,
+    "label_source": "UniProt N-linked annotation",
+    "proteins": 28,
+    "source_rows": 201,
+    "unannotated_control": 48
+  },
+  "f1_comparability_caveat": "35M 使用窗口化留一蛋白 OOF 估计；150M 使用全序列作者 adapter 推理。两者的差异不能只归因于模型大小。",
+  "f1_esm150_repro": {
+    "confusion": {
+      "fn": 128,
+      "fp": 67,
+      "tn": 1186,
+      "tp": 1173
+    },
+    "delta": 0.0003488428592927084,
+    "mcc": 0.8483488428592927,
+    "reference_mcc": 0.848,
+    "row_count": 2554
+  },
+  "f1_methods": [
+    {
+      "confusion": {
+        "fn": 0,
+        "fp": 48,
+        "tn": 0,
+        "tp": 82
+      },
+      "control_specificity": 0.0,
+      "id": "sequon_rule",
+      "label": "Sequon 规则",
+      "mcc": 0.0,
+      "mcc_defined": false,
+      "roc_auc": null
+    },
+    {
+      "confusion": {
+        "fn": 22,
+        "fp": 19,
+        "tn": 29,
+        "tp": 60
+      },
+      "control_specificity": 0.6041666666666666,
+      "id": "esm35_oof",
+      "label": "35M 线性探针 OOF",
+      "mcc": 0.33197492126736816,
+      "mcc_defined": true,
+      "roc_auc": 0.7560975609756098
+    },
+    {
+      "confusion": {
+        "fn": 11,
+        "fp": 48,
+        "tn": 0,
+        "tp": 71
+      },
+      "control_specificity": 0.0,
+      "id": "esm150_author_adapter",
+      "label": "150M 作者适配器",
+      "mcc": -0.2326143775812488,
+      "mcc_defined": true,
+      "roc_auc": 0.618140243902439
+    }
+  ],
+  "f2": {
+    "model": {
+      "embedding": [
+        143,
+        128
+      ],
+      "hidden_dim": 128,
+      "layers": 3,
+      "mlp": [
+        768,
+        768
+      ],
+      "pooling": [
+        "mean",
+        "max"
+      ],
+      "relation_channels": 84
+    },
+    "tasks": {
+      "glycosylation": {
+        "aggregate": {
+          "test_accuracy": {
+            "mean": 0.9613821138211381,
+            "n": 3,
+            "std": 0.003520428470668453
+          },
+          "test_macro_f1": {
+            "mean": 0.9377928560029268,
+            "n": 3,
+            "std": 0.0038891301525018625
+          },
+          "validation_accuracy": {
+            "mean": 0.9815950920245399,
+            "n": 3,
+            "std": 0.006134969325153339
+          },
+          "validation_macro_f1": {
+            "mean": 0.9737638177569528,
+            "n": 3,
+            "std": 0.011989923663555217
+          }
+        },
+        "class_mapping": {
+          "N": 0,
+          "O": 1,
+          "free": 2
+        },
+        "csv": "D:\\wbworkspace\\glyco-analysis\\data\\raw\\glycanml\\glycan_link.csv",
+        "cuda_fallback_reason": null,
+        "device": "cuda:0",
+        "edges": 27044,
+        "label_counts": {
+          "0": 937,
+          "1": 668,
+          "2": 78
+        },
+        "max_nodes": 30,
+        "min_nodes": 3,
+        "nodes": 15206,
+        "num_classes": 3,
+        "per_seed": [
+          {
+            "best_epoch": 10,
+            "device": "cuda:0",
+            "last_train_loss": 0.0018980738976547924,
+            "seed": 0,
+            "test": {
+              "accuracy": 0.9634146341463414,
+              "macro_f1": 0.9407962109575013
+            },
+            "validation": {
+              "accuracy": 0.9815950920245399,
+              "macro_f1": 0.9716791979949875
+            },
+            "validation_selection": {
+              "metric": "accuracy",
+              "value": 0.9815950920245399
+            }
+          },
+          {
+            "best_epoch": 7,
+            "device": "cuda:0",
+            "last_train_loss": 0.0014435208485335397,
+            "seed": 1,
+            "test": {
+              "accuracy": 0.9634146341463414,
+              "macro_f1": 0.9333997727074045
+            },
+            "validation": {
+              "accuracy": 0.9754601226993865,
+              "macro_f1": 0.9629528985507246
+            },
+            "validation_selection": {
+              "metric": "accuracy",
+              "value": 0.9754601226993865
+            }
+          },
+          {
+            "best_epoch": 22,
+            "device": "cuda:0",
+            "last_train_loss": 0.0017180774287234135,
+            "seed": 2,
+            "test": {
+              "accuracy": 0.9573170731707317,
+              "macro_f1": 0.9391825843438747
+            },
+            "validation": {
+              "accuracy": 0.9877300613496932,
+              "macro_f1": 0.9866593567251462
+            },
+            "validation_selection": {
+              "metric": "accuracy",
+              "value": 0.9877300613496932
+            }
+          }
+        ],
+        "report_metric": "macro_f1",
+        "rows": 1683,
+        "selection_metric": "accuracy",
+        "split_counts": {
+          "test": 164,
+          "train": 1356,
+          "valid": 163
+        },
+        "target_column": "link"
+      },
+      "immunogenicity": {
+        "aggregate": {
+          "test_accuracy": {
+            "mean": 0.9241379310344827,
+            "n": 3,
+            "std": 0.006896551724137945
+          },
+          "test_auprc": {
+            "mean": 0.7748635136784087,
+            "n": 3,
+            "std": 0.009111853148723878
+          },
+          "test_auroc": {
+            "mean": 0.9730666666666666,
+            "n": 3,
+            "std": 0.0012858201014657124
+          },
+          "validation_accuracy": {
+            "mean": 0.9440715883668904,
+            "n": 3,
+            "std": 0.003874834021406879
+          },
+          "validation_auprc": {
+            "mean": 0.6573102858679781,
+            "n": 3,
+            "std": 0.00906946825981584
+          },
+          "validation_auroc": {
+            "mean": 0.9700226244343891,
+            "n": 3,
+            "std": 0.003804757931864678
+          }
+        },
+        "class_mapping": {
+          "0": 0,
+          "1": 1
+        },
+        "csv": "D:\\wbworkspace\\glyco-analysis\\data\\raw\\glycanml\\glycan_immunogenicity.csv",
+        "cuda_fallback_reason": null,
+        "device": "cuda:0",
+        "edges": 16628,
+        "label_counts": {
+          "0": 684,
+          "1": 636
+        },
+        "max_nodes": 24,
+        "min_nodes": 3,
+        "nodes": 9634,
+        "num_classes": 1,
+        "per_seed": [
+          {
+            "best_epoch": 41,
+            "device": "cuda:0",
+            "last_train_loss": 0.03236003900781913,
+            "seed": 0,
+            "test": {
+              "accuracy": 0.9172413793103448,
+              "auprc": 0.7832559324152325,
+              "auroc": 0.974
+            },
+            "validation": {
+              "accuracy": 0.9395973154362416,
+              "auprc": 0.6496909607486531,
+              "auroc": 0.9669117647058824
+            },
+            "validation_selection": {
+              "metric": "auroc",
+              "value": 0.9669117647058824
+            }
+          },
+          {
+            "best_epoch": 47,
+            "device": "cuda:0",
+            "last_train_loss": 0.04100431487341838,
+            "seed": 1,
+            "test": {
+              "accuracy": 0.9241379310344827,
+              "auprc": 0.7651717289430979,
+              "auroc": 0.9716
+            },
+            "validation": {
+              "accuracy": 0.9463087248322147,
+              "auprc": 0.667342059649752,
+              "auroc": 0.9742647058823528
+            },
+            "validation_selection": {
+              "metric": "auroc",
+              "value": 0.9742647058823528
+            }
+          },
+          {
+            "best_epoch": 46,
+            "device": "cuda:0",
+            "last_train_loss": 0.03875902100860143,
+            "seed": 2,
+            "test": {
+              "accuracy": 0.9310344827586207,
+              "auprc": 0.7761628796768958,
+              "auroc": 0.9736
+            },
+            "validation": {
+              "accuracy": 0.9463087248322147,
+              "auprc": 0.6548978372055295,
+              "auroc": 0.968891402714932
+            },
+            "validation_selection": {
+              "metric": "auroc",
+              "value": 0.968891402714932
+            }
+          }
+        ],
+        "report_metric": "auprc",
+        "rows": 1320,
+        "selection_metric": "auroc",
+        "split_counts": {
+          "test": 145,
+          "train": 1026,
+          "valid": 149
+        },
+        "target_column": "immunogenicity"
+      }
+    },
+    "torchdrug_installed": false,
+    "torchdrug_notes": [
+      "No TorchDrug runtime is installed in this environment, so no numeric delta was measured.",
+      "This script implements the requested per-relation mean channels; it is structurally related to, but not a bitwise clone of, TorchDrug's RelationalGraphConv.",
+      "The upstream link_RGCN.yaml specifies num_class: 2 while the CSV contains N, O, and free; this benchmark intentionally uses three classes as required for the Table 3 recomputation.",
+      "The upstream dataset docstring also contains stale split statistics; this script validates the actual CSV one-hot counts."
+    ],
+    "training": {
+      "T_max": 100,
+      "batch_size": 64,
+      "deterministic_seed_control": true,
+      "epochs": 50,
+      "lr": 0.0005,
+      "optimizer": "Adam",
+      "scheduler": "CosineAnnealingLR",
+      "weight_decay": 0.001
+    },
+    "vocab": {
+      "active_units": 127,
+      "embedding_rows": 143,
+      "relation_ids": 84
+    }
+  },
+  "f3": {
+    "all_expected_called": 34,
+    "any_expected_called": 41,
+    "exact_sequence": 19,
+    "grader": "not_run_upstream_requires_gpt4o_api_key",
+    "max_rounds": 4,
+    "model": "qwen3:4b",
+    "num_ctx": 8192,
+    "tasks_run": 50,
+    "tasks_with_final_answer": 39,
+    "tasks_with_tool_call": 50,
+    "tool_call_successes": 78,
+    "tool_calls": 110
+  },
+  "metrics": [
+    {
+      "comparison": {
+        "delta_local_minus_reference": 0.0003488428592927084,
+        "kind": "comparable",
+        "reference_id": "ref.f1.esm150_lora.mcc",
+        "scope_note": "作者检查点复算；差值方向为本地减参考。"
+      },
+      "local": {
+        "denominator": null,
+        "denominator_locator": null,
+        "locator": "/mcc",
+        "n": null,
+        "source": "f1_metrics",
+        "std": null,
+        "std_locator": null,
+        "value": 0.8483488428592927
+      },
+      "metric": "MCC",
+      "metric_id": "f1.esm150_lora.mcc",
+      "reference": {
+        "citation": "REPRO.md 第四节，作者 ESM-2 150M LoRA 复算表",
+        "denominator": null,
+        "label": "LoRA-N-Gly 论文 MCC",
+        "n": null,
+        "reference_id": "ref.f1.esm150_lora.mcc",
+        "std": null,
+        "track": "F1",
+        "unit": "mcc",
+        "value": 0.848
+      },
+      "subject": "ESM-2 150M LoRA 作者检查点",
+      "track": "F1",
+      "unit": "mcc"
+    },
+    {
+      "comparison": {
+        "delta_local_minus_reference": -0.00513648632159136,
+        "kind": "comparable",
+        "reference_id": "ref.f2.immunogenicity.auprc",
+        "scope_note": "论文 Table 3 RGCN 数值对照；本地为 PyG 自实现，不是 TorchDrug 逐位克隆。"
+      },
+      "local": {
+        "denominator": null,
+        "denominator_locator": null,
+        "locator": "/tasks/immunogenicity/aggregate/test_auprc/mean",
+        "n": 3,
+        "source": "f2_recompute",
+        "std": 0.009111853148723878,
+        "std_locator": "/tasks/immunogenicity/aggregate/test_auprc/std",
+        "value": 0.7748635136784087
+      },
+      "metric": "AUPRC",
+      "metric_id": "f2.immunogenicity.auprc",
+      "reference": {
+        "citation": "reports/w2_day2/f2_f3_comparison.md，F2 对齐 GlycanML Table 3",
+        "denominator": null,
+        "label": "GlycanML Table 3 RGCN 免疫原性 AUPRC",
+        "n": null,
+        "reference_id": "ref.f2.immunogenicity.auprc",
+        "std": 0.006,
+        "track": "F2",
+        "unit": "auprc",
+        "value": 0.78
+      },
+      "subject": "GlycanML 免疫原性",
+      "track": "F2",
+      "unit": "auprc"
+    },
+    {
+      "comparison": {
+        "delta_local_minus_reference": -0.01020714399707312,
+        "kind": "comparable",
+        "reference_id": "ref.f2.glycosylation.macro_f1",
+        "scope_note": "论文 Table 3 RGCN 数值对照；本地为 PyG 自实现，不是 TorchDrug 逐位克隆。"
+      },
+      "local": {
+        "denominator": null,
+        "denominator_locator": null,
+        "locator": "/tasks/glycosylation/aggregate/test_macro_f1/mean",
+        "n": 3,
+        "source": "f2_recompute",
+        "std": 0.0038891301525018625,
+        "std_locator": "/tasks/glycosylation/aggregate/test_macro_f1/std",
+        "value": 0.9377928560029268
+      },
+      "metric": "Macro-F1",
+      "metric_id": "f2.glycosylation.macro_f1",
+      "reference": {
+        "citation": "reports/w2_day2/f2_f3_comparison.md，F2 对齐 GlycanML Table 3",
+        "denominator": null,
+        "label": "GlycanML Table 3 RGCN 糖基化 Macro-F1",
+        "n": null,
+        "reference_id": "ref.f2.glycosylation.macro_f1",
+        "std": 0.004,
+        "track": "F2",
+        "unit": "macro_f1",
+        "value": 0.948
+      },
+      "subject": "GlycanML 糖基化",
+      "track": "F2",
+      "unit": "macro_f1"
+    },
+    {
+      "comparison": {
+        "kind": "not_comparable",
+        "reason": "工具轨迹或输出存在性，不是答案正确率。上游 Claude 18/50、Qwen3 15/50 使用 GPT-4o 评分，本轮未运行同一评分器，不能生成差值。",
+        "reference_ids": [
+          "ref.f3.claude.answer_accuracy",
+          "ref.f3.qwen3.answer_accuracy"
+        ]
+      },
+      "local": {
+        "denominator": 50,
+        "denominator_locator": "/tasks_run",
+        "locator": "/exact_sequence",
+        "n": null,
+        "source": "f3_summary",
+        "std": null,
+        "std_locator": null,
+        "value": 19
+      },
+      "metric": "精确工具序列",
+      "metric_id": "f3.qwen3_4b.exact_sequence",
+      "reference": null,
+      "subject": "Qwen3 4B，50 道任务",
+      "track": "F3",
+      "unit": "count"
+    },
+    {
+      "comparison": {
+        "kind": "not_comparable",
+        "reason": "工具轨迹或输出存在性，不是答案正确率。上游 Claude 18/50、Qwen3 15/50 使用 GPT-4o 评分，本轮未运行同一评分器，不能生成差值。",
+        "reference_ids": [
+          "ref.f3.claude.answer_accuracy",
+          "ref.f3.qwen3.answer_accuracy"
+        ]
+      },
+      "local": {
+        "denominator": 50,
+        "denominator_locator": "/tasks_run",
+        "locator": "/all_expected_called",
+        "n": null,
+        "source": "f3_summary",
+        "std": null,
+        "std_locator": null,
+        "value": 34
+      },
+      "metric": "全部期望工具已调用",
+      "metric_id": "f3.qwen3_4b.all_expected_called",
+      "reference": null,
+      "subject": "Qwen3 4B，50 道任务",
+      "track": "F3",
+      "unit": "count"
+    },
+    {
+      "comparison": {
+        "kind": "not_comparable",
+        "reason": "工具轨迹或输出存在性，不是答案正确率。上游 Claude 18/50、Qwen3 15/50 使用 GPT-4o 评分，本轮未运行同一评分器，不能生成差值。",
+        "reference_ids": [
+          "ref.f3.claude.answer_accuracy",
+          "ref.f3.qwen3.answer_accuracy"
+        ]
+      },
+      "local": {
+        "denominator": 50,
+        "denominator_locator": "/tasks_run",
+        "locator": "/any_expected_called",
+        "n": null,
+        "source": "f3_summary",
+        "std": null,
+        "std_locator": null,
+        "value": 41
+      },
+      "metric": "任一期望工具已调用",
+      "metric_id": "f3.qwen3_4b.any_expected_called",
+      "reference": null,
+      "subject": "Qwen3 4B，50 道任务",
+      "track": "F3",
+      "unit": "count"
+    },
+    {
+      "comparison": {
+        "kind": "not_comparable",
+        "reason": "工具轨迹或输出存在性，不是答案正确率。上游 Claude 18/50、Qwen3 15/50 使用 GPT-4o 评分，本轮未运行同一评分器，不能生成差值。",
+        "reference_ids": [
+          "ref.f3.claude.answer_accuracy",
+          "ref.f3.qwen3.answer_accuracy"
+        ]
+      },
+      "local": {
+        "denominator": 50,
+        "denominator_locator": "/tasks_run",
+        "locator": "/tasks_with_final_answer",
+        "n": null,
+        "source": "f3_summary",
+        "std": null,
+        "std_locator": null,
+        "value": 39
+      },
+      "metric": "存在最终回答",
+      "metric_id": "f3.qwen3_4b.tasks_with_final_answer",
+      "reference": null,
+      "subject": "Qwen3 4B，50 道任务",
+      "track": "F3",
+      "unit": "count"
+    },
+    {
+      "comparison": {
+        "kind": "not_comparable",
+        "reason": "工具轨迹或输出存在性，不是答案正确率。上游 Claude 18/50、Qwen3 15/50 使用 GPT-4o 评分，本轮未运行同一评分器，不能生成差值。",
+        "reference_ids": [
+          "ref.f3.claude.answer_accuracy",
+          "ref.f3.qwen3.answer_accuracy"
+        ]
+      },
+      "local": {
+        "denominator": 110,
+        "denominator_locator": "/tool_calls",
+        "locator": "/tool_call_successes",
+        "n": null,
+        "source": "f3_summary",
+        "std": null,
+        "std_locator": null,
+        "value": 78
+      },
+      "metric": "工具调用成功数",
+      "metric_id": "f3.qwen3_4b.tool_call_successes",
+      "reference": null,
+      "subject": "Qwen3 4B，50 道任务",
+      "track": "F3",
+      "unit": "count"
+    }
+  ],
+  "policy": {
+    "delta_sign": "local_minus_reference",
+    "f2_comparison": "paper_table_row_not_bitwise_clone",
+    "f3_comparison": "trajectory_metrics_not_answer_accuracy",
+    "timestamp_policy": "no_wall_clock_timestamp"
+  },
+  "schema_version": "glyco-web-metrics/v1",
+  "scorecard_status": "PASS",
+  "sources": [
+    {
+      "byte_count": 473,
+      "path": "reports/esm150_lora_repro_v0/metrics.json",
+      "role": "f1_esm150",
+      "sha256": "5bbfbfddbc944ae7f07f92095a7c54b590440c95690196f127151c9fc4752d26"
+    },
+    {
+      "byte_count": 4505,
+      "path": "reports/w1_three_method_v0/metrics.json",
+      "role": "f1_three_method",
+      "sha256": "cdd9b997f94569806b78dc9124b8001cfd8b2c8510a4abd04d33a52a71b73b4f"
+    },
+    {
+      "byte_count": 73886,
+      "path": "reports/w2_day1/glycanml_data_check.json",
+      "role": "f2_data_check",
+      "sha256": "ee73924a9c98db68cc94f0ce5ddefcc10ba765ed4f2c6882b28b05cf95e0f111"
+    },
+    {
+      "byte_count": 8125,
+      "path": "reports/w2_day1/glycanml_rgcn_recompute.json",
+      "role": "f2_recompute",
+      "sha256": "546e5bb7bff0986bc4185d2671aec2ad2b92e7e4bc285e4c7a3d6aca8ac301b8"
+    },
+    {
+      "byte_count": 497,
+      "path": "reports/w2_day2/f3_qwen3_4b_50/summary.json",
+      "role": "f3_summary",
+      "sha256": "4ead0e26a15760a34450c55859679a5c5aeee4dd913014826540b77e5b7c66f4"
+    },
+    {
+      "byte_count": 9616,
+      "path": "reports/w3_day1/task_feasibility_revised.csv",
+      "role": "feasibility",
+      "sha256": "13e3c3cecf1c9dffdac3f1b9c552bed68a53b140b6889d752e8fc05abc4985ba"
+    },
+    {
+      "byte_count": 14326,
+      "path": "reports/w3_day1/tool_blocker_recheck_summary.json",
+      "role": "recheck",
+      "sha256": "89e784ef12e60d59a20ea31524c97310ab75b7911e32e60eb5c1c7ea710f6675"
+    },
+    {
+      "byte_count": 13307,
+      "path": "reports/w3_day2/scorecard.json",
+      "role": "scorecard",
+      "sha256": "7d6657c43932f5ceff1abbf2febeff2bc4d743cc766d11dc59d2c1df2464b3d7"
+    },
+    {
+      "byte_count": 27593,
+      "path": "reports/w2_day1/doc2agent_tasks.csv",
+      "role": "tasks",
+      "sha256": "72e4cfe73c4d86281beffa5b69097736d03682aab334d06041fb57728e7f4cdf"
+    },
+    {
+      "byte_count": 1501,
+      "path": "reports/w2_day1/doc2agent_tasks_summary.json",
+      "role": "tasks_summary",
+      "sha256": "e04b37770e2ca13bdfb5376d632abf5943c80d16a60b1e5e63fdcabedaee7b01"
+    },
+    {
+      "byte_count": 10264,
+      "path": "reports/w2_day1/doc2agent_tools.csv",
+      "role": "tools",
+      "sha256": "0863a18b4c9e573c833e885c933e910461639b023f2bf4e379a1bec5598a1ebc"
+    },
+    {
+      "byte_count": 1602,
+      "path": "reports/w2_day1/doc2agent_tools_summary.json",
+      "role": "tools_summary",
+      "sha256": "958a29f88875c2ed29b028b63e618e2ea8a9698e83c925b022497a877d938845"
+    }
+  ],
+  "validations": {
+    "f1_row_count": 2554,
+    "f2_seeds": 3,
+    "f3_tasks": 50,
+    "feasibility_total": 50,
+    "metric_rows": 8
+  }
+}

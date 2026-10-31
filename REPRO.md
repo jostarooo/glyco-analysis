@@ -37,7 +37,7 @@ W3 Day 1 的本地基线是 `985d8975799f254bad18f05a8fcf68682ff75a72`。2026-10
 | 2 | **数据关** | UniProt 人类糖蛋白检索返回 1381 条；GlyGen 单蛋白详情可取；其余接口状态有记录 | ✅ 通过（4/6 可用） | `reports/endpoint_check_2026-10-18.md` |
 | 3 | **复现关** | 作者 150M 检查点在作者 `test.csv` 上复算 MCC，与论文 0.848 对表并解释差异 | ✅ 通过 | `reports/mcc_repro.md` |
 | 4 | **本机训练关** | ESM2-150M + LoRA 能在 6.6 GiB 可用显存内跑通若干步且损失下降 | ⬜ 未开始（后续周） | `reports/local_train.md` |
-| 5 | **系统关** | 浏览器里能用真实后端结果完成一次"序列 → 位点 → 糖链"的端到端问答 | ⬜ 未开始（后续周） | 录屏 + `docs/demo.md` |
+| 5 | **系统关** | 浏览器里能用真实后端结果完成一次"序列 → 位点 → 糖链"的端到端问答；W3 Day 3 已交付只读展示前端 | 🔶 部分通过 | `web/` + `scripts/build_web_data.py`；端到端问答仍待 `docs/demo.md` |
 
 ## 二、术语表
 
@@ -315,6 +315,23 @@ $env:PYTHONUTF8='1'
 
 正式 F3 批次是 `qwen3:4b` 的 50 题结果。`reports/w2_day2/f3_qwen3_8b_50_incomplete/` 是中断目录，不是成绩。上游 Claude 18/50 和 Qwen3 15/50 均由 GPT-4o 评分，本轮没有相同评分器，不能直接比较。
 
+### web 数据契约（2026-10-31，W3 Day 3）
+
+```powershell
+$env:PYTHONUTF8 = '1'
+D:\python\python.exe scripts\build_web_data.py
+D:\python\python.exe scripts\build_web_data.py --check
+
+cd /d D:\wbworkspace\glyco-analysis\web
+D:\node\node.exe D:\node\node_modules\npm\bin\npm-cli.js run build
+D:\node\node.exe D:\node\node_modules\npm\bin\npm-cli.js run preview
+```
+
+`scripts/build_web_data.py` 从 12 个真实产物生成 `web/src/data/{project,metrics,tools,boundaries}.json`，
+记录每个源的相对路径、字节数和 SHA256，并在 `project.json` 写入当时 `git rev-parse HEAD`。
+生成器不写运行时间，连续两跑输出必须字节一致；`--check` 在文件缺失、过期或被手改时退出 1。
+`web/` 界面只读展示这些数据，不写死指标、不使用 Mock。构建命令为 `web/` 下的 `npm run build`，
+预览命令为 `npm run preview`。本节是 REPRO.md 第 5 关系统关的第一个交付前端，端到端问答仍未完成。
 ### W3 可重算 F1/F2/F3 记分卡
 
 ```powershell
@@ -349,3 +366,4 @@ F3 计数上限、工具可行性题号集合和 Markdown 参考锚点都必须�
 | 2026-10-29 | W2 Day 2：Qwen3 4B 50 题与可行性分类 | 50 个 task JSON 与 summary 重算一致；三分类 20/25/5 合计 50 | ✅ 运行提交 `8fc1da6`，分类提交 `6b77fa7`；产物见 `reports/w2_day2/` |
 | 2026-10-30 | W3 Day 1：17 个阻断工具任务级复测 | 服务可达 17/17；工具体 13/1/2/1；50 题修正为 43/5/2 | 本地 W3 提交见当日 Git 历史；产物见 `reports/w3_day1/`，边界见 `docs/W3_D1_tool_blocker_triage.txt` |
 | 2026-10-31 | W3 Day 2：F1/F2/F3 可重算记分卡 | 8 条指标与 43/5/2 从固定源重算；连续两跑字节一致；手改输出后 `--check` 返回 1；全量测试 99 项，98 项通过、1 项 GPU 门控跳过 | ✅ 生成与检查通过；产物见 `reports/w3_day2/`，验证见 `reports/w3_day2/validation_2026-10-31.md` |
+| 2026-10-31 | W3 Day 3：web 交付界面数据契约 | 12 个源产物生成 4 个数据契约文件；build_web_data.py 连续两跑字节一致；web build 通过 | ✅ 生成与检查通过；产物见 `web/src/data/` 与 `scripts/build_web_data.py` |

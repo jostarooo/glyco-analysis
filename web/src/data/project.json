@@ -1,0 +1,184 @@
+{
+  "counts": {
+    "f2_csv_bytes": 30675065,
+    "f2_csv_count": 5,
+    "metric_rows": 8,
+    "scorecard_schema": "w3-scorecard-v1",
+    "scorecard_status": "PASS",
+    "tasks_total": 50,
+    "tools_alive": 61,
+    "tools_ok": 43,
+    "tools_total": 70
+  },
+  "gates": [
+    {
+      "artifact": "reports/env_check.md",
+      "name": "环境关",
+      "no": 1,
+      "state": "通过"
+    },
+    {
+      "artifact": "reports/endpoint_check_2026-10-18.md",
+      "name": "数据关",
+      "no": 2,
+      "state": "通过"
+    },
+    {
+      "artifact": "reports/mcc_repro.md",
+      "name": "复现关",
+      "no": 3,
+      "state": "通过"
+    },
+    {
+      "artifact": "reports/local_train.md",
+      "name": "本机训练关",
+      "no": 4,
+      "state": "未开始（后续周）"
+    },
+    {
+      "artifact": "docs/demo.md（计划）",
+      "name": "系统关",
+      "no": 5,
+      "state": "本界面为 W3 Day 3 的交付前端，端到端问答未完成"
+    }
+  ],
+  "generated_by": "scripts/build_web_data.py",
+  "head_commit": "e552313a51b9a38a68c6ec6669caf2f38d84ff30",
+  "project": {
+    "one_liner": "以蛋白质语言模型预测 N-糖基化位点、以图神经网络解析糖链、并用工具调用智能体把两者串成一个可对话的分析工作台",
+    "title": "毕设糖基化分析系统",
+    "tracks": [
+      {
+        "base": "ESM-2（35M 线性探针 / 150M LoRA）",
+        "id": "F1",
+        "name": "位点预测",
+        "what": "给定蛋白序列，预测 N-X-S/T 位点是否真被糖基化"
+      },
+      {
+        "base": "RGCN（PyG 自实现，对齐 GlycanML Table 3）",
+        "id": "F2",
+        "name": "糖链模型",
+        "what": "给定糖链结构，预测其性质；本轮完成免疫原性与糖基化两任务"
+      },
+      {
+        "base": "Doc2Agent 路线 + MCP；本轮完成 Qwen3 4B 50 题轨迹基线",
+        "id": "F3",
+        "name": "工具调用智能体",
+        "what": "把 F1/F2 与数据库查询包装成工具，用中文任务驱动"
+      }
+    ]
+  },
+  "schema_version": "glyco-web-project/v1",
+  "sources": [
+    {
+      "byte_count": 473,
+      "path": "reports/esm150_lora_repro_v0/metrics.json",
+      "role": "f1_esm150",
+      "sha256": "5bbfbfddbc944ae7f07f92095a7c54b590440c95690196f127151c9fc4752d26"
+    },
+    {
+      "byte_count": 4505,
+      "path": "reports/w1_three_method_v0/metrics.json",
+      "role": "f1_three_method",
+      "sha256": "cdd9b997f94569806b78dc9124b8001cfd8b2c8510a4abd04d33a52a71b73b4f"
+    },
+    {
+      "byte_count": 73886,
+      "path": "reports/w2_day1/glycanml_data_check.json",
+      "role": "f2_data_check",
+      "sha256": "ee73924a9c98db68cc94f0ce5ddefcc10ba765ed4f2c6882b28b05cf95e0f111"
+    },
+    {
+      "byte_count": 8125,
+      "path": "reports/w2_day1/glycanml_rgcn_recompute.json",
+      "role": "f2_recompute",
+      "sha256": "546e5bb7bff0986bc4185d2671aec2ad2b92e7e4bc285e4c7a3d6aca8ac301b8"
+    },
+    {
+      "byte_count": 497,
+      "path": "reports/w2_day2/f3_qwen3_4b_50/summary.json",
+      "role": "f3_summary",
+      "sha256": "4ead0e26a15760a34450c55859679a5c5aeee4dd913014826540b77e5b7c66f4"
+    },
+    {
+      "byte_count": 9616,
+      "path": "reports/w3_day1/task_feasibility_revised.csv",
+      "role": "feasibility",
+      "sha256": "13e3c3cecf1c9dffdac3f1b9c552bed68a53b140b6889d752e8fc05abc4985ba"
+    },
+    {
+      "byte_count": 14326,
+      "path": "reports/w3_day1/tool_blocker_recheck_summary.json",
+      "role": "recheck",
+      "sha256": "89e784ef12e60d59a20ea31524c97310ab75b7911e32e60eb5c1c7ea710f6675"
+    },
+    {
+      "byte_count": 13307,
+      "path": "reports/w3_day2/scorecard.json",
+      "role": "scorecard",
+      "sha256": "7d6657c43932f5ceff1abbf2febeff2bc4d743cc766d11dc59d2c1df2464b3d7"
+    },
+    {
+      "byte_count": 27593,
+      "path": "reports/w2_day1/doc2agent_tasks.csv",
+      "role": "tasks",
+      "sha256": "72e4cfe73c4d86281beffa5b69097736d03682aab334d06041fb57728e7f4cdf"
+    },
+    {
+      "byte_count": 1501,
+      "path": "reports/w2_day1/doc2agent_tasks_summary.json",
+      "role": "tasks_summary",
+      "sha256": "e04b37770e2ca13bdfb5376d632abf5943c80d16a60b1e5e63fdcabedaee7b01"
+    },
+    {
+      "byte_count": 10264,
+      "path": "reports/w2_day1/doc2agent_tools.csv",
+      "role": "tools",
+      "sha256": "0863a18b4c9e573c833e885c933e910461639b023f2bf4e379a1bec5598a1ebc"
+    },
+    {
+      "byte_count": 1602,
+      "path": "reports/w2_day1/doc2agent_tools_summary.json",
+      "role": "tools_summary",
+      "sha256": "958a29f88875c2ed29b028b63e618e2ea8a9698e83c925b022497a877d938845"
+    }
+  ],
+  "terms": [
+    {
+      "code": "MCC",
+      "plain": "马修斯相关系数。综合看真阳、真阴两侧的分类质量，1 最好，0 等于随机"
+    },
+    {
+      "code": "sequon",
+      "plain": "N-X-S/T 序列模体，X 不是脯氨酸；有模体不等于真被糖基化"
+    },
+    {
+      "code": "LoRA / adapter",
+      "plain": "低秩适配器，冻结大模型主干、只加载少量可训练参数"
+    },
+    {
+      "code": "OOF",
+      "plain": "留一蛋白折外预测：每次留出一个蛋白做测试，汇总各折结果"
+    },
+    {
+      "code": "AUPRC",
+      "plain": "精确率-召回率曲线下面积，正类稀少时比准确率更有信息"
+    },
+    {
+      "code": "Macro-F1",
+      "plain": "每个类别先算 F1 再取平均，类别不平衡时不偏大类"
+    },
+    {
+      "code": "RGCN",
+      "plain": "关系图卷积网络，按边类型（糖苷键）分别卷积"
+    },
+    {
+      "code": "MCP",
+      "plain": "模型上下文协议，把外部工具按统一接口给智能体调用"
+    },
+    {
+      "code": "wrapper",
+      "plain": "把一个外部 API 包装成智能体可调用的工具函数"
+    }
+  ]
+}

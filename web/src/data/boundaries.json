@@ -1,0 +1,116 @@
+{
+  "f1_caveat": "35M 使用窗口化留一蛋白 OOF 估计；150M 使用全序列作者 adapter 推理。两者的差异不能只归因于模型大小。",
+  "f1_pool": {
+    "controls_are_not_confirmed_negatives": true,
+    "evaluation_rows": 130,
+    "experimental_positive": 82,
+    "id": "experimental_positive_vs_unannotated_control",
+    "inferred_display_only": 71,
+    "inferred_excluded_from_metrics": true,
+    "label_source": "UniProt N-linked annotation",
+    "proteins": 28,
+    "source_rows": 201,
+    "unannotated_control": 48
+  },
+  "f2_data_url_fixes": [
+    "glycan_link"
+  ],
+  "f2_torchdrug_notes": [
+    "No TorchDrug runtime is installed in this environment, so no numeric delta was measured.",
+    "This script implements the requested per-relation mean channels; it is structurally related to, but not a bitwise clone of, TorchDrug's RelationalGraphConv.",
+    "The upstream link_RGCN.yaml specifies num_class: 2 while the CSV contains N, O, and free; this benchmark intentionally uses three classes as required for the Table 3 recomputation.",
+    "The upstream dataset docstring also contains stale split statistics; this script validates the actual CSV one-hot counts."
+  ],
+  "f3_grader": "not_run_upstream_requires_gpt4o_api_key",
+  "policy": {
+    "delta_sign": "local_minus_reference",
+    "f2_comparison": "paper_table_row_not_bitwise_clone",
+    "f3_comparison": "trajectory_metrics_not_answer_accuracy",
+    "timestamp_policy": "no_wall_clock_timestamp"
+  },
+  "recheck_notes": [
+    "get_proteins TLS 校验失败不等于服务死亡，verify=False 诊断返回 HTTP 200，生产不关闭 TLS 校验。",
+    "get_ligands HTTP 200 空数组不等于任务可用。"
+  ],
+  "schema_version": "glyco-web-boundaries/v1",
+  "scorecard_boundaries": [
+    "F2 对齐 GlycanML Table 3；本地是 PyG 自实现，不是 TorchDrug 逐位克隆。",
+    "F3 指标是工具轨迹与输出存在性，不是 GPT-4o 评分的答案正确率。",
+    "get_proteins 的 TLS 校验失败不等于服务死亡，不能关闭生产 TLS 校验。",
+    "get_ligands 的 HTTP 200 空数组不代表任务可用。"
+  ],
+  "sources": [
+    {
+      "byte_count": 473,
+      "path": "reports/esm150_lora_repro_v0/metrics.json",
+      "role": "f1_esm150",
+      "sha256": "5bbfbfddbc944ae7f07f92095a7c54b590440c95690196f127151c9fc4752d26"
+    },
+    {
+      "byte_count": 4505,
+      "path": "reports/w1_three_method_v0/metrics.json",
+      "role": "f1_three_method",
+      "sha256": "cdd9b997f94569806b78dc9124b8001cfd8b2c8510a4abd04d33a52a71b73b4f"
+    },
+    {
+      "byte_count": 73886,
+      "path": "reports/w2_day1/glycanml_data_check.json",
+      "role": "f2_data_check",
+      "sha256": "ee73924a9c98db68cc94f0ce5ddefcc10ba765ed4f2c6882b28b05cf95e0f111"
+    },
+    {
+      "byte_count": 8125,
+      "path": "reports/w2_day1/glycanml_rgcn_recompute.json",
+      "role": "f2_recompute",
+      "sha256": "546e5bb7bff0986bc4185d2671aec2ad2b92e7e4bc285e4c7a3d6aca8ac301b8"
+    },
+    {
+      "byte_count": 497,
+      "path": "reports/w2_day2/f3_qwen3_4b_50/summary.json",
+      "role": "f3_summary",
+      "sha256": "4ead0e26a15760a34450c55859679a5c5aeee4dd913014826540b77e5b7c66f4"
+    },
+    {
+      "byte_count": 9616,
+      "path": "reports/w3_day1/task_feasibility_revised.csv",
+      "role": "feasibility",
+      "sha256": "13e3c3cecf1c9dffdac3f1b9c552bed68a53b140b6889d752e8fc05abc4985ba"
+    },
+    {
+      "byte_count": 14326,
+      "path": "reports/w3_day1/tool_blocker_recheck_summary.json",
+      "role": "recheck",
+      "sha256": "89e784ef12e60d59a20ea31524c97310ab75b7911e32e60eb5c1c7ea710f6675"
+    },
+    {
+      "byte_count": 13307,
+      "path": "reports/w3_day2/scorecard.json",
+      "role": "scorecard",
+      "sha256": "7d6657c43932f5ceff1abbf2febeff2bc4d743cc766d11dc59d2c1df2464b3d7"
+    },
+    {
+      "byte_count": 27593,
+      "path": "reports/w2_day1/doc2agent_tasks.csv",
+      "role": "tasks",
+      "sha256": "72e4cfe73c4d86281beffa5b69097736d03682aab334d06041fb57728e7f4cdf"
+    },
+    {
+      "byte_count": 1501,
+      "path": "reports/w2_day1/doc2agent_tasks_summary.json",
+      "role": "tasks_summary",
+      "sha256": "e04b37770e2ca13bdfb5376d632abf5943c80d16a60b1e5e63fdcabedaee7b01"
+    },
+    {
+      "byte_count": 10264,
+      "path": "reports/w2_day1/doc2agent_tools.csv",
+      "role": "tools",
+      "sha256": "0863a18b4c9e573c833e885c933e910461639b023f2bf4e379a1bec5598a1ebc"
+    },
+    {
+      "byte_count": 1602,
+      "path": "reports/w2_day1/doc2agent_tools_summary.json",
+      "role": "tools_summary",
+      "sha256": "958a29f88875c2ed29b028b63e618e2ea8a9698e83c925b022497a877d938845"
+    }
+  ]
+}

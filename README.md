@@ -57,6 +57,11 @@ $env:PYTHONPATH = 'D:\uv\pylibs\lora-n-gly-peft014'
 D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\check_w1_three_method.py --comparison-dir reports\w1_three_method_v0
 D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\check_esm150_lora_repro.py --run-dir reports\esm150_lora_repro_v0 --test-csv D:\wbworkspace\LoRA-N-Gly\data\N-GlycositeAltas\test.csv --adapter-dir D:\wbworkspace\LoRA-N-Gly\checkpoints\N-linked\ESM-150M\checkpoint --base-model-revision a695f6045e2e32885fa60af20c13cb35398ce30c --recheck-inference
 D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe -m unittest discover -s tests -p "test_*.py" -v
+
+# W3 web 数据契约与交付前端（构建后打开 web/dist/index.html 或 npm run preview）
+$env:PYTHONUTF8 = "1"
+D:\python\python.exe scripts\build_web_data.py --check
+D:\node\node.exe D:\node\node_modules\npm\bin\npm-cli.js run build --prefix D:\wbworkspace\glyco-analysis\web
 ```
 
 `scripts/build_w1_delivery.py --sync` 会把仓库内的报告、源代码、README、REPRO 和正式周附件同步到交付目录，随后重算 `SHA256SUMS.txt`。当前视频已补入，交付包和正式周目录的校验状态均为 `PASS`；以后修改文档或重新生成交付物时再运行该命令。
@@ -159,9 +164,10 @@ F3 的五个数都是工具轨迹或输出存在性，不是答案正确率；F2
 
 ```
 glyco-analysis/
-├─ scripts/          可直接运行的脚本（环境、数据、探针、校验与发布）
+├─ scripts/          可直接运行的脚本（环境、数据、探针、校验、发布与 web 数据契约）
 ├─ reports/          体检、数据集、探针产物与发布记录
 ├─ docs/             设计与说明
+├─ web/              交付前端界面（React + Vite，数据由 scripts/build_web_data.py 生成）
 ├─ data/             本地数据（不入库，见 .gitignore）
 └─ REPRO.md          复现手册：可行性五关、术语表、本机配置
 ```
@@ -171,7 +177,8 @@ glyco-analysis/
 - 前端不写死任何数字；
 - 不用 Mock 冒真实功能；
 - 演示版本 = 仓库最新提交；
-- **论文里的数字只能作为对照，不能当成自己的结果**。
+- **论文里的数字只能作为对照，不能当成自己的结果**；
+- `web/` 界面只读展示 `web/src/data/` 的契约数据，不写死指标、不使用 Mock；
 
 ## 引用与许可
 
