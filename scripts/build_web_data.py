@@ -277,6 +277,15 @@ def build_boundaries(data: dict[str, dict[str, Any]]) -> dict[str, Any]:
     }
 
 
+def project_matches_ignoring_head(path: Path, payload: dict[str, Any]) -> bool:
+    try:
+        disk = json.loads(path.read_text(encoding="utf-8-sig"))
+    except (OSError, json.JSONDecodeError):
+        return False
+    strip = lambda item: {key: value for key, value in item.items() if key != "head_commit"}
+    return strip(disk) == strip(payload)
+
+
 def write_outputs(payloads: dict[str, dict[str, Any]], *, check: bool) -> bool:
     WEB_DATA.mkdir(parents=True, exist_ok=True)
     changed: list[str] = []
@@ -287,7 +296,13 @@ def write_outputs(payloads: dict[str, dict[str, Any]], *, check: bool) -> bool:
             if not path.is_file():
                 changed.append(f"{name}: missing")
             elif path.read_bytes() != content:
-                changed.append(f"{name}: differs")
+                head_lag_ok = (
+                    name == "project.json"
+                    and head_contract_is_current()
+                    and project_matches_ignoring_head(path, payloads[name])
+                )
+                if not head_lag_ok:
+                    changed.append(f"{name}: differs")
         else:
             if not path.is_file() or path.read_bytes() != content:
                 path.write_bytes(content)
