@@ -15,15 +15,15 @@ from enum import StrEnum
 from pathlib import Path
 from typing import NamedTuple, TypeAlias
 ROOT = Path(__file__).resolve().parents[1]
-SCHEMA = "w3-scorecard-v1"
-REF_SCHEMA = "w3-scorecard-references-v1"
+SCHEMA = "w2-day4-scorecard-v1"
+REF_SCHEMA = "w2-day4-scorecard-references-v1"
 TOL = 1e-12
 
 class ScorecardValidationError(ValueError): pass
 class ScorecardOutputError(RuntimeError): pass
 
 Track = StrEnum("Track", {"F1": "F1", "F2": "F2", "F3": "F3"})
-SourceRole = StrEnum("SourceRole", {"F1": "f1_metrics", "F2": "f2_recompute", "F3": "f3_summary", "MIRROR": "reference_mirror", "W2": "w2_tool_summary", "CSV": "feasibility_csv", "W3": "w3_recheck_summary", "CATALOG": "reference_catalog"})
+SourceRole = StrEnum("SourceRole", {"F1": "f1_metrics", "F2": "f2_recompute", "F3": "f3_summary", "MIRROR": "reference_mirror", "W2": "w2_tool_summary", "CSV": "feasibility_csv", "RECHECK": "recheck_summary", "CATALOG": "reference_catalog"})
 Unit = StrEnum("Unit", {"MCC": "mcc", "AUPRC": "auprc", "MACRO_F1": "macro_f1", "COUNT": "count"})
 Feasibility = StrEnum("Feasibility", {"DIRECT": "current_tools_direct", "REPLACEMENT": "needs_replacement_tool", "SERVICE": "service_failure"})
 
@@ -33,9 +33,9 @@ SOURCE_PATHS = {
     SourceRole.F3: "reports/w2_day2/f3_qwen3_4b_50/summary.json",
     SourceRole.MIRROR: "reports/w2_day2/f2_f3_comparison.md",
     SourceRole.W2: "reports/w2_day2/tool_feasibility_summary.json",
-    SourceRole.CSV: "reports/w3_day1/task_feasibility_revised.csv",
-    SourceRole.W3: "reports/w3_day1/tool_blocker_recheck_summary.json",
-    SourceRole.CATALOG: "reports/w3_day2/reference_values.json",
+    SourceRole.CSV: "reports/w2_day3/task_feasibility_revised.csv",
+    SourceRole.RECHECK: "reports/w2_day3/tool_blocker_recheck_summary.json",
+    SourceRole.CATALOG: "reports/w2_day4/reference_values.json",
 }
 REF_IDS = {Track.F1: ("ref.f1.esm150_lora.mcc",), Track.F2: ("ref.f2.immunogenicity.auprc", "ref.f2.glycosylation.macro_f1"), Track.F3: ("ref.f3.claude.answer_accuracy", "ref.f3.qwen3.answer_accuracy")}
 REF_TYPES = {"ref.f1.esm150_lora.mcc": (Track.F1, Unit.MCC), "ref.f2.immunogenicity.auprc": (Track.F2, Unit.AUPRC), "ref.f2.glycosylation.macro_f1": (Track.F2, Unit.MACRO_F1), "ref.f3.claude.answer_accuracy": (Track.F3, Unit.COUNT), "ref.f3.qwen3.answer_accuracy": (Track.F3, Unit.COUNT)}
@@ -303,7 +303,7 @@ def _read_counts(value: object, source: ArtifactRef, field: str) -> dict[Feasibi
         raise _err(source, field, "expected exactly three feasibility categories")
     return {item: _int(raw[item.value], source, f"{field}.{item.value}", 0) for item in Feasibility}
 
-def _parse_feasibility(csv_raw: bytes, csv_source: ArtifactRef, w2_raw: bytes, w2_source: ArtifactRef, w3_raw: bytes, w3_source: ArtifactRef) -> FeasibilitySnapshot:
+def _parse_feasibility(csv_raw: bytes, csv_source: ArtifactRef, w2_raw: bytes, w2_source: ArtifactRef, recheck_raw: bytes, recheck_source: ArtifactRef) -> FeasibilitySnapshot:
     try:
         reader = csv.DictReader(io.StringIO(csv_raw.decode("utf-8-sig"), newline=""), strict=True)
         required = {"task_id", "original_category", "revised_category", "blocking_tools", "decision_reason", "evidence"}
@@ -348,25 +348,25 @@ def _parse_feasibility(csv_raw: bytes, csv_source: ArtifactRef, w2_raw: bytes, w
     original_counts = {item: original[item.value] for item in Feasibility}
     if original_counts != ORIGINAL_COUNTS:
         raise _err(csv_source, "original_category", "expected 20/25/5")
-    w2, w3 = _json(w2_raw, w2_source), _json(w3_raw, w3_source)
+    w2, recheck = _json(w2_raw, w2_source), _json(recheck_raw, recheck_source)
     if w2.get("status") != "PASS" or _read_counts(w2.get("category_counts"), w2_source, "category_counts") != ORIGINAL_COUNTS:
         raise _err(w2_source, "category_counts", "expected PASS and 20/25/5")
-    if w3.get("status") != "PASS":
-        raise _err(w3_source, "status", "expected PASS")
-    reclass = _map(w3.get("w2_task_reclassification"), w3_source, "w2_task_reclassification")
-    w3_original = _read_counts(reclass.get("original_counts"), w3_source, "w2_task_reclassification.original_counts")
-    w3_revised = _read_counts(reclass.get("revised_counts"), w3_source, "w2_task_reclassification.revised_counts")
-    if w3_original != ORIGINAL_COUNTS:
-        raise _err(w3_source, "original_counts", "historical counts differ from W2 summary")
-    if w3_revised != counts:
-        raise _err(w3_source, "revised_counts", "counts differ from revised CSV")
+    if recheck.get("status") != "PASS":
+        raise _err(recheck_source, "status", "expected PASS")
+    reclass = _map(recheck.get("w2_task_reclassification"), recheck_source, "w2_task_reclassification")
+    recheck_original = _read_counts(reclass.get("original_counts"), recheck_source, "w2_task_reclassification.original_counts")
+    recheck_revised = _read_counts(reclass.get("revised_counts"), recheck_source, "w2_task_reclassification.revised_counts")
+    if recheck_original != ORIGINAL_COUNTS:
+        raise _err(recheck_source, "original_counts", "historical counts differ from W2 summary")
+    if recheck_revised != counts:
+        raise _err(recheck_source, "revised_counts", "counts differ from revised CSV")
     changed = sum(row["original_category"] != row["revised_category"] for row in rows)
-    if _int(reclass.get("changed_tasks"), w3_source, "changed_tasks", 0) != changed:
-        raise _err(w3_source, "changed_tasks", f"expected {changed}")
-    validation = _map(w3.get("validation"), w3_source, "validation")
-    for field, value, expected in (("unique_tools", validation.get("unique_tools"), 17), ("service_reachable", w3.get("service_reachable"), 17), ("default_transport_ok", w3.get("default_transport_ok"), 16)):
-        if _int(value, w3_source, field, 0) != expected:
-            raise _err(w3_source, field, f"expected {expected}")
+    if _int(reclass.get("changed_tasks"), recheck_source, "changed_tasks", 0) != changed:
+        raise _err(recheck_source, "changed_tasks", f"expected {changed}")
+    validation = _map(recheck.get("validation"), recheck_source, "validation")
+    for field, value, expected in (("unique_tools", validation.get("unique_tools"), 17), ("service_reachable", recheck.get("service_reachable"), 17), ("default_transport_ok", recheck.get("default_transport_ok"), 16)):
+        if _int(value, recheck_source, field, 0) != expected:
+            raise _err(recheck_source, field, f"expected {expected}")
     return FeasibilitySnapshot(50, tuple((item, counts[item]) for item in Feasibility), tuple((item, original_counts[item]) for item in Feasibility), tuple((item, tuple(sorted(ids[item]))) for item in Feasibility), changed, 17, 17, 16)
 
 def _rows(f1: F1Evidence, f2: tuple[F2TaskEvidence, ...], f3: F3Evidence, refs: dict[str, ReferenceValue]) -> tuple[MetricRow, ...]:
@@ -431,7 +431,7 @@ def _build(repo: Path) -> Scorecard:
     f1 = _parse_f1(raws[SourceRole.F1], sources.by_role(SourceRole.F1), refs["ref.f1.esm150_lora.mcc"])
     f2 = _parse_f2(raws[SourceRole.F2], sources.by_role(SourceRole.F2))
     f3 = _parse_f3(raws[SourceRole.F3], sources.by_role(SourceRole.F3))
-    feasibility = _parse_feasibility(raws[SourceRole.CSV], sources.by_role(SourceRole.CSV), raws[SourceRole.W2], sources.by_role(SourceRole.W2), raws[SourceRole.W3], sources.by_role(SourceRole.W3))
+    feasibility = _parse_feasibility(raws[SourceRole.CSV], sources.by_role(SourceRole.CSV), raws[SourceRole.W2], sources.by_role(SourceRole.W2), raws[SourceRole.RECHECK], sources.by_role(SourceRole.RECHECK))
     rows = _rows(f1, f2, f3, refs)
     _validate(rows, refs, sources)
     return Scorecard(SCHEMA, rows, references, feasibility, sources)
@@ -508,8 +508,8 @@ def _render_markdown(card: Scorecard) -> bytes:
     claude = next(ref for key, ref in f3_refs.items() if "claude" in key)
     qwen = next(ref for key, ref in f3_refs.items() if "qwen" in key)
     lines = [
-        "# W3 Day 2 可重算记分卡", "",
-        f"Schema：`{card.schema_version}`。由 `scripts/build_w3_scorecard.py` 从固定证据源生成，不包含运行时间。", "",
+        "# W2 Day 4 可重算记分卡", "",
+        f"Schema：`{card.schema_version}`。由 `scripts/build_w2_scorecard.py` 从固定证据源生成，不包含运行时间。", "",
         "差值方向统一为 `local_minus_reference`。只有 F1 MCC、F2 AUPRC、F2 Macro-F1 生成差值。", "",
         "## 八条核心指标", "",
         "| 指标 ID | 赛道 | 对象 | 指标 | 本地值 | 本地标准差 | 参考值 | 参考标准差 | 差值（本地减参考） | 比较状态 | 口径 |",
@@ -542,7 +542,7 @@ def _render_markdown(card: Scorecard) -> bytes:
         "- F2 对齐 GlycanML 论文 Table 3。本地是 PyG 自实现，不是 TorchDrug 逐位克隆，TorchDrug 未安装。",
         f"- F3 的 {f3_local} 是工具轨迹或输出存在性，不是答案正确率。",
         f"- 上游 Claude {claude.value}/50 和 Qwen3 {qwen.value}/50 使用 GPT-4o 评分，本轮未运行同一评分器，不能直接比较或计算差值。",
-        "- W3 工具可行性是任务可用性分类，不是模型准确率。`get_proteins` 的 TLS 校验失败不等于服务死亡。",
+        "- W2 Day 3 工具可行性是任务可用性分类，不是模型准确率。`get_proteins` 的 TLS 校验失败不等于服务死亡。",
         "- `get_ligands` 返回 HTTP 200 空数组只说明服务可达，不代表任务可用。", "",
         "## 来源与哈希", "",
         "| 角色 | 路径 | SHA256 | 字节数 |", "|---|---|---|---:|",
@@ -566,20 +566,20 @@ def _write_if_changed(path: Path, data: bytes) -> None:
 
 def generate_scorecard(repo_root: Path = ROOT, out_dir: Path | None = None) -> Scorecard:
     repo = Path(repo_root).resolve()
-    destination = Path(out_dir) if out_dir is not None else repo / "reports" / "w3_day2"
+    destination = Path(out_dir) if out_dir is not None else repo / "reports" / "w2_day4"
     card = _build(repo)
     for name, data in _render(card).items(): _write_if_changed(destination / name, data)
     return card
 def check_scorecard(repo_root: Path = ROOT, out_dir: Path | None = None) -> None:
     repo = Path(repo_root).resolve()
-    destination = Path(out_dir) if out_dir is not None else repo / "reports" / "w3_day2"
+    destination = Path(out_dir) if out_dir is not None else repo / "reports" / "w2_day4"
     card = _build(repo)
     stale = [name for name, data in _render(card).items() if not (destination / name).exists() or (destination / name).read_bytes() != data]
     if stale:
         raise ScorecardOutputError(f"scorecard outputs missing or stale: {', '.join(stale)}")
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Build the deterministic W3 F1/F2/F3 scorecard.")
+    parser = argparse.ArgumentParser(description="Build the deterministic W2 Day 4 F1/F2/F3 scorecard.")
     parser.add_argument("--repo-root", type=Path, default=ROOT)
     parser.add_argument("--out-dir", type=Path)
     parser.add_argument("--check", action="store_true")

@@ -1,0 +1,51 @@
+task_id,original_category,revised_category,blocking_tools,original_classes,recheck_classes,decision_reason,evidence
+1,needs_replacement_tool,current_tools_direct,convert_iupac_extended_to_wurcs,api_error,passes_with_valid_args,All expected blocker tools return usable content with task-grounded arguments.,reports/w2_day3/tool_blocker_recheck.csv
+2,current_tools_direct,current_tools_direct,,,,No expected wrapper blocked this task in W2.,reports/w2_day3/tool_blocker_recheck.csv
+3,needs_replacement_tool,current_tools_direct,compound_property_tables,param_error,passes_with_valid_args,All expected blocker tools return usable content with task-grounded arguments.,reports/w2_day3/tool_blocker_recheck.csv
+4,current_tools_direct,current_tools_direct,,,,No expected wrapper blocked this task in W2.,reports/w2_day3/tool_blocker_recheck.csv
+5,needs_replacement_tool,needs_replacement_tool,get_lectins,bad_request,api_contract_failure,"At least one blocker still has an API, dependency, or task-contract mismatch.",reports/w2_day3/tool_blocker_recheck.csv
+6,needs_replacement_tool,current_tools_direct,get_feature_by_locations,bad_request,passes_with_valid_args,All expected blocker tools return usable content with task-grounded arguments.,reports/w2_day3/tool_blocker_recheck.csv
+7,current_tools_direct,current_tools_direct,,,,No expected wrapper blocked this task in W2.,reports/w2_day3/tool_blocker_recheck.csv
+8,current_tools_direct,current_tools_direct,,,,No expected wrapper blocked this task in W2.,reports/w2_day3/tool_blocker_recheck.csv
+9,current_tools_direct,current_tools_direct,,,,No expected wrapper blocked this task in W2.,reports/w2_day3/tool_blocker_recheck.csv
+10,needs_replacement_tool,current_tools_direct,search_uniprot_entries_by_taxonomy_and_genomic_coordinates,bad_request,passes_with_valid_args,All expected blocker tools return usable content with task-grounded arguments.,reports/w2_day3/tool_blocker_recheck.csv
+11,needs_replacement_tool,current_tools_direct,convert_gws_format_to_wurcs_format,api_error,passes_with_valid_args,All expected blocker tools return usable content with task-grounded arguments.,reports/w2_day3/tool_blocker_recheck.csv
+12,needs_replacement_tool,current_tools_direct,get_fungal_lectins,bad_request,passes_with_valid_args,All expected blocker tools return usable content with task-grounded arguments.,reports/w2_day3/tool_blocker_recheck.csv
+13,needs_replacement_tool,current_tools_direct,compound_property_tables,param_error,passes_with_valid_args,All expected blocker tools return usable content with task-grounded arguments.,reports/w2_day3/tool_blocker_recheck.csv
+14,needs_replacement_tool,current_tools_direct,get_trefoil_lectins,param_error,passes_with_valid_args,All expected blocker tools return usable content with task-grounded arguments.,reports/w2_day3/tool_blocker_recheck.csv
+15,needs_replacement_tool,current_tools_direct,get_feature_by_locations,bad_request,passes_with_valid_args,All expected blocker tools return usable content with task-grounded arguments.,reports/w2_day3/tool_blocker_recheck.csv
+16,needs_replacement_tool,current_tools_direct,generate_glycan_image,param_error,passes_with_valid_args,All expected blocker tools return usable content with task-grounded arguments.,reports/w2_day3/tool_blocker_recheck.csv
+17,current_tools_direct,current_tools_direct,,,,No expected wrapper blocked this task in W2.,reports/w2_day3/tool_blocker_recheck.csv
+18,needs_replacement_tool,current_tools_direct,get_natural_variants_by_hgvs_expression,bad_request,passes_with_valid_args,All expected blocker tools return usable content with task-grounded arguments.,reports/w2_day3/tool_blocker_recheck.csv
+19,current_tools_direct,current_tools_direct,,,,No expected wrapper blocked this task in W2.,reports/w2_day3/tool_blocker_recheck.csv
+20,service_failure,service_failure,get_proteins,unreachable,tls_verification_failure,At least one blocker still fails at the transport or service layer.,reports/w2_day3/tool_blocker_recheck.csv
+21,service_failure,needs_replacement_tool,convert_composition_text_to_wurcs_format,http_424,api_contract_failure,"The exact composition returns WURCS but no GlyTouCan identifier, which task 21 asks for.",reports/w2_day3/tool_blocker_recheck.csv
+22,current_tools_direct,current_tools_direct,,,,No expected wrapper blocked this task in W2.,reports/w2_day3/tool_blocker_recheck.csv
+23,needs_replacement_tool,current_tools_direct,get_fungal_lectins,bad_request,passes_with_valid_args,All expected blocker tools return usable content with task-grounded arguments.,reports/w2_day3/tool_blocker_recheck.csv
+24,current_tools_direct,current_tools_direct,,,,No expected wrapper blocked this task in W2.,reports/w2_day3/tool_blocker_recheck.csv
+25,current_tools_direct,current_tools_direct,,,,No expected wrapper blocked this task in W2.,reports/w2_day3/tool_blocker_recheck.csv
+26,current_tools_direct,current_tools_direct,,,,No expected wrapper blocked this task in W2.,reports/w2_day3/tool_blocker_recheck.csv
+27,current_tools_direct,current_tools_direct,,,,No expected wrapper blocked this task in W2.,reports/w2_day3/tool_blocker_recheck.csv
+28,needs_replacement_tool,needs_replacement_tool,find,wrapper_bug,passes_but_task_needs_redesign,"At least one blocker still has an API, dependency, or task-contract mismatch.",reports/w2_day3/tool_blocker_recheck.csv
+29,current_tools_direct,current_tools_direct,,,,No expected wrapper blocked this task in W2.,reports/w2_day3/tool_blocker_recheck.csv
+30,current_tools_direct,current_tools_direct,,,,No expected wrapper blocked this task in W2.,reports/w2_day3/tool_blocker_recheck.csv
+31,service_failure,current_tools_direct,convert_composition_to_wurcs,server_error,passes_with_valid_args,All expected blocker tools return usable content with task-grounded arguments.,reports/w2_day3/tool_blocker_recheck.csv
+32,needs_replacement_tool,current_tools_direct,convert_iupac_extended_to_wurcs | generate_glycan_image,api_error | param_error,passes_with_valid_args | passes_with_valid_args,All expected blocker tools return usable content with task-grounded arguments.,reports/w2_day3/tool_blocker_recheck.csv
+33,current_tools_direct,current_tools_direct,,,,No expected wrapper blocked this task in W2.,reports/w2_day3/tool_blocker_recheck.csv
+34,needs_replacement_tool,current_tools_direct,generate_glycan_image,param_error,passes_with_valid_args,All expected blocker tools return usable content with task-grounded arguments.,reports/w2_day3/tool_blocker_recheck.csv
+35,needs_replacement_tool,current_tools_direct,generate_glycan_image,param_error,passes_with_valid_args,All expected blocker tools return usable content with task-grounded arguments.,reports/w2_day3/tool_blocker_recheck.csv
+36,needs_replacement_tool,current_tools_direct,convert_gws_format_to_wurcs_format,api_error,passes_with_valid_args,All expected blocker tools return usable content with task-grounded arguments.,reports/w2_day3/tool_blocker_recheck.csv
+37,service_failure,current_tools_direct,convert_composition_text_to_wurcs_format,http_424,api_contract_failure,Task 37 needs WURCS only; its exact composition returns G14669DU and WURCS.,reports/w2_day3/tool_blocker_recheck.csv
+38,current_tools_direct,current_tools_direct,,,,No expected wrapper blocked this task in W2.,reports/w2_day3/tool_blocker_recheck.csv
+39,current_tools_direct,current_tools_direct,,,,No expected wrapper blocked this task in W2.,reports/w2_day3/tool_blocker_recheck.csv
+40,needs_replacement_tool,current_tools_direct,get_human_lectome,bad_request,passes_with_valid_args,All expected blocker tools return usable content with task-grounded arguments.,reports/w2_day3/tool_blocker_recheck.csv
+41,needs_replacement_tool,current_tools_direct,get_predicted_lectins,bad_request,passes_with_valid_args,All expected blocker tools return usable content with task-grounded arguments.,reports/w2_day3/tool_blocker_recheck.csv
+42,needs_replacement_tool,current_tools_direct,generate_glycan_image,param_error,passes_with_valid_args,All expected blocker tools return usable content with task-grounded arguments.,reports/w2_day3/tool_blocker_recheck.csv
+43,current_tools_direct,current_tools_direct,,,,No expected wrapper blocked this task in W2.,reports/w2_day3/tool_blocker_recheck.csv
+44,needs_replacement_tool,current_tools_direct,generate_glycan_image,param_error,passes_with_valid_args,All expected blocker tools return usable content with task-grounded arguments.,reports/w2_day3/tool_blocker_recheck.csv
+45,current_tools_direct,current_tools_direct,,,,No expected wrapper blocked this task in W2.,reports/w2_day3/tool_blocker_recheck.csv
+46,service_failure,service_failure,get_proteins,unreachable,tls_verification_failure,At least one blocker still fails at the transport or service layer.,reports/w2_day3/tool_blocker_recheck.csv
+47,needs_replacement_tool,current_tools_direct,compound_property_tables,param_error,passes_with_valid_args,All expected blocker tools return usable content with task-grounded arguments.,reports/w2_day3/tool_blocker_recheck.csv
+48,needs_replacement_tool,needs_replacement_tool,get_ligands,bad_request,passes_with_valid_args,"The reachable ligand endpoint returned an empty list, so the task still lacks usable ligand data.",reports/w2_day3/tool_blocker_recheck.csv
+49,current_tools_direct,current_tools_direct,,,,No expected wrapper blocked this task in W2.,reports/w2_day3/tool_blocker_recheck.csv
+50,needs_replacement_tool,needs_replacement_tool,get_lectins,bad_request,api_contract_failure,"At least one blocker still has an API, dependency, or task-contract mismatch.",reports/w2_day3/tool_blocker_recheck.csv

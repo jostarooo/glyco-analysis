@@ -11,26 +11,31 @@
 
 本节的“当前状态”只描述交付材料，不覆盖各运行清单中记录的生成时基线。例如 35M 探针的生成基线仍是 `29f97a5`，不会被改写为交付当天的 HEAD。
 
-### W2（交付日 2026-11-03，2026-10-29 核心实验收口）
+### W2（交付日 2026-11-03，2026-11-01 Day 5 交付收口）
 
-W2 核心实验已完成。交接基线为 `8fc1da68b29a2cd865b3b5c056996b14607b9479`，W2 已提交单元为 `e776c5f`、`8fc1da6` 和 `6b77fa7`。截至本记录，W2 尚未执行远端发布，远端同步状态未确认。
+W2 核心实验、记分卡与交付前端已完成。交接基线为 `8fc1da68b29a2cd865b3b5c056996b14607b9479`。截至本记录，W2 尚未执行远端发布，远端同步状态未确认。
 
 GlycanML 五个 CSV 共 30675065 字节，MD5 全部通过。F2 按论文 Table 3 使用 seeds 0/1/2、50 epochs、batch 64 完成复算：免疫原性 AUPRC 为 0.7748635136784087 ± 0.009111853148723878，论文为 0.780 ± 0.006；糖基化 Macro-F1 为 0.9377928560029268 ± 0.0038891301525018625，论文为 0.948 ± 0.004。TorchDrug 未安装，本轮是 PyG 自实现，不是逐位克隆。
 
-Doc2Agent 70 个 wrapper 中 43 个直接返回 `ok`，服务存活 61 个。W2 当天用通用探针把 50 道任务分为 20 道可直接完成、25 道需要替代工具、5 道受服务失败阻断。2026-10-30 W3 用任务参数重测 17 个阻断工具后，最新分类为 43/5/2，W2 原始 CSV 和 summary 保留为历史证据。Qwen3 4B 正式批次完成 50 题，`exact_sequence=19`、`all_expected_called=34`、`any_expected_called=41`、`tasks_with_final_answer=39`，110 次工具调用中 78 次成功。这些是轨迹指标，不是答案正确率。
+Doc2Agent 70 个 wrapper 中 43 个直接返回 `ok`，服务存活 61 个。W2 Day 1 用通用探针把 50 道任务分为 20 道可直接完成、25 道需要替代工具、5 道受服务失败阻断。2026-10-30 W2 Day 3 用任务参数重测 17 个阻断工具后，最新分类为 43/5/2，原始 CSV 和 summary 保留为历史证据。Qwen3 4B 正式批次完成 50 题，`exact_sequence=19`、`all_expected_called=34`、`any_expected_called=41`、`tasks_with_final_answer=39`，110 次工具调用中 78 次成功。这些是轨迹指标，不是答案正确率。
 
-### W3（交付日 2026-11-10，2026-10-31 记分卡与 web 界面收口）
+### W2 Day 4 和 Day 5（2026-10-31 至 2026-11-01）
 
-W3 Day 1 的本地基线是 `985d8975799f254bad18f05a8fcf68682ff75a72`。2026-10-31
+W2 Day 3 的本地基线是 `985d8975799f254bad18f05a8fcf68682ff75a72`。2026-10-31
 新增可重算记分卡，把 F1 MCC、F2 Table 3 两项指标、F3 五项轨迹计数和工具可行性
-统一到 `reports/w3_day2/scorecard.json`、`scorecard.csv`、`scorecard.md`。
-`scripts/build_w3_scorecard.py --check` 会从固定源产物重算并拒绝缺失、过期或被手改的输出。
-W3 Day 3 新增 `web/` 交付界面，由 `scripts/build_web_data.py` 从 12 个真实产物生成数据契约，
+统一到 `reports/w2_day4/scorecard.json`、`scorecard.csv`、`scorecard.md`。
+`scripts/build_w2_scorecard.py --check` 会从固定源产物重算并拒绝缺失、过期或被手改的输出。
+W2 Day 5 新增 `web/` 交付界面，由 `scripts/build_web_data.py` 从 12 个真实产物生成数据契约，
 构建与预览验证通过，提交 `797e560`。随后把路由改为 hash 模式，提交 `ce0b020`。
 2026-11-01 的 `file://` 实测发现外部模块脚本和样式表会被浏览器按 CORS 拦截，
 因此生产构建改用 `vite-plugin-singlefile` 内联全部 JavaScript 和 CSS，提交 `51b421f`；
 `scripts/check_web_dist.py --browser` 会用 Edge 直接加载单文件产物并检查应用挂载。
 本轮没有重跑 F2 训练，没有重跑 Qwen3 4B 50 题，也没有执行发布。
+
+### W3（交付日 2026-11-10，尚未开始）
+
+W3 从 2026-11-04 开始。当前只有下一步计划。`reports/weekly/W03_2026-11-10_progress.md`
+是占位报告，不包含已经完成的 W3 工作。
 
 ## 一、可行性五关（项目级，W1 只验收第 1 至第 3 关）
 
@@ -42,7 +47,7 @@ W3 Day 3 新增 `web/` 交付界面，由 `scripts/build_web_data.py` 从 12 个
 | 2 | **数据关** | UniProt 人类糖蛋白检索返回 1381 条；GlyGen 单蛋白详情可取；其余接口状态有记录 | ✅ 通过（4/6 可用） | `reports/endpoint_check_2026-10-18.md` |
 | 3 | **复现关** | 作者 150M 检查点在作者 `test.csv` 上复算 MCC，与论文 0.848 对表并解释差异 | ✅ 通过 | `reports/mcc_repro.md` |
 | 4 | **本机训练关** | ESM2-150M + LoRA 能在 6.6 GiB 可用显存内跑通若干步且损失下降 | ⬜ 未开始（后续周） | `reports/local_train.md` |
-| 5 | **系统关** | 浏览器里能用真实后端结果完成一次"序列 → 位点 → 糖链"的端到端问答；W3 Day 3 已交付只读展示前端 | 🔶 部分通过 | `web/` + `scripts/build_web_data.py`；端到端问答仍待 `docs/demo.md` |
+| 5 | **系统关** | 浏览器里能用真实后端结果完成一次"序列 → 位点 → 糖链"的端到端问答；W2 Day 5 已交付只读展示前端 | 🔶 部分通过 | `web/` + `scripts/build_web_data.py`；端到端问答仍待 `docs/demo.md` |
 
 ## 二、术语表
 
@@ -320,17 +325,15 @@ $env:PYTHONUTF8='1'
 
 正式 F3 批次是 `qwen3:4b` 的 50 题结果。`reports/w2_day2/f3_qwen3_8b_50_incomplete/` 是中断目录，不是成绩。上游 Claude 18/50 和 Qwen3 15/50 均由 GPT-4o 评分，本轮没有相同评分器，不能直接比较。
 
-### web 数据契约（2026-10-31，W3 Day 3）
+### web 数据契约（2026-10-31 至 2026-11-01，W2 Day 4 至 Day 5）
 
 ```powershell
 $env:PYTHONUTF8 = '1'
 D:\python\python.exe scripts\build_web_data.py
 D:\python\python.exe scripts\build_web_data.py --check
 
-cd /d D:\wbworkspace\glyco-analysis\web
-D:\node\node.exe D:\node\node_modules\npm\bin\npm-cli.js run build
-D:\node\node.exe D:\node\node_modules\npm\bin\npm-cli.js run preview
-cd /d D:\wbworkspace\glyco-analysis
+D:\node\node.exe D:\node\node_modules\npm\bin\npm-cli.js run build --prefix D:\wbworkspace\glyco-analysis\web
+D:\node\node.exe D:\node\node_modules\npm\bin\npm-cli.js run preview --prefix D:\wbworkspace\glyco-analysis\web
 D:\python\python.exe scripts\check_web_dist.py --browser
 ```
 
@@ -343,20 +346,20 @@ D:\python\python.exe scripts\check_web_dist.py --browser
 从 `file://` 加载该文件并验证应用挂载。预览命令 `npm run preview` 仍可用于开发态检查。
 提交后如果有文档类改动，`project.json` 中的 HEAD 短哈希会等到下一次数据契约生成时刷新；
 这种滞后只允许出现在提交后的 UI 文件上，直接手改契约仍会被拒绝。本节是 REPRO.md 第 5 关系统关的第一个交付前端，端到端问答仍未完成。
-### W3 可重算 F1/F2/F3 记分卡
+### W2 Day 4 可重算 F1/F2/F3 记分卡
 
 ```powershell
 $env:PYTHONUTF8 = '1'
-D:\python\python.exe scripts\build_w3_scorecard.py
-D:\python\python.exe scripts\build_w3_scorecard.py --check
-D:\python\python.exe -m unittest tests\test_w3_scorecard.py -v
+D:\python\python.exe scripts\build_w2_scorecard.py
+D:\python\python.exe scripts\build_w2_scorecard.py --check
+D:\python\python.exe -m unittest tests\test_w2_scorecard.py -v
 ```
 
 `reference_values.json` 是人工核对的版本化输入，生成器不覆盖它。生成器会重新读取
 八个固定证据源并记录相对路径、字节数和 SHA256；F1 混淆矩阵、MCC、F2 三种子聚合、
 F3 计数上限、工具可行性题号集合和 Markdown 参考锚点都必须在同一轮校验中成立。
 连续两跑必须字节一致且第二次不更新 mtime，手改任一输出后 `--check` 必须退出 1。
-验证记录见 `reports/w3_day2/validation_2026-10-31.md`。
+验证记录见 `reports/w2_day4/validation_2026-10-31.md`。
 
 ## 五、复现记录
 
@@ -375,7 +378,7 @@ F3 计数上限、工具可行性题号集合和 Markdown 参考锚点都必须�
 | 2026-10-27 | 交付日提交 | 用户放入改编版进度报告、6 分 00 秒正式周视频与日志总结，完成正式提交 | ✅ 用户确认已提交；交付总表改 `已交`；交付包清单重算 68/68（2026-10-28 核记） |
 | 2026-10-28 | W2 Day 1：PyG RGCN、GlycanML 数据、Doc2Agent 盘点 | 5 个 CSV MD5 通过；F2 三种子完成；70 个 wrapper 与 50 道任务盘点完成 | ✅ 提交 `e776c5f`；产物见 `reports/w2_day1/` |
 | 2026-10-29 | W2 Day 2：Qwen3 4B 50 题与可行性分类 | 50 个 task JSON 与 summary 重算一致；三分类 20/25/5 合计 50 | ✅ 运行提交 `8fc1da6`，分类提交 `6b77fa7`；产物见 `reports/w2_day2/` |
-| 2026-10-30 | W3 Day 1：17 个阻断工具任务级复测 | 服务可达 17/17；工具体 13/1/2/1；50 题修正为 43/5/2 | 本地 W3 提交见当日 Git 历史；产物见 `reports/w3_day1/`，边界见 `docs/W3_D1_tool_blocker_triage.txt` |
-| 2026-10-31 | W3 Day 2：F1/F2/F3 可重算记分卡 | 8 条指标与 43/5/2 从固定源重算；连续两跑字节一致；手改输出后 `--check` 返回 1；全量测试 99 项，98 项通过、1 项 GPU 门控跳过 | ✅ 生成与检查通过；产物见 `reports/w3_day2/`，验证见 `reports/w3_day2/validation_2026-10-31.md` |
-| 2026-10-31 | W3 Day 3：web 交付界面数据契约 | 12 个源产物生成 4 个数据契约文件；build_web_data.py 连续两跑字节一致；web build 通过 | ✅ 生成与检查通过；产物见 `web/src/data/` 与 `scripts/build_web_data.py` |
-| 2026-11-01 | W3 Day 3 修复：生产构建可从磁盘直接打开 | 原构建在 `file://` 下被 CORS 拦截外部 JS/CSS；改为单文件内联，Edge 实测四页挂载 | ✅ 静态契约和 Edge `file://` 挂载通过；检查入口见 `scripts/check_web_dist.py --browser` |
+| 2026-10-30 | W2 Day 3：17 个阻断工具任务级复测 | 服务可达 17/17；工具体 13/1/2/1；50 题修正为 43/5/2 | ✅ 本地 W2 提交见当日 Git 历史；产物见 `reports/w2_day3/`，边界见 `docs/W2_D3_tool_blocker_triage.txt` |
+| 2026-10-31 | W2 Day 4：F1/F2/F3 可重算记分卡 | 8 条指标与 43/5/2 从固定源重算；连续两跑字节一致；手改输出后 `--check` 返回 1；全量测试 99 项，98 项通过、1 项 GPU 门控跳过 | ✅ 生成与检查通过；产物见 `reports/w2_day4/`，验证见 `reports/w2_day4/validation_2026-10-31.md` |
+| 2026-10-31 | W2 Day 4：web 交付界面数据契约 | 12 个源产物生成 4 个数据契约文件；build_web_data.py 连续两跑字节一致；web build 通过 | ✅ 生成与检查通过；产物见 `web/src/data/` 与 `scripts/build_web_data.py` |
+| 2026-11-01 | W2 Day 5 修复：生产构建可从磁盘直接打开 | 原构建在 `file://` 下被 CORS 拦截外部 JS/CSS；改为单文件内联，Edge 实测四页挂载 | ✅ 静态契约和 Edge `file://` 挂载通过；检查入口见 `scripts/check_web_dist.py --browser` |

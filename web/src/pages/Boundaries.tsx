@@ -75,7 +75,7 @@ export function Component() {
         <div className="callout">
           生成政策 · delta_sign={d.policy.delta_sign} · f2_comparison={d.policy.f2_comparison} · f3_comparison={d.policy.f3_comparison} · timestamp_policy={d.policy.timestamp_policy}
         </div>
-        <p className="hint">复现命令：REPRO.md「W3 可重算 F1/F2/F3 记分卡」与「web 数据契约」两节；生成器 <code>scripts/build_web_data.py --check</code> 在文档被改或输出过期时退出 1。</p>
+        <p className="hint">复现命令：REPRO.md「W2 Day 4 可重算 F1/F2/F3 记分卡」与「web 数据契约」两节；生成器 <code>scripts/build_web_data.py --check</code> 在文档被改或输出过期时退出 1。</p>
       </section>
     </div>
   );

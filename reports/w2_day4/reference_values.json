@@ -1,5 +1,5 @@
 {
-  "schema_version": "w3-scorecard-references-v1",
+  "schema_version": "w2-day4-scorecard-references-v1",
   "references": [
     {
       "reference_id": "ref.f1.esm150_lora.mcc",

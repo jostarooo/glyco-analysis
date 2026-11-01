@@ -48,7 +48,7 @@ export function Component() {
 
       <div className="stat-row">
         <div className="stat"><div className="label">W2 盘点 wrapper</div><div className="value">{d.tool_summary.total_tools}</div><div className="foot">直接 ok {d.tool_summary.directly_ok} · 存活 {d.tool_summary.service_alive}（{ (d.tool_summary.service_alive_rate * 100).toFixed(2) }%）</div></div>
-        <div className="stat"><div className="label">W3 复测阻断工具</div><div className="value">{counts?.total_blocked_tools ?? "-"}</div><div className="foot">服务可达 {counts?.service_reachable ?? "-"} · 默认传输 ok {counts?.default_transport_ok ?? "-"}</div></div>
+        <div className="stat"><div className="label">W2 Day 3 复测阻断工具</div><div className="value">{counts?.total_blocked_tools ?? "-"}</div><div className="foot">服务可达 {counts?.service_reachable ?? "-"} · 默认传输 ok {counts?.default_transport_ok ?? "-"}</div></div>
         <div className="stat"><div className="label">任务分类（最新）</div><div className="value">{revisedCounts.current_tools_direct ?? 0}/{revisedCounts.needs_replacement_tool ?? 0}/{revisedCounts.service_failure ?? 0}</div><div className="foot">直接 / 替代 / 失败，合计 {d.tasks.length}</div></div>
         <div className="stat"><div className="label">W2 原始口径</div><div className="value">{originalCounts.current_tools_direct ?? 0}/{originalCounts.needs_replacement_tool ?? 0}/{originalCounts.service_failure ?? 0}</div><div className="foot">历史证据保留，不改写</div></div>
       </div>
@@ -66,7 +66,7 @@ export function Component() {
             </table>
           </div>
           <div>
-            <h3>W3 任务级复测</h3>
+            <h3>W2 Day 3 任务级复测</h3>
             <table>
               <thead><tr><th>复测类别</th><th className="num">工具数</th></tr></thead>
               <tbody>
@@ -137,7 +137,7 @@ export function Component() {
             <thead style={{ position: "sticky", top: 0, background: "var(--card)" }}><tr><th>题号</th><th>站点</th><th>步数</th><th>期望工具</th><th>最新分类</th><th>W2 原始</th><th>阻断工具 / 原因</th></tr></thead>
             <tbody>
               {filteredTasks.map((t) => {
-                const f = t.feasibility ?? { revised_category: "unknown", original_category: "unknown", blocking_tools: "", w3_classes: "", decision_reason: "" };
+                const f = t.feasibility ?? { revised_category: "unknown", original_category: "unknown", blocking_tools: "", recheck_classes: "", decision_reason: "" };
                 return (
                   <tr key={t.task_id}>
                     <td>{t.task_id}</td>
@@ -148,7 +148,7 @@ export function Component() {
                     <td>{FEAS_LABEL[f.original_category] ?? f.original_category}</td>
                     <td style={{ maxWidth: 320 }}>
                       {f.blocking_tools ? <code>{f.blocking_tools}</code> : <span style={{ color: "var(--ink-soft)" }}>无阻断</span>}
-                      {f.w3_classes ? <div style={{ fontSize: 12, color: "var(--ink-soft)" }}>{f.w3_classes}</div> : null}
+                      {f.recheck_classes ? <div style={{ fontSize: 12, color: "var(--ink-soft)" }}>{f.recheck_classes}</div> : null}
                       {f.decision_reason ? <div style={{ fontSize: 12, color: "var(--ink-soft)", marginTop: 3 }}>{f.decision_reason}</div> : null}
                     </td>
                   </tr>

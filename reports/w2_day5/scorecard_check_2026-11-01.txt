@@ -1,0 +1,5 @@
+COMMAND: D:\python\python.exe scripts\build_w2_scorecard.py --check
+CWD: D:\wbworkspace\glyco-analysis
+EXIT_CODE: 0
+
+PASS: scorecard outputs are current

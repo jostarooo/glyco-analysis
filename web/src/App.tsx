@@ -12,7 +12,7 @@ export default function App() {
             <strong>糖基化分析系统</strong>
             <span>F1 位点预测 · F2 糖链模型 · F3 工具调用智能体</span>
           </div>
-          <span className="head-commit">演示版本 <code>{shortCommit(head)}</code></span>
+          <span className="head-commit">数据基线 <code>{shortCommit(head)}</code></span>
           <nav className="nav">
             <NavLink to="/" end>项目总览</NavLink>
             <NavLink to="/metrics">核心指标</NavLink>

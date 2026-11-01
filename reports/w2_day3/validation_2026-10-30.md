@@ -1,4 +1,4 @@
-# W3 Day 1 验证记录
+# W2 Day 3 验证记录
 
 日期：2026-10-30
 仓库：`D:\wbworkspace\glyco-analysis`
@@ -23,7 +23,7 @@
 | 分类变化 | 24 题 |
 | 三类合计 | 50 |
 
-W2 原始 CSV 和 summary 的 SHA256 已写入 W3 summary 的 `sources` 字段，原文件未改写。
+W2 原始 CSV 和 summary 的 SHA256 已写入 W2 Day 3 复测 summary 的 `sources` 字段，原文件未改写。
 
 ## 固定回归
 

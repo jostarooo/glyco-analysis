@@ -23,7 +23,7 @@ export interface ToolRow {
 }
 export interface FeasibilityRow {
   revised_category: string; original_category: string;
-  blocking_tools: string; w3_classes: string; decision_reason: string;
+  blocking_tools: string; recheck_classes: string; decision_reason: string;
 }
 export interface TaskRow {
   task_id: string; site: string; steps: string; tools: string; question: string;

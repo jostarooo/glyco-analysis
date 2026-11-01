@@ -21,7 +21,7 @@ export function Component() {
     <div>
       <h1 className="page-title">核心指标</h1>
       <p className="page-sub">
-        8 条指标全部来自 <code>reports/w3_day2/scorecard.json</code>，由 <code>scripts/build_w3_scorecard.py</code> 从固定源产物重算，状态 <strong>{d.scorecard_status}</strong>。
+        8 条指标全部来自 <code>reports/w2_day4/scorecard.json</code>，由 <code>scripts/build_w2_scorecard.py</code> 从固定源产物重算，状态 <strong>{d.scorecard_status}</strong>。
       </p>
 
       <section className="card">

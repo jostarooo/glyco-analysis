@@ -378,7 +378,7 @@
       "value": 15
     }
   ],
-  "schema_version": "w3-scorecard-v1",
+  "schema_version": "w2-day4-scorecard-v1",
   "sources": [
     {
       "byte_count": 473,
@@ -399,10 +399,10 @@
       "sha256": "4ead0e26a15760a34450c55859679a5c5aeee4dd913014826540b77e5b7c66f4"
     },
     {
-      "byte_count": 7547,
+      "byte_count": 7580,
       "path": "reports/w2_day2/f2_f3_comparison.md",
       "role": "reference_mirror",
-      "sha256": "e0b2abd858ee4a34bba577018ed3ccff8729605388b27d8def3e41392812ed17"
+      "sha256": "f832c9a878d35b99285bb4b467dbcb921b640e9c2eb8397770965ab8d5be2f71"
     },
     {
       "byte_count": 2265,
@@ -411,22 +411,22 @@
       "sha256": "ec28fa7607304395f7dbe4fb403fa0181bdbc7c93e514b31fd5c8acf34050229"
     },
     {
-      "byte_count": 9616,
-      "path": "reports/w3_day1/task_feasibility_revised.csv",
+      "byte_count": 9621,
+      "path": "reports/w2_day3/task_feasibility_revised.csv",
       "role": "feasibility_csv",
-      "sha256": "13e3c3cecf1c9dffdac3f1b9c552bed68a53b140b6889d752e8fc05abc4985ba"
+      "sha256": "296e332f13c0691afbf85d0b09edafef492ba3735bf36e773e0297c89a028493"
     },
     {
       "byte_count": 14326,
-      "path": "reports/w3_day1/tool_blocker_recheck_summary.json",
-      "role": "w3_recheck_summary",
-      "sha256": "89e784ef12e60d59a20ea31524c97310ab75b7911e32e60eb5c1c7ea710f6675"
+      "path": "reports/w2_day3/tool_blocker_recheck_summary.json",
+      "role": "recheck_summary",
+      "sha256": "cb8bb254c63d1250aaac2d7c1fdaf450ab90e08a3095c903bcbf7481b3affe4c"
     },
     {
-      "byte_count": 1771,
-      "path": "reports/w3_day2/reference_values.json",
+      "byte_count": 1776,
+      "path": "reports/w2_day4/reference_values.json",
       "role": "reference_catalog",
-      "sha256": "2305b04608c052bdfefde29bc299c0aa150162ab8521e1a2c652aeeb0ee64f6e"
+      "sha256": "a59ff3dadcb5f88e3ee45489680a51c5db5553117d59279408d45c8a2bc4fbd8"
     }
   ],
   "status": "PASS",

@@ -13,7 +13,7 @@ tasks. `tool_feasibility_summary.json` records the original W2 counts of 20
 direct, 25 replacement, and 5 service-failure tasks and binds them to the
 source-file hashes. These files remain unchanged as the historical W2 result.
 
-The 2026-10-30 task-grounded recheck in `reports/w3_day1/` revises the current
+The 2026-10-30 task-grounded recheck in `reports/w2_day3/` revises the current
 classification to 43 direct, 5 replacement, and 2 service-failure tasks. The
 revision distinguishes invalid generic probe arguments, wrapper contract
 failures, TLS verification failure, and unavailable service. Use

@@ -1,8 +1,8 @@
 {
   "artifact": {
-    "bytes": 427163,
+    "bytes": 427469,
     "path": "web/dist/index.html",
-    "sha256": "2D6D740D034D9FC0A32062E395F4E36303A3B481184949D1A2B67FB9A07380CA"
+    "sha256": "b6a37f3d943b022c30b117cd687615e07a6491deaeb98618116ec080fee3a8b9"
   },
   "before": {
     "console_errors": [
@@ -46,5 +46,14 @@
   },
   "build_fix_commit": "51b421ff8fed929fb273abaec4ce886baa6f680b",
   "dist_file_count": 1,
-  "observed_at": "2026-11-01T12:51:26+08:00"
+  "observed_at": "2026-11-01T12:51:26+08:00",
+  "final_validation": {
+    "observed_at": "2026-11-01T14:14:21+08:00",
+    "command": "D:\\python\\python.exe scripts\\check_web_dist.py --browser",
+    "exit_code": 0,
+    "static_contract": "PASS",
+    "edge_file_mount": "PASS",
+    "evidence": "reports/w2_day5/file_open_check_2026-11-01.txt",
+    "label_correction": "当前构建已把工作归回 W2 Day 3 至 Day 5；before/after 保留最初 CORS 根因控制记录。"
+  }
 }

@@ -21,7 +21,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 WEB_DATA = REPO_ROOT / "web" / "src" / "data"
 
 SOURCES = {
-    "scorecard": "reports/w3_day2/scorecard.json",
+    "scorecard": "reports/w2_day4/scorecard.json",
     "f1_three_method": "reports/w1_three_method_v0/metrics.json",
     "f1_esm150": "reports/esm150_lora_repro_v0/metrics.json",
     "f2_recompute": "reports/w2_day1/glycanml_rgcn_recompute.json",
@@ -31,8 +31,8 @@ SOURCES = {
     "tools_summary": "reports/w2_day1/doc2agent_tools_summary.json",
     "tasks": "reports/w2_day1/doc2agent_tasks.csv",
     "tasks_summary": "reports/w2_day1/doc2agent_tasks_summary.json",
-    "feasibility": "reports/w3_day1/task_feasibility_revised.csv",
-    "recheck": "reports/w3_day1/tool_blocker_recheck_summary.json",
+    "feasibility": "reports/w2_day3/task_feasibility_revised.csv",
+    "recheck": "reports/w2_day3/tool_blocker_recheck_summary.json",
 }
 
 EXPECTED_GENERATED = ["project.json", "metrics.json", "tools.json", "boundaries.json"]
@@ -145,7 +145,7 @@ def build_project(data: dict[str, dict[str, Any]]) -> dict[str, Any]:
             {"no": 2, "name": "数据关", "state": "通过", "artifact": "reports/endpoint_check_2026-10-18.md"},
             {"no": 3, "name": "复现关", "state": "通过", "artifact": "reports/mcc_repro.md"},
             {"no": 4, "name": "本机训练关", "state": "未开始（后续周）", "artifact": "reports/local_train.md"},
-            {"no": 5, "name": "系统关", "state": "本界面为 W3 Day 3 的交付前端，端到端问答未完成", "artifact": "docs/demo.md（计划）"},
+            {"no": 5, "name": "系统关", "state": "本界面为 W2 Day 5 的交付前端，端到端问答未完成", "artifact": "docs/demo.md（计划）"},
         ],
         "counts": {
             "tools_total": ts["total_tools"],
@@ -219,7 +219,7 @@ def build_tools(data: dict[str, dict[str, Any]]) -> dict[str, Any]:
             "revised_category": row["revised_category"],
             "original_category": row["original_category"],
             "blocking_tools": row["blocking_tools"],
-            "w3_classes": row["w3_classes"],
+            "recheck_classes": row["recheck_classes"],
             "decision_reason": row["decision_reason"],
         }
     tasks = []
@@ -235,7 +235,7 @@ def build_tools(data: dict[str, dict[str, Any]]) -> dict[str, Any]:
         })
     return {
         "schema_version": "glyco-web-tools/v1",
-        "snapshot_note": "W2 盘点是当日快照；W3 复测是最新任务级口径。两边都保留，不互相改写。",
+        "snapshot_note": "W2 Day 1 的盘点是当日快照；W2 Day 3 的任务级复测是最新口径。两边都保留，不互相改写。",
         "tools": data["tools"]["rows"],
         "tool_summary": ts,
         "recheck": {

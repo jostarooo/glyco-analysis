@@ -1,0 +1,7 @@
+COMMAND: D:\python\python.exe scripts\check_web_dist.py --browser
+CWD: D:\wbworkspace\glyco-analysis
+EXIT_CODE: 0
+
+PASS static single-file contract: D:\wbworkspace\glyco-analysis\web\dist\index.html
+- bytes: 427469
+PASS Edge file:// mount: file:///D:/wbworkspace/glyco-analysis/web/dist/index.html

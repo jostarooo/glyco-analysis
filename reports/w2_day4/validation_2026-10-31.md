@@ -1,6 +1,8 @@
-# W3 Day 2 记分卡验证记录
+# W2 Day 4 记分卡验证记录
 
 日期：2026-10-31
+
+> 周次与路径纠错后的最终复跑见文末“2026-11-01 最终复跑”。上面的首次验证保留为当天历史记录。
 
 仓库：`D:\wbworkspace\glyco-analysis`
 
@@ -108,3 +110,17 @@ glycan_link=PASS_URL_FIX
 - 上游 Claude 18/50 和 Qwen3 15/50 使用 GPT-4o 评分，本轮未运行同一评分器。
 - `reports/w2_day2/f3_qwen3_8b_50_incomplete/` 是中断目录，不是成绩。
 - 工具可行性 43/5/2 是任务可用性快照，不是模型准确率。
+
+## 2026-11-01 最终复跑
+
+W2 Day 3 至 Day 5 的路径和标签纠错后，记分卡重新生成。当前输出：
+
+| 输出 | SHA256 |
+|---|---|
+| `scorecard.json` | `8e1f4c6403c7d9ab3347c36546e8928c7463ff5dfd75effccd6621dda62ceef0` |
+| `scorecard.csv` | `5f9422647575d8d2aaa7092b962f75155aaba94cbad15daf578abcf14ca87fdf` |
+| `scorecard.md` | `00d8b132e62bfd81a3f28db4d5e1f75b34593219308e0bf9fab9d8f51f24007c` |
+
+`build_w2_scorecard.py --check` 再次返回 `PASS: scorecard outputs are current`。
+最终全量回归为 108 项，104 项通过，4 项按设计或 GPU 门控跳过。原始输出见
+`reports/w2_day5/unittest_2026-11-01.txt`。

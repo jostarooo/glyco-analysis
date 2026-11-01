@@ -15,8 +15,8 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = ROOT / "scripts" / "build_w3_scorecard.py"
-SPEC = importlib.util.spec_from_file_location("build_w3_scorecard", SCRIPT)
+SCRIPT = ROOT / "scripts" / "build_w2_scorecard.py"
+SPEC = importlib.util.spec_from_file_location("build_w2_scorecard", SCRIPT)
 assert SPEC is not None and SPEC.loader is not None
 scorecard = importlib.util.module_from_spec(SPEC)
 sys.modules[SPEC.name] = scorecard
@@ -85,7 +85,7 @@ class ScorecardTest(unittest.TestCase):
             )
             self.assertGreater(pin.byte_count, 0)
         for name in scorecard.OUTPUT_NAMES:
-            self.assertTrue((self.root / "reports" / "w3_day2" / name).is_file())
+            self.assertTrue((self.root / "reports" / "w2_day4" / name).is_file())
 
     def test_f1_confusion_sum_must_match_row_count(self) -> None:
         def mutate(data: dict[str, object]) -> None:
@@ -146,7 +146,7 @@ class ScorecardTest(unittest.TestCase):
 
     def test_f3_rows_never_emit_numeric_delta(self) -> None:
         scorecard.generate_scorecard(self.root)
-        out = self.root / "reports" / "w3_day2"
+        out = self.root / "reports" / "w2_day4"
         payload = json.loads((out / "scorecard.json").read_text(encoding="utf-8"))
         f3_rows = [row for row in payload["metrics"] if row["track"] == "F3"]
         self.assertEqual(5, len(f3_rows))
@@ -173,12 +173,12 @@ class ScorecardTest(unittest.TestCase):
         self.path(relative).write_text(buffer.getvalue(), encoding="utf-8")
         self.assert_invalid("task ids differ from 5,21,28,48,50")
 
-    def test_w3_historical_counts_must_equal_w2(self) -> None:
+    def test_revised_historical_counts_must_equal_w2(self) -> None:
         def mutate(data: dict[str, object]) -> None:
             data["w2_task_reclassification"]["original_counts"]["current_tools_direct"] = 19
             data["w2_task_reclassification"]["original_counts"]["needs_replacement_tool"] = 26
 
-        self.mutate_json(scorecard.SOURCE_PATHS[scorecard.SourceRole.W3], mutate)
+        self.mutate_json(scorecard.SOURCE_PATHS[scorecard.SourceRole.RECHECK], mutate)
         self.assert_invalid("historical counts differ from W2 summary")
 
     def test_reference_catalog_must_match_markdown_anchor(self) -> None:
@@ -207,7 +207,7 @@ class ScorecardTest(unittest.TestCase):
         with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
             self.assertEqual(0, scorecard.main(["--repo-root", str(self.root)]))
             self.assertEqual(0, scorecard.main(["--repo-root", str(self.root), "--check"]))
-        output = self.root / "reports" / "w3_day2" / "scorecard.json"
+        output = self.root / "reports" / "w2_day4" / "scorecard.json"
         output.write_bytes(output.read_bytes() + b"\n")
         with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
             self.assertEqual(1, scorecard.main(["--repo-root", str(self.root), "--check"]))
@@ -217,7 +217,7 @@ class ScorecardTest(unittest.TestCase):
 
     def test_check_is_read_only(self) -> None:
         scorecard.generate_scorecard(self.root)
-        out = self.root / "reports" / "w3_day2"
+        out = self.root / "reports" / "w2_day4"
         before = {name: hashlib.sha256((out / name).read_bytes()).hexdigest() for name in scorecard.OUTPUT_NAMES}
         scorecard.check_scorecard(self.root)
         after = {name: hashlib.sha256((out / name).read_bytes()).hexdigest() for name in scorecard.OUTPUT_NAMES}
@@ -225,7 +225,7 @@ class ScorecardTest(unittest.TestCase):
 
     def test_two_generations_are_byte_identical_and_preserve_mtime(self) -> None:
         scorecard.generate_scorecard(self.root)
-        out = self.root / "reports" / "w3_day2"
+        out = self.root / "reports" / "w2_day4"
         first = {name: (out / name).read_bytes() for name in scorecard.OUTPUT_NAMES}
         mtimes = {name: (out / name).stat().st_mtime_ns for name in scorecard.OUTPUT_NAMES}
         time.sleep(0.02)
@@ -236,7 +236,7 @@ class ScorecardTest(unittest.TestCase):
 
     def test_json_csv_and_markdown_agree_on_ids_values_and_status(self) -> None:
         scorecard.generate_scorecard(self.root)
-        out = self.root / "reports" / "w3_day2"
+        out = self.root / "reports" / "w2_day4"
         payload = json.loads((out / "scorecard.json").read_text(encoding="utf-8"))
         with (out / "scorecard.csv").open(encoding="utf-8", newline="") as stream:
             csv_rows = {row["metric_id"]: row for row in csv.DictReader(stream)}

@@ -1,0 +1,17 @@
+COMMAND: D:\python\python.exe D:\wbworkspace\glyco-analysis\scripts\summarize_doc2agent_run.py --run-dir D:\wbworkspace\glyco-analysis\reports\w2_day2\f3_qwen3_4b_50 --expected-tasks 50 --check-summary D:\wbworkspace\glyco-analysis\reports\w2_day2\f3_qwen3_4b_50\summary.json
+CWD: D:\wbworkspace\glyco-analysis
+EXIT_CODE: 0
+
+{
+  "status": "PASS",
+  "metrics": {
+    "tasks_run": 50,
+    "exact_sequence": 19,
+    "all_expected_called": 34,
+    "any_expected_called": 41,
+    "tasks_with_tool_call": 50,
+    "tasks_with_final_answer": 39,
+    "tool_call_successes": 78,
+    "tool_calls": 110
+  }
+}

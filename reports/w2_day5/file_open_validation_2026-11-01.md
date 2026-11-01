@@ -26,8 +26,8 @@ Chromium 系浏览器不会按跨域规则加载这些模块脚本和样式表�
 
 ```text
 index.html
-bytes: 427163
-sha256: 2D6D740D034D9FC0A32062E395F4E36303A3B481184949D1A2B67FB9A07380CA
+bytes: 427469
+sha256: B6A37F3D943B022C30B117CD687615E07A6491DEAEB98618116EC080FEE3A8B9
 ```
 
 ## 通过证据
@@ -36,7 +36,7 @@ sha256: 2D6D740D034D9FC0A32062E395F4E36303A3B481184949D1A2B67FB9A07380CA
 
 ```text
 PASS static single-file contract: D:\wbworkspace\glyco-analysis\web\dist\index.html
-- bytes: 427163
+- bytes: 427469
 PASS Edge file:// mount: file:///D:/wbworkspace/glyco-analysis/web/dist/index.html
 ```
 
@@ -49,7 +49,7 @@ PASS Edge file:// mount: file:///D:/wbworkspace/glyco-analysis/web/dist/index.ht
 | 工具与任务 | 工具与任务 | 4 | 0 | 0 |
 | 口径与边界 | 口径与边界 | 4 | 0 | 0 |
 
-结构化结果见 `reports/w3_day3/file_open_verification.json`。
+结构化结果见 `reports/w2_day5/file_open_verification.json`。
 
 ## 复现命令
 
@@ -62,3 +62,7 @@ D:\python\python.exe D:\wbworkspace\glyco-analysis\scripts\check_web_dist.py --b
 `scripts/check_web_dist.py` 同时检查外部资源引用为零、内联模块和内联样式存在，
 并通过 Edge 的 `file://` 页面确认 `app-shell` 已挂载。行为测试见
 `tests/test_web_dist_contract.py`。
+
+最终构建把页头标记从“演示版本”改为“数据基线”。`head_commit` 是生成 web 数据时的
+仓库 HEAD，不可能是包含它自身的下一次提交；视频开头仍必须现场运行
+`git rev-parse HEAD` 证明交付前最新提交。

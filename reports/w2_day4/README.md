@@ -1,4 +1,4 @@
-# W3 Day 2 可重算记分卡
+# W2 Day 4 可重算记分卡
 
 本目录把已经核验的 F1、F2、F3 和工具可行性证据收束为一组确定性输出。它不重跑
 F2 训练，不重跑 Qwen3 4B 50 题，也不把 F3 轨迹指标解释成答案正确率。
@@ -22,8 +22,8 @@ F2 训练，不重跑 Qwen3 4B 50 题，也不把 F3 轨迹指标解释成答案
 
 ```powershell
 $env:PYTHONUTF8 = '1'
-D:\python\python.exe scripts\build_w3_scorecard.py
-D:\python\python.exe scripts\build_w3_scorecard.py --check
+D:\python\python.exe scripts\build_w2_scorecard.py
+D:\python\python.exe scripts\build_w2_scorecard.py --check
 ```
 
 生成器固定读取八个仓库内证据源，重算 F1 混淆矩阵与 MCC、F2 三种子均值和

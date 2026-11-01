@@ -39,15 +39,15 @@ DEFAULT_TOOLS_DIR = Path(
         r"D:\wbworkspace\Doc2Agent\test_glycan\MCPTools",
     )
 )
-DEFAULT_OUT_CSV = ROOT / "reports" / "w3_day1" / "tool_blocker_recheck.csv"
+DEFAULT_OUT_CSV = ROOT / "reports" / "w2_day3" / "tool_blocker_recheck.csv"
 DEFAULT_OUT_SUMMARY = (
-    ROOT / "reports" / "w3_day1" / "tool_blocker_recheck_summary.json"
+    ROOT / "reports" / "w2_day3" / "tool_blocker_recheck_summary.json"
 )
 DEFAULT_OUT_TASK_CSV = (
-    ROOT / "reports" / "w3_day1" / "task_feasibility_corrections.csv"
+    ROOT / "reports" / "w2_day3" / "task_feasibility_corrections.csv"
 )
 DEFAULT_OUT_TASK_FULL_CSV = (
-    ROOT / "reports" / "w3_day1" / "task_feasibility_revised.csv"
+    ROOT / "reports" / "w2_day3" / "task_feasibility_revised.csv"
 )
 
 PASS = "passes_with_valid_args"
@@ -93,7 +93,7 @@ REVISED_TASK_FIELDS = (
     "revised_category",
     "blocking_tools",
     "original_classes",
-    "w3_classes",
+    "recheck_classes",
     "decision_reason",
     "evidence",
 )
@@ -870,9 +870,9 @@ def task_revision_rows(
                     "revised_category": revised,
                     "blocking_tools": " | ".join(blockers),
                     "original_classes": row["blocking_classes"],
-                    "w3_classes": " | ".join(classes[tool] for tool in blockers),
+                    "recheck_classes": " | ".join(classes[tool] for tool in blockers),
                     "decision_reason": reason,
-                    "evidence": "reports/w3_day1/tool_blocker_recheck.csv",
+                    "evidence": "reports/w2_day3/tool_blocker_recheck.csv",
                 }
             )
     return revisions
@@ -892,7 +892,7 @@ def correction_rows(
                 "revised_category": row["revised_category"],
                 "blocking_tool": row["blocking_tools"],
                 "original_class": row["original_classes"],
-                "recheck_class": row["w3_classes"],
+                "recheck_class": row["recheck_classes"],
                 "reason": row["decision_reason"],
                 "evidence": row["evidence"],
             }

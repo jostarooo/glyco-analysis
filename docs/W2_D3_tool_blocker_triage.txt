@@ -1,4 +1,4 @@
-W3 Day 1 Doc2Agent 阻断工具复测
+W2 Day 3 Doc2Agent 阻断工具复测
 日期：2026-10-30
 仓库：D:\wbworkspace\glyco-analysis
 分支：main
@@ -86,7 +86,7 @@ W2 原始分类：
 需要替代工具 25
 服务失败 5
 
-W3 逐题修正后：
+W2 Day 3 逐题修正后：
 
 当前工具可直接完成 43
 需要替代工具 5
@@ -120,7 +120,7 @@ W3 逐题修正后：
 
 五、W2 数字的处理
 
-W2 原始 CSV 和 summary 保留不动，作为当天的历史证据。W3 的修正另写文件，避免
+W2 原始 CSV 和 summary 保留不动，作为当天的历史证据。W2 Day 3 的修正另写文件，避免
 静默覆盖原分类。F2 的 Table 3 结果和 F3 的 Qwen3 4B 轨迹数字不变：
 
 - 免疫原性 AUPRC：0.7748635136784087 ± 0.009111853148723878。
@@ -136,14 +136,14 @@ W2 原始 CSV 和 summary 保留不动，作为当天的历史证据。W3 的修
 六、证据与复现
 
 逐工具证据：
-reports/w3_day1/tool_blocker_recheck.csv
+reports/w2_day3/tool_blocker_recheck.csv
 
 逐题修正证据：
-reports/w3_day1/task_feasibility_revised.csv
-reports/w3_day1/task_feasibility_corrections.csv
+reports/w2_day3/task_feasibility_revised.csv
+reports/w2_day3/task_feasibility_corrections.csv
 
 汇总和校验：
-reports/w3_day1/tool_blocker_recheck_summary.json
+reports/w2_day3/tool_blocker_recheck_summary.json
 
 summary 中的 probe_accepted_tools 是探针级列表，包含返回空数组的 get_ligands 和需要
 拆查询的 find。任务可用性以 task_fit_counts 和 task_feasibility_revised.csv 为准，
@@ -160,7 +160,7 @@ $env:PYTHONUTF8='1'
 
 1. 本轮是一次 2026-10-30 的现场复测，外部 API 以后可能变化，不能把今天的
    HTTP 200 当成永久承诺。
-2. W2 的 F3 轨迹指标没有重算，W3 只修正工具可行性分类。
+2. W2 的 F3 轨迹指标没有重算，W2 Day 3 只修正工具可行性分类。
 3. 下一步先修 get_lectins 的字段映射、get_proteins 的证书链和 task 28 的组合查询，
    再考虑用新的工具目录重跑 F3。
 4. 重新跑 F3 前，仍需补上与上游一致的 GPT-4o 答案评分器，才能报告答案正确率。

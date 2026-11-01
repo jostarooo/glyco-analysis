@@ -1,6 +1,6 @@
-# W3 Day 2 可重算记分卡
+# W2 Day 4 可重算记分卡
 
-Schema：`w3-scorecard-v1`。由 `scripts/build_w3_scorecard.py` 从固定证据源生成，不包含运行时间。
+Schema：`w2-day4-scorecard-v1`。由 `scripts/build_w2_scorecard.py` 从固定证据源生成，不包含运行时间。
 
 差值方向统一为 `local_minus_reference`。只有 F1 MCC、F2 AUPRC、F2 Macro-F1 生成差值。
 
@@ -31,7 +31,7 @@ Schema：`w3-scorecard-v1`。由 `scripts/build_w3_scorecard.py` 从固定证据
 - F2 对齐 GlycanML 论文 Table 3。本地是 PyG 自实现，不是 TorchDrug 逐位克隆，TorchDrug 未安装。
 - F3 的 19/50、34/50、41/50、39/50、78/110 是工具轨迹或输出存在性，不是答案正确率。
 - 上游 Claude 18/50 和 Qwen3 15/50 使用 GPT-4o 评分，本轮未运行同一评分器，不能直接比较或计算差值。
-- W3 工具可行性是任务可用性分类，不是模型准确率。`get_proteins` 的 TLS 校验失败不等于服务死亡。
+- W2 Day 3 工具可行性是任务可用性分类，不是模型准确率。`get_proteins` 的 TLS 校验失败不等于服务死亡。
 - `get_ligands` 返回 HTTP 200 空数组只说明服务可达，不代表任务可用。
 
 ## 来源与哈希
@@ -41,8 +41,8 @@ Schema：`w3-scorecard-v1`。由 `scripts/build_w3_scorecard.py` 从固定证据
 | f1_metrics | `reports/esm150_lora_repro_v0/metrics.json` | `5bbfbfddbc944ae7f07f92095a7c54b590440c95690196f127151c9fc4752d26` | 473 |
 | f2_recompute | `reports/w2_day1/glycanml_rgcn_recompute.json` | `546e5bb7bff0986bc4185d2671aec2ad2b92e7e4bc285e4c7a3d6aca8ac301b8` | 8125 |
 | f3_summary | `reports/w2_day2/f3_qwen3_4b_50/summary.json` | `4ead0e26a15760a34450c55859679a5c5aeee4dd913014826540b77e5b7c66f4` | 497 |
-| reference_mirror | `reports/w2_day2/f2_f3_comparison.md` | `e0b2abd858ee4a34bba577018ed3ccff8729605388b27d8def3e41392812ed17` | 7547 |
+| reference_mirror | `reports/w2_day2/f2_f3_comparison.md` | `f832c9a878d35b99285bb4b467dbcb921b640e9c2eb8397770965ab8d5be2f71` | 7580 |
 | w2_tool_summary | `reports/w2_day2/tool_feasibility_summary.json` | `ec28fa7607304395f7dbe4fb403fa0181bdbc7c93e514b31fd5c8acf34050229` | 2265 |
-| feasibility_csv | `reports/w3_day1/task_feasibility_revised.csv` | `13e3c3cecf1c9dffdac3f1b9c552bed68a53b140b6889d752e8fc05abc4985ba` | 9616 |
-| w3_recheck_summary | `reports/w3_day1/tool_blocker_recheck_summary.json` | `89e784ef12e60d59a20ea31524c97310ab75b7911e32e60eb5c1c7ea710f6675` | 14326 |
-| reference_catalog | `reports/w3_day2/reference_values.json` | `2305b04608c052bdfefde29bc299c0aa150162ab8521e1a2c652aeeb0ee64f6e` | 1771 |
+| feasibility_csv | `reports/w2_day3/task_feasibility_revised.csv` | `296e332f13c0691afbf85d0b09edafef492ba3735bf36e773e0297c89a028493` | 9621 |
+| recheck_summary | `reports/w2_day3/tool_blocker_recheck_summary.json` | `cb8bb254c63d1250aaac2d7c1fdaf450ab90e08a3095c903bcbf7481b3affe4c` | 14326 |
+| reference_catalog | `reports/w2_day4/reference_values.json` | `a59ff3dadcb5f88e3ee45489680a51c5db5553117d59279408d45c8a2bc4fbd8` | 1776 |

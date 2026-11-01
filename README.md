@@ -1,21 +1,21 @@
 # 糖基化分析系统：以蛋白质语言模型预测 N-糖基化位点、以图神经网络解析糖链、并用工具调用智能体把两者串成一个可对话的分析工作台
 
-> 2026-10-27 第一次对齐；2026-10-28 W1 交付闭环与 W2 启动；2026-10-29 W2 核心实验收口；2026-10-30 W3 阻断工具修正；2026-10-31 W3 可重算记分卡与 web 交付界面
+> 2026-10-27 第一次对齐；2026-10-28 W1 交付闭环与 W2 启动；2026-10-29 W2 核心实验收口；2026-10-30 W2 Day 3 阻断工具修正；2026-10-31 W2 Day 4 可重算记分卡；2026-11-01 W2 Day 5 web 单文件离线交付
 > 代码状态：W1 的环境、数据集 v0、35M 线性探针、作者 150M LoRA 复算、三方法对拍和 10 个分歧位点人工复核均已完成。
 > 数据口径见 `reports/dataset_v0.md`，探针结果见 `reports/esm35_linear_probe_v0/report.md`，
 > 150M 复算结论见 `reports/mcc_repro.md`，候选位点对拍见 `reports/w1_three_method_v0/report.md`。
 >
 > W1 已于 2026-10-27 正式提交（2026-10-28 核记）。正式周视频为 `02-进度报告\第一周展示视频.mp4`（6 分 00 秒），交付包为 68 个内容文件、68/68 条校验一致，正式周目录为 76 个文件、75/75 条校验一致。
 >
-> W2 核心实验已完成并提交到本地 `main`。PyG RGCN 按 GlycanML 论文 Table 3 完成 3 种子复算，免疫原性 AUPRC 为 0.7748635136784087 ± 0.009111853148723878，糖基化 Macro-F1 为 0.9377928560029268 ± 0.0038891301525018625；Doc2Agent 70 个 wrapper 中 43 个直接成功，Qwen3 4B 完成 50 题轨迹批次。W3 Day 1 用任务参数重测 17 个阻断工具，50 题最新分类为当前工具可直接完成 43、需要替代工具 5、服务失败 2。W3 Day 2 把 F1、F2、F3 和工具可行性固化为可重算记分卡，唯一数字入口是 `reports/w3_day2/scorecard.md`。W3 Day 3 新增 `web/` 交付界面与 `scripts/build_web_data.py` 数据契约，界面只读展示真实产物并显示当前 HEAD。生产构建已用 `vite-plugin-singlefile` 内联全部 JavaScript 和 CSS，`web/dist/index.html` 可直接从磁盘打开。W2 原始 20/25/5 分类保留为历史证据，远端同步状态未确认，本轮没有发布。
+> W2 核心实验已完成并提交到本地 `main`。PyG RGCN 按 GlycanML 论文 Table 3 完成 3 种子复算，免疫原性 AUPRC 为 0.7748635136784087 ± 0.009111853148723878，糖基化 Macro-F1 为 0.9377928560029268 ± 0.0038891301525018625；Doc2Agent 70 个 wrapper 中 43 个直接成功，Qwen3 4B 完成 50 题轨迹批次。W2 Day 3 用任务参数重测 17 个阻断工具，50 题最新分类为当前工具可直接完成 43、需要替代工具 5、服务失败 2。W2 Day 4 把 F1、F2、F3 和工具可行性固化为可重算记分卡，唯一数字入口是 `reports/w2_day4/scorecard.md`。W2 Day 5 新增 `web/` 交付界面与 `scripts/build_web_data.py` 数据契约，界面只读展示真实产物，并标出数据生成时的 HEAD。生产构建已用 `vite-plugin-singlefile` 内联全部 JavaScript 和 CSS，`web/dist/index.html` 可直接从磁盘打开。W2 原始 20/25/5 分类保留为历史证据，远端同步状态未确认，本轮没有发布。
 
 ## 教师建议阅读顺序
 
-1. 先读 `reports/w3_day2/scorecard.md`，这是 F1/F2/F3 指标和工具可行性的唯一汇总入口。需要可视化浏览时打开 `web/` 交付界面，数据由 `scripts/build_web_data.py` 生成。
-2. 再读 `reports/weekly/W03_2026-11-10_progress.md`，了解本周检查点、证据边界和验证结果。
-3. 接着读 `reports/w2_day2/f2_f3_comparison.md` 与 `docs/W3_D1_tool_blocker_triage.txt`，核对论文值、轨迹指标边界和 W3 阻断工具分类。
+1. 先读 `reports/w2_day4/scorecard.md`，这是 F1/F2/F3 指标和工具可行性的唯一汇总入口。需要可视化浏览时打开 `web/` 交付界面，数据由 `scripts/build_web_data.py` 生成。
+2. 再读 `reports/weekly/W02_2026-11-03_progress.md`，了解 W2 Day 1 至 Day 5 的实验、证据边界和验证结果。
+3. 接着读 `reports/w2_day2/f2_f3_comparison.md` 与 `docs/W2_D3_tool_blocker_triage.txt`，核对论文值、轨迹指标边界和 W2 Day 3 阻断工具分类。
 4. 需要复查 W1 时读 `reports/weekly/W01_2026-10-27_progress.md`，核对交付、130 行评估池和三方法对拍。
-5. 需要重跑时读 `REPRO.md`；原始证据在 `reports/w2_day1/`、`reports/w2_day2/`、`reports/w3_day1/` 和 `reports/w3_day2/`。
+5. 需要重跑时读 `REPRO.md`；原始证据在 `reports/w2_day1/`、`reports/w2_day2/`、`reports/w2_day3/`、`reports/w2_day4/` 和 `reports/w2_day5/`。
 
 文档、标题、表头和人工复核说明均使用中文。代码标识、JSON 与 CSV 字段名、状态枚举、模型名、路径、命令和原始软件告警保留英文，确保机器复核和哈希追溯不被破坏。
 
@@ -58,7 +58,7 @@ D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\check_w1_three_me
 D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\check_esm150_lora_repro.py --run-dir reports\esm150_lora_repro_v0 --test-csv D:\wbworkspace\LoRA-N-Gly\data\N-GlycositeAltas\test.csv --adapter-dir D:\wbworkspace\LoRA-N-Gly\checkpoints\N-linked\ESM-150M\checkpoint --base-model-revision a695f6045e2e32885fa60af20c13cb35398ce30c --recheck-inference
 D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe -m unittest discover -s tests -p "test_*.py" -v
 
-# W3 web 数据契约与交付前端（构建后可直接打开 web/dist/index.html）
+# W2 Day 5 web 数据契约与交付前端（构建后可直接打开 web/dist/index.html）
 $env:PYTHONUTF8 = "1"
 D:\python\python.exe scripts\build_web_data.py --check
 D:\node\node.exe D:\node\node_modules\npm\bin\npm-cli.js run build --prefix D:\wbworkspace\glyco-analysis\web
@@ -112,14 +112,14 @@ D:\python\python.exe scripts\classify_doc2agent_feasibility.py
 # W2 F3 聚合复核：50 个 task JSON 与 summary 必须一致
 D:\python\python.exe scripts\summarize_doc2agent_run.py --run-dir reports\w2_day2\f3_qwen3_4b_50 --expected-tasks 50 --check-summary reports\w2_day2\f3_qwen3_4b_50\summary.json
 
-# W3 阻断工具任务级复测：生成独立证据，不改写 W2 原始分类
+# W2 Day 3 阻断工具任务级复测：生成独立证据，不改写 W2 原始分类
 $env:PYTHONPATH='D:\wbworkspace\glyco-analysis\.venv\Lib\site-packages'
 $env:PYTHONUTF8='1'
 & 'C:\Users\jostaro\AppData\Roaming\uv\python\cpython-3.12.14-windows-x86_64-none\python.exe' scripts\retest_doc2agent_blockers.py
 
-# W3 可重算记分卡：从固定证据源生成，再检查输出是否过期
-D:\python\python.exe scripts\build_w3_scorecard.py
-D:\python\python.exe scripts\build_w3_scorecard.py --check
+# W2 Day 4 可重算记分卡：从固定证据源生成，再检查输出是否过期
+D:\python\python.exe scripts\build_w2_scorecard.py
+D:\python\python.exe scripts\build_w2_scorecard.py --check
 ```
 
 探针把 82 个含 `ECO:0000269` 的 N-连接糖基化位点作为实验阳性，把 48 个没有 N-连接
@@ -153,10 +153,10 @@ SHA256 清单。新录的 6 分 00 秒展示视频是正式周视频，3 分 34 
 版本保留备查。交付总表已改为 `已交`。
 
 W2 正式交付目录为 `D:\毕设交付\W02_2026-11-03`。交付材料只包含周报、核心证据、
-验证记录和 SHA256 清单，不放源代码、模型权重或全部中间 task JSON。W3 阻断工具
+验证记录和 SHA256 清单，不放源代码、模型权重或全部中间 task JSON。W2 Day 3 阻断工具
 复测、50 题修正分类和验证日志已加入核心证据。视频待用户录制后放入。
 
-W3 记分卡保存在 `reports/w3_day2/`。生成器会重算 F1 混淆矩阵和 MCC、F2 三种子
+W2 Day 4 记分卡保存在 `reports/w2_day4/`。生成器会重算 F1 混淆矩阵和 MCC、F2 三种子
 均值与样本标准差，并校验 F3 计数、工具可行性 43/5/2、源文件 SHA256 和跨源参考值。
 F3 的五个数都是工具轨迹或输出存在性，不是答案正确率；F2 是 PyG 自实现，
 不是 TorchDrug 逐位复刻。
@@ -177,7 +177,7 @@ glyco-analysis/
 
 - 前端不写死任何数字；
 - 不用 Mock 冒真实功能；
-- 演示版本 = 仓库最新提交；
+- 界面标记的“数据基线”是生成 `web/src/data/` 时的 HEAD；视频开头必须另外现场运行 `git rev-parse HEAD`，不能拿界面短哈希替代最新提交证据；
 - 生产前端必须是单个自包含的 `web/dist/index.html`，并用 `scripts/check_web_dist.py --browser` 从 `file://` 实际验证；
 - **论文里的数字只能作为对照，不能当成自己的结果**；
 - `web/` 界面只读展示 `web/src/data/` 的契约数据，不写死指标、不使用 Mock；
