@@ -1,0 +1,50 @@
+{
+  "artifact": {
+    "bytes": 427163,
+    "path": "web/dist/index.html",
+    "sha256": "2D6D740D034D9FC0A32062E395F4E36303A3B481184949D1A2B67FB9A07380CA"
+  },
+  "before": {
+    "console_errors": [
+      "Access to script at 'file:///D:/wbworkspace/glyco-analysis/web/dist/assets/index-CBqYTIjM.js' from origin 'null' has been blocked by CORS policy",
+      "Access to CSS stylesheet at 'file:///D:/wbworkspace/glyco-analysis/web/dist/assets/index-KyyqUDJP.css' from origin 'null' has been blocked by CORS policy"
+    ],
+    "root_html_length": 0,
+    "surface": "file:///D:/wbworkspace/glyco-analysis/web/dist/index.html"
+  },
+  "after": {
+    "console_errors": [],
+    "edge_file_mount": "PASS",
+    "page_errors": [],
+    "routes": [
+      {
+        "body_chars": 1215,
+        "heading": "项目总览",
+        "nav_links": 4,
+        "url": "file:///D:/wbworkspace/glyco-analysis/web/dist/index.html"
+      },
+      {
+        "body_chars": 1960,
+        "heading": "核心指标",
+        "nav_links": 4,
+        "url": "file:///D:/wbworkspace/glyco-analysis/web/dist/index.html#/metrics"
+      },
+      {
+        "body_chars": 14808,
+        "heading": "工具与任务",
+        "nav_links": 4,
+        "url": "file:///D:/wbworkspace/glyco-analysis/web/dist/index.html#/tools"
+      },
+      {
+        "body_chars": 2865,
+        "heading": "口径与边界",
+        "nav_links": 4,
+        "url": "file:///D:/wbworkspace/glyco-analysis/web/dist/index.html#/boundaries"
+      }
+    ],
+    "static_contract": "PASS"
+  },
+  "build_fix_commit": "51b421ff8fed929fb273abaec4ce886baa6f680b",
+  "dist_file_count": 1,
+  "observed_at": "2026-11-01T12:51:26+08:00"
+}

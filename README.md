@@ -7,7 +7,7 @@
 >
 > W1 已于 2026-10-27 正式提交（2026-10-28 核记）。正式周视频为 `02-进度报告\第一周展示视频.mp4`（6 分 00 秒），交付包为 68 个内容文件、68/68 条校验一致，正式周目录为 76 个文件、75/75 条校验一致。
 >
-> W2 核心实验已完成并提交到本地 `main`。PyG RGCN 按 GlycanML 论文 Table 3 完成 3 种子复算，免疫原性 AUPRC 为 0.7748635136784087 ± 0.009111853148723878，糖基化 Macro-F1 为 0.9377928560029268 ± 0.0038891301525018625；Doc2Agent 70 个 wrapper 中 43 个直接成功，Qwen3 4B 完成 50 题轨迹批次。W3 Day 1 用任务参数重测 17 个阻断工具，50 题最新分类为当前工具可直接完成 43、需要替代工具 5、服务失败 2。W3 Day 2 把 F1、F2、F3 和工具可行性固化为可重算记分卡，唯一数字入口是 `reports/w3_day2/scorecard.md`。W3 Day 3 新增 `web/` 交付界面与 `scripts/build_web_data.py` 数据契约，界面只读展示真实产物并显示当前 HEAD。W2 原始 20/25/5 分类保留为历史证据，远端同步状态未确认，本轮没有发布。
+> W2 核心实验已完成并提交到本地 `main`。PyG RGCN 按 GlycanML 论文 Table 3 完成 3 种子复算，免疫原性 AUPRC 为 0.7748635136784087 ± 0.009111853148723878，糖基化 Macro-F1 为 0.9377928560029268 ± 0.0038891301525018625；Doc2Agent 70 个 wrapper 中 43 个直接成功，Qwen3 4B 完成 50 题轨迹批次。W3 Day 1 用任务参数重测 17 个阻断工具，50 题最新分类为当前工具可直接完成 43、需要替代工具 5、服务失败 2。W3 Day 2 把 F1、F2、F3 和工具可行性固化为可重算记分卡，唯一数字入口是 `reports/w3_day2/scorecard.md`。W3 Day 3 新增 `web/` 交付界面与 `scripts/build_web_data.py` 数据契约，界面只读展示真实产物并显示当前 HEAD。生产构建已用 `vite-plugin-singlefile` 内联全部 JavaScript 和 CSS，`web/dist/index.html` 可直接从磁盘打开。W2 原始 20/25/5 分类保留为历史证据，远端同步状态未确认，本轮没有发布。
 
 ## 教师建议阅读顺序
 
@@ -58,10 +58,11 @@ D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\check_w1_three_me
 D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\check_esm150_lora_repro.py --run-dir reports\esm150_lora_repro_v0 --test-csv D:\wbworkspace\LoRA-N-Gly\data\N-GlycositeAltas\test.csv --adapter-dir D:\wbworkspace\LoRA-N-Gly\checkpoints\N-linked\ESM-150M\checkpoint --base-model-revision a695f6045e2e32885fa60af20c13cb35398ce30c --recheck-inference
 D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe -m unittest discover -s tests -p "test_*.py" -v
 
-# W3 web 数据契约与交付前端（构建后打开 web/dist/index.html，或用 npm run preview）
+# W3 web 数据契约与交付前端（构建后可直接打开 web/dist/index.html）
 $env:PYTHONUTF8 = "1"
 D:\python\python.exe scripts\build_web_data.py --check
 D:\node\node.exe D:\node\node_modules\npm\bin\npm-cli.js run build --prefix D:\wbworkspace\glyco-analysis\web
+D:\python\python.exe scripts\check_web_dist.py --browser
 ```
 
 `scripts/build_w1_delivery.py --sync` 会把仓库内的报告、源代码、README、REPRO 和正式周附件同步到交付目录，随后重算 `SHA256SUMS.txt`。当前视频已补入，交付包和正式周目录的校验状态均为 `PASS`；以后修改文档或重新生成交付物时再运行该命令。
@@ -177,6 +178,7 @@ glyco-analysis/
 - 前端不写死任何数字；
 - 不用 Mock 冒真实功能；
 - 演示版本 = 仓库最新提交；
+- 生产前端必须是单个自包含的 `web/dist/index.html`，并用 `scripts/check_web_dist.py --browser` 从 `file://` 实际验证；
 - **论文里的数字只能作为对照，不能当成自己的结果**；
 - `web/` 界面只读展示 `web/src/data/` 的契约数据，不写死指标、不使用 Mock；
 

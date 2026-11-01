@@ -26,9 +26,10 @@ W3 Day 1 的本地基线是 `985d8975799f254bad18f05a8fcf68682ff75a72`。2026-10
 统一到 `reports/w3_day2/scorecard.json`、`scorecard.csv`、`scorecard.md`。
 `scripts/build_w3_scorecard.py --check` 会从固定源产物重算并拒绝缺失、过期或被手改的输出。
 W3 Day 3 新增 `web/` 交付界面，由 `scripts/build_web_data.py` 从 12 个真实产物生成数据契约，
-构建与预览验证通过，提交 `797e560`。
-随后把路由改为 hash 模式，使 `web/dist/index.html` 可以直接离线打开；构建复核通过，
-提交 `ce0b020`。
+构建与预览验证通过，提交 `797e560`。随后把路由改为 hash 模式，提交 `ce0b020`。
+2026-11-01 的 `file://` 实测发现外部模块脚本和样式表会被浏览器按 CORS 拦截，
+因此生产构建改用 `vite-plugin-singlefile` 内联全部 JavaScript 和 CSS，提交 `51b421f`；
+`scripts/check_web_dist.py --browser` 会用 Edge 直接加载单文件产物并检查应用挂载。
 本轮没有重跑 F2 训练，没有重跑 Qwen3 4B 50 题，也没有执行发布。
 
 ## 一、可行性五关（项目级，W1 只验收第 1 至第 3 关）
@@ -329,13 +330,17 @@ D:\python\python.exe scripts\build_web_data.py --check
 cd /d D:\wbworkspace\glyco-analysis\web
 D:\node\node.exe D:\node\node_modules\npm\bin\npm-cli.js run build
 D:\node\node.exe D:\node\node_modules\npm\bin\npm-cli.js run preview
+cd /d D:\wbworkspace\glyco-analysis
+D:\python\python.exe scripts\check_web_dist.py --browser
 ```
 
 `scripts/build_web_data.py` 从 12 个真实产物生成 `web/src/data/{project,metrics,tools,boundaries}.json`，
 记录每个源的相对路径、字节数和 SHA256，并在 `project.json` 写入当时 `git rev-parse HEAD`。
 生成器不写运行时间，连续两跑输出必须字节一致；`--check` 在文件缺失、过期或被手改时退出 1。
 `web/` 界面只读展示这些数据，不写死指标、不使用 Mock。构建命令为 `web/` 下的 `npm run build`，
-预览命令为 `npm run preview`；路由已用 hash 模式，`web/dist/index.html` 可直接离线打开。
+生产构建通过 `vite-plugin-singlefile` 把 JavaScript 和 CSS 内联为一个
+`web/dist/index.html`，可直接双击打开；`scripts/check_web_dist.py --browser` 会用 Edge
+从 `file://` 加载该文件并验证应用挂载。预览命令 `npm run preview` 仍可用于开发态检查。
 提交后如果有文档类改动，`project.json` 中的 HEAD 短哈希会等到下一次数据契约生成时刷新；
 这种滞后只允许出现在提交后的 UI 文件上，直接手改契约仍会被拒绝。本节是 REPRO.md 第 5 关系统关的第一个交付前端，端到端问答仍未完成。
 ### W3 可重算 F1/F2/F3 记分卡
@@ -373,3 +378,4 @@ F3 计数上限、工具可行性题号集合和 Markdown 参考锚点都必须�
 | 2026-10-30 | W3 Day 1：17 个阻断工具任务级复测 | 服务可达 17/17；工具体 13/1/2/1；50 题修正为 43/5/2 | 本地 W3 提交见当日 Git 历史；产物见 `reports/w3_day1/`，边界见 `docs/W3_D1_tool_blocker_triage.txt` |
 | 2026-10-31 | W3 Day 2：F1/F2/F3 可重算记分卡 | 8 条指标与 43/5/2 从固定源重算；连续两跑字节一致；手改输出后 `--check` 返回 1；全量测试 99 项，98 项通过、1 项 GPU 门控跳过 | ✅ 生成与检查通过；产物见 `reports/w3_day2/`，验证见 `reports/w3_day2/validation_2026-10-31.md` |
 | 2026-10-31 | W3 Day 3：web 交付界面数据契约 | 12 个源产物生成 4 个数据契约文件；build_web_data.py 连续两跑字节一致；web build 通过 | ✅ 生成与检查通过；产物见 `web/src/data/` 与 `scripts/build_web_data.py` |
+| 2026-11-01 | W3 Day 3 修复：生产构建可从磁盘直接打开 | 原构建在 `file://` 下被 CORS 拦截外部 JS/CSS；改为单文件内联，Edge 实测四页挂载 | ✅ 静态契约和 Edge `file://` 挂载通过；检查入口见 `scripts/check_web_dist.py --browser` |
