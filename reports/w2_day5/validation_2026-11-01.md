@@ -18,11 +18,11 @@ $env:PYTHONUTF8='1'
 结果：
 
 ```text
-Ran 108 tests in 21.112s
-OK (skipped=4)
+Ran 108 tests in 21.111s
+OK (skipped=5)
 ```
 
-4 项跳过均为按设计或 GPU 门控跳过。原始输出见 `reports/w2_day5/unittest_2026-11-01.txt`。
+5 项跳过均为按设计或 GPU 门控跳过。原始输出见 `reports/w2_day5/unittest_2026-11-01-final.txt`。
 
 ## 内容与数据检查
 
