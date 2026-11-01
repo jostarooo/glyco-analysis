@@ -27,6 +27,8 @@ INDEX_REL = Path("dist/index.html")
 SOURCE_SPECS: tuple[tuple[str, str, str], ...] = (
     ("w1_weekly", "reports/weekly/W01_2026-10-27_progress.md", "W1 周报"),
     ("w1_manifest", "reports/w1_three_method_v0/manifest.json", "W1 三方法核验"),
+    ("f1_comparison", "reports/w1_three_method_v0/comparison.csv", "F1 候选位点对比"),
+    ("f1_review", "reports/w1_three_method_v0/review_top10.csv", "F1 人工复核样本"),
     ("w1_esm150", "reports/esm150_lora_repro_v0/metrics.json", "150M 作者检查点复算"),
     ("f2_recompute", "reports/w2_day1/glycanml_rgcn_recompute.json", "F2 Table 3 复算"),
     ("f3_summary", "reports/w2_day2/f3_qwen3_4b_50/summary.json", "F3 Qwen3 4B 轨迹"),
@@ -36,6 +38,7 @@ SOURCE_SPECS: tuple[tuple[str, str, str], ...] = (
     ("scorecard", "reports/w2_day4/scorecard.json", "W2 可重算记分卡"),
     ("w2_weekly", "reports/weekly/W02_2026-11-03_progress.md", "W2 周报"),
 )
+F3_TASK_DIR = Path("reports/w2_day2/f3_qwen3_4b_50")
 
 SOURCE_LABELS = {role: label for role, _path, label in SOURCE_SPECS}
 
@@ -71,9 +74,9 @@ W2_DAYS = (
     {
         "day": "Day 5",
         "date": "11.01",
-        "title": "单文件交付界面",
-        "work": "完成只读数据契约、自包含页面和本地 file:// 验证。",
-        "purpose": "让结果可以脱离开发服务器，直接用于检查和录屏。",
+        "title": "交付界面与功能演示",
+        "work": "完成单文件交付界面，并加入 F1 位点、F2 结果和 F3 轨迹三项现场交互。",
+        "purpose": "让结果既能离线检查，也能在录屏时亲手操作并解释。",
     },
 )
 
@@ -130,6 +133,34 @@ def load_sources(root: Path) -> dict[str, dict[str, Any]]:
     return loaded
 
 
+def load_f3_task_sources(root: Path) -> dict[str, dict[str, Any]]:
+    task_dir = root / F3_TASK_DIR
+    if not task_dir.is_dir():
+        raise SystemExit(f"missing F3 task directory: {F3_TASK_DIR.as_posix()}")
+    paths = sorted(
+        task_dir.glob("task_*.json"),
+        key=lambda path: int(path.stem.split("_", 1)[1]),
+    )
+    if len(paths) != 50:
+        raise RuntimeError(f"expected 50 F3 task files, found {len(paths)}")
+
+    loaded: dict[str, dict[str, Any]] = {}
+    for path in paths:
+        raw = path.read_bytes()
+        role = f"f3_task_{int(path.stem.split('_', 1)[1]):02d}"
+        loaded[role] = {
+            "payload": json.loads(raw.decode("utf-8-sig")),
+            "meta": {
+                "role": role,
+                "label": f"F3 task {path.stem}",
+                "path": f"{F3_TASK_DIR.as_posix()}/{path.name}",
+                "sha256": sha256_bytes(raw),
+                "bytes": len(raw),
+            },
+        }
+    return loaded
+
+
 def metric_by_id(scorecard: dict[str, Any], metric_id: str) -> dict[str, Any]:
     for metric in scorecard["metrics"]:
         if metric.get("metric_id") == metric_id:
@@ -146,11 +177,32 @@ def feasibility_counts(rows: list[dict[str, str]]) -> dict[str, int]:
     }
 
 
+def optional_float(value: Any) -> float | None:
+    text = str(value or "").strip()
+    return float(text) if text else None
+
+
+def optional_int(value: Any) -> int | None:
+    text = str(value or "").strip()
+    return int(text) if text else None
+
+
+def source_ref(meta: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "path": meta["path"],
+        "sha256": meta["sha256"],
+        "bytes": meta["bytes"],
+    }
+
+
 def build_story(root: Path = REPO_ROOT, head: str | None = None) -> dict[str, Any]:
     sources = load_sources(root)
+    f3_task_sources = load_f3_task_sources(root)
     source_head = head or git_head(root)
 
     w1_manifest = sources["w1_manifest"]["payload"]
+    f1_comparison = sources["f1_comparison"]["payload"]
+    f1_review = sources["f1_review"]["payload"]
     w1_esm150 = sources["w1_esm150"]["payload"]
     f2 = sources["f2_recompute"]["payload"]
     f3 = sources["f3_summary"]["payload"]
@@ -158,6 +210,10 @@ def build_story(root: Path = REPO_ROOT, head: str | None = None) -> dict[str, An
     feasibility_rows = sources["feasibility_csv"]["payload"]
     recheck = sources["recheck_summary"]["payload"]
     scorecard = sources["scorecard"]["payload"]
+    f3_tasks = [
+        f3_task_sources[f"f3_task_{index:02d}"]["payload"]
+        for index in range(1, 51)
+    ]
 
     benchmark = w1_manifest["benchmark"]
     if benchmark["evaluation_rows"] != (
@@ -180,7 +236,10 @@ def build_story(root: Path = REPO_ROOT, head: str | None = None) -> dict[str, An
     if classification_total != len(feasibility_rows):
         raise RuntimeError("feasibility categories do not cover every task")
 
-    sources_meta = [sources[role]["meta"] for role, _path, _label in SOURCE_SPECS]
+    sources_meta = [
+        *[sources[role]["meta"] for role, _path, _label in SOURCE_SPECS],
+        *[f3_task_sources[role]["meta"] for role in sorted(f3_task_sources)],
+    ]
     source_meta_by_role = {item["role"]: item for item in sources_meta}
 
     tracks = [
@@ -284,6 +343,204 @@ def build_story(root: Path = REPO_ROOT, head: str | None = None) -> dict[str, An
         },
     ]
 
+    review_by_id = {row["row_id"]: row for row in f1_review}
+    comparison_by_id = {row["row_id"]: row for row in f1_comparison}
+    review_order = [row["row_id"] for row in f1_review]
+    remaining_order = sorted(
+        row_id for row_id in comparison_by_id if row_id not in review_by_id
+    )
+    f1_candidates = []
+    for row_id in [*review_order, *remaining_order]:
+        row = comparison_by_id[row_id]
+        review = review_by_id.get(row_id, {})
+        f1_candidates.append(
+            {
+                "row_id": row_id,
+                "accession": row["accession"],
+                "protein_name": row["protein_name"],
+                "pos": optional_int(row["pos"]),
+                "motif": row["motif"],
+                "seq_len": optional_int(row["seq_len"]),
+                "evidence_class": row["evidence_class"],
+                "evaluation_included": row["evaluation_included"] == "1",
+                "evaluation_label": optional_int(row["evaluation_label"]),
+                "uniprot_prediction": optional_int(row["uniprot_prediction"]),
+                "sequence_rule_prediction": optional_int(
+                    row["sequence_rule_prediction"]
+                ),
+                "esm35_probability": optional_float(row["esm35_probability"]),
+                "esm35_prediction": optional_int(row["esm35_prediction"]),
+                "esm150_probability": optional_float(row["esm150_probability"]),
+                "esm150_prediction": optional_int(row["esm150_prediction"]),
+                "disagreement_pattern": row["disagreement_pattern"],
+                "review_status": review.get("review_status", ""),
+                "reviewer_note": review.get("reviewer_note", ""),
+                "source": source_ref(sources["f1_comparison"]["meta"]),
+                "review_source": (
+                    source_ref(sources["f1_review"]["meta"]) if review else None
+                ),
+            }
+        )
+    if not f1_candidates:
+        raise RuntimeError("F1 comparison has no candidates")
+
+    f1_presets = []
+    used_preset_rows: set[str] = set()
+
+    def add_preset(preset_id: str, label: str, predicate: Any) -> None:
+        for candidate in f1_candidates:
+            if candidate["row_id"] in used_preset_rows or not predicate(candidate):
+                continue
+            used_preset_rows.add(candidate["row_id"])
+            f1_presets.append(
+                {
+                    "id": preset_id,
+                    "label": label,
+                    "row_id": candidate["row_id"],
+                }
+            )
+            return
+
+    add_preset("reviewed", "人工复核样本", lambda item: bool(item["review_status"]))
+    add_preset(
+        "disagreement",
+        "三方法有分歧",
+        lambda item: item["disagreement_pattern"] not in {"all_agree", "display_only_inferred"},
+    )
+    add_preset(
+        "unannotated",
+        "未标注对照",
+        lambda item: item["evidence_class"] == "unannotated_control",
+    )
+    add_preset(
+        "all_agree",
+        "三方法一致",
+        lambda item: item["disagreement_pattern"] == "all_agree",
+    )
+
+    f2_demo_tasks = []
+    for task_id, label, metric_name, metric_key, reference_id in (
+        (
+            "immunogenicity",
+            "免疫原性",
+            "AUPRC",
+            "auprc",
+            "f2.immunogenicity.auprc",
+        ),
+        (
+            "glycosylation",
+            "糖基化连接",
+            "Macro-F1",
+            "macro_f1",
+            "f2.glycosylation.macro_f1",
+        ),
+    ):
+        task = f2["tasks"][task_id]
+        reference = metric_by_id(scorecard, reference_id)
+        f2_demo_tasks.append(
+            {
+                "id": task_id,
+                "label": label,
+                "metric": metric_name,
+                "test_metric_key": metric_key,
+                "validation_metric_key": metric_key,
+                "rows": task["rows"],
+                "split_counts": task["split_counts"],
+                "label_counts": task["label_counts"],
+                "aggregate": task["aggregate"],
+                "per_seed": task["per_seed"],
+                "reference_mean": reference["reference"]["value"],
+                "reference_std": reference["reference"]["std"],
+                "delta": reference["comparison"]["delta_local_minus_reference"],
+                "source": source_ref(sources["f2_recompute"]["meta"]),
+                "reference_source": source_ref(sources["scorecard"]["meta"]),
+            }
+        )
+
+    feasibility_by_task = {
+        int(row["task_id"]): row for row in feasibility_rows
+    }
+    f3_demo_tasks = []
+    for task in f3_tasks:
+        task_id = int(task["task_id"])
+        source_role = f"f3_task_{task_id:02d}"
+        feasibility = feasibility_by_task.get(task_id, {})
+        f3_demo_tasks.append(
+            {
+                "task_id": task_id,
+                "question": task["question"],
+                "expected_tools": task["expected_tools"],
+                "tool_calls": [
+                    {
+                        "tool": call.get("tool", ""),
+                        "arguments": call.get("arguments", {}),
+                        "status": call.get("status", "unknown"),
+                        "error": call.get("error", ""),
+                    }
+                    for call in task.get("tool_calls", [])
+                ],
+                "final_answer": task.get("final_answer", ""),
+                "errors": task.get("errors", []),
+                "exact_sequence": bool(task.get("exact_sequence")),
+                "all_expected_called": bool(task.get("all_expected_called")),
+                "any_expected_called": bool(task.get("any_expected_called")),
+                "expected_steps": task.get("expected_steps", len(task["expected_tools"])),
+                "called_steps": task.get("called_steps", len(task.get("tool_calls", []))),
+                "call_successes": task.get("call_successes", 0),
+                "feasibility": feasibility.get("revised_category", "unknown"),
+                "blocking_tools": feasibility.get("blocking_tools", ""),
+                "source": source_ref(f3_task_sources[source_role]["meta"]),
+            }
+        )
+    if len(f3_demo_tasks) != f3["tasks_run"]:
+        raise RuntimeError(
+            "F3 task files and trajectory summary disagree: "
+            f"{len(f3_demo_tasks)} != {f3['tasks_run']}"
+        )
+
+    default_f3 = next(
+        (
+            task
+            for task in f3_demo_tasks
+            if task["exact_sequence"]
+            and task["final_answer"]
+            and any(call["status"] != "ok" for call in task["tool_calls"])
+        ),
+        f3_demo_tasks[0],
+    )
+
+    demos = {
+        "f1": {
+            "default_row_id": f1_presets[0]["row_id"] if f1_presets else f1_candidates[0]["row_id"],
+            "candidates": f1_candidates,
+            "presets": f1_presets,
+            "candidate_count": len(f1_candidates),
+            "rule": {
+                "label": "N-X-S/T",
+                "constraint": "X 不能是 P",
+                "scope": "只现场计算序列规则，不调用模型，不代表实验结论。",
+            },
+            "source": source_ref(sources["f1_comparison"]["meta"]),
+        },
+        "f2": {
+            "tasks": f2_demo_tasks,
+            "training": f2["training"],
+            "implementation": f2["model"],
+            "implementation_label": next(
+                item for item in tracks if item["code"] == "F2"
+            )["implementation"],
+            "seed_count": len(f2_demo_tasks[0]["per_seed"]),
+            "torchdrug_installed": f2["torchdrug_comparison"]["torchdrug_installed"],
+            "source": source_ref(sources["f2_recompute"]["meta"]),
+        },
+        "f3": {
+            "default_task_id": default_f3["task_id"],
+            "tasks": f3_demo_tasks,
+            "task_count": len(f3_demo_tasks),
+            "source_dir": F3_TASK_DIR.as_posix(),
+        },
+    }
+
     scorecard_boundaries = list(scorecard["boundaries"])
     boundaries = [
         *[{"kind": "claim", "text": text} for text in scorecard_boundaries],
@@ -311,7 +568,7 @@ def build_story(root: Path = REPO_ROOT, head: str | None = None) -> dict[str, An
             "period": "W01 2026-10-18 至 10-27；W02 2026-10-28 至 11-03",
             "head_commit": source_head,
             "head_short": source_head[:8],
-            "slide_count": 8,
+            "slide_count": 9,
             "generated_by": "scripts/build_video_ui.py",
             "sources": sources_meta,
         },
@@ -355,6 +612,23 @@ def build_story(root: Path = REPO_ROOT, head: str | None = None) -> dict[str, An
             },
             {
                 "slide": 3,
+                "id": "f1demo",
+                "chapter": "F1工作台",
+                "range": "201 candidates / live sequon",
+                "title": "F1 位点工作台：把三个判断摆在同一个位点上",
+                "thesis": "现场切换真实候选位点，对照 UniProt、序列规则、35M 和 150M；再输入短肽验证 N-X-S/T 规则。",
+                "work": "候选、模型概率和人工复核都来自固定快照；只有 Sequon 规则在浏览器里现场计算。",
+                "purpose": "让观众看见“同一个位点为什么会有不同判断”，而不是只看一条汇总 MCC。",
+                "source_roles": ["f1_comparison", "f1_review"],
+                "notes": (
+                    "现场先切换一个快速预设，再拖动候选选择器。"
+                    "指出左边是模型快照，右边是人工复核证据。"
+                    "最后在 Sequon 输入框里输入 NST，点击运行，说明 N-X-S/T 且 X 不能是 P。"
+                    "强调这个规则演示只验证序列模式，不是模型推理，也不代表实验结论。"
+                ),
+            },
+            {
+                "slide": 4,
                 "id": "w2",
                 "chapter": "W2",
                 "range": "2026-10-28 - 11-03",
@@ -374,7 +648,7 @@ def build_story(root: Path = REPO_ROOT, head: str | None = None) -> dict[str, An
                 ),
             },
             {
-                "slide": 4,
+                "slide": 5,
                 "id": "tracks",
                 "chapter": "三线",
                 "range": "F1 / F2 / F3",
@@ -389,30 +663,31 @@ def build_story(root: Path = REPO_ROOT, head: str | None = None) -> dict[str, An
                 ),
             },
             {
-                "slide": 5,
+                "slide": 6,
                 "id": "f2",
                 "chapter": "F2",
                 "range": "GlycanML Table 3",
-                "title": "F2 复算：接近论文，但不冒充逐位克隆",
-                "thesis": "三随机种子、固定训练配置、保留论文参照值和真实偏差。",
-                "work": "在本地 PyG 实现上完成免疫原性与糖基化连接两个任务。",
-                "purpose": "证明图模型路线能跑通、结果量级合理，同时把实现差异写在结果旁边。",
+                "title": "F2 结果检查器：切换任务与种子，看真实复算值",
+                "thesis": "两个任务、三个随机种子、论文 Table 3 参照和本地偏差都在同一页现场检查。",
+                "work": "点击任务和种子按钮，读取每个种子真实的 validation、test 和 best epoch。",
+                "purpose": "证明结果不是一张写死的汇总图，同时保留 PyG 自实现与 TorchDrug 的差异边界。",
                 "source_roles": ["f2_recompute", "scorecard"],
                 "notes": (
                     "先说对齐的是 Table 3，不是 Table 2。"
-                    "再报两个本地均值加减标准差。免疫原性落在论文报告值的一个本地实测标准差内；"
-                    "糖基化 Macro-F1 低于论文值，需要如实说明。TorchDrug 没有安装，所以不能声称逐位复刻。"
+                    "现场切换免疫原性和糖基化连接两个任务，再切换 seed 0、1、2。"
+                    "让观众看到每个种子的真实 test 指标和 best epoch 一起变化。"
+                    "最后报两个本地均值加减标准差，并说明 TorchDrug 没有安装，不能声称逐位复刻。"
                 ),
             },
             {
-                "slide": 6,
+                "slide": 7,
                 "id": "f3",
                 "chapter": "F3",
                 "range": "Doc2Agent / Qwen3 4B",
-                "title": "F3 与工具：先看轨迹，再谈答案",
-                "thesis": "工具有没有被调用、是否调对、服务是否可用，必须和答案正确率分开。",
-                "work": "记录 50 题的工具轨迹，盘点 70 个 wrapper，并修正任务级可行性分类。",
-                "purpose": "找出真正阻断任务的原因，为下一周修工具契约和统一评分做准备。",
+                "title": "F3 轨迹播放器：逐步看模型到底调用了什么",
+                "thesis": "从 50 道真实任务中选一题，按步回放工具名、参数、执行状态和最终回答。",
+                "work": "可按完整轨迹、含工具失败、无最终回答筛选，再点击下一步复现执行轨迹。",
+                "purpose": "把“模型会不会用工具”拆成可观察的步骤，而不是只报一个无法解释的总分。",
                 "source_roles": [
                     "f3_summary",
                     "tools_summary",
@@ -420,13 +695,14 @@ def build_story(root: Path = REPO_ROOT, head: str | None = None) -> dict[str, An
                     "recheck_summary",
                 ],
                 "notes": (
-                    "这一页最容易讲错。轨迹匹配、期望工具命中和最终回答存在性都不是答案正确率。"
+                    "这一页最容易讲错。先用筛选器切到“含工具失败”，再换一道题，点击下一步回放。"
+                    "指出工具名、参数和状态是真实轨迹，最后一步才显示最终回答。"
+                    "轨迹匹配、期望工具命中和最终回答存在性都不是答案正确率。"
                     "本地没有 GPT-4o grader，所以不能拿这些数字直接和上游 18/50、15/50 比。"
-                    "工具任务分类才是当前工具能不能完成任务的判断。"
                 ),
             },
             {
-                "slide": 7,
+                "slide": 8,
                 "id": "delivery",
                 "chapter": "闭环",
                 "range": "W2 Delivery",
@@ -442,7 +718,7 @@ def build_story(root: Path = REPO_ROOT, head: str | None = None) -> dict[str, An
                 ),
             },
             {
-                "slide": 8,
+                "slide": 9,
                 "id": "boundaries",
                 "chapter": "边界",
                 "range": "Claims / Next",
@@ -459,6 +735,7 @@ def build_story(root: Path = REPO_ROOT, head: str | None = None) -> dict[str, An
             },
         ],
         "tracks": tracks,
+        "demos": demos,
         "delivery": {
             "status": scorecard["status"],
             "metric_rows": scorecard["validations"]["metric_rows"],

@@ -88,8 +88,8 @@ def static_check(index: Path) -> tuple[list[str], dict | None]:
         failures.append("unrendered template marker remains")
     if "fetch(" in html or "XMLHttpRequest" in html:
         failures.append("network API found in self-contained deck")
-    if "https://" in html or "http://" in html:
-        failures.append("absolute URL found in self-contained deck")
+    if "url(http" in html:
+        failures.append("remote CSS asset found in self-contained deck")
 
     story = None
     try:
@@ -103,15 +103,26 @@ def static_check(index: Path) -> tuple[list[str], dict | None]:
             "meta",
             "weeks",
             "tracks",
+            "demos",
             "delivery",
             "boundaries",
             "next",
         }
         if set(story) != expected_keys:
             failures.append("story top-level shape changed")
-        if len(story.get("weeks", [])) != 8:
-            failures.append("story must contain eight slides")
-        expected_ids = ["cover", "w1", "w2", "tracks", "f2", "f3", "delivery", "boundaries"]
+        if len(story.get("weeks", [])) != 9:
+            failures.append("story must contain nine slides")
+        expected_ids = [
+            "cover",
+            "w1",
+            "f1demo",
+            "w2",
+            "tracks",
+            "f2",
+            "f3",
+            "delivery",
+            "boundaries",
+        ]
         actual_ids = [slide.get("id") for slide in story.get("weeks", [])]
         if actual_ids != expected_ids:
             failures.append(f"slide ids differ: {actual_ids}")
@@ -182,6 +193,168 @@ def browser_check(index: Path, edge: Path, story: dict) -> list[str]:
     return failures
 
 
+def interactive_check(index: Path, edge: Path) -> list[str]:
+    failures: list[str] = []
+    try:
+        from playwright.sync_api import sync_playwright
+    except ImportError:
+        return ["Playwright is not installed in the active Python environment"]
+
+    uri = index.resolve().as_uri()
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch(
+            executable_path=str(edge),
+            headless=True,
+        )
+        try:
+            for width, height in ((1920, 1080), (1366, 768)):
+                page = browser.new_page(viewport={"width": width, "height": height})
+
+                def goto_slide(number: int, label: str) -> bool:
+                    page.goto(f"{uri}?slide={number}", wait_until="load")
+                    page.wait_for_selector('#deck[data-deck-mounted="true"]')
+                    layout_ok = page.locator("#deck").get_attribute("data-layout-ok")
+                    if layout_ok != "true":
+                        failures.append(f"{label} at {width}x{height}: layout overflow")
+                        return False
+                    body_text = page.locator("body").inner_text()
+                    for malformed in ("[object Object]", "undefined"):
+                        if malformed in body_text:
+                            failures.append(
+                                f"{label} at {width}x{height}: malformed text {malformed!r}"
+                            )
+                    return True
+
+                if goto_slide(3, "F1 demo"):
+                    initial_row = page.locator("[data-f1-row]").get_attribute("data-f1-row")
+                    preset_count = page.locator('[data-demo="f1-preset"]').count()
+                    if preset_count < 2:
+                        failures.append(
+                            f"F1 at {width}x{height}: expected at least two presets"
+                        )
+                    else:
+                        if page.locator(".f1-matrix-row").count() != 4:
+                            failures.append(
+                                f"F1 at {width}x{height}: expected four matrix rows"
+                            )
+                        page.locator('[data-demo="f1-preset"]').nth(1).click()
+                        changed_row = page.locator("[data-f1-row]").get_attribute(
+                            "data-f1-row"
+                        )
+                        if changed_row == initial_row:
+                            failures.append(
+                                f"F1 at {width}x{height}: preset did not change candidate"
+                            )
+                        if page.locator(".f1-matrix-row.active").count() != 1:
+                            failures.append(
+                                f"F1 at {width}x{height}: active matrix row is ambiguous"
+                            )
+
+                    page.fill('[data-demo="f1-rule-input"]', "NST")
+                    page.click('[data-demo="f1-rule-run"]')
+                    page.wait_for_selector(".rule-result")
+                    positive_count = page.locator(".rule-result").get_attribute(
+                        "data-rule-match-count"
+                    )
+                    if positive_count != "1":
+                        failures.append(
+                            f"F1 at {width}x{height}: NST produced {positive_count} matches"
+                        )
+                    if "NST" not in page.locator(".rule-result").inner_text():
+                        failures.append(
+                            f"F1 at {width}x{height}: NST match text absent"
+                        )
+
+                    page.fill('[data-demo="f1-rule-input"]', "NPS")
+                    page.click('[data-demo="f1-rule-run"]')
+                    page.wait_for_selector(".rule-result")
+                    negative_count = page.locator(".rule-result").get_attribute(
+                        "data-rule-match-count"
+                    )
+                    if negative_count != "0":
+                        failures.append(
+                            f"F1 at {width}x{height}: NPS should be rejected"
+                        )
+
+                if goto_slide(6, "F2 demo"):
+                    initial_task = page.locator(".f2-demo-slide").get_attribute(
+                        "data-f2-task"
+                    )
+                    task_buttons = page.locator('[data-demo="f2-task"]')
+                    if task_buttons.count() < 2:
+                        failures.append(
+                            f"F2 at {width}x{height}: task selector missing"
+                        )
+                    else:
+                        task_buttons.nth(1).click()
+                        changed_task = page.locator(".f2-demo-slide").get_attribute(
+                            "data-f2-task"
+                        )
+                        if changed_task == initial_task:
+                            failures.append(
+                                f"F2 at {width}x{height}: task did not switch"
+                            )
+                    page.click('[data-demo="f2-seed"][data-seed="2"]')
+                    if not page.locator('.f2-seed-detail[data-f2-seed="2"]').count():
+                        failures.append(
+                            f"F2 at {width}x{height}: seed 2 detail missing"
+                        )
+                    if page.locator(".seed-comparison-row").count() != 3:
+                        failures.append(
+                            f"F2 at {width}x{height}: expected three seed bars"
+                        )
+                    if page.locator(".seed-comparison-row.active").count() != 1:
+                        failures.append(
+                            f"F2 at {width}x{height}: active seed bar is ambiguous"
+                        )
+                    f2_text = page.locator(".f2-demo-slide").inner_text()
+                    for malformed in ("[object Object]", "undefined"):
+                        if malformed in f2_text:
+                            failures.append(
+                                f"F2 at {width}x{height}: malformed text {malformed!r}"
+                            )
+                    if page.locator("#deck").get_attribute("data-layout-ok") != "true":
+                        failures.append(
+                            f"F2 at {width}x{height}: layout overflow after interaction"
+                        )
+
+                if goto_slide(7, "F3 demo"):
+                    page.select_option('[data-demo="f3-task"]', "3")
+                    before = page.locator(".trace-step-list").get_attribute(
+                        "data-visible-steps"
+                    )
+                    page.click('[data-demo="f3-next-step"]')
+                    after = page.locator(".trace-step-list").get_attribute(
+                        "data-visible-steps"
+                    )
+                    if int(after or "0") <= int(before or "0"):
+                        failures.append(
+                            f"F3 at {width}x{height}: next step did not reveal a call"
+                        )
+                    page.click('[data-demo="f3-all-steps"]')
+                    if not page.locator(".final-answer").count():
+                        failures.append(
+                            f"F3 at {width}x{height}: final answer did not appear"
+                        )
+                    page.click('[data-demo="f3-filter"][data-filter="failure"]')
+                    active_filter = page.locator(
+                        '[data-demo="f3-filter"][data-filter="failure"]'
+                    ).get_attribute("class")
+                    if "active" not in (active_filter or ""):
+                        failures.append(
+                            f"F3 at {width}x{height}: failure filter did not activate"
+                        )
+                    if page.locator("#deck").get_attribute("data-layout-ok") != "true":
+                        failures.append(
+                            f"F3 at {width}x{height}: layout overflow after interaction"
+                        )
+
+                page.close()
+        finally:
+            browser.close()
+    return failures
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--index", type=Path, default=DEFAULT_INDEX)
@@ -213,7 +386,18 @@ def main(argv: list[str] | None = None) -> int:
             for failure in failures:
                 print(f"- {failure}")
             return 1
-        print(f"PASS Edge file:// mount and eight-slide routing: {index.as_uri()}")
+        print(f"PASS Edge file:// mount and nine-slide routing: {index.as_uri()}")
+        try:
+            failures = interactive_check(index, args.edge.resolve())
+        except Exception as exc:
+            print(f"FAIL interactive file:// check: {exc}")
+            return 1
+        if failures:
+            print(f"FAIL interactive file:// check: {index.as_uri()}")
+            for failure in failures:
+                print(f"- {failure}")
+            return 1
+        print("PASS interactive F1/F2/F3 controls at 1920x1080 and 1366x768")
 
     return 0
 

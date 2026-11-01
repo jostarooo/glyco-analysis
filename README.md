@@ -1,6 +1,6 @@
 # 糖基化分析系统：以蛋白质语言模型预测 N-糖基化位点、以图神经网络解析糖链、并用工具调用智能体把两者串成一个可对话的分析工作台
 
-> 2026-10-27 第一次对齐；2026-10-28 W1 交付闭环与 W2 启动；2026-10-29 W2 核心实验收口；2026-10-30 W2 Day 3 阻断工具修正；2026-10-31 W2 Day 4 可重算记分卡；2026-11-01 W2 Day 5 web 单文件离线交付
+> 2026-10-27 第一次对齐；2026-10-28 W1 交付闭环与 W2 启动；2026-10-29 W2 核心实验收口；2026-10-30 W2 Day 3 阻断工具修正；2026-10-31 W2 Day 4 可重算记分卡；2026-11-01 W2 Day 5 web 单文件离线交付与录制功能演示
 > 代码状态：W1 的环境、数据集 v0、35M 线性探针、作者 150M LoRA 复算、三方法对拍和 10 个分歧位点人工复核均已完成。
 > 数据口径见 `reports/dataset_v0.md`，探针结果见 `reports/esm35_linear_probe_v0/report.md`，
 > 150M 复算结论见 `reports/mcc_repro.md`，候选位点对拍见 `reports/w1_three_method_v0/report.md`。
@@ -8,10 +8,11 @@
 > W1 已于 2026-10-27 正式提交（2026-10-28 核记）。正式周视频为 `02-进度报告\第一周展示视频.mp4`（6 分 00 秒），交付包为 68 个内容文件、68/68 条校验一致，正式周目录为 76 个文件、75/75 条校验一致。
 >
 > W2 核心实验已完成并提交到本地 `main`。PyG RGCN 按 GlycanML 论文 Table 3 完成 3 种子复算，免疫原性 AUPRC 为 0.7748635136784087 ± 0.009111853148723878，糖基化 Macro-F1 为 0.9377928560029268 ± 0.0038891301525018625；Doc2Agent 70 个 wrapper 中 43 个直接成功，Qwen3 4B 完成 50 题轨迹批次。W2 Day 3 用任务参数重测 17 个阻断工具，50 题最新分类为当前工具可直接完成 43、需要替代工具 5、服务失败 2。W2 Day 4 把 F1、F2、F3 和工具可行性固化为可重算记分卡，唯一数字入口是 `reports/w2_day4/scorecard.md`。W2 Day 5 新增 `web/` 交付界面与 `scripts/build_web_data.py` 数据契约，界面只读展示真实产物，并标出数据生成时的 HEAD。生产构建已用 `vite-plugin-singlefile` 内联全部 JavaScript 和 CSS，`web/dist/index.html` 可直接从磁盘打开。W2 原始 20/25/5 分类保留为历史证据，远端同步状态未确认，本轮没有发布。
+> 与正式 `web/` 分离的 `video-ui/` 只用于录制周视频。它提供 F1 真实候选与 Sequon 现场规则、F2 任务和 seed 切换、F3 真实工具轨迹逐步骤播放，生成单个 `video-ui/dist/index.html`，不进入正式 W02 交付目录。
 
 ## 教师建议阅读顺序
 
-1. 先读 `reports/w2_day4/scorecard.md`，这是 F1/F2/F3 指标和工具可行性的唯一汇总入口。需要可视化浏览时打开 `web/` 交付界面，数据由 `scripts/build_web_data.py` 生成。
+1. 先读 `reports/w2_day4/scorecard.md`，这是 F1/F2/F3 指标和工具可行性的唯一汇总入口。需要正式可视化浏览时打开 `web/` 交付界面，数据由 `scripts/build_web_data.py` 生成；需要录屏时打开 `video-ui/dist/index.html`。
 2. 再读 `reports/weekly/W02_2026-11-03_progress.md`，了解 W2 Day 1 至 Day 5 的实验、证据边界和验证结果。
 3. 接着读 `reports/w2_day2/f2_f3_comparison.md` 与 `docs/W2_D3_tool_blocker_triage.txt`，核对论文值、轨迹指标边界和 W2 Day 3 阻断工具分类。
 4. 需要复查 W1 时读 `reports/weekly/W01_2026-10-27_progress.md`，核对交付、130 行评估池和三方法对拍。

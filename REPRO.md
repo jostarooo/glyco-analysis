@@ -30,6 +30,9 @@ W2 Day 5 新增 `web/` 交付界面，由 `scripts/build_web_data.py` 从 12 个
 2026-11-01 的 `file://` 实测发现外部模块脚本和样式表会被浏览器按 CORS 拦截，
 因此生产构建改用 `vite-plugin-singlefile` 内联全部 JavaScript 和 CSS，提交 `51b421f`；
 `scripts/check_web_dist.py --browser` 会用 Edge 直接加载单文件产物并检查应用挂载。
+同日新增与正式交付界面隔离的 `video-ui/` 录制台。生成器从 201 个 F1 候选、
+F2 逐种子结果和 50 个 F3 task JSON 建立真实演示数据；浏览器检查会实际点击
+任务切换、seed 切换、Sequon `NST`/`NPS` 规则和工具轨迹逐步骤播放。
 本轮没有重跑 F2 训练，没有重跑 Qwen3 4B 50 题，也没有执行发布。
 
 ### W3（交付日 2026-11-10，尚未开始）
@@ -382,3 +385,4 @@ F3 计数上限、工具可行性题号集合和 Markdown 参考锚点都必须�
 | 2026-10-31 | W2 Day 4：F1/F2/F3 可重算记分卡 | 8 条指标与 43/5/2 从固定源重算；连续两跑字节一致；手改输出后 `--check` 返回 1；全量测试 99 项，98 项通过、1 项 GPU 门控跳过 | ✅ 生成与检查通过；产物见 `reports/w2_day4/`，验证见 `reports/w2_day4/validation_2026-10-31.md` |
 | 2026-10-31 | W2 Day 4：web 交付界面数据契约 | 12 个源产物生成 4 个数据契约文件；build_web_data.py 连续两跑字节一致；web build 通过 | ✅ 生成与检查通过；产物见 `web/src/data/` 与 `scripts/build_web_data.py` |
 | 2026-11-01 | W2 Day 5 修复：生产构建可从磁盘直接打开 | 原构建在 `file://` 下被 CORS 拦截外部 JS/CSS；改为单文件内联，Edge 实测四页挂载 | ✅ 静态契约和 Edge `file://` 挂载通过；检查入口见 `scripts/check_web_dist.py --browser` |
+| 2026-11-01 | W2 Day 5 录制台：三项真实功能演示 | 9 页单文件加入 F1 候选与 Sequon 规则、F2 任务与 seed、F3 工具轨迹播放；浏览器实际点击通过 | ✅ 11 项聚焦测试、Edge `file://` 和双分辨率交互检查通过；入口见 `video-ui/dist/index.html` |

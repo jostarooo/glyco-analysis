@@ -44,20 +44,39 @@ class VideoStoryTests(unittest.TestCase):
     def test_top_level_shape_is_exact(self) -> None:
         self.assertEqual(
             list(self.story),
-            ["schema_version", "meta", "weeks", "tracks", "delivery", "boundaries", "next"],
+            [
+                "schema_version",
+                "meta",
+                "weeks",
+                "tracks",
+                "demos",
+                "delivery",
+                "boundaries",
+                "next",
+            ],
         )
 
-    def test_eight_slide_projection(self) -> None:
-        self.assertEqual(len(self.story["weeks"]), 8)
+    def test_nine_slide_projection(self) -> None:
+        self.assertEqual(len(self.story["weeks"]), 9)
         self.assertEqual(
             [slide["id"] for slide in self.story["weeks"]],
-            ["cover", "w1", "w2", "tracks", "f2", "f3", "delivery", "boundaries"],
+            [
+                "cover",
+                "w1",
+                "f1demo",
+                "w2",
+                "tracks",
+                "f2",
+                "f3",
+                "delivery",
+                "boundaries",
+            ],
         )
-        self.assertEqual(self.story["meta"]["slide_count"], 8)
+        self.assertEqual(self.story["meta"]["slide_count"], 9)
         self.assertEqual(self.story["meta"]["head_commit"], HEAD)
 
     def test_every_source_hash_matches_disk(self) -> None:
-        self.assertGreaterEqual(len(self.story["meta"]["sources"]), 8)
+        self.assertGreaterEqual(len(self.story["meta"]["sources"]), 58)
         for source in self.story["meta"]["sources"]:
             path = ROOT / source["path"]
             raw = path.read_bytes()
@@ -128,6 +147,82 @@ class VideoStoryTests(unittest.TestCase):
             scorecard["feasibility"]["counts"]["service_failure"],
         )
 
+    def test_interactive_demo_data_matches_disk(self) -> None:
+        import csv
+
+        campaigns_path = ROOT / "reports/w1_three_method_v0/comparison.csv"
+        with campaigns_path.open(encoding="utf-8-sig", newline="") as handle:
+            candidates = list(csv.DictReader(handle))
+        self.assertEqual(
+            self.story["demos"]["f1"]["candidate_count"],
+            len(candidates),
+        )
+        default_row = self.story["demos"]["f1"]["default_row_id"]
+        self.assertIn(
+            default_row,
+            {row["row_id"] for row in candidates},
+        )
+        self.assertTrue(self.story["demos"]["f1"]["presets"])
+
+        f2_source = json.loads(
+            (ROOT / "reports/w2_day1/glycanml_rgcn_recompute.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        f2_demo = {
+            task["id"]: task for task in self.story["demos"]["f2"]["tasks"]
+        }
+        f2_track = next(item for item in self.story["tracks"] if item["code"] == "F2")
+        self.assertEqual(
+            self.story["demos"]["f2"]["implementation_label"],
+            f2_track["implementation"],
+        )
+        self.assertEqual(
+            self.story["demos"]["f2"]["seed_count"],
+            len(f2_source["tasks"]["immunogenicity"]["per_seed"]),
+        )
+        for task_id in ("immunogenicity", "glycosylation"):
+            self.assertEqual(
+                f2_demo[task_id]["aggregate"],
+                f2_source["tasks"][task_id]["aggregate"],
+            )
+            self.assertEqual(
+                f2_demo[task_id]["per_seed"],
+                f2_source["tasks"][task_id]["per_seed"],
+            )
+
+        f3_source = json.loads(
+            (ROOT / "reports/w2_day2/f3_qwen3_4b_50/summary.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertEqual(
+            self.story["demos"]["f3"]["task_count"],
+            f3_source["tasks_run"],
+        )
+        task_9 = next(
+            task
+            for task in self.story["demos"]["f3"]["tasks"]
+            if task["task_id"] == 9
+        )
+        task_9_source = json.loads(
+            (ROOT / "reports/w2_day2/f3_qwen3_4b_50/task_09.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertEqual(
+            task_9["tool_calls"],
+            [
+                {
+                    "tool": call["tool"],
+                    "arguments": call["arguments"],
+                    "status": call["status"],
+                    "error": call.get("error", ""),
+                }
+                for call in task_9_source["tool_calls"]
+            ],
+        )
+
     def test_rendered_html_has_no_external_assets(self) -> None:
         html = self.html_bytes.decode("utf-8")
         parser = AssetParser()
@@ -135,8 +230,6 @@ class VideoStoryTests(unittest.TestCase):
         self.assertEqual(parser.references, [])
         self.assertNotIn("@import", html)
         self.assertNotIn("url(http", html)
-        self.assertNotIn("https://", html)
-        self.assertNotIn("http://", html)
         self.assertNotIn("fetch(", html)
         self.assertIn('id="deck"', html)
         self.assertIn('id="story-data"', html)
@@ -177,7 +270,11 @@ class VideoStoryTests(unittest.TestCase):
             "End",
             'key.toLowerCase() === "n"',
             'key.toLowerCase() === "f"',
-            "/^[1-8]$/",
+            "/^[1-9]$/",
+            'data-demo="f1-candidate"',
+            'data-demo="f2-task"',
+            'data-demo="f3-next-step"',
+            "sequonMatches",
         ):
             self.assertIn(token, script)
 

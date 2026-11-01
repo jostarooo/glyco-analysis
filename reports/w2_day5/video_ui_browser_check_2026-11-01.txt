@@ -1,0 +1,6 @@
+PASS static self-contained contract: D:\wbworkspace\glyco-analysis\video-ui\dist\index.html
+- bytes: 341357
+- slides: 9
+- head: 75f2fc0b0342c81c1e1228ccefce446a125a0ec3
+PASS Edge file:// mount and nine-slide routing: file:///D:/wbworkspace/glyco-analysis/video-ui/dist/index.html
+PASS interactive F1/F2/F3 controls at 1920x1080 and 1366x768
