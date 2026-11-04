@@ -1,0 +1,3561 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f3eadb">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; font-src 'none'; base-uri 'none'; form-action 'self'; object-src 'none'">
+  <title>糖基化分析系统 · 位点预测</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f3eadb;
+      --paper-deep: #e9dac4;
+      --paper-edge: #d8c2a4;
+      --card: #fffaf1;
+      --card-strong: #fffdf8;
+      --ink: #241d15;
+      --ink-soft: #6e5f4d;
+      --ink-faint: #94846f;
+      --line: #d8c8b1;
+      --line-strong: #bca588;
+      --amber: #b56a25;
+      --amber-deep: #7b4217;
+      --amber-soft: #f0d5b2;
+      --moss: #456b52;
+      --moss-soft: #e4eee4;
+      --danger: #963f34;
+      --danger-soft: #f5dfda;
+      --warning: #8a5a16;
+      --warning-soft: #f5e8c9;
+      --shadow-lg: 0 28px 70px rgba(77, 52, 26, 0.15), 0 3px 10px rgba(77, 52, 26, 0.08);
+      --shadow-md: 0 14px 34px rgba(77, 52, 26, 0.09), 0 2px 6px rgba(77, 52, 26, 0.06);
+      --serif: "Iowan Old Style", "Baskerville", "Songti SC", "STSong", "Noto Serif CJK SC", "Source Han Serif SC", "SimSun", serif;
+      --mono: "Cascadia Mono", "SFMono-Regular", "Consolas", "Liberation Mono", monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-width: 320px;
+      background: var(--paper);
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 10% 4%, rgba(181, 106, 37, 0.13), transparent 28rem),
+        radial-gradient(circle at 92% 92%, rgba(69, 107, 82, 0.09), transparent 32rem),
+        repeating-linear-gradient(0deg, rgba(73, 48, 22, 0.026) 0, rgba(73, 48, 22, 0.026) 1px, transparent 1px, transparent 28px),
+        var(--paper);
+      font-family: var(--serif);
+      line-height: 1.58;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      color: inherit;
+    }
+
+    button,
+    summary {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button:focus-visible,
+    input:focus-visible,
+    textarea:focus-visible,
+    summary:focus-visible {
+      outline: 3px solid rgba(181, 106, 37, 0.34);
+      outline-offset: 3px;
+    }
+
+    ::selection {
+      color: var(--ink);
+      background: var(--amber-soft);
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    .visually-hidden {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+
+    .page-shell {
+      width: min(100%, 1480px);
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 22px;
+    }
+
+    .login-stage {
+      min-height: calc(100vh - 44px);
+      display: grid;
+      place-items: center;
+    }
+
+    .login-card {
+      width: min(1180px, 100%);
+      min-height: 690px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(380px, 0.92fr);
+      overflow: hidden;
+      border: 1px solid var(--line-strong);
+      border-radius: 3px 30px 3px 30px;
+      background: var(--card);
+      box-shadow: var(--shadow-lg);
+      animation: card-in 560ms cubic-bezier(0.22, 0.8, 0.26, 1) both;
+    }
+
+    .login-story {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      padding: clamp(36px, 5vw, 70px);
+      color: #fff7e9;
+      background:
+        linear-gradient(145deg, rgba(255, 235, 204, 0.12), transparent 34%),
+        radial-gradient(circle at 12% 88%, rgba(255, 223, 177, 0.22), transparent 22rem),
+        linear-gradient(145deg, #a96124 0%, #8a4d1c 48%, #613613 100%);
+    }
+
+    .login-story::before {
+      content: "";
+      position: absolute;
+      width: 310px;
+      height: 310px;
+      top: -160px;
+      right: -105px;
+      border: 1px solid rgba(255, 246, 228, 0.32);
+      border-radius: 50%;
+      box-shadow:
+        0 0 0 34px rgba(255, 246, 228, 0.05),
+        0 0 0 70px rgba(255, 246, 228, 0.035);
+    }
+
+    .login-story::after {
+      content: "N";
+      position: absolute;
+      right: 34px;
+      bottom: -70px;
+      color: rgba(255, 250, 241, 0.07);
+      font-size: 310px;
+      font-weight: 700;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .brand-lockup {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255, 249, 239, 0.58);
+      border-radius: 50%;
+      color: #fff9ef;
+      font-family: var(--mono);
+      font-size: 17px;
+      letter-spacing: 0.04em;
+      background: rgba(255, 250, 241, 0.08);
+    }
+
+    .brand-copy {
+      display: grid;
+      gap: 1px;
+    }
+
+    .brand-copy strong {
+      font-size: 17px;
+      letter-spacing: 0.08em;
+    }
+
+    .brand-copy span {
+      color: rgba(255, 247, 233, 0.72);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .story-content {
+      position: relative;
+      z-index: 1;
+      width: min(620px, 100%);
+      margin: clamp(46px, 8vh, 92px) 0 42px;
+    }
+
+    .story-kicker,
+    .eyebrow {
+      margin: 0 0 13px;
+      color: var(--amber-deep);
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .story-kicker {
+      color: #f4d4a8;
+    }
+
+    .login-story h1 {
+      max-width: 610px;
+      margin: 0;
+      font-size: clamp(42px, 5.1vw, 68px);
+      font-weight: 600;
+      line-height: 1.08;
+      letter-spacing: -0.035em;
+    }
+
+    .story-lead {
+      max-width: 560px;
+      margin: 26px 0 0;
+      color: rgba(255, 248, 236, 0.8);
+      font-size: 17px;
+      line-height: 1.75;
+    }
+
+    .flow-list {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 12px;
+      max-width: 590px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .flow-list li {
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr);
+      gap: 13px;
+      align-items: center;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 247, 233, 0.2);
+    }
+
+    .flow-list .step-number {
+      color: #f1c68f;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+    }
+
+    .flow-list strong {
+      display: block;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .flow-list span:last-child {
+      display: block;
+      color: rgba(255, 247, 233, 0.65);
+      font-size: 12px;
+    }
+
+    .login-panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(34px, 5vw, 72px);
+      background:
+        linear-gradient(90deg, rgba(125, 85, 43, 0.035) 1px, transparent 1px) 0 0 / 36px 36px,
+        var(--card);
+    }
+
+    .login-panel-head {
+      max-width: 420px;
+      margin-bottom: 32px;
+    }
+
+    .login-panel-head h2 {
+      margin: 0 0 12px;
+      font-size: clamp(30px, 3.2vw, 43px);
+      font-weight: 600;
+      line-height: 1.16;
+      letter-spacing: -0.025em;
+    }
+
+    .login-panel-head p {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 14px;
+    }
+
+    .login-form {
+      display: grid;
+      gap: 19px;
+      max-width: 420px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .field-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: baseline;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .field-label small {
+      color: var(--ink-faint);
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+    }
+
+    .text-input,
+    .sequence-input {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      color: var(--ink);
+      background: rgba(255, 253, 248, 0.82);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+    }
+
+    .text-input {
+      min-height: 49px;
+      padding: 11px 14px;
+    }
+
+    .text-input:hover,
+    .sequence-input:hover {
+      border-color: var(--line-strong);
+    }
+
+    .text-input:focus,
+    .sequence-input:focus {
+      outline: none;
+      border-color: var(--amber);
+      box-shadow: 0 0 0 4px rgba(181, 106, 37, 0.12);
+      background: var(--card-strong);
+    }
+
+    .text-input:disabled,
+    .sequence-input:disabled {
+      color: var(--ink-faint);
+      background: rgba(233, 218, 196, 0.38);
+      cursor: not-allowed;
+    }
+
+    .primary-button,
+    .secondary-button,
+    .ghost-button {
+      min-height: 46px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: transform 160ms ease, background 160ms ease, border-color 160ms ease, color 160ms ease, box-shadow 160ms ease;
+    }
+
+    .primary-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: 1px solid var(--amber-deep);
+      padding: 11px 21px;
+      color: #fffaf1;
+      background: var(--amber-deep);
+      box-shadow: 0 8px 20px rgba(123, 66, 23, 0.18);
+      font-weight: 700;
+    }
+
+    .primary-button:hover:not(:disabled) {
+      transform: translateY(-1px);
+      background: #63330f;
+      box-shadow: 0 11px 24px rgba(123, 66, 23, 0.22);
+    }
+
+    .primary-button:disabled {
+      color: rgba(255, 250, 241, 0.64);
+      background: #9c8a74;
+      border-color: #8b7964;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    .secondary-button {
+      border: 1px solid var(--line-strong);
+      padding: 9px 16px;
+      color: var(--amber-deep);
+      background: rgba(255, 250, 241, 0.72);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .secondary-button:hover:not(:disabled) {
+      transform: translateY(-1px);
+      border-color: var(--amber);
+      background: var(--amber-soft);
+    }
+
+    .ghost-button {
+      border: 1px solid transparent;
+      padding: 8px 12px;
+      color: var(--ink-soft);
+      background: transparent;
+      font-size: 13px;
+    }
+
+    .ghost-button:hover:not(:disabled) {
+      color: var(--amber-deep);
+      background: rgba(181, 106, 37, 0.08);
+    }
+
+    .secondary-button:disabled,
+    .ghost-button:disabled {
+      opacity: 0.52;
+      cursor: not-allowed;
+    }
+
+    .login-submit {
+      width: 100%;
+      margin-top: 2px;
+    }
+
+    .button-arrow {
+      font-family: var(--mono);
+      font-size: 16px;
+      line-height: 1;
+    }
+
+    .form-status,
+    .inline-error {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .form-status {
+      min-height: 20px;
+      color: var(--ink-soft);
+    }
+
+    .form-status[data-tone="error"],
+    .inline-error {
+      color: var(--danger);
+    }
+
+    .form-status[data-tone="success"] {
+      color: var(--moss);
+    }
+
+    .login-error {
+      padding: 10px 12px;
+      border: 1px solid #e1b5ad;
+      border-radius: 9px;
+      background: var(--danger-soft);
+    }
+
+    .login-footnote {
+      max-width: 420px;
+      margin: 26px 0 0;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      color: var(--ink-faint);
+      font-size: 12px;
+      line-height: 1.65;
+    }
+
+    .workspace {
+      animation: workspace-in 420ms ease both;
+    }
+
+    .app-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      min-height: 78px;
+      padding: 14px clamp(18px, 3vw, 42px);
+      border-bottom: 1px solid rgba(188, 165, 136, 0.72);
+      background: rgba(243, 234, 219, 0.91);
+      backdrop-filter: blur(14px);
+    }
+
+    .app-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 260px;
+    }
+
+    .app-brand .brand-mark {
+      width: 38px;
+      height: 38px;
+      color: var(--amber-deep);
+      border-color: var(--line-strong);
+      background: rgba(255, 250, 241, 0.74);
+      font-size: 14px;
+    }
+
+    .app-brand-copy {
+      display: grid;
+      gap: 1px;
+    }
+
+    .app-brand-copy strong {
+      font-size: 16px;
+      letter-spacing: 0.04em;
+    }
+
+    .app-brand-copy span {
+      color: var(--ink-soft);
+      font-size: 11px;
+    }
+
+    .header-spacer {
+      flex: 1;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .model-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      max-width: min(430px, 44vw);
+      padding: 7px 11px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--ink-soft);
+      background: rgba(255, 250, 241, 0.68);
+      font-family: var(--mono);
+      font-size: 11px;
+      line-height: 1.35;
+    }
+
+    .model-badge strong {
+      overflow: hidden;
+      color: var(--ink);
+      font-weight: 600;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .model-badge-label {
+      color: var(--ink-faint);
+      font-family: var(--serif);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .status-dot {
+      flex: 0 0 auto;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--ink-faint);
+      box-shadow: 0 0 0 4px rgba(110, 95, 77, 0.09);
+    }
+
+    .status-dot[data-state="ready"] {
+      background: var(--moss);
+      box-shadow: 0 0 0 4px rgba(69, 107, 82, 0.12);
+    }
+
+    .status-dot[data-state="loading"] {
+      background: var(--amber);
+      animation: dot-pulse 1.2s ease-in-out infinite;
+    }
+
+    .status-dot[data-state="error"] {
+      background: var(--danger);
+      box-shadow: 0 0 0 4px rgba(150, 63, 52, 0.11);
+    }
+
+    .user-chip {
+      padding: 7px 11px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--ink-soft);
+      background: rgba(255, 250, 241, 0.62);
+      font-size: 12px;
+    }
+
+    .workspace-main {
+      width: min(100%, 1340px);
+      margin: 0 auto;
+      padding: clamp(32px, 5vw, 64px) clamp(18px, 3vw, 38px) 44px;
+    }
+
+    .workspace-intro {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 28px;
+      align-items: end;
+      margin-bottom: 28px;
+    }
+
+    .workspace-intro h1 {
+      max-width: 850px;
+      margin: 0;
+      font-size: clamp(34px, 4.3vw, 58px);
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.035em;
+    }
+
+    .workspace-lead {
+      max-width: 770px;
+      margin: 17px 0 0;
+      color: var(--ink-soft);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .runtime-ribbon {
+      display: grid;
+      grid-template-columns: auto minmax(150px, 1fr);
+      gap: 9px 10px;
+      align-items: center;
+      min-width: 280px;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 16px 3px 16px 3px;
+      background: rgba(255, 250, 241, 0.68);
+      box-shadow: var(--shadow-md);
+    }
+
+    .runtime-ribbon span {
+      color: var(--ink-soft);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .runtime-ribbon .secondary-button {
+      grid-column: 1 / -1;
+      width: 100%;
+      min-height: 38px;
+      padding-block: 7px;
+    }
+
+    .notice {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0 0 18px;
+      padding: 11px 14px;
+      border: 1px solid #dfcba8;
+      border-radius: 11px;
+      color: var(--warning);
+      background: var(--warning-soft);
+      font-size: 13px;
+    }
+
+    .notice[data-tone="success"] {
+      color: var(--moss);
+      border-color: #bfd4c1;
+      background: var(--moss-soft);
+    }
+
+    .notice[data-tone="error"] {
+      color: var(--danger);
+      border-color: #dfb4ac;
+      background: var(--danger-soft);
+    }
+
+    .notice span {
+      flex: 1;
+    }
+
+    .notice button {
+      min-height: 30px;
+      padding: 3px 8px;
+      border: 0;
+      color: currentColor;
+      background: transparent;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(340px, 0.7fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 3px 22px 3px 22px;
+      background: rgba(255, 250, 241, 0.88);
+      box-shadow: var(--shadow-md);
+    }
+
+    .composer {
+      padding: clamp(22px, 3.2vw, 38px);
+    }
+
+    .panel-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 23px;
+    }
+
+    .panel-index {
+      margin: 0 0 5px;
+      color: var(--amber);
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+    }
+
+    .panel h2,
+    .panel h3 {
+      margin: 0;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+    }
+
+    .panel h2 {
+      font-size: clamp(23px, 2.5vw, 31px);
+    }
+
+    .panel h3 {
+      font-size: 20px;
+    }
+
+    .panel-sub {
+      margin: 6px 0 0;
+      color: var(--ink-soft);
+      font-size: 13px;
+    }
+
+    .sample-area {
+      display: grid;
+      justify-items: end;
+      gap: 6px;
+      max-width: 340px;
+      text-align: right;
+    }
+
+    .sample-meta {
+      color: var(--ink-faint);
+      font-size: 11px;
+      line-height: 1.45;
+    }
+
+    .sequence-wrap {
+      display: grid;
+      gap: 9px;
+    }
+
+    .sequence-input {
+      min-height: 265px;
+      resize: vertical;
+      padding: 18px;
+      font-family: var(--mono);
+      font-size: 15px;
+      line-height: 1.85;
+      letter-spacing: 0.045em;
+      background:
+        linear-gradient(90deg, rgba(181, 106, 37, 0.035) 1px, transparent 1px) 0 0 / 42px 42px,
+        rgba(255, 253, 248, 0.84);
+    }
+
+    .sequence-meta {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      min-height: 22px;
+      color: var(--ink-faint);
+      font-family: var(--mono);
+      font-size: 11px;
+    }
+
+    .sequence-validation {
+      text-align: right;
+    }
+
+    .sequence-validation[data-tone="ok"] {
+      color: var(--moss);
+    }
+
+    .sequence-validation[data-tone="error"] {
+      color: var(--danger);
+    }
+
+    .composer-actions {
+      display: grid;
+      grid-template-columns: minmax(180px, 0.78fr) minmax(240px, 1.22fr);
+      gap: 18px;
+      align-items: end;
+      margin-top: 22px;
+      padding-top: 22px;
+      border-top: 1px solid var(--line);
+    }
+
+    .submit-area {
+      display: grid;
+      gap: 8px;
+    }
+
+    .submit-area .primary-button {
+      width: 100%;
+    }
+
+    .submit-hint {
+      min-height: 18px;
+      margin: 0;
+      color: var(--ink-faint);
+      font-size: 11px;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .job-card {
+      position: sticky;
+      top: 96px;
+      padding: clamp(22px, 2.8vw, 32px);
+      background:
+        radial-gradient(circle at 100% 0, rgba(181, 106, 37, 0.08), transparent 16rem),
+        rgba(255, 250, 241, 0.9);
+    }
+
+    .job-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 21px;
+    }
+
+    .state-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 28px;
+      padding: 4px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--ink-soft);
+      background: rgba(255, 255, 255, 0.4);
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+    }
+
+    .state-pill[data-state="active"] {
+      color: var(--warning);
+      border-color: #dfc38f;
+      background: var(--warning-soft);
+    }
+
+    .state-pill[data-state="success"] {
+      color: var(--moss);
+      border-color: #bdd2c0;
+      background: var(--moss-soft);
+    }
+
+    .state-pill[data-state="error"] {
+      color: var(--danger);
+      border-color: #dfb4ac;
+      background: var(--danger-soft);
+    }
+
+    .job-idle {
+      display: grid;
+      justify-items: start;
+      gap: 13px;
+      padding: 18px 0 26px;
+    }
+
+    .idle-mark {
+      position: relative;
+      width: 72px;
+      height: 72px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 4px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: var(--amber);
+      font-family: var(--mono);
+      font-size: 18px;
+      background: rgba(240, 213, 178, 0.38);
+    }
+
+    .idle-mark::before,
+    .idle-mark::after {
+      content: "";
+      position: absolute;
+      inset: -8px;
+      border: 1px solid rgba(181, 106, 37, 0.14);
+      border-radius: 50%;
+    }
+
+    .idle-mark::after {
+      inset: -17px;
+      border-color: rgba(181, 106, 37, 0.07);
+    }
+
+    .job-idle p,
+    .job-detail,
+    .failure-copy {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .job-mainline {
+      display: flex;
+      align-items: flex-start;
+      gap: 13px;
+    }
+
+    .spinner {
+      flex: 0 0 auto;
+      width: 22px;
+      height: 22px;
+      margin-top: 3px;
+      border: 2px solid rgba(181, 106, 37, 0.2);
+      border-top-color: var(--amber);
+      border-radius: 50%;
+      animation: spin 800ms linear infinite;
+    }
+
+    .job-stage {
+      margin: 5px 0 0;
+      color: var(--ink-faint);
+      font-family: var(--mono);
+      font-size: 10px;
+      line-height: 1.45;
+    }
+
+    .progress-rail {
+      position: relative;
+      height: 6px;
+      margin: 23px 0 18px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: var(--paper-deep);
+    }
+
+    .progress-fill {
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 38%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--amber), #d29450);
+    }
+
+    .job-active[data-progress="indeterminate"] .progress-fill {
+      animation: progress-drift 1.65s ease-in-out infinite;
+    }
+
+    .job-active[data-progress="complete"] .progress-fill {
+      width: 100%;
+      background: linear-gradient(90deg, var(--moss), #7c9b7e);
+    }
+
+    .stage-list {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      margin: 18px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .stage-list li {
+      display: grid;
+      justify-items: start;
+      gap: 6px;
+      color: var(--ink-faint);
+      font-size: 10px;
+      line-height: 1.35;
+    }
+
+    .stage-dot {
+      width: 9px;
+      height: 9px;
+      border: 1px solid var(--line-strong);
+      border-radius: 50%;
+      background: var(--card);
+    }
+
+    .stage-list li[data-state="done"] {
+      color: var(--moss);
+    }
+
+    .stage-list li[data-state="done"] .stage-dot {
+      border-color: var(--moss);
+      background: var(--moss);
+    }
+
+    .stage-list li[data-state="active"] {
+      color: var(--amber-deep);
+      font-weight: 700;
+    }
+
+    .stage-list li[data-state="active"] .stage-dot {
+      border-color: var(--amber);
+      background: var(--amber);
+      box-shadow: 0 0 0 5px rgba(181, 106, 37, 0.12);
+      animation: dot-pulse 1.2s ease-in-out infinite;
+    }
+
+    .job-meta-line {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 19px;
+    }
+
+    .meta-chip {
+      display: inline-flex;
+      max-width: 100%;
+      padding: 5px 9px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      color: var(--ink-soft);
+      background: rgba(255, 255, 255, 0.35);
+      font-family: var(--mono);
+      font-size: 10px;
+      line-height: 1.4;
+      overflow-wrap: anywhere;
+    }
+
+    .poll-issue {
+      margin: 13px 0 0;
+      padding: 9px 11px;
+      border: 1px solid #e2cfaa;
+      border-radius: 8px;
+      color: var(--warning);
+      background: var(--warning-soft);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .job-failure {
+      padding: 8px 0 3px;
+    }
+
+    .failure-tag {
+      margin: 0 0 6px;
+      color: var(--danger);
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .failure-code {
+      display: inline-block;
+      margin-top: 13px;
+      padding: 5px 8px;
+      border: 1px solid #dfb4ac;
+      border-radius: 6px;
+      color: var(--danger);
+      background: rgba(245, 223, 218, 0.62);
+      font-family: var(--mono);
+      font-size: 10px;
+    }
+
+    .failure-actions {
+      margin-top: 18px;
+    }
+
+    .runtime-card {
+      margin-top: 24px;
+      padding-top: 19px;
+      border-top: 1px solid var(--line);
+    }
+
+    .runtime-card summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--ink);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 700;
+      list-style: none;
+    }
+
+    .runtime-card summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .runtime-card summary::after {
+      content: "+";
+      color: var(--amber);
+      font-family: var(--mono);
+      font-size: 17px;
+      font-weight: 400;
+    }
+
+    .runtime-card[open] summary::after {
+      content: "−";
+    }
+
+    .runtime-details {
+      margin-top: 15px;
+    }
+
+    .definition-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .definition-row {
+      display: grid;
+      grid-template-columns: minmax(88px, 0.42fr) minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+      padding-bottom: 9px;
+      border-bottom: 1px solid rgba(216, 200, 177, 0.68);
+    }
+
+    .definition-row:last-child {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+
+    .definition-row dt {
+      color: var(--ink-faint);
+      font-size: 11px;
+      line-height: 1.45;
+    }
+
+    .definition-row dd {
+      margin: 0;
+      color: var(--ink-soft);
+      font-family: var(--mono);
+      font-size: 10px;
+      line-height: 1.55;
+      overflow-wrap: anywhere;
+    }
+
+    .details-empty {
+      padding: 14px;
+      border: 1px dashed var(--line-strong);
+      border-radius: 9px;
+      color: var(--ink-faint);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .results-panel {
+      margin-top: 20px;
+      padding: clamp(22px, 3.2vw, 38px);
+      scroll-margin-top: 100px;
+    }
+
+    .results-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+      margin-bottom: 22px;
+    }
+
+    .candidate-count {
+      flex: 0 0 auto;
+      padding: 6px 11px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--ink-soft);
+      background: rgba(255, 255, 255, 0.45);
+      font-family: var(--mono);
+      font-size: 10px;
+    }
+
+    .result-stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .result-stat {
+      min-height: 96px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 12px 2px 12px 2px;
+      background: rgba(255, 253, 248, 0.65);
+    }
+
+    .result-stat span {
+      display: block;
+      color: var(--ink-faint);
+      font-size: 10px;
+      line-height: 1.4;
+    }
+
+    .result-stat strong {
+      display: block;
+      margin-top: 5px;
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.4;
+      overflow-wrap: anywhere;
+    }
+
+    .result-hash {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin: 0 0 18px;
+      padding: 10px 12px;
+      border: 1px solid rgba(216, 200, 177, 0.8);
+      border-radius: 8px;
+      color: var(--ink-faint);
+      background: rgba(233, 218, 196, 0.18);
+      font-size: 10px;
+      line-height: 1.5;
+    }
+
+    .result-hash code {
+      color: var(--ink-soft);
+      font-family: var(--mono);
+      overflow-wrap: anywhere;
+    }
+
+    .table-wrap {
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: 12px 2px 12px 2px;
+      background: var(--card-strong);
+    }
+
+    .candidate-table {
+      width: 100%;
+      min-width: 760px;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .candidate-table th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      padding: 12px 13px;
+      border-bottom: 1px solid var(--line-strong);
+      color: var(--ink-soft);
+      background: #f6ecdd;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    .candidate-table th.num,
+    .candidate-table td.num {
+      text-align: right;
+    }
+
+    .candidate-table td {
+      padding: 12px 13px;
+      border-bottom: 1px solid rgba(216, 200, 177, 0.7);
+      vertical-align: middle;
+    }
+
+    .candidate-table tbody tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .candidate-table tbody tr:hover {
+      background: rgba(181, 106, 37, 0.045);
+    }
+
+    .candidate-table tbody tr.is-positive {
+      box-shadow: inset 4px 0 0 var(--amber);
+    }
+
+    .site-code,
+    .motif-code,
+    .logit-value {
+      font-family: var(--mono);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .site-code {
+      color: var(--amber-deep);
+      font-weight: 700;
+    }
+
+    .motif-code {
+      padding: 3px 7px;
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      color: var(--ink-soft);
+      background: var(--paper);
+      font-size: 11px;
+    }
+
+    .prob-cell {
+      display: grid;
+      justify-items: end;
+      gap: 5px;
+      min-width: 105px;
+    }
+
+    .prob-value {
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .prob-track {
+      width: 100%;
+      height: 4px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: var(--paper-deep);
+    }
+
+    .prob-track i {
+      display: block;
+      width: var(--prob, 0%);
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #d1a361, var(--amber));
+    }
+
+    .label-badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 3px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--ink-soft);
+      background: rgba(255, 255, 255, 0.38);
+      font-size: 10px;
+      white-space: nowrap;
+    }
+
+    .label-badge.positive {
+      color: var(--amber-deep);
+      border-color: #d9b889;
+      background: var(--amber-soft);
+      font-weight: 700;
+    }
+
+    .empty-candidates {
+      display: grid;
+      justify-items: center;
+      gap: 10px;
+      padding: 48px 20px;
+      border: 1px dashed var(--line-strong);
+      border-radius: 12px;
+      text-align: center;
+      background: rgba(233, 218, 196, 0.16);
+    }
+
+    .empty-candidates strong {
+      font-size: 19px;
+      font-weight: 600;
+    }
+
+    .empty-candidates p {
+      max-width: 520px;
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 13px;
+    }
+
+    .empty-symbol {
+      width: 52px;
+      height: 52px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: var(--amber);
+      font-family: var(--mono);
+      font-size: 20px;
+      background: var(--amber-soft);
+    }
+
+    .limitations {
+      margin-top: 18px;
+      padding: 15px 17px;
+      border-left: 3px solid var(--amber);
+      border-radius: 3px 9px 9px 3px;
+      background: rgba(240, 213, 178, 0.27);
+    }
+
+    .limitations strong {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 12px;
+    }
+
+    .limitations ul {
+      display: grid;
+      gap: 5px;
+      margin: 0;
+      padding-left: 18px;
+      color: var(--ink-soft);
+      font-size: 12px;
+    }
+
+    .result-provenance {
+      margin-top: 17px;
+      padding-top: 15px;
+      border-top: 1px solid var(--line);
+    }
+
+    .result-provenance summary {
+      color: var(--ink-soft);
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .result-model-grid {
+      margin-top: 13px;
+    }
+
+    .research-callout {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: center;
+      margin-top: 18px;
+      padding: 11px 13px;
+      border: 1px solid #e0c9a5;
+      border-radius: 8px;
+      color: var(--amber-deep);
+      background: rgba(240, 213, 178, 0.3);
+      font-size: 11px;
+      line-height: 1.55;
+    }
+
+    .research-callout code {
+      color: var(--ink-faint);
+      font-family: var(--mono);
+      font-size: 9px;
+      white-space: nowrap;
+    }
+
+    .site-footer {
+      width: min(100%, 1340px);
+      margin: 0 auto;
+      padding: 0 clamp(18px, 3vw, 38px) 34px;
+      color: var(--ink-faint);
+      font-size: 11px;
+    }
+
+    .footer-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+    }
+
+    .footer-line span:last-child {
+      font-family: var(--mono);
+      text-align: right;
+    }
+
+    @media (max-width: 1080px) {
+      .login-card {
+        grid-template-columns: minmax(0, 0.94fr) minmax(360px, 1.06fr);
+      }
+
+      .work-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .job-card {
+        position: static;
+      }
+
+      .workspace-intro {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .runtime-ribbon {
+        width: min(100%, 470px);
+      }
+    }
+
+    @media (max-width: 860px) {
+      .page-shell {
+        padding: 12px;
+      }
+
+      .login-stage {
+        min-height: calc(100vh - 24px);
+      }
+
+      .login-card {
+        grid-template-columns: 1fr;
+        min-height: 0;
+        border-radius: 3px 22px 3px 22px;
+      }
+
+      .login-story {
+        min-height: 430px;
+        padding: 34px;
+      }
+
+      .story-content {
+        margin: 45px 0 34px;
+      }
+
+      .login-story h1 {
+        font-size: clamp(38px, 9vw, 56px);
+      }
+
+      .flow-list {
+        grid-template-columns: 1fr;
+      }
+
+      .login-panel {
+        padding: 38px 32px 42px;
+      }
+
+      .app-header {
+        position: relative;
+        align-items: flex-start;
+        flex-wrap: wrap;
+      }
+
+      .app-brand {
+        min-width: 0;
+      }
+
+      .header-spacer {
+        display: none;
+      }
+
+      .header-actions {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .model-badge {
+        max-width: 100%;
+      }
+
+      .result-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 680px) {
+      .login-story {
+        min-height: 390px;
+        padding: 28px 24px;
+      }
+
+      .login-story h1 {
+        font-size: 40px;
+      }
+
+      .story-lead {
+        font-size: 15px;
+      }
+
+      .flow-list li:nth-child(3) {
+        display: none;
+      }
+
+      .login-panel {
+        padding: 32px 22px 36px;
+      }
+
+      .workspace-main {
+        padding-top: 34px;
+      }
+
+      .workspace-intro h1 {
+        font-size: 38px;
+      }
+
+      .composer,
+      .job-card,
+      .results-panel {
+        padding: 20px 17px;
+      }
+
+      .panel-head,
+      .results-head {
+        display: grid;
+        gap: 13px;
+      }
+
+      .sample-area {
+        max-width: none;
+        justify-items: start;
+        text-align: left;
+      }
+
+      .sequence-input {
+        min-height: 230px;
+        padding: 14px;
+        font-size: 14px;
+      }
+
+      .sequence-meta {
+        display: grid;
+        gap: 4px;
+      }
+
+      .sequence-validation {
+        text-align: left;
+      }
+
+      .composer-actions {
+        grid-template-columns: 1fr;
+      }
+
+      .result-stats {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .candidate-table {
+        min-width: 720px;
+      }
+
+      .research-callout {
+        display: grid;
+        gap: 5px;
+      }
+
+      .research-callout code {
+        white-space: normal;
+      }
+
+      .footer-line {
+        display: grid;
+      }
+
+      .footer-line span:last-child {
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 440px) {
+      .page-shell {
+        padding: 0;
+      }
+
+      .login-card {
+        border-left: 0;
+        border-right: 0;
+        border-radius: 0;
+      }
+
+      .login-story h1 {
+        font-size: 35px;
+      }
+
+      .brand-copy span {
+        display: none;
+      }
+
+      .header-actions {
+        gap: 7px;
+      }
+
+      .model-badge {
+        width: 100%;
+      }
+
+      .result-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .stage-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        row-gap: 12px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    @keyframes card-in {
+      from {
+        opacity: 0;
+        transform: translateY(14px) scale(0.992);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes workspace-in {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes dot-pulse {
+      0%,
+      100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.38;
+      }
+    }
+
+    @keyframes progress-drift {
+      0% {
+        left: -38%;
+        width: 38%;
+      }
+      50% {
+        left: 42%;
+        width: 46%;
+      }
+      100% {
+        left: 100%;
+        width: 38%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <section class="login-stage" id="loginView" aria-labelledby="loginTitle">
+      <article class="login-card">
+        <div class="login-story">
+          <div class="brand-lockup">
+            <span class="brand-mark" aria-hidden="true">GLY</span>
+            <span class="brand-copy">
+              <strong>糖基化分析系统</strong>
+              <span>Protein language model lab</span>
+            </span>
+          </div>
+
+          <div class="story-content">
+            <p class="story-kicker">W3 / F1 / System slice</p>
+            <h1>把序列交给模型，把判断留在证据上。</h1>
+            <p class="story-lead">登录后读取服务端模型来源，提交真实蛋白序列，并跟踪冷加载、排队与推理任务。页面不生成任何本地预测数字。</p>
+          </div>
+
+          <ol class="flow-list" aria-label="工作流">
+            <li>
+              <span class="step-number">01</span>
+              <span><strong>建立安全会话</strong><span>HttpOnly Cookie 与 CSRF 令牌</span></span>
+            </li>
+            <li>
+              <span class="step-number">02</span>
+              <span><strong>核对模型来源</strong><span>基础模型、修订、适配器与设备</span></span>
+            </li>
+            <li>
+              <span class="step-number">03</span>
+              <span><strong>跟踪真实任务</strong><span>从排队到结果均由后端任务返回</span></span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="login-panel">
+          <div class="login-panel-head">
+            <p class="eyebrow">Protected workspace</p>
+            <h2 id="loginTitle">进入位点预测工作台</h2>
+            <p>使用分配给你的研究账号登录。密码只用于本次请求，页面不会存储密码。</p>
+          </div>
+
+          <form class="login-form" id="loginForm" novalidate>
+            <label class="field">
+              <span class="field-label">用户账号 <small>AUTOCOMPLETE ON</small></span>
+              <input class="text-input" id="loginUsername" name="username" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" required>
+            </label>
+            <label class="field">
+              <span class="field-label">密码 <small>SERVER COOKIE</small></span>
+              <input class="text-input" id="loginPassword" name="password" type="password" autocomplete="current-password" required>
+            </label>
+            <p class="form-status inline-error login-error" id="loginError" role="alert" hidden></p>
+            <button class="primary-button login-submit" id="loginButton" type="submit" disabled>
+              <span id="loginButtonText">正在校验会话</span>
+              <span class="button-arrow" aria-hidden="true">›</span>
+            </button>
+            <p class="form-status" id="sessionStatus" data-tone="muted" aria-live="polite">正在校验现有登录会话。</p>
+          </form>
+
+          <p class="login-footnote">研究原型，不是临床诊断，概率不是实验验证。进入系统后只展示后端任务返回的候选位点与模型元数据。</p>
+        </div>
+      </article>
+    </section>
+
+    <section class="workspace" id="workspaceView" aria-labelledby="workspaceTitle" hidden>
+      <header class="app-header">
+        <div class="app-brand">
+          <span class="brand-mark" aria-hidden="true">GLY</span>
+          <span class="app-brand-copy">
+            <strong>糖基化分析系统</strong>
+            <span>F1 位点预测 · 研究原型</span>
+          </span>
+        </div>
+        <span class="header-spacer"></span>
+        <div class="header-actions">
+          <span class="model-badge" id="modelBadge" title="等待模型信息">
+            <span class="status-dot" id="modelBadgeDot" data-state="idle" aria-hidden="true"></span>
+            <span class="model-badge-label">模型来源</span>
+            <strong id="modelBadgeText">读取中</strong>
+          </span>
+          <span class="user-chip" id="usernameLabel">已登录用户</span>
+          <button class="ghost-button" id="logoutButton" type="button">退出登录</button>
+        </div>
+      </header>
+
+      <main class="workspace-main">
+        <div class="notice" id="appNotice" role="status" data-tone="warning" hidden>
+          <span id="noticeText"></span>
+          <button id="noticeClose" type="button" aria-label="关闭提示">关闭</button>
+        </div>
+
+        <section class="workspace-intro" aria-labelledby="workspaceTitle">
+          <div>
+            <p class="eyebrow">F1 / N-linked glycosylation</p>
+            <h1 id="workspaceTitle">从蛋白序列定位候选糖基化位点</h1>
+            <p class="workspace-lead">载入服务端提供的真实样例或粘贴标准氨基酸序列。任务状态、候选位点和概率全部读取自同源 API，不使用前端示例数据。</p>
+          </div>
+          <div class="runtime-ribbon" aria-live="polite">
+            <span class="status-dot" id="runtimeStateDot" data-state="idle" aria-hidden="true"></span>
+            <span id="runtimeSummary">正在等待模型元数据。</span>
+            <button class="secondary-button" id="refreshRuntimeButton" type="button">刷新模型信息</button>
+          </div>
+        </section>
+
+        <div class="work-grid">
+          <section class="panel composer" aria-labelledby="composerTitle">
+            <header class="panel-head">
+              <div>
+                <p class="panel-index">01 / INPUT</p>
+                <h2 id="composerTitle">蛋白质序列</h2>
+                <p class="panel-sub">标准 20 种氨基酸单字母代码。空格与换行会在提交时移除。</p>
+              </div>
+              <div class="sample-area">
+                <button class="secondary-button" id="sampleButton" type="button" disabled>载入真实样例</button>
+                <span class="sample-meta" id="sampleMeta">等待模型样例。</span>
+              </div>
+            </header>
+
+            <form id="predictForm" novalidate>
+              <label class="sequence-wrap">
+                <span class="field-label">氨基酸序列 <small>SINGLE LETTER CODE</small></span>
+                <textarea class="sequence-input" id="sequenceInput" name="sequence" rows="10" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="粘贴蛋白质序列，例如 MKWVTFISLL..."></textarea>
+                <span class="sequence-meta">
+                  <span id="sequenceCount">0 aa</span>
+                  <span class="sequence-validation" id="sequenceValidation" data-tone="muted" aria-live="polite">请输入标准氨基酸序列</span>
+                </span>
+              </label>
+
+              <div class="composer-actions">
+                <label class="field">
+                  <span class="field-label">蛋白标识 <small>OPTIONAL</small></span>
+                  <input class="text-input" id="proteinIdInput" name="protein_id" type="text" autocomplete="off" spellcheck="false" placeholder="例如 P01857">
+                </label>
+                <div class="submit-area">
+                  <button class="primary-button" id="predictButton" type="submit" disabled>开始位点预测</button>
+                  <p class="submit-hint" id="submitHint">登录并读取模型后可提交。</p>
+                </div>
+              </div>
+            </form>
+          </section>
+
+          <aside class="panel job-card" aria-labelledby="jobPanelTitle">
+            <header class="job-head">
+              <div>
+                <p class="panel-index">02 / JOB</p>
+                <h2 id="jobPanelTitle">推理任务</h2>
+              </div>
+              <span class="state-pill" id="jobStatePill" data-state="idle">待提交</span>
+            </header>
+
+            <div id="jobIdle" class="job-idle">
+              <span class="idle-mark" aria-hidden="true">N</span>
+              <h3>模型尚未启动</h3>
+              <p>提交序列后，这里会显示排队位置、冷加载、推理阶段和服务端错误。</p>
+            </div>
+
+            <div class="job-active" id="jobActive" data-progress="indeterminate" hidden>
+              <div class="job-mainline">
+                <span class="spinner" id="jobSpinner" aria-hidden="true"></span>
+                <div>
+                  <h3 id="jobTitle">正在创建任务</h3>
+                  <p class="job-stage" id="jobStage">等待服务端响应</p>
+                </div>
+              </div>
+              <div class="progress-rail" aria-hidden="true"><span class="progress-fill"></span></div>
+              <p class="job-detail" id="jobDetail">正在提交序列并分配任务编号。</p>
+              <ol class="stage-list" id="jobSteps" aria-label="任务阶段">
+                <li data-step="queued" data-state="pending"><span class="stage-dot" aria-hidden="true"></span><span>排队</span></li>
+                <li data-step="loading_model" data-state="pending"><span class="stage-dot" aria-hidden="true"></span><span>冷加载</span></li>
+                <li data-step="running" data-state="pending"><span class="stage-dot" aria-hidden="true"></span><span>推理</span></li>
+                <li data-step="done" data-state="pending"><span class="stage-dot" aria-hidden="true"></span><span>完成</span></li>
+              </ol>
+              <div class="job-meta-line">
+                <span class="meta-chip" id="jobQueueChip">队列位置待更新</span>
+                <span class="meta-chip" id="jobIdChip">任务编号待分配</span>
+              </div>
+              <p class="poll-issue" id="jobPollIssue" hidden></p>
+            </div>
+
+            <div class="job-failure" id="jobFailure" hidden>
+              <p class="failure-tag">Task interrupted</p>
+              <h3 id="jobErrorTitle">任务未完成</h3>
+              <p class="failure-copy" id="jobErrorMessage"></p>
+              <code class="failure-code" id="jobErrorCode" hidden></code>
+              <div class="failure-actions">
+                <button class="secondary-button" id="resumePollButton" type="button" hidden>继续查询任务</button>
+              </div>
+            </div>
+
+            <details class="runtime-card">
+              <summary>模型来源与运行配置</summary>
+              <div class="runtime-details" id="runtimeDetailsBody">
+                <div class="details-empty">正在读取运行配置。</div>
+              </div>
+            </details>
+          </aside>
+        </div>
+
+        <section class="panel results-panel" id="resultsSection" aria-labelledby="resultsTitle" hidden>
+          <header class="results-head">
+            <div>
+              <p class="panel-index">03 / RESULT</p>
+              <h2 id="resultsTitle">候选位点</h2>
+              <p class="panel-sub">按服务端返回顺序展示，不对概率做二次推断。</p>
+            </div>
+            <span class="candidate-count" id="resultCandidateCount">0 个候选</span>
+          </header>
+
+          <div class="result-stats" id="resultStats"></div>
+          <p class="result-hash"><span>序列 SHA256</span><code id="resultSequenceHash">暂无</code></p>
+
+          <div class="empty-candidates" id="candidatesEmpty" hidden>
+            <span class="empty-symbol" aria-hidden="true">∅</span>
+            <strong>服务端返回空候选集</strong>
+            <p>本次任务没有可列出的候选位点。结果仍来自后端，不代表前端提交失败。</p>
+          </div>
+
+          <div class="table-wrap" id="candidatesTableWrap" hidden>
+            <table class="candidate-table">
+              <thead>
+                <tr>
+                  <th scope="col">位点</th>
+                  <th scope="col">序列片段</th>
+                  <th scope="col" class="num">阳性概率</th>
+                  <th scope="col">判定</th>
+                  <th scope="col" class="num">阴性 logit</th>
+                  <th scope="col" class="num">阳性 logit</th>
+                </tr>
+              </thead>
+              <tbody id="candidatesBody"></tbody>
+            </table>
+          </div>
+
+          <div class="limitations" id="limitationsBlock" hidden>
+            <strong>模型限制</strong>
+            <ul id="limitationsList"></ul>
+          </div>
+
+          <details class="result-provenance" id="resultProvenance" hidden>
+            <summary>本次结果模型来源</summary>
+            <div class="definition-grid result-model-grid" id="resultModelBody"></div>
+          </details>
+
+          <div class="research-callout">
+            <span>研究原型，不是临床诊断，概率不是实验验证</span>
+            <code>NO CLINICAL CLAIM</code>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div class="footer-line">
+          <span>结果、模型来源和任务状态均由同源 API 返回。</span>
+          <span>研究原型，不是临床诊断，概率不是实验验证</span>
+        </div>
+      </footer>
+    </section>
+  </div>
+
+  <div class="visually-hidden" id="liveRegion" role="status" aria-live="polite"></div>
+  <noscript>
+    <p style="padding: 24px; font-family: serif;">此页面需要 JavaScript 才能登录和读取预测结果。</p>
+  </noscript>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const API = Object.freeze({
+        session: "/api/auth/session",
+        login: "/api/auth/login",
+        logout: "/api/auth/logout",
+        runtime: "/api/runtime",
+        predictions: "/api/predictions"
+      });
+      const STANDARD_AMINO_ACIDS = new Set("ACDEFGHIKLMNPQRSTVWY".split(""));
+      const JOB_STATUSES = new Set(["queued", "loading_model", "running", "succeeded", "failed"]);
+      const numberFormatter = new Intl.NumberFormat("zh-CN");
+      const fixedTwoFormatter = new Intl.NumberFormat("zh-CN", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+      const fixedThreeFormatter = new Intl.NumberFormat("zh-CN", {
+        minimumFractionDigits: 3,
+        maximumFractionDigits: 3
+      });
+
+      class ApiError extends Error {
+        constructor(message, options = {}) {
+          super(message);
+          this.name = "ApiError";
+          this.status = Number.isFinite(options.status) ? options.status : 0;
+          this.code = options.code || "UNKNOWN";
+        }
+      }
+
+      function createJobState() {
+        return {
+          phase: "idle",
+          id: "",
+          status: "",
+          stage: "",
+          queuePosition: null,
+          result: null,
+          error: null,
+          pollToken: 0,
+          pollTimer: null,
+          pollErrors: 0,
+          pollIssue: ""
+        };
+      }
+
+      const state = {
+        auth: {
+          phase: "restoring",
+          user: null,
+          csrfToken: "",
+          error: "",
+          status: "正在校验现有登录会话。",
+          statusTone: "muted",
+          version: 0
+        },
+        runtime: {
+          phase: "idle",
+          data: null,
+          error: null
+        },
+        job: createJobState(),
+        noticeTimer: null
+      };
+
+      const dom = {};
+
+      function cacheDom() {
+        const ids = [
+          "loginView",
+          "loginForm",
+          "loginUsername",
+          "loginPassword",
+          "loginButton",
+          "loginButtonText",
+          "loginError",
+          "sessionStatus",
+          "workspaceView",
+          "modelBadge",
+          "modelBadgeDot",
+          "modelBadgeText",
+          "usernameLabel",
+          "logoutButton",
+          "appNotice",
+          "noticeText",
+          "noticeClose",
+          "runtimeSummary",
+          "runtimeStateDot",
+          "refreshRuntimeButton",
+          "sampleButton",
+          "sampleMeta",
+          "predictForm",
+          "sequenceInput",
+          "sequenceCount",
+          "sequenceValidation",
+          "proteinIdInput",
+          "predictButton",
+          "submitHint",
+          "jobStatePill",
+          "jobIdle",
+          "jobActive",
+          "jobSpinner",
+          "jobTitle",
+          "jobStage",
+          "jobDetail",
+          "jobSteps",
+          "jobQueueChip",
+          "jobIdChip",
+          "jobPollIssue",
+          "jobFailure",
+          "jobErrorTitle",
+          "jobErrorMessage",
+          "jobErrorCode",
+          "resumePollButton",
+          "runtimeDetailsBody",
+          "resultsSection",
+          "resultCandidateCount",
+          "resultStats",
+          "resultSequenceHash",
+          "candidatesEmpty",
+          "candidatesTableWrap",
+          "candidatesBody",
+          "limitationsBlock",
+          "limitationsList",
+          "resultProvenance",
+          "resultModelBody",
+          "liveRegion"
+        ];
+        for (const id of ids) {
+          dom[id] = document.getElementById(id);
+        }
+      }
+
+      function bindEvents() {
+        dom.loginForm.addEventListener("submit", handleLogin);
+        dom.logoutButton.addEventListener("click", handleLogout);
+        dom.refreshRuntimeButton.addEventListener("click", () => loadRuntime(state.auth.version));
+        dom.sampleButton.addEventListener("click", handleSampleLoad);
+        dom.predictForm.addEventListener("submit", handlePredictionSubmit);
+        dom.sequenceInput.addEventListener("input", renderDraft);
+        dom.proteinIdInput.addEventListener("input", renderDraft);
+        dom.resumePollButton.addEventListener("click", resumePolling);
+        dom.noticeClose.addEventListener("click", hideNotice);
+        dom.loginUsername.addEventListener("input", clearLoginError);
+        dom.loginPassword.addEventListener("input", clearLoginError);
+        window.addEventListener("beforeunload", cancelPolling);
+      }
+
+      function boot() {
+        cacheDom();
+        bindEvents();
+        renderAuth();
+        renderRuntime();
+        renderJob();
+        renderResults();
+        renderDraft();
+        restoreSession();
+        document.body.dataset.ready = "true";
+      }
+
+      function announce(message) {
+        dom.liveRegion.textContent = "";
+        window.setTimeout(() => {
+          dom.liveRegion.textContent = message;
+        }, 20);
+      }
+
+      function showNotice(message, tone = "warning") {
+        dom.noticeText.textContent = message;
+        dom.appNotice.dataset.tone = tone;
+        dom.appNotice.hidden = false;
+        if (state.noticeTimer) {
+          window.clearTimeout(state.noticeTimer);
+        }
+        if (tone !== "error") {
+          state.noticeTimer = window.setTimeout(hideNotice, 6000);
+        }
+      }
+
+      function hideNotice() {
+        if (state.noticeTimer) {
+          window.clearTimeout(state.noticeTimer);
+          state.noticeTimer = null;
+        }
+        dom.appNotice.hidden = true;
+      }
+
+      function clearLoginError() {
+        if (!state.auth.error) {
+          return;
+        }
+        state.auth.error = "";
+        dom.loginError.textContent = "";
+        dom.loginError.hidden = true;
+      }
+
+      function setTagState(element, value) {
+        element.dataset.state = value;
+      }
+
+      function asObject(value) {
+        return value !== null && typeof value === "object" && !Array.isArray(value) ? value : null;
+      }
+
+      function asText(value, fallback = "") {
+        if (typeof value === "string") {
+          return value.trim();
+        }
+        if (typeof value === "number" || typeof value === "boolean") {
+          return String(value);
+        }
+        return fallback;
+      }
+
+      function asNumber(value) {
+        if (typeof value === "number" && Number.isFinite(value)) {
+          return value;
+        }
+        if (typeof value === "string" && value.trim() !== "") {
+          const parsed = Number(value);
+          return Number.isFinite(parsed) ? parsed : null;
+        }
+        return null;
+      }
+
+      function displayValue(value) {
+        if (value === null || value === undefined || value === "") {
+          return "暂无";
+        }
+        if (typeof value === "boolean") {
+          return value ? "是" : "否";
+        }
+        if (typeof value === "string" || typeof value === "number") {
+          return String(value);
+        }
+        try {
+          return JSON.stringify(value);
+        } catch {
+          return "无法显示";
+        }
+      }
+
+      function shortText(value, maxLength) {
+        const text = asText(value);
+        if (!text) {
+          return "暂无";
+        }
+        if (text.length <= maxLength) {
+          return text;
+        }
+        return `${text.slice(0, Math.max(0, maxLength - 1))}…`;
+      }
+
+      function errorMessageFromPayload(payload, fallback, fallbackCode) {
+        let message = fallback;
+        let code = fallbackCode;
+        const objectPayload = asObject(payload);
+        const nestedError = objectPayload ? asObject(objectPayload.error) : null;
+
+        if (nestedError) {
+          message = asText(nestedError.message, message);
+          code = asText(nestedError.code, code);
+        }
+        if (objectPayload) {
+          if (typeof objectPayload.detail === "string" && objectPayload.detail.trim()) {
+            message = objectPayload.detail.trim();
+          } else if (Array.isArray(objectPayload.detail)) {
+            const details = objectPayload.detail
+              .map((item) => {
+                const detail = asObject(item);
+                return detail ? asText(detail.msg, asText(detail.message, "")) : asText(item, "");
+              })
+              .filter(Boolean);
+            if (details.length) {
+              message = details.join("；");
+            }
+          }
+          message = asText(objectPayload.message, message);
+          code = asText(objectPayload.code, code);
+        } else if (typeof payload === "string" && payload.trim()) {
+          message = payload.trim();
+        }
+
+        return new ApiError(message, { code });
+      }
+
+      async function apiRequest(path, options = {}) {
+        if (!path.startsWith("/api/")) {
+          throw new ApiError("只允许访问同源 API。", { code: "INVALID_API_PATH" });
+        }
+
+        const method = options.method || "GET";
+        const headers = { Accept: "application/json" };
+        if (options.csrf) {
+          if (!state.auth.csrfToken) {
+            throw new ApiError("当前会话缺少 CSRF 令牌，请重新登录。", {
+              status: 401,
+              code: "CSRF_MISSING"
+            });
+          }
+          headers["X-CSRF-Token"] = state.auth.csrfToken;
+        }
+
+        const init = {
+          method,
+          headers,
+          credentials: "same-origin",
+          cache: "no-store"
+        };
+        if (options.body !== undefined) {
+          headers["Content-Type"] = "application/json";
+          init.body = JSON.stringify(options.body);
+        }
+
+        let response;
+        try {
+          response = await fetch(path, init);
+        } catch {
+          throw new ApiError("无法连接服务，请确认后端已启动。", {
+            status: 0,
+            code: "NETWORK_ERROR"
+          });
+        }
+
+        const rawBody = await response.text();
+        let payload = null;
+        if (rawBody) {
+          try {
+            payload = JSON.parse(rawBody);
+          } catch {
+            payload = rawBody;
+          }
+        }
+
+        if (!response.ok) {
+          const error = errorMessageFromPayload(
+            payload,
+            `请求失败，服务端返回 HTTP ${response.status}。`,
+            `HTTP_${response.status}`
+          );
+          error.status = response.status;
+          throw error;
+        }
+
+        return payload === null ? {} : payload;
+      }
+
+      function normalizeModel(raw) {
+        const model = asObject(raw);
+        if (!model) {
+          return null;
+        }
+        return {
+          baseModelId: asText(model.base_model_id),
+          baseModelRevision: asText(model.base_model_revision),
+          adapterSha256: asText(model.adapter_sha256),
+          device: asText(model.device),
+          state: asText(model.state),
+          attentionBackend: asText(model.attention_backend),
+          dtype: asText(model.dtype),
+          fullSequence: typeof model.full_sequence === "boolean" ? model.full_sequence : null,
+          truncation: model.truncation,
+          windowing: model.windowing
+        };
+      }
+
+      function normalizeRuntime(raw) {
+        const runtime = asObject(raw);
+        if (!runtime) {
+          throw new ApiError("模型运行信息格式无效。", { code: "INVALID_RUNTIME" });
+        }
+        const sample = asObject(runtime.sample);
+        return {
+          head: asText(runtime.head),
+          model: normalizeModel(runtime.model),
+          sample: sample
+            ? {
+                accession: asText(sample.accession),
+                sequence: asText(sample.sequence),
+                source: asText(sample.source)
+              }
+            : null
+        };
+      }
+
+      function normalizeCandidate(raw) {
+        const candidate = asObject(raw);
+        if (!candidate) {
+          return null;
+        }
+        return {
+          position: asNumber(candidate.position),
+          motif: asText(candidate.motif),
+          probPositive: asNumber(candidate.prob_positive),
+          predictedLabel: candidate.predicted_label,
+          logitNegative: asNumber(candidate.logit_negative),
+          logitPositive: asNumber(candidate.logit_positive)
+        };
+      }
+
+      function normalizeResult(raw) {
+        const result = asObject(raw);
+        if (!result) {
+          throw new ApiError("任务已完成，但响应中缺少结果。", { code: "INVALID_RESULT" });
+        }
+        if (!Array.isArray(result.candidates)) {
+          throw new ApiError("任务结果中的候选位点格式无效。", { code: "INVALID_CANDIDATES" });
+        }
+
+        return {
+          sequenceSha256: asText(result.sequence_sha256),
+          sequenceLength: asNumber(result.sequence_length),
+          candidates: result.candidates.map(normalizeCandidate).filter(Boolean),
+          elapsedSeconds: asNumber(result.elapsed_seconds),
+          model: normalizeModel(result.model),
+          limitations: Array.isArray(result.limitations)
+            ? result.limitations.map((item) => asText(item)).filter(Boolean)
+            : []
+        };
+      }
+
+      function normalizeJob(raw) {
+        const job = asObject(raw);
+        if (!job) {
+          throw new ApiError("任务状态响应格式无效。", { code: "INVALID_JOB" });
+        }
+        const status = asText(job.status).toLowerCase();
+        if (!JOB_STATUSES.has(status)) {
+          throw new ApiError("服务端返回了未知任务状态。", { code: "UNKNOWN_JOB_STATUS" });
+        }
+
+        let error = null;
+        if (status === "failed") {
+          const rawError = asObject(job.error) || {};
+          error = {
+            title: "模型任务失败",
+            code: asText(rawError.code, "TASK_FAILED"),
+            message: asText(rawError.message, "服务端未提供失败详情。")
+          };
+        }
+
+        return {
+          id: asText(job.job_id),
+          status,
+          stage: asText(job.stage),
+          queuePosition: asNumber(job.queue_position),
+          result: status === "succeeded" ? normalizeResult(job.result) : null,
+          error
+        };
+      }
+
+      function normalizedSequence(value) {
+        return String(value || "").replace(/\s+/g, "").toUpperCase();
+      }
+
+      function inspectSequence(value) {
+        const sequence = normalizedSequence(value);
+        const invalidCharacters = [...new Set(sequence.split("").filter((character) => !STANDARD_AMINO_ACIDS.has(character)))];
+        return {
+          sequence,
+          length: sequence.length,
+          invalidCharacters,
+          valid: sequence.length > 0 && invalidCharacters.length === 0
+        };
+      }
+
+      function isJobActive() {
+        return state.job.phase === "submitting" || state.job.phase === "polling";
+      }
+
+      function cancelPolling() {
+        state.job.pollToken += 1;
+        if (state.job.pollTimer !== null) {
+          window.clearTimeout(state.job.pollTimer);
+          state.job.pollTimer = null;
+        }
+      }
+
+      function clearDraft() {
+        dom.sequenceInput.value = "";
+        dom.proteinIdInput.value = "";
+      }
+
+      function resetProtectedState() {
+        cancelPolling();
+        state.job = createJobState();
+        state.runtime = {
+          phase: "idle",
+          data: null,
+          error: null
+        };
+        hideNotice();
+        clearDraft();
+        renderRuntime();
+        renderJob();
+        renderResults();
+        renderDraft();
+      }
+
+      function endSession(message, options = {}) {
+        const previousUsername = options.username || state.auth.user?.username || dom.loginUsername.value;
+        resetProtectedState();
+        state.auth.version += 1;
+        state.auth = {
+          phase: "anonymous",
+          user: null,
+          csrfToken: "",
+          error: "",
+          status: message || "当前未登录。",
+          statusTone: options.tone || "warning",
+          version: state.auth.version
+        };
+        dom.loginUsername.value = previousUsername || "";
+        dom.loginPassword.value = "";
+        renderAuth();
+        if (message) {
+          announce(message);
+        }
+      }
+
+      function renderAuth() {
+        const phase = state.auth.phase;
+        const authenticated = phase === "authenticated" || phase === "signingOut";
+        const busy = phase === "restoring" || phase === "authenticating";
+        const inputsLocked = busy || phase === "signingOut";
+
+        dom.loginView.hidden = authenticated;
+        dom.workspaceView.hidden = !authenticated;
+        dom.loginUsername.disabled = inputsLocked;
+        dom.loginPassword.disabled = inputsLocked;
+        dom.loginButton.disabled = busy;
+        dom.loginButton.setAttribute("aria-busy", String(busy));
+
+        if (phase === "restoring") {
+          dom.loginButtonText.textContent = "正在校验会话";
+        } else if (phase === "authenticating") {
+          dom.loginButtonText.textContent = "正在登录";
+        } else {
+          dom.loginButtonText.textContent = "进入分析工作台";
+        }
+
+        dom.loginError.textContent = state.auth.error || "";
+        dom.loginError.hidden = !state.auth.error;
+        dom.sessionStatus.textContent = state.auth.status || "";
+        dom.sessionStatus.dataset.tone = state.auth.statusTone || "muted";
+
+        if (authenticated) {
+          dom.usernameLabel.textContent = state.auth.user?.username || "已登录用户";
+          dom.logoutButton.disabled = phase === "signingOut";
+          dom.logoutButton.textContent = phase === "signingOut" ? "正在退出" : "退出登录";
+        }
+
+        renderDraft();
+      }
+
+      async function restoreSession() {
+        state.auth.phase = "restoring";
+        state.auth.error = "";
+        state.auth.status = "正在校验现有登录会话。";
+        state.auth.statusTone = "muted";
+        renderAuth();
+
+        try {
+          const payload = asObject(await apiRequest(API.session));
+          if (!payload) {
+            throw new ApiError("会话响应格式无效。", { code: "INVALID_SESSION" });
+          }
+
+          if (payload.authenticated === true) {
+            const csrfToken = asText(payload.csrf_token);
+            if (!csrfToken) {
+              throw new ApiError("服务端会话缺少 CSRF 令牌，请重新登录。", {
+                status: 401,
+                code: "CSRF_MISSING"
+              });
+            }
+            state.auth.version += 1;
+            state.auth = {
+              phase: "authenticated",
+              user: asObject(payload.user),
+              csrfToken,
+              error: "",
+              status: "",
+              statusTone: "muted",
+              version: state.auth.version
+            };
+            dom.loginPassword.value = "";
+            renderAuth();
+            announce("已恢复登录会话。");
+            loadRuntime(state.auth.version);
+            return;
+          }
+
+          state.auth.phase = "anonymous";
+          state.auth.status = "当前未登录，请输入研究账号。";
+          state.auth.statusTone = "muted";
+          state.auth.error = "";
+          renderAuth();
+        } catch (error) {
+          state.auth.phase = "anonymous";
+          state.auth.status = error.message || "无法校验当前会话。";
+          state.auth.statusTone = "error";
+          state.auth.error = "";
+          renderAuth();
+        }
+      }
+
+      async function handleLogin(event) {
+        event.preventDefault();
+        if (state.auth.phase === "restoring" || state.auth.phase === "authenticating") {
+          return;
+        }
+
+        const username = dom.loginUsername.value.trim();
+        const password = dom.loginPassword.value;
+        if (!username || !password) {
+          state.auth.phase = "anonymous";
+          state.auth.error = "请输入用户账号和密码。";
+          state.auth.status = "";
+          state.auth.statusTone = "muted";
+          renderAuth();
+          return;
+        }
+
+        state.auth.phase = "authenticating";
+        state.auth.error = "";
+        state.auth.status = "正在验证账号并建立安全会话。";
+        state.auth.statusTone = "muted";
+        renderAuth();
+
+        try {
+          const payload = asObject(await apiRequest(API.login, {
+            method: "POST",
+            body: { username, password }
+          }));
+          if (!payload || payload.authenticated !== true) {
+            throw new ApiError("服务端未确认登录成功。", { code: "LOGIN_NOT_CONFIRMED" });
+          }
+          const csrfToken = asText(payload.csrf_token);
+          if (!csrfToken) {
+            throw new ApiError("登录响应缺少 CSRF 令牌，请重试。", { code: "CSRF_MISSING" });
+          }
+
+          state.auth.version += 1;
+          state.auth = {
+            phase: "authenticated",
+            user: asObject(payload.user),
+            csrfToken,
+            error: "",
+            status: "",
+            statusTone: "muted",
+            version: state.auth.version
+          };
+          dom.loginPassword.value = "";
+          renderAuth();
+          announce("登录成功，正在读取模型信息。");
+          loadRuntime(state.auth.version);
+        } catch (error) {
+          state.auth.phase = "anonymous";
+          state.auth.error = error.status === 401 ? "账号或密码不正确。" : (error.message || "登录失败。");
+          state.auth.status = "";
+          state.auth.statusTone = "muted";
+          dom.loginPassword.value = "";
+          renderAuth();
+          dom.loginPassword.focus();
+        }
+      }
+
+      async function handleLogout() {
+        if (state.auth.phase !== "authenticated") {
+          return;
+        }
+        const username = state.auth.user?.username || "";
+        state.auth.phase = "signingOut";
+        renderAuth();
+
+        try {
+          const payload = asObject(await apiRequest(API.logout, {
+            method: "POST",
+            csrf: true
+          }));
+          if (!payload || payload.authenticated !== false) {
+            throw new ApiError("服务端未确认退出登录。", { code: "LOGOUT_NOT_CONFIRMED" });
+          }
+          endSession("已安全退出登录。", { tone: "success", username });
+        } catch (error) {
+          if (error.status === 401) {
+            endSession("登录会话已失效。", { tone: "warning", username });
+            return;
+          }
+          state.auth.phase = "authenticated";
+          renderAuth();
+          showNotice(`退出失败：${error.message}`, "error");
+        }
+      }
+
+      function appendDefinitionList(container, entries) {
+        container.replaceChildren();
+        const list = document.createElement("dl");
+        list.className = "definition-grid";
+        for (const [label, value] of entries) {
+          const row = document.createElement("div");
+          row.className = "definition-row";
+          const term = document.createElement("dt");
+          term.textContent = label;
+          const detail = document.createElement("dd");
+          detail.textContent = displayValue(value);
+          row.append(term, detail);
+          list.append(row);
+        }
+        container.append(list);
+      }
+
+      function modelEntries(model, runtime) {
+        if (!model && !runtime) {
+          return [];
+        }
+        const entries = [];
+        if (runtime?.head) {
+          entries.push(["系统基线", runtime.head]);
+        }
+        if (model) {
+          entries.push(
+            ["基础模型", model.baseModelId],
+            ["模型修订", model.baseModelRevision],
+            ["适配器 SHA", model.adapterSha256],
+            ["运行设备", model.device],
+            ["模型状态", model.state],
+            ["注意力后端", model.attentionBackend],
+            ["数值精度", model.dtype],
+            ["全序列模式", model.fullSequence],
+            ["截断策略", model.truncation],
+            ["窗口设置", model.windowing]
+          );
+        }
+        if (runtime?.sample) {
+          entries.push(
+            ["样例标识", runtime.sample.accession],
+            ["样例来源", runtime.sample.source]
+          );
+        }
+        return entries.filter(([, value]) => value !== undefined);
+      }
+
+      function renderModelBadge() {
+        const resultModel = state.job.phase === "succeeded" ? state.job.result?.model : null;
+        const model = resultModel || state.runtime.data?.model || null;
+
+        if (state.runtime.phase === "loading" && !model) {
+          dom.modelBadgeText.textContent = "模型信息读取中";
+          dom.modelBadge.title = "正在读取 GET /api/runtime";
+          setTagState(dom.modelBadgeDot, "loading");
+          return;
+        }
+        if (state.runtime.phase === "error" && !model) {
+          dom.modelBadgeText.textContent = "模型信息不可用";
+          dom.modelBadge.title = state.runtime.error?.message || "模型信息读取失败";
+          setTagState(dom.modelBadgeDot, "error");
+          return;
+        }
+        if (!model) {
+          dom.modelBadgeText.textContent = "等待模型信息";
+          dom.modelBadge.title = "尚未读取模型元数据";
+          setTagState(dom.modelBadgeDot, "idle");
+          return;
+        }
+
+        const baseModel = model.baseModelId || "模型已配置";
+        const modelState = model.state || "状态未知";
+        dom.modelBadgeText.textContent = `${baseModel} · ${modelState}`;
+        dom.modelBadge.title = [
+          `基础模型: ${displayValue(model.baseModelId)}`,
+          `修订: ${displayValue(model.baseModelRevision)}`,
+          `适配器: ${displayValue(model.adapterSha256)}`,
+          `设备: ${displayValue(model.device)}`
+        ].join("\n");
+        const normalizedState = modelState.toLowerCase();
+        const dotState = normalizedState.includes("error") || normalizedState.includes("fail")
+          ? "error"
+          : normalizedState.includes("loading")
+            ? "loading"
+            : normalizedState.includes("ready") || normalizedState.includes("loaded") || normalizedState.includes("ok")
+              ? "ready"
+              : "idle";
+        setTagState(dom.modelBadgeDot, dotState);
+      }
+
+      function renderRuntime() {
+        const phase = state.runtime.phase;
+        const runtime = state.runtime.data;
+        dom.refreshRuntimeButton.disabled = phase === "loading" || isJobActive();
+        dom.refreshRuntimeButton.textContent = phase === "loading" ? "正在检查" : "刷新模型信息";
+
+        if (phase === "loading") {
+          dom.runtimeSummary.textContent = "正在读取模型来源与运行配置。";
+          dom.sampleMeta.textContent = "等待服务端样例。";
+          setTagState(dom.runtimeStateDot, "loading");
+        } else if (phase === "error") {
+          dom.runtimeSummary.textContent = `模型信息读取失败。${state.runtime.error?.message || ""}`.trim();
+          dom.sampleMeta.textContent = "样例暂不可用。";
+          setTagState(dom.runtimeStateDot, "error");
+        } else if (phase === "ready" && runtime) {
+          const modelState = runtime.model?.state || "状态未知";
+          const device = runtime.model?.device || "设备未知";
+          const head = runtime.head ? shortText(runtime.head, 10) : "基线未知";
+          dom.runtimeSummary.textContent = `${head} · ${device} · ${modelState}`;
+          dom.runtimeSummary.title = runtime.head || "";
+          dom.sampleMeta.textContent = runtime.sample?.sequence
+            ? `真实样例 ${runtime.sample.accession || "未命名"} · ${runtime.sample.source || "来源未标注"}`
+            : "服务端未返回样例序列。";
+          setTagState(dom.runtimeStateDot, "ready");
+        } else {
+          dom.runtimeSummary.textContent = "正在等待模型元数据。";
+          dom.sampleMeta.textContent = "等待模型样例。";
+          setTagState(dom.runtimeStateDot, "idle");
+        }
+
+        dom.sampleButton.disabled = isJobActive() || phase !== "ready" || !runtime?.sample?.sequence;
+
+        if (phase === "loading") {
+          dom.runtimeDetailsBody.innerHTML = '<div class="details-empty">正在读取模型来源、设备和序列处理配置。</div>';
+        } else if (phase === "error") {
+          dom.runtimeDetailsBody.replaceChildren();
+          const empty = document.createElement("div");
+          empty.className = "details-empty";
+          empty.textContent = state.runtime.error?.message || "模型信息读取失败。";
+          dom.runtimeDetailsBody.append(empty);
+        } else if (phase === "ready" && runtime) {
+          const entries = modelEntries(runtime.model, runtime);
+          if (entries.length) {
+            appendDefinitionList(dom.runtimeDetailsBody, entries);
+          } else {
+            dom.runtimeDetailsBody.innerHTML = '<div class="details-empty">服务端未返回可展示的模型字段。</div>';
+          }
+        } else {
+          dom.runtimeDetailsBody.innerHTML = '<div class="details-empty">登录后自动读取模型来源与运行配置。</div>';
+        }
+
+        renderModelBadge();
+        renderDraft();
+      }
+
+      async function loadRuntime(version) {
+        if (state.auth.phase !== "authenticated") {
+          return false;
+        }
+        state.runtime.phase = "loading";
+        state.runtime.error = null;
+        renderRuntime();
+
+        try {
+          const payload = normalizeRuntime(await apiRequest(API.runtime));
+          if (version !== state.auth.version || state.auth.phase !== "authenticated") {
+            return false;
+          }
+          state.runtime = {
+            phase: "ready",
+            data: payload,
+            error: null
+          };
+          renderRuntime();
+          return true;
+        } catch (error) {
+          if (error.status === 401) {
+            endSession("登录会话已过期，请重新登录。", { tone: "warning" });
+            return false;
+          }
+          if (version !== state.auth.version || state.auth.phase !== "authenticated") {
+            return false;
+          }
+          state.runtime = {
+            phase: "error",
+            data: null,
+            error
+          };
+          renderRuntime();
+          return false;
+        }
+      }
+
+      async function handleSampleLoad() {
+        if (isJobActive()) {
+          return;
+        }
+        if (state.runtime.phase !== "ready") {
+          const loaded = await loadRuntime(state.auth.version);
+          if (!loaded) {
+            showNotice("无法读取真实样例，请先恢复模型连接。", "error");
+            return;
+          }
+        }
+        const sample = state.runtime.data?.sample;
+        if (!sample?.sequence) {
+          showNotice("服务端没有返回样例序列。", "error");
+          return;
+        }
+        dom.sequenceInput.value = sample.sequence;
+        dom.proteinIdInput.value = sample.accession || "";
+        renderDraft();
+        dom.sequenceInput.focus();
+        dom.sequenceInput.setSelectionRange(dom.sequenceInput.value.length, dom.sequenceInput.value.length);
+        announce(`已载入服务端真实样例${sample.accession ? ` ${sample.accession}` : ""}。`);
+      }
+
+      function renderDraft() {
+        const inspection = inspectSequence(dom.sequenceInput.value);
+        const active = isJobActive();
+        dom.sequenceCount.textContent = `${numberFormatter.format(inspection.length)} aa`;
+
+        if (inspection.length === 0) {
+          dom.sequenceValidation.textContent = "请输入标准氨基酸序列";
+          dom.sequenceValidation.dataset.tone = "muted";
+        } else if (inspection.invalidCharacters.length) {
+          dom.sequenceValidation.textContent = `含不支持字符：${inspection.invalidCharacters.join("、")}`;
+          dom.sequenceValidation.dataset.tone = "error";
+        } else {
+          dom.sequenceValidation.textContent = "字符有效，可提交";
+          dom.sequenceValidation.dataset.tone = "ok";
+        }
+
+        dom.sequenceInput.disabled = active;
+        dom.proteinIdInput.disabled = active;
+        dom.sampleButton.disabled = active || state.runtime.phase !== "ready" || !state.runtime.data?.sample?.sequence;
+
+        const csrfReady = Boolean(state.auth.csrfToken);
+        const canSubmit = state.auth.phase === "authenticated"
+          && csrfReady
+          && !active
+          && inspection.valid;
+        dom.predictButton.disabled = !canSubmit;
+
+        if (state.job.phase === "submitting") {
+          dom.predictButton.textContent = "正在创建任务";
+          dom.submitHint.textContent = "正在等待服务端分配任务编号。";
+        } else if (active) {
+          dom.predictButton.textContent = "任务进行中";
+          dom.submitHint.textContent = "任务运行期间表单暂时锁定。";
+        } else if (state.job.phase === "succeeded") {
+          dom.predictButton.textContent = "开始新的预测";
+          dom.submitHint.textContent = "可修改序列后提交新任务。";
+        } else if (!csrfReady && state.auth.phase === "authenticated") {
+          dom.predictButton.textContent = "开始位点预测";
+          dom.submitHint.textContent = "会话缺少 CSRF 令牌，请重新登录。";
+        } else if (!inspection.valid) {
+          dom.predictButton.textContent = "开始位点预测";
+          dom.submitHint.textContent = inspection.length
+            ? "修正不支持字符后再提交。"
+            : "提交后由服务端创建真实任务。";
+        } else {
+          dom.predictButton.textContent = "开始位点预测";
+          dom.submitHint.textContent = "提交后由服务端创建真实任务。";
+        }
+      }
+
+      function jobTitleFor(status) {
+        return {
+          queued: "任务已进入队列",
+          loading_model: "正在冷加载模型",
+          running: "正在执行位点推理",
+          succeeded: "位点预测完成"
+        }[status] || "正在创建预测任务";
+      }
+
+      function jobDetailFor(status, queuePosition) {
+        if (status === "queued") {
+          return queuePosition !== null && queuePosition > 0
+            ? `当前排在第 ${numberFormatter.format(queuePosition)} 位，页面会自动刷新状态。`
+            : "正在等待可用推理槽位，页面会自动刷新状态。";
+        }
+        if (status === "loading_model") {
+          return "首次请求需要把模型加载到推理设备，耗时通常高于后续任务。";
+        }
+        if (status === "running") {
+          return "服务端模型正在计算本次序列的候选位点，请保持页面打开。";
+        }
+        if (status === "succeeded") {
+          return "结果已从本次后端任务读取，可以查看候选位点和模型限制。";
+        }
+        return "正在提交序列并分配任务编号。";
+      }
+
+      function updateStageList(status) {
+        const order = ["queued", "loading_model", "running", "done"];
+        const activeIndex = status === "queued"
+          ? 0
+          : status === "loading_model"
+            ? 1
+            : status === "running"
+              ? 2
+              : status === "succeeded"
+                ? 3
+                : 0;
+        const nodes = dom.jobSteps.querySelectorAll("[data-step]");
+        nodes.forEach((node, index) => {
+          if (status === "succeeded") {
+            node.dataset.state = "done";
+          } else if (index < activeIndex) {
+            node.dataset.state = "done";
+          } else if (index === activeIndex) {
+            node.dataset.state = "active";
+          } else {
+            node.dataset.state = "pending";
+          }
+        });
+
+        if (!status || status === "failed") {
+          nodes.forEach((node) => {
+            node.dataset.state = "pending";
+          });
+        }
+      }
+
+      function renderJob() {
+        const phase = state.job.phase;
+        const status = state.job.status;
+        const active = phase === "submitting" || phase === "polling";
+        const succeeded = phase === "succeeded";
+        const failed = phase === "failed" || phase === "interrupted";
+
+        dom.jobIdle.hidden = phase !== "idle";
+        dom.jobActive.hidden = !(active || succeeded);
+        dom.jobFailure.hidden = !failed;
+
+        if (phase === "idle") {
+          dom.jobStatePill.textContent = "待提交";
+          setTagState(dom.jobStatePill, "idle");
+          updateStageList("");
+        }
+
+        if (active || succeeded) {
+          const displayStatus = succeeded ? "succeeded" : phase === "submitting" ? "submitting" : (status || "queued");
+          dom.jobActive.dataset.progress = succeeded ? "complete" : "indeterminate";
+          dom.jobSpinner.hidden = succeeded;
+          dom.jobTitle.textContent = jobTitleFor(displayStatus);
+          dom.jobStage.textContent = `服务端阶段 · ${state.job.stage || (phase === "submitting" ? "submitting" : displayStatus)}`;
+          dom.jobDetail.textContent = jobDetailFor(displayStatus, state.job.queuePosition);
+          updateStageList(displayStatus);
+
+          if (succeeded) {
+            dom.jobStatePill.textContent = "已完成";
+            setTagState(dom.jobStatePill, "success");
+          } else if (displayStatus === "queued") {
+            dom.jobStatePill.textContent = "排队中";
+            setTagState(dom.jobStatePill, "active");
+          } else if (displayStatus === "loading_model") {
+            dom.jobStatePill.textContent = "冷加载";
+            setTagState(dom.jobStatePill, "active");
+          } else if (displayStatus === "running") {
+            dom.jobStatePill.textContent = "推理中";
+            setTagState(dom.jobStatePill, "active");
+          } else {
+            dom.jobStatePill.textContent = "提交中";
+            setTagState(dom.jobStatePill, "active");
+          }
+
+          if (state.job.queuePosition !== null) {
+            if (state.job.queuePosition > 0 && !succeeded && displayStatus === "queued") {
+              dom.jobQueueChip.textContent = `队列第 ${numberFormatter.format(state.job.queuePosition)} 位`;
+            } else if (state.job.queuePosition === 0) {
+              dom.jobQueueChip.textContent = "队列已就绪";
+            } else {
+              dom.jobQueueChip.textContent = "已获得推理槽位";
+            }
+          } else {
+            dom.jobQueueChip.textContent = "队列位置待更新";
+          }
+
+          dom.jobIdChip.textContent = state.job.id ? `任务编号 ${shortText(state.job.id, 18)}` : "任务编号待分配";
+          dom.jobIdChip.title = state.job.id;
+          dom.jobPollIssue.textContent = state.job.pollIssue || "";
+          dom.jobPollIssue.hidden = !state.job.pollIssue;
+        }
+
+        if (failed) {
+          const error = state.job.error || {
+            title: "任务未完成",
+            code: "UNKNOWN",
+            message: "服务端未提供错误信息。"
+          };
+          dom.jobErrorTitle.textContent = error.title || "任务未完成";
+          dom.jobErrorMessage.textContent = error.message || "服务端未提供错误信息。";
+          dom.jobErrorCode.textContent = error.code || "";
+          dom.jobErrorCode.hidden = !error.code;
+          dom.resumePollButton.hidden = phase !== "interrupted" || !state.job.id;
+          dom.jobStatePill.textContent = phase === "interrupted" ? "轮询中断" : "任务失败";
+          setTagState(dom.jobStatePill, "error");
+          updateStageList("");
+        }
+
+        renderDraft();
+        renderModelBadge();
+      }
+
+      function formatProbability(value) {
+        if (value === null || !Number.isFinite(value)) {
+          return "暂无";
+        }
+        return `${fixedTwoFormatter.format(value * 100)}%`;
+      }
+
+      function probabilityWidth(value) {
+        if (value === null || !Number.isFinite(value)) {
+          return 0;
+        }
+        return Math.max(0, Math.min(100, value * 100));
+      }
+
+      function formatLogit(value) {
+        return value === null || !Number.isFinite(value) ? "暂无" : fixedThreeFormatter.format(value);
+      }
+
+      function formatDuration(seconds) {
+        if (seconds === null || !Number.isFinite(seconds)) {
+          return "暂无";
+        }
+        if (seconds < 60) {
+          return `${fixedTwoFormatter.format(seconds)} 秒`;
+        }
+        const minutes = Math.floor(seconds / 60);
+        const remaining = seconds - minutes * 60;
+        return `${numberFormatter.format(minutes)} 分 ${fixedTwoFormatter.format(remaining)} 秒`;
+      }
+
+      function isPositiveLabel(value) {
+        if (value === true || value === 1) {
+          return true;
+        }
+        if (typeof value === "string") {
+          const normalized = value.toLowerCase();
+          return normalized === "positive" || normalized === "1" || normalized === "true" || value === "阳性";
+        }
+        return false;
+      }
+
+      function labelText(value) {
+        if (isPositiveLabel(value)) {
+          return "阳性";
+        }
+        if (value === false || value === 0 || value === "0" || value === "false" || value === "negative" || value === "非阳性") {
+          return "非阳性";
+        }
+        return displayValue(value);
+      }
+
+      function appendResultStat(label, value) {
+        const card = document.createElement("div");
+        card.className = "result-stat";
+        const title = document.createElement("span");
+        title.textContent = label;
+        const content = document.createElement("strong");
+        content.textContent = displayValue(value);
+        card.append(title, content);
+        dom.resultStats.append(card);
+      }
+
+      function renderCandidates(candidates) {
+        dom.candidatesBody.replaceChildren();
+        for (const candidate of candidates) {
+          const row = document.createElement("tr");
+          const positive = isPositiveLabel(candidate.predictedLabel);
+          if (positive) {
+            row.classList.add("is-positive");
+          }
+
+          const positionCell = document.createElement("td");
+          const position = document.createElement("span");
+          position.className = "site-code";
+          position.textContent = candidate.position === null ? "暂无" : `#${numberFormatter.format(candidate.position)}`;
+          positionCell.append(position);
+
+          const motifCell = document.createElement("td");
+          const motif = document.createElement("code");
+          motif.className = "motif-code";
+          motif.textContent = candidate.motif || "暂无";
+          motifCell.append(motif);
+
+          const probabilityCell = document.createElement("td");
+          probabilityCell.className = "num";
+          const probabilityWrap = document.createElement("div");
+          probabilityWrap.className = "prob-cell";
+          const probabilityValue = document.createElement("span");
+          probabilityValue.className = "prob-value";
+          probabilityValue.textContent = formatProbability(candidate.probPositive);
+          const probabilityTrack = document.createElement("span");
+          probabilityTrack.className = "prob-track";
+          const probabilityFill = document.createElement("i");
+          probabilityFill.style.setProperty("--prob", `${probabilityWidth(candidate.probPositive)}%`);
+          probabilityTrack.append(probabilityFill);
+          probabilityWrap.append(probabilityValue, probabilityTrack);
+          probabilityCell.append(probabilityWrap);
+
+          const labelCell = document.createElement("td");
+          const label = document.createElement("span");
+          label.className = `label-badge${positive ? " positive" : ""}`;
+          label.textContent = labelText(candidate.predictedLabel);
+          labelCell.append(label);
+
+          const negativeLogitCell = document.createElement("td");
+          negativeLogitCell.className = "num logit-value";
+          negativeLogitCell.textContent = formatLogit(candidate.logitNegative);
+
+          const positiveLogitCell = document.createElement("td");
+          positiveLogitCell.className = "num logit-value";
+          positiveLogitCell.textContent = formatLogit(candidate.logitPositive);
+
+          row.append(positionCell, motifCell, probabilityCell, labelCell, negativeLogitCell, positiveLogitCell);
+          dom.candidatesBody.append(row);
+        }
+      }
+
+      function renderResults() {
+        const result = state.job.phase === "succeeded" ? state.job.result : null;
+        if (!result) {
+          dom.resultsSection.hidden = true;
+          return;
+        }
+
+        dom.resultsSection.hidden = false;
+        const candidateCount = result.candidates.length;
+        dom.resultCandidateCount.textContent = `${numberFormatter.format(candidateCount)} 个候选`;
+        dom.resultStats.replaceChildren();
+        appendResultStat("候选位点", numberFormatter.format(candidateCount));
+        appendResultStat("序列长度", result.sequenceLength === null ? "暂无" : `${numberFormatter.format(result.sequenceLength)} aa`);
+        appendResultStat("推理耗时", formatDuration(result.elapsedSeconds));
+        appendResultStat("基础模型", result.model?.baseModelId || "暂无");
+        dom.resultSequenceHash.textContent = result.sequenceSha256 || "暂无";
+        dom.resultSequenceHash.title = result.sequenceSha256 || "";
+
+        const empty = candidateCount === 0;
+        dom.candidatesEmpty.hidden = !empty;
+        dom.candidatesTableWrap.hidden = empty;
+        if (!empty) {
+          renderCandidates(result.candidates);
+        } else {
+          dom.candidatesBody.replaceChildren();
+        }
+
+        dom.limitationsList.replaceChildren();
+        if (result.limitations.length) {
+          for (const limitation of result.limitations) {
+            const item = document.createElement("li");
+            item.textContent = limitation;
+            dom.limitationsList.append(item);
+          }
+          dom.limitationsBlock.hidden = false;
+        } else {
+          dom.limitationsBlock.hidden = true;
+        }
+
+        const modelEntriesForResult = [
+          ["基础模型", result.model?.baseModelId],
+          ["模型修订", result.model?.baseModelRevision],
+          ["适配器 SHA", result.model?.adapterSha256],
+          ["运行设备", result.model?.device],
+          ["模型状态", result.model?.state],
+          ["注意力后端", result.model?.attentionBackend],
+          ["数值精度", result.model?.dtype]
+        ].filter(([, value]) => value !== undefined);
+        if (modelEntriesForResult.length) {
+          appendDefinitionList(dom.resultModelBody, modelEntriesForResult);
+          dom.resultProvenance.hidden = false;
+        } else {
+          dom.resultModelBody.replaceChildren();
+          dom.resultProvenance.hidden = true;
+        }
+
+        renderModelBadge();
+      }
+
+      async function handlePredictionSubmit(event) {
+        event.preventDefault();
+        if (isJobActive()) {
+          return;
+        }
+
+        const inspection = inspectSequence(dom.sequenceInput.value);
+        if (!inspection.valid) {
+          renderDraft();
+          dom.sequenceInput.focus();
+          return;
+        }
+        if (state.auth.phase !== "authenticated" || !state.auth.csrfToken) {
+          endSession("登录会话缺少 CSRF 令牌，请重新登录。", { tone: "warning" });
+          return;
+        }
+
+        const version = state.auth.version;
+        const proteinId = dom.proteinIdInput.value.trim();
+        const requestBody = { sequence: inspection.sequence };
+        if (proteinId) {
+          requestBody.protein_id = proteinId;
+        }
+
+        cancelPolling();
+        state.job = {
+          ...createJobState(),
+          phase: "submitting",
+          status: "queued",
+          stage: "submitting"
+        };
+        renderJob();
+        renderResults();
+
+        try {
+          const payload = asObject(await apiRequest(API.predictions, {
+            method: "POST",
+            csrf: true,
+            body: requestBody
+          }));
+          if (version !== state.auth.version || state.auth.phase !== "authenticated") {
+            return;
+          }
+          if (!payload) {
+            throw new ApiError("预测任务响应格式无效。", { code: "INVALID_SUBMISSION" });
+          }
+          const jobId = asText(payload.job_id);
+          if (!jobId) {
+            throw new ApiError("服务端没有返回任务编号。", { code: "MISSING_JOB_ID" });
+          }
+          const acceptedStatus = asText(payload.status, "queued").toLowerCase();
+          if (!JOB_STATUSES.has(acceptedStatus)) {
+            throw new ApiError("服务端返回了未知任务状态。", { code: "UNKNOWN_JOB_STATUS" });
+          }
+
+          state.job.id = jobId;
+          state.job.phase = "polling";
+          state.job.status = acceptedStatus;
+          state.job.stage = "queued";
+          state.job.queuePosition = null;
+          state.job.pollErrors = 0;
+          renderJob();
+          renderResults();
+          announce("预测任务已创建，正在等待服务端状态。");
+          startPolling(version);
+        } catch (error) {
+          if (version !== state.auth.version) {
+            return;
+          }
+          if (error.status === 401) {
+            endSession("登录会话已过期，请重新登录。", { tone: "warning" });
+            return;
+          }
+          state.job.phase = "failed";
+          state.job.status = "";
+          state.job.stage = "";
+          state.job.error = {
+            title: "无法创建预测任务",
+            code: error.code || "SUBMIT_FAILED",
+            message: error.message || "服务端未接受本次任务。"
+          };
+          renderJob();
+          renderResults();
+          announce("预测任务创建失败。");
+        }
+      }
+
+      function startPolling(version) {
+        cancelPolling();
+        state.job.pollErrors = 0;
+        state.job.pollIssue = "";
+        const token = state.job.pollToken;
+        schedulePoll(token, version, 450);
+      }
+
+      function schedulePoll(token, version, delay) {
+        if (token !== state.job.pollToken || state.job.phase !== "polling") {
+          return;
+        }
+        state.job.pollTimer = window.setTimeout(() => {
+          pollJob(token, version);
+        }, delay);
+      }
+
+      function pollDelayFor(status) {
+        if (status === "queued") {
+          return 1200;
+        }
+        if (status === "loading_model") {
+          return 1600;
+        }
+        if (status === "running") {
+          return 1000;
+        }
+        return 1400;
+      }
+
+      async function pollJob(token, version) {
+        state.job.pollTimer = null;
+        if (token !== state.job.pollToken || state.job.phase !== "polling") {
+          return;
+        }
+
+        try {
+          const job = normalizeJob(await apiRequest(`${API.predictions}/${encodeURIComponent(state.job.id)}`));
+          if (token !== state.job.pollToken || version !== state.auth.version || state.auth.phase !== "authenticated") {
+            return;
+          }
+
+          const previousStatus = state.job.status;
+          state.job.status = job.status;
+          state.job.stage = job.stage;
+          state.job.queuePosition = job.queuePosition;
+          state.job.pollErrors = 0;
+          state.job.pollIssue = "";
+
+          if (job.status === "succeeded") {
+            state.job.phase = "succeeded";
+            state.job.result = job.result;
+            state.job.error = null;
+            renderJob();
+            renderResults();
+            const count = job.result?.candidates.length || 0;
+            announce(count ? `位点预测完成，共返回 ${numberFormatter.format(count)} 个候选位点。` : "位点预测完成，服务端返回空候选集。");
+            return;
+          }
+
+          if (job.status === "failed") {
+            state.job.phase = "failed";
+            state.job.error = job.error;
+            renderJob();
+            renderResults();
+            announce("模型任务失败。");
+            return;
+          }
+
+          state.job.phase = "polling";
+          renderJob();
+          if (previousStatus !== job.status) {
+            announce(jobTitleFor(job.status));
+          }
+          schedulePoll(token, version, pollDelayFor(job.status));
+        } catch (error) {
+          if (token !== state.job.pollToken || version !== state.auth.version) {
+            return;
+          }
+          if (error.status === 401) {
+            endSession("登录会话已过期，请重新登录。", { tone: "warning" });
+            return;
+          }
+          if (error.status >= 400 && error.status < 500 && error.status !== 429) {
+            state.job.phase = "failed";
+            state.job.error = {
+              title: "无法读取任务状态",
+              code: error.code || `HTTP_${error.status}`,
+              message: error.message || "服务端拒绝了任务状态查询。"
+            };
+            renderJob();
+            renderResults();
+            announce("任务状态查询失败。");
+            return;
+          }
+
+          state.job.pollErrors += 1;
+          if (state.job.pollErrors >= 3) {
+            state.job.phase = "interrupted";
+            state.job.error = {
+              title: "任务状态刷新中断",
+              code: error.code || "POLL_FAILED",
+              message: `${error.message || "无法读取任务状态"} 任务可能仍在服务端运行，可以继续查询。`
+            };
+            renderJob();
+            renderResults();
+            announce("任务状态刷新中断。");
+            return;
+          }
+
+          state.job.pollIssue = `状态刷新失败 ${state.job.pollErrors}/3，正在重试。`;
+          renderJob();
+          schedulePoll(token, version, 2200);
+        }
+      }
+
+      function resumePolling() {
+        if (!state.job.id || state.auth.phase !== "authenticated") {
+          return;
+        }
+        state.job.phase = "polling";
+        state.job.error = null;
+        state.job.pollErrors = 0;
+        state.job.pollIssue = "";
+        renderJob();
+        announce("正在继续查询任务状态。");
+        startPolling(state.auth.version);
+      }
+
+      boot();
+    })();
+  </script>
+</body>
+</html>

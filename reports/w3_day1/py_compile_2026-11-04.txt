@@ -1,0 +1,3 @@
+COMMAND: python -m py_compile system/*.py tests/test_system_*.py
+EXIT_CODE: 0
+PASS

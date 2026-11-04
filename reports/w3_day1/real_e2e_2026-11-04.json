@@ -1,0 +1,86 @@
+{
+  "head": "9b93d60aecb82a3328d7fab05a8cf64c6147124c",
+  "model": {
+    "base_model_id": "facebook/esm2_t30_150M_UR50D",
+    "base_model_revision": "a695f6045e2e32885fa60af20c13cb35398ce30c",
+    "adapter_sha256": "A4A5B486862724F459F60E8343AC135C340305D5A0F2E936EB5AD1DFD34788D4",
+    "adapter_tensor_count": 376,
+    "device": "cuda",
+    "state": "cold",
+    "attention_backend": "sdpa",
+    "full_sequence": true,
+    "truncation": false,
+    "windowing": false
+  },
+  "sample_accession": "O75144",
+  "sample_source": "reports/candidates_30_lora.csv + reports/esm150_w1_candidates_v0/predictions.csv",
+  "stages": [
+    [
+      "loading_model",
+      "首次加载真实 ESM-2 150M LoRA 检查点",
+      0
+    ],
+    [
+      "succeeded",
+      "完成",
+      0
+    ]
+  ],
+  "wall_seconds": 33.907544300000154,
+  "inference_seconds": 19.645788400001038,
+  "candidate_count": 6,
+  "sequence_length": 302,
+  "sequence_sha256": "0CA51F904C28299D8ED0B0DC85EDC28E9F28DF28A7968477D36F062D257722E0",
+  "site_matches": [
+    {
+      "position": 70,
+      "motif": "NSS",
+      "predicted_label": 1,
+      "prob_delta": 0.0,
+      "label_match": true
+    },
+    {
+      "position": 102,
+      "motif": "NVT",
+      "predicted_label": 1,
+      "prob_delta": 0.0,
+      "label_match": true
+    },
+    {
+      "position": 137,
+      "motif": "NFS",
+      "predicted_label": 1,
+      "prob_delta": 0.0,
+      "label_match": true
+    },
+    {
+      "position": 173,
+      "motif": "NKT",
+      "predicted_label": 1,
+      "prob_delta": 0.0,
+      "label_match": true
+    },
+    {
+      "position": 186,
+      "motif": "NDT",
+      "predicted_label": 1,
+      "prob_delta": 0.0,
+      "label_match": true
+    },
+    {
+      "position": 225,
+      "motif": "NLT",
+      "predicted_label": 1,
+      "prob_delta": 0.0,
+      "label_match": true
+    }
+  ],
+  "all_labels_match": true,
+  "max_probability_delta": 0.0,
+  "limitations": [
+    "这是研究原型，不是临床诊断工具。",
+    "概率来自分类头 softmax，未做外部概率校准。",
+    "模型预测不等于体内实验证据；需要回到 UniProt 或原始论文核对。",
+    "本轮只判断 N-X-S/T sequon，不覆盖 O-糖基化。"
+  ]
+}

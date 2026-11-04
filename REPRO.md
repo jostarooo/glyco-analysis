@@ -13,7 +13,7 @@
 
 ### W2（交付日 2026-11-03，2026-11-01 Day 5 交付收口）
 
-W2 核心实验、记分卡与交付前端已完成。交接基线为 `8fc1da68b29a2cd865b3b5c056996b14607b9479`。截至本记录，W2 尚未执行远端发布，远端同步状态未确认。
+W2 核心实验、记分卡与交付前端已完成。交接基线为 `8fc1da68b29a2cd865b3b5c056996b14607b9479`。2026-11-02 经用户明确授权，REST 发布器把本地历史精确镜像到远端 `main`，发布后本地、远端和 W2 视频 HEAD 均为 `9b93d60aecb82a3328d7fab05a8cf64c6147124c`；重建的 67 个提交 SHA 全部一致，目录树和 274 个文件一致。
 
 GlycanML 五个 CSV 共 30675065 字节，MD5 全部通过。F2 按论文 Table 3 使用 seeds 0/1/2、50 epochs、batch 64 完成复算：免疫原性 AUPRC 为 0.7748635136784087 ± 0.009111853148723878，论文为 0.780 ± 0.006；糖基化 Macro-F1 为 0.9377928560029268 ± 0.0038891301525018625，论文为 0.948 ± 0.004。TorchDrug 未安装，本轮是 PyG 自实现，不是逐位克隆。
 
@@ -35,10 +35,14 @@ F2 逐种子结果和 50 个 F3 task JSON 建立真实演示数据；浏览器�
 任务切换、seed 切换、Sequon `NST`/`NPS` 规则和工具轨迹逐步骤播放。
 本轮没有重跑 F2 训练，没有重跑 Qwen3 4B 50 题，也没有执行发布。
 
-### W3（交付日 2026-11-10，尚未开始）
+### W3 Day 1（2026-11-04，进行中）
 
-W3 从 2026-11-04 开始。当前只有下一步计划。`reports/weekly/W03_2026-11-10_progress.md`
-是占位报告，不包含已经完成的 W3 工作。
+W3 Day 1 完成了 11/10 检查点缺失的系统纵切：用户登录，提交真实蛋白序列，后端排队并加载作者
+ESM-2 150M LoRA 检查点，返回全部 N-X-S/T 候选位点，浏览器轮询并展示结果。系统使用独立
+`system/` 包、Python 标准库 HTTP 服务、单 GPU worker 和有界内存队列，不修改 W2 的 `web/`
+与 `video-ui/`。真实 O75144 回归返回 6 个位点，预测标签与历史产物一致，概率差为 0。
+完整结果见 `reports/w3_day1/real_e2e_2026-11-04.json`，周报见
+`reports/weekly/W03_2026-11-10_progress.md`。
 
 ## 一、可行性五关（项目级，W1 只验收第 1 至第 3 关）
 
@@ -50,7 +54,7 @@ W3 从 2026-11-04 开始。当前只有下一步计划。`reports/weekly/W03_202
 | 2 | **数据关** | UniProt 人类糖蛋白检索返回 1381 条；GlyGen 单蛋白详情可取；其余接口状态有记录 | ✅ 通过（4/6 可用） | `reports/endpoint_check_2026-10-18.md` |
 | 3 | **复现关** | 作者 150M 检查点在作者 `test.csv` 上复算 MCC，与论文 0.848 对表并解释差异 | ✅ 通过 | `reports/mcc_repro.md` |
 | 4 | **本机训练关** | ESM2-150M + LoRA 能在 6.6 GiB 可用显存内跑通若干步且损失下降 | ⬜ 未开始（后续周） | `reports/local_train.md` |
-| 5 | **系统关** | 浏览器里能用真实后端结果完成一次"序列 → 位点 → 糖链"的端到端问答；W2 Day 5 已交付只读展示前端 | 🔶 部分通过 | `web/` + `scripts/build_web_data.py`；端到端问答仍待 `docs/demo.md` |
+| 5 | **系统关** | 浏览器里能用真实后端结果完成一次"序列 → 位点 → 糖链"的端到端问答；W3 Day 1 已完成登录、真实序列提交与位点预测 | 🔶 部分通过 | `system/` 真实预测系统；糖链段与问答编排仍未完成 |
 
 ## 二、术语表
 
@@ -287,11 +291,12 @@ D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\publish_github.py
 任何一项对不上就报错退出；发布记录写在 `reports/github_publish_<日期>.md`。脚本会重写远端 `main`，运行前必须确认这次发布是用户要求的。
 
 2026-10-18 首次发布，2026-10-21 全量复现完成后再次镜像发布，2026-10-26 文档中文化
-和最终校验完成后再次镜像发布。截至 2026-10-28 W1 核记，远端
-https://github.com/jostarooo/glyco-analysis 为公开仓库，`main` 为 `e301353` 的网页 README 快照；
-本地文档提交 `6d19f1e` 及其后的提交尚未镜像到远端，两边历史已经分叉。10/26 的发布记录是当时快照，
-不再代表当前远端状态。
-2026-10-29 W2 收口没有重新联网核实远端，也没有执行 push 或发布脚本。W2 的 `e776c5f`、`8fc1da6`、`6b77fa7` 及后续文档提交都只存在于本地。
+和最终校验完成后再次镜像发布。2026-11-02 经用户明确授权，发布器再次重建并镜像 W2 历史；
+远端 https://github.com/jostarooo/glyco-analysis 的 `main`、本地 HEAD 和 W2 视频 HEAD
+均为 `9b93d60aecb82a3328d7fab05a8cf64c6147124c`。目录树 SHA 为
+`e7d6fc1b8bb6b8fd39c7a428df424c757a3df7d4`，共 274 个文件。
+普通 `git fetch` 仍被本机到 `github.com:443` 的网络重置阻断，因此远端状态使用
+GitHub REST API 独立核验。W3 Day 1 的提交尚未发布。
 后续交付记录中的历史 SHA 是当日发布快照，不代表当前交付状态；当前状态以本文第零节和交付总表为准。
 
 ### F2 GlycanML Table 3
@@ -349,6 +354,34 @@ D:\python\python.exe scripts\check_web_dist.py --browser
 从 `file://` 加载该文件并验证应用挂载。预览命令 `npm run preview` 仍可用于开发态检查。
 提交后如果有文档类改动，`project.json` 中的 HEAD 短哈希会等到下一次数据契约生成时刷新；
 这种滞后只允许出现在提交后的 UI 文件上，直接手改契约仍会被拒绝。本节是 REPRO.md 第 5 关系统关的第一个交付前端，端到端问答仍未完成。
+
+### F1 交互式真实预测系统（2026-11-04，W3 Day 1）
+
+```powershell
+& 'D:\wbworkspace\glyco-analysis\scripts\run_w3_system.ps1' doctor
+& 'D:\wbworkspace\glyco-analysis\scripts\run_w3_system.ps1' serve
+```
+
+打开 `http://127.0.0.1:8765`。本机演示账号为 `demo`，密码为 `glyco-demo`，
+只用于回环地址演示。绑定非回环地址时必须设置 `GLYCO_PASSWORD_HASH`，否则服务拒绝启动。
+
+启动脚本设置固定的 Python 3.12、项目 `site-packages`、LoRA 兼容 overlay 和离线 Hugging Face
+缓存。`doctor` 只检查检查点元数据与样例；真实 GPU 由以下命令复核：
+
+```powershell
+$env:RUN_W3_REAL_MODEL='1'
+$env:PYTHONPATH='D:\wbworkspace\glyco-analysis;D:\wbworkspace\glyco-analysis\.venv\Lib\site-packages'
+$env:HF_HOME='D:\hf'
+$env:HF_HUB_CACHE='D:\hf\hub'
+$env:HF_HUB_OFFLINE='1'
+$env:TRANSFORMERS_OFFLINE='1'
+& 'C:\Users\jostaro\AppData\Roaming\uv\python\cpython-3.12.14-windows-x86_64-none\python.exe' -m unittest tests.test_system_predictor_gpu -v
+```
+
+服务只判断 N-X-S/T，其中 X 不是脯氨酸。`O75144` 的 302 aa 序列返回 6 个位点：
+70 NSS、102 NVT、137 NFS、173 NKT、186 NDT、225 NLT。真实 GPU 回归
+3/3 通过，标签与历史产物一致，最大概率差为 0。服务不保存原始序列到磁盘，任务与会话只存在内存中。
+
 ### W2 Day 4 可重算 F1/F2/F3 记分卡
 
 ```powershell
@@ -386,3 +419,4 @@ F3 计数上限、工具可行性题号集合和 Markdown 参考锚点都必须�
 | 2026-10-31 | W2 Day 4：web 交付界面数据契约 | 12 个源产物生成 4 个数据契约文件；build_web_data.py 连续两跑字节一致；web build 通过 | ✅ 生成与检查通过；产物见 `web/src/data/` 与 `scripts/build_web_data.py` |
 | 2026-11-01 | W2 Day 5 修复：生产构建可从磁盘直接打开 | 原构建在 `file://` 下被 CORS 拦截外部 JS/CSS；改为单文件内联，Edge 实测四页挂载 | ✅ 静态契约和 Edge `file://` 挂载通过；检查入口见 `scripts/check_web_dist.py --browser` |
 | 2026-11-01 | W2 Day 5 录制台：三项真实功能演示 | 9 页单文件加入 F1 候选与 Sequon 规则、F2 任务与 seed、F3 工具轨迹播放；浏览器实际点击通过 | ✅ 11 项聚焦测试、Edge `file://` 和双分辨率交互检查通过；入口见 `video-ui/dist/index.html` |
+| 2026-11-04 | W3 Day 1：登录与真实位点预测系统纵切 | 真实 O75144 302 aa 经 HTTP 登录、排队、GPU 推理和轮询返回 6 个位点；历史标签与概率逐项对拍 | ✅ 真实 GPU 3/3；聚焦合同测试 25/25；全量 147 项中 139 通过、8 项按设计或 GPU 门控跳过；Edge 现场流程无脚本错误 |

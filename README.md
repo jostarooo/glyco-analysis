@@ -1,14 +1,16 @@
 # 糖基化分析系统：以蛋白质语言模型预测 N-糖基化位点、以图神经网络解析糖链、并用工具调用智能体把两者串成一个可对话的分析工作台
 
-> 2026-10-27 第一次对齐；2026-10-28 W1 交付闭环与 W2 启动；2026-10-29 W2 核心实验收口；2026-10-30 W2 Day 3 阻断工具修正；2026-10-31 W2 Day 4 可重算记分卡；2026-11-01 W2 Day 5 web 单文件离线交付与录制功能演示
+> 2026-10-27 第一次对齐；2026-10-28 W1 交付闭环与 W2 启动；2026-10-29 W2 核心实验收口；2026-10-30 W2 Day 3 阻断工具修正；2026-10-31 W2 Day 4 可重算记分卡；2026-11-01 W2 Day 5 web 单文件离线交付与录制功能演示；2026-11-04 W3 Day 1 登录与真实位点预测系统纵切
 > 代码状态：W1 的环境、数据集 v0、35M 线性探针、作者 150M LoRA 复算、三方法对拍和 10 个分歧位点人工复核均已完成。
 > 数据口径见 `reports/dataset_v0.md`，探针结果见 `reports/esm35_linear_probe_v0/report.md`，
 > 150M 复算结论见 `reports/mcc_repro.md`，候选位点对拍见 `reports/w1_three_method_v0/report.md`。
 >
 > W1 已于 2026-10-27 正式提交（2026-10-28 核记）。正式周视频为 `02-进度报告\第一周展示视频.mp4`（6 分 00 秒），交付包为 68 个内容文件、68/68 条校验一致，正式周目录为 76 个文件、75/75 条校验一致。
 >
-> W2 核心实验已完成并提交到本地 `main`。PyG RGCN 按 GlycanML 论文 Table 3 完成 3 种子复算，免疫原性 AUPRC 为 0.7748635136784087 ± 0.009111853148723878，糖基化 Macro-F1 为 0.9377928560029268 ± 0.0038891301525018625；Doc2Agent 70 个 wrapper 中 43 个直接成功，Qwen3 4B 完成 50 题轨迹批次。W2 Day 3 用任务参数重测 17 个阻断工具，50 题最新分类为当前工具可直接完成 43、需要替代工具 5、服务失败 2。W2 Day 4 把 F1、F2、F3 和工具可行性固化为可重算记分卡，唯一数字入口是 `reports/w2_day4/scorecard.md`。W2 Day 5 新增 `web/` 交付界面与 `scripts/build_web_data.py` 数据契约，界面只读展示真实产物，并标出数据生成时的 HEAD。生产构建已用 `vite-plugin-singlefile` 内联全部 JavaScript 和 CSS，`web/dist/index.html` 可直接从磁盘打开。W2 原始 20/25/5 分类保留为历史证据，远端同步状态未确认，本轮没有发布。
+> W2 核心实验已完成并提交到 `main`。PyG RGCN 按 GlycanML 论文 Table 3 完成 3 种子复算，免疫原性 AUPRC 为 0.7748635136784087 ± 0.009111853148723878，糖基化 Macro-F1 为 0.9377928560029268 ± 0.0038891301525018625；Doc2Agent 70 个 wrapper 中 43 个直接成功，Qwen3 4B 完成 50 题轨迹批次。W2 Day 3 用任务参数重测 17 个阻断工具，50 题最新分类为当前工具可直接完成 43、需要替代工具 5、服务失败 2。W2 Day 4 把 F1、F2、F3 和工具可行性固化为可重算记分卡，唯一数字入口是 `reports/w2_day4/scorecard.md`。W2 Day 5 新增 `web/` 交付界面与 `scripts/build_web_data.py` 数据契约，界面只读展示真实产物，并标出数据生成时的 HEAD。生产构建已用 `vite-plugin-singlefile` 内联全部 JavaScript 和 CSS，`web/dist/index.html` 可直接从磁盘打开。W2 原始 20/25/5 分类保留为历史证据。2026-11-02 经授权完成 REST 镜像发布，远端 `main` 与本地、W2 视频均为 `9b93d60`。
 > 与正式 `web/` 分离的 `video-ui/` 只用于录制周视频。它提供 F1 真实候选与 Sequon 现场规则、F2 任务和 seed 切换、F3 真实工具轨迹逐步骤播放，生成单个 `video-ui/dist/index.html`，不进入正式 W02 交付目录。
+>
+> W3 Day 1 新增独立的 `system/` 交互系统。用户先登录，再提交蛋白序列；后端把任务放入单 GPU 工作队列，加载作者 ESM-2 150M LoRA 检查点，返回全部 N-X-S/T 候选位点。页面现场显示 HEAD、模型来源、任务阶段和真实结果。该服务只允许本机回环地址，不是临床诊断，也不替代实验验证。
 
 ## 教师建议阅读顺序
 
@@ -17,6 +19,7 @@
 3. 接着读 `reports/w2_day2/f2_f3_comparison.md` 与 `docs/W2_D3_tool_blocker_triage.txt`，核对论文值、轨迹指标边界和 W2 Day 3 阻断工具分类。
 4. 需要复查 W1 时读 `reports/weekly/W01_2026-10-27_progress.md`，核对交付、130 行评估池和三方法对拍。
 5. 需要重跑时读 `REPRO.md`；原始证据在 `reports/w2_day1/`、`reports/w2_day2/`、`reports/w2_day3/`、`reports/w2_day4/` 和 `reports/w2_day5/`。
+6. 需要现场验证 F1 真实推理系统时运行 `scripts/run_w3_system.ps1`，先执行 `doctor`，再执行 `serve`，然后访问 `http://127.0.0.1:8765`。W3 证据在 `reports/w3_day1/`。
 
 文档、标题、表头和人工复核说明均使用中文。代码标识、JSON 与 CSV 字段名、状态枚举、模型名、路径、命令和原始软件告警保留英文，确保机器复核和哈希追溯不被破坏。
 
@@ -64,6 +67,9 @@ $env:PYTHONUTF8 = "1"
 D:\python\python.exe scripts\build_web_data.py --check
 D:\node\node.exe D:\node\node_modules\npm\bin\npm-cli.js run build --prefix D:\wbworkspace\glyco-analysis\web
 D:\python\python.exe scripts\check_web_dist.py --browser
+# W3 Day 1 真实系统：先检查模型来源，再启动登录与预测界面
+& 'D:\wbworkspace\glyco-analysis\scripts\run_w3_system.ps1' doctor
+& 'D:\wbworkspace\glyco-analysis\scripts\run_w3_system.ps1' serve
 ```
 
 `scripts/build_w1_delivery.py --sync` 会把仓库内的报告、源代码、README、REPRO 和正式周附件同步到交付目录，随后重算 `SHA256SUMS.txt`。当前视频已补入，交付包和正式周目录的校验状态均为 `PASS`；以后修改文档或重新生成交付物时再运行该命令。
@@ -121,6 +127,15 @@ $env:PYTHONUTF8='1'
 # W2 Day 4 可重算记分卡：从固定证据源生成，再检查输出是否过期
 D:\python\python.exe scripts\build_w2_scorecard.py
 D:\python\python.exe scripts\build_w2_scorecard.py --check
+
+# W3 Day 1 真实 GPU 回归：加载作者检查点并对拍 O75144 的历史位点结果
+$env:PYTHONPATH='D:\wbworkspace\glyco-analysis;D:\wbworkspace\glyco-analysis\.venv\Lib\site-packages'
+$env:HF_HOME='D:\hf'
+$env:HF_HUB_CACHE='D:\hf\hub'
+$env:HF_HUB_OFFLINE='1'
+$env:TRANSFORMERS_OFFLINE='1'
+$env:RUN_W3_REAL_MODEL='1'
+& 'C:\Users\jostaro\AppData\Roaming\uv\python\cpython-3.12.14-windows-x86_64-none\python.exe' -m unittest tests.test_system_predictor_gpu -v
 ```
 
 探针把 82 个含 `ECO:0000269` 的 N-连接糖基化位点作为实验阳性，把 48 个没有 N-连接
@@ -144,7 +159,7 @@ MCC 为 **0.000000**。35M 使用窗口化折外预测，150M 使用全序列 Lo
 发布脚本会把本地历史逐提交重放到远端，并校验提交 SHA 与目录树 SHA 都与本地一致，
 不一致就报错退出；空仓库的首次提交由脚本自己播种。脚本会重写远端 `main`，运行前必须确认这次发布是用户要求的。详见 `REPRO.md` 第四节。
 
-远端：https://github.com/jostarooo/glyco-analysis （公开仓库）。截至 2026-10-28 W1 核记，`main` 为 `e301353` 的网页 README 快照；本地 `6d19f1e` 及其后的 W2 提交尚未镜像，两边历史已分叉。2026-10-29 W2 收口未重新联网核实远端，也未执行发布。
+远端：https://github.com/jostarooo/glyco-analysis （公开仓库）。2026-11-02 经用户明确授权，REST 发布器把本地历史精确镜像到 `main`，发布后本地、远端和 W2 视频均为 `9b93d60`。普通 `git fetch` 仍受本机到 `github.com:443` 的网络重置影响，远端状态由 GitHub REST API 独立核验。W3 Day 1 提交尚未发布。
 
 环境事实见 `REPRO.md`，复现用的三个上游仓库在 `D:\wbworkspace\`（LoRA-N-Gly / GlycanML / Doc2Agent）。
 
@@ -155,7 +170,7 @@ SHA256 清单。新录的 6 分 00 秒展示视频是正式周视频，3 分 34 
 
 W2 正式交付目录为 `D:\毕设交付\W02_2026-11-03`。交付材料包含周报、核心证据、
 验证记录、单文件交付界面和 SHA256 清单，不放源代码、模型权重或全部中间 task JSON。
-W2 Day 3 阻断工具复测、50 题修正分类和验证日志已加入核心证据。视频待用户录制后放入。
+W2 Day 3 阻断工具复测、50 题修正分类和验证日志已加入核心证据。W2 周视频与最终材料已进入交付目录，正式提交仍由用户完成。
 
 W2 Day 4 记分卡保存在 `reports/w2_day4/`。生成器会重算 F1 混淆矩阵和 MCC、F2 三种子
 均值与样本标准差，并校验 F3 计数、工具可行性 43/5/2、源文件 SHA256 和跨源参考值。
@@ -170,6 +185,8 @@ glyco-analysis/
 ├─ reports/          体检、数据集、探针产物与发布记录
 ├─ docs/             设计与说明
 ├─ web/              交付前端界面（React + Vite，数据由 scripts/build_web_data.py 生成）
+├─ system/           W3 登录、任务队列、真实 ESM-150M 推理服务与单文件 UI
+├─ video-ui/         录制专用周报界面，与正式 web/ 分离
 ├─ data/             本地数据（不入库，见 .gitignore）
 └─ REPRO.md          复现手册：可行性五关、术语表、本机配置
 ```
@@ -182,6 +199,9 @@ glyco-analysis/
 - 生产前端必须是单个自包含的 `web/dist/index.html`，并用 `scripts/check_web_dist.py --browser` 从 `file://` 实际验证；
 - **论文里的数字只能作为对照，不能当成自己的结果**；
 - `web/` 界面只读展示 `web/src/data/` 的契约数据，不写死指标、不使用 Mock；
+- `system/` 的 `serve` 必须装配真实 `Esm150Predictor`，测试替身只能由测试注入；
+- `system/` 默认只绑定 `127.0.0.1`，非回环地址必须配置环境密码哈希，不能用本地演示账号；
+- 页面上的位点概率来自作者检查点现场推理，不是实验阳性证据，也不是临床结论；
 
 ## 引用与许可
 
