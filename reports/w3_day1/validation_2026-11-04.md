@@ -73,7 +73,7 @@ Edge 通过 Playwright 从同源 HTTP 页面完成登录、载入样例、提交
 
 ```text
 HTTP 状态：200
-页面 HEAD 文本：9b93d60a
+页面 HEAD 文本：与运行时 `git rev-parse HEAD` 一致
 模型状态：ready
 序列长度：302
 结果表行数：6
