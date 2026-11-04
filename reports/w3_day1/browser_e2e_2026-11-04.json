@@ -1,7 +1,7 @@
 {
   "url": "http://127.0.0.1:8765/",
   "title": "糖基化分析系统 · 位点预测",
-  "head_text": "9b93d60ae… · NVIDIA GeForce RTX 5060 Laptop GPU · ready",
+  "head_text": "eac3566d8… · cuda · cold",
   "model_badge": "facebook/esm2_t30_150M_UR50D · ready",
   "sequence_length": 302,
   "job_state": "已完成",
