@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "provider": "local_magpie",
+  "model": "workbuddy-ai/glm-5.3",
+  "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+  "metrics_scope": "trajectory_only",
+  "answer_correctness": "not_evaluated",
+  "grader": "not_run_upstream_requires_gpt4o_api_key",
+  "tasks_run": 1,
+  "max_rounds": 4,
+  "tools_available": 70,
+  "prompt_hashes": {
+    "system": "ea6dbf107e44cf10e1e9430375c0d081b02184ea28fdefab7ba75ed5f4554e83",
+    "user_template": "91061473cda7ffc953222b6a91d3d40d6e566f4db558059c9e1dc978ce8ed74d",
+    "tool_catalog": "1c21bc74329197112b45d0f2b93c826294ce7df1067f6409ded9b59841510e3e"
+  },
+  "task_hash": "ce623531f4e89bbd0c559dd43a50b1d5fc47c7438ba51d28f43573d8f0ad7512",
+  "request_options": {
+    "temperature": 0.0,
+    "max_tokens": 512,
+    "stream": false,
+    "request_timeout_seconds": 180,
+    "provider_native_tools": false,
+    "tool_choice": "not_sent"
+  },
+  "exact_sequence": 0,
+  "all_expected_called": 1,
+  "any_expected_called": 1,
+  "tasks_with_tool_call": 1,
+  "tasks_with_final_answer": 0,
+  "tool_call_successes": 1,
+  "tool_calls": 4,
+  "model_calls": 4,
+  "finish_reasons": {
+    "stop": 4
+  },
+  "token_usage": {
+    "prompt_tokens": 11096,
+    "completion_tokens": 499,
+    "total_tokens": 11595,
+    "responses_with_usage": 4
+  },
+  "elapsed_seconds": 21.422
+}

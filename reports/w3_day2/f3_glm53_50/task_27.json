@@ -1,0 +1,76 @@
+{
+  "task_id": 27,
+  "question": "What are the detailed chemical properties, biological associations, classifications, and cross-references of the glycan with GlyTouCan accession number 'G01543ZX'? Use the glycan_detail tool to gather comprehensive details for potential research on glycan biological roles and interactions.",
+  "expected_tools": [
+    "glycan_detail"
+  ],
+  "tool_calls": [
+    {
+      "tool": "glycan_detail",
+      "arguments": {
+        "glytoucan_ac": "G01543ZX"
+      },
+      "status": "ok",
+      "error": "",
+      "result": {
+        "truncated": true,
+        "preview": "{\"status_code\": 200, \"url\": \"https://api.glygen.org/glycan/detail/G01543ZX/\", \"data\": {\"glytoucan\": {\"glytoucan_ac\": \"G01543ZX\", \"glytoucan_url\": \"https://glytoucan.org/Structures/Glycans/G01543ZX\"}, \"mass\": 2733.97, \"number_monosaccharides\": 14, \"wurcs\": \"WURCS=2.0/6,14,13/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5][a2112h-1b_1-5][a1221m-1a_1-5][Aad21122h-2a_2-6_5*NCC/3=O]/1-1-2-3-1-4-1-4-3-1-4-5-6-6/a4-b1_a6-l1_b4-c1_c3-d1_c6-i1_d2-e1_d4-g1_e4-f1_g4-h1_i2-j1_j4-k1_m2-a3|b3|c3|d3|e3|f3|g3|h3|i3|j3|k3|l3}_n2-a3|b3|c3|d3|e3|f3|g3|h3|i3|j3|k3|l3}\", \"glycoct\": \"RES 1b:b-dglc-HEX-1:5 2s:n-acetyl 3b:b-dglc-HEX-1:5 4s:n-acetyl 5b:b-dman-HEX-1:5 6b:a-dman-HEX-1:5 7b:b-dglc-HEX-1:5 8s:n-acetyl 9b:b-dgal-HEX-1:5 10b:b-dglc-HEX-1:5 11s:n-acetyl 12b:b-dgal-HEX-1:5 13b:a-dman-HEX-1:5 14b:b-dglc-HEX-1:5 15s:n-acetyl 16b:b-dgal-HEX-1:5 17b:a-lgal-HEX-1:5|6:d LIN 1:1d(2+1)2n 2:1o(4+1)3d 3:3d(2+1)4n 4:3o(4+1)5d 5:5o(3+1)6d 6:6o(2+1)7d 7:7d(2+1)8n 8:7o(4+1)9d 9:6o(4+1)10d 10:10d(2+1)11n 11:10o(4+1)12d 12:5o(6+1)13d 13:13o(2+1)14d 14:14d(2+1)15n 15:14o(4+1)16d 16:1o(6+1)17d UND UND1:100.0:100.0 ParentIDs:1|3|5|6|7|9|10|12|13|14|16|17 SubtreeLinkageID1:o(3+2)d RES 18b:a-dgro-dgal-NON-2:6|1:a|2:keto|3:d 19s:n-acetyl LIN 17:18d(5+1)19n UND2:100.0:100.0 ParentIDs:1|3|5|6|7|9|10|12|13|14|16|17 SubtreeLinkageID1:o(3+2)d RES 20b:a-dgro-dgal-NON-2:6|1:a|2:keto|3:d 21s:n-acetyl LIN 18:20d(5+1)21n\", \"species\": [{\"taxid\": 10029, \"name\": \"Cricetulus griseus\", \"annotation_category\": \"subsumption\", \"evidence\": [{\"database\": \"Subsumption\", \"id\": \"G62765SF\", \"url\": \"https://www.glygen.org/glycan/G62765SF\"}], \"common_name\": \"Chinese hamster\", \"glygen_name\": \"Hamster\", \"reference_species\": \"Cricetulus griseus [10029]\"}, {\"taxid\": 9606, \"name\": \"Homo sapiens\", \"annotation_category\": \"both\", \"evidence\": [{\"database\": \"Subsumption\", \"id\": \"G62765SF\", \"url\": \"https://www.glygen.org/glycan/G62765SF\"}, {\"database\": \"GlyConnect\", \"id\": \"3590\", \"url\": \"https://glyconnect.expasy.org/browser/structures/3590\"}, {\"database\": \"PubMed\", \"id\": \"10704524\", \"url\": \"https://glygen.org/publication/PubMed/10704524\"}, {\"database\": \"PubMed\", \"id\": \"8407880\", \"url\": \"https://glygen.org/publication/PubMed/8407880\"}, {\"database\": \"PubMed\", \"id\": \"8969451\", \"url\": \"https://glygen.org/publication/PubMed/8969451\"}], \"common_name\": \"Human\", \"glygen_name\": \"Human\", \"reference_species\": \"Homo sapiens [9606]\"}], \"classification\": [{\"type\": {\"name\": \"N-linked\"}, \"subtype\": {\"name\": \"Complex\"}}, {\"type\": {\"name\": \"N-linked\"}, \"subtype\": {\"name\": \"Core-fucosylated\"}}, {\"type\": {\"name\": \"N-linked\"}, \"subtype\": {\"name\": \"Triantennary\"}}], \"glycoprotein\": [{\"uniprot_canonical_ac\": \"P14210-1\", \"start_pos\": 294, \"end_pos\": 294, \"residue\": \"Asn\", \"evidence\": [{\"database\": \"PubMed\", \"id\": \"8407880\", \"url\": \"https://glygen.org/publication/PubMed/8407880\"}, {\"database\": \"GlyConnect\", \"id\": \"219\", \"url\": \"https://glyconnect.expasy.org/browser/proteins/219\"}], \"protein_name\": \"Hepatocyte growth factor\", \"gene_name\": \"HGF\", \"tax_id\": 9606, \"tax_name\": \"Homo sapiens\", \"tax_common_name\": \"Human\"}, {\"uniprot_canonical_ac\": \"P14210-1\", \"start_pos\": 402, \"end_pos\": 402, \"residue\": \"Asn\", \"evidence\": [{\"database\": \"PubMed\", \"id\": \"8407880\", \"url\": \"https://glygen.org/publication/PubMed/8407880\"}, {\"database\": \"GlyConnect\", \"id\": \"219\", \"url\": \"https://glyconnect.expasy.org/browser/proteins/219\"}], \"protein_name\": \"Hepatocyte growth factor\", \"gene_name\": \"HGF\", \"tax_id\": 9606, \"tax_name\": \"Homo sapiens\", \"tax_common_name\": \"Human\"}, {\"uniprot_canonical_ac\": \"P14210-1\", \"start_pos\": 566, \"end_pos\": 566, \"residue\": \"Asn\", \"evidence\": [{\"database\": \"PubMed\", \"id\": \"8407880\", \"url\": \"https://glygen.org/publication/PubMed/8407880\"}, {\"database\": \"GlyConnect\", \"id\": \"219\", \"url\": \"https://glyconnect.expasy.org/browser/proteins/219\"}], \"protein_name\": \"Hepatocyte growth factor\", \"gene_name\": \"HGF\", \"tax_id\": 9606, \"tax_name\": \"Homo sapiens\", \"tax_common_name\": \"Human\"}, {\"uniprot_canonical_ac\": \"P14210-1\", \"start_pos\": 653, \"end_pos\": 653, \"residue\": \"Asn\", \"evidence\": [{\"database\": \"PubMed\", \"id\": \"8407880\", \"url\": \"https://glygen.org/publication/PubMed/8407880\"}, {\"database\": \"GlyConnect\", \"id\": \"219\", \"url\": \"https://glyconnect.expasy.org/browser/proteins/219\"}], \"protein_name\": \"Hepatocyte growth factor\", \"gene_name\": \"HGF\", \"tax_id\": 9606, \"tax_name\": \"Homo sapiens\", \"tax_common_name\": \"Human\"}, {\"uniprot_canonical_ac\": \"P00451-1\", \"evidence\": [{\"database\": \"PubMed\", \"id\": \"8969451\", \"url\": \"https://glygen.org/publication/PubMed/8969451\"}, {\"database\": \"GlyConnect\", \"id\": \"99\", \"url\": \"https://glyconnect.expasy.org/browser/proteins/99\"}], \"protein_name\": \"Coagulation factor VIII\", \"gene_name\": \"F8\", \"tax_id\": 9606, \"tax_name\": \"Homo sapiens\", \"tax_common_name\": \"Human\"}, {\"uniprot_canonical_ac\": \"P17050-1\", \"evidence\": [{\"database\": \"PubMed\", \"id\": \"10704524\", \"url\": \"https://glygen.org/publication/PubMed/10704524\"}, {\"database\": \"GlyConnect\", \"id\": \"45\", \"url\": \"https://glyconnect.expasy.org/browser/proteins/45\"}], \"protein_name\": \"Alpha-N-acetylgalactosaminidase\", \"gene_name\": \"NAGA\", \"tax_id\": 9606, \"tax_name\": \"Homo sapiens\", \"tax_common_name\": \"Human\"}], \"enzyme\": [{\"uniprot_canonical_ac\": \"Q9D8C3-1\", \"xref_key\": \"glycan_xref_sandbox\", \"xref_id\": \"G01543ZX\", \"protein_name\": \"UDP-N-acetylglucosamine transferase subunit ALG13\", \"gene\": \"Alg13\", \"gene_link\": \"https://www.uniprot.org/uniprotkb/Q9D8C3\", \"tax_id\": 10090, \"tax_name\": \"Mus musculus\", \"tax_common_name\": \"Mouse\", \"evidence\": [{\"id\": \"G01543ZX\", \"database\": \"Sandbox\", \"url\": \"https://sandbox.glyomics.org/explore.html?G01543ZX\"}]}, {\"uniprot_canonical_ac\": \"Q9NP73-1\", \"xref_key\": \"glycan_xref_sandbox\", \"xref_id\": \"G01543ZX\", \"protein_name\": \"UDP-N-acetylglucosamine transferase subunit ALG13\", \"gene\": \"ALG13\", \"gene_link\": \"https://www.uniprot.org/uniprotkb/Q9NP73\", \"tax_id\": 9606, \"tax_name\": \"Homo sapiens\", \"tax_common_name\": \"Human\", \"evidence\": [{\"id\": \"G01543ZX\", \"database\": \"Sandbox\", \"url\": \"https://"
+      }
+    }
+  ],
+  "final_answer": "GlyTouCan G01543ZX is a core-fucosylated, triantennary complex N-linked glycan (14 monosaccharides, mass 2733.97 Da) containing GlcNAc, Man, Gal, fucose and two NeuAc residues; WURCS and GlycoCT sequences were retrieved. Species associations: Homo sapiens (evidence: GlyConnect 3590, PubMed 10704524, 8407880, 8969451) and Cricetulus griseus (Chinese hamster, subsumption via G62765SF). Classification: N-linked / Complex, Core-fucosylated, Triantennary. Biological associations (glycoproteins, human): Hepatocyte growth factor (P14210-1, Asn294/402/566/653; PubMed 8407880, GlyConnect 219), Coagulation factor VIII (P00451-1; PubMed 8969451, GlyConnect 99), and Alpha-N-acetylgalactosaminidase (P17050-1/NAGA; PubMed 10704524, GlyConnect 45). Enzyme cross-references: UDP-N-acetylglucosamine transferase subunit ALG13 from human (Q9NP73-1) and mouse (Q9D8C3-1) via GlyGen sandbox (G01543ZX). Full record: https://glytoucan.org/Structures/Glycans/G01543ZX.",
+  "errors": [],
+  "elapsed_seconds": 17.72,
+  "exact_sequence": true,
+  "all_expected_called": true,
+  "any_expected_called": true,
+  "expected_steps": 1,
+  "called_steps": 1,
+  "call_successes": 1,
+  "model_calls": 2,
+  "model_responses": [
+    {
+      "round": 1,
+      "elapsed_seconds": 1.889,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 26,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "prompt_tokens": 2449,
+        "prompt_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 2304
+        },
+        "total_tokens": 2475
+      }
+    },
+    {
+      "round": 2,
+      "elapsed_seconds": 8.503,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 359,
+        "completion_tokens_details": {
+          "reasoning_tokens": 9
+        },
+        "prompt_tokens": 5197,
+        "prompt_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 2304
+        },
+        "total_tokens": 5556
+      }
+    }
+  ],
+  "token_usage": {
+    "prompt_tokens": 7646,
+    "completion_tokens": 385,
+    "total_tokens": 8031,
+    "responses_with_usage": 2
+  },
+  "finish_reasons": {
+    "stop": 2
+  }
+}
