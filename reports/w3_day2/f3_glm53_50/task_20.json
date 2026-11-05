@@ -1,0 +1,148 @@
+{
+  "task_id": 20,
+  "question": "Using the get_proteins tool, retrieve comprehensive protein information for the UniProtKB ID 'P08047' to analyze the extent of O-GlcNAcylation and other post-translational modifications present. Specifically, assess how O-GlcNAcylation might influence the protein's function within metabolic pathways. Include details of gene names and sequence data in the analysis.",
+  "expected_tools": [
+    "get_proteins"
+  ],
+  "tool_calls": [
+    {
+      "tool": "get_proteins",
+      "arguments": {
+        "query_protein": "P08047"
+      },
+      "status": "error",
+      "error": "SSLError: HTTPSConnectionPool(host='oglcnac.mcw.edu', port=443): Max retries exceeded with url: /api/v1/proteins/?query_protein=P08047 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)')))",
+      "result": null
+    },
+    {
+      "tool": "get_uniprot_entry_by_accession",
+      "arguments": {
+        "accession": "P08047"
+      },
+      "status": "ok",
+      "error": "",
+      "result": {
+        "truncated": true,
+        "preview": "{\"status_code\": 200, \"url\": \"https://www.ebi.ac.uk/proteins/api/proteins/P08047\", \"data\": {\"accession\": \"P08047\", \"id\": \"SP1_HUMAN\", \"proteinExistence\": \"Evidence at protein level\", \"info\": {\"type\": \"Swiss-Prot\", \"created\": \"1988-08-01\", \"modified\": \"2026-11-04\", \"version\": 271}, \"organism\": {\"taxonomy\": 9606, \"names\": [{\"type\": \"scientific\", \"value\": \"Homo sapiens\"}, {\"type\": \"common\", \"value\": \"Human\"}], \"lineage\": [\"Eukaryota\", \"Metazoa\", \"Chordata\", \"Craniata\", \"Vertebrata\", \"Euteleostomi\", \"Mammalia\", \"Eutheria\", \"Euarchontoglires\", \"Primates\", \"Haplorrhini\", \"Catarrhini\", \"Hominidae\", \"Homo\"]}, \"secondaryAccession\": [\"E4Z9M7\", \"G5E9M8\", \"Q86TN8\", \"Q9H3Q5\", \"Q9NR51\", \"Q9NY21\", \"Q9NYE7\"], \"protein\": {\"recommendedName\": {\"fullName\": {\"value\": \"Transcription factor Sp1\"}}}, \"gene\": [{\"name\": {\"value\": \"SP1\"}, \"synonyms\": [{\"value\": \"TSFP1\"}]}], \"comments\": [{\"type\": \"FUNCTION\", \"text\": [{\"value\": \"Transcription factor that can activate or repress transcription in response to physiological and pathological stimuli. Binds with high affinity to GC-rich motifs and regulates the expression of a large number of genes involved in a variety of processes such as cell growth, apoptosis, differentiation and immune responses. Highly regulated by post-translational modifications (phosphorylations, sumoylation, proteolytic cleavage, glycosylation and acetylation). Also binds the PDGFR-alpha G-box promoter. May have a role in modulating the cellular response to DNA damage. Implicated in chromatin remodeling. Plays an essential role in the regulation of FE65 gene expression. In complex with ATF7IP, maintains telomerase activity in cancer cells by inducing TERT and TERC gene expression. Isoform 3 is a stronger activator of transcription than isoform 1. Positively regulates the transcription of the core clock component BMAL1 (PubMed:10391891, PubMed:11371615, PubMed:11904305, PubMed:14593115, PubMed:16377629, PubMed:16478997, PubMed:16943418, PubMed:17049555, PubMed:18171990, PubMed:18199680, PubMed:18239466, PubMed:18513490, PubMed:18619531, PubMed:19193796, PubMed:20091743, PubMed:21046154, PubMed:21798247). Plays a role in the recruitment of SMARCA4/BRG1 on the c-FOS promoter. Plays a role in protecting cells against oxidative stress following brain injury by regulating the expression of RNF112 (By similarity)\", \"evidences\": [{\"code\": \"ECO:0000250\", \"source\": {\"name\": \"UniProtKB\", \"id\": \"O89090\", \"url\": \"https://www.uniprot.org/uniprot/O89090\"}}, {\"code\": \"ECO:0000250\", \"source\": {\"name\": \"UniProtKB\", \"id\": \"Q01714\", \"url\": \"https://www.uniprot.org/uniprot/Q01714\"}}, {\"code\": \"ECO:0000269\", \"source\": {\"name\": \"PubMed\", \"id\": \"10391891\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/10391891\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/10391891\"}}, {\"code\": \"ECO:0000269\", \"source\": {\"name\": \"PubMed\", \"id\": \"11371615\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/11371615\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/11371615\"}}, {\"code\": \"ECO:0000269\", \"source\": {\"name\": \"PubMed\", \"id\": \"11904305\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/11904305\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/11904305\"}}, {\"code\": \"ECO:0000269\", \"source\": {\"name\": \"PubMed\", \"id\": \"14593115\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/14593115\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/14593115\"}}, {\"code\": \"ECO:0000269\", \"source\": {\"name\": \"PubMed\", \"id\": \"16377629\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/16377629\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/16377629\"}}, {\"code\": \"ECO:0000269\", \"source\": {\"name\": \"PubMed\", \"id\": \"16478997\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/16478997\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/16478997\"}}, {\"code\": \"ECO:0000269\", \"source\": {\"name\": \"PubMed\", \"id\": \"16943418\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/16943418\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/16943418\"}}, {\"code\": \"ECO:0000269\", \"source\": {\"name\": \"PubMed\", \"id\": \"17049555\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/17049555\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/17049555\"}}, {\"code\": \"ECO:0000269\", \"source\": {\"name\": \"PubMed\", \"id\": \"18171990\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/18171990\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/18171990\"}}, {\"code\": \"ECO:0000269\", \"source\": {\"name\": \"PubMed\", \"id\": \"18199680\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/18199680\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/18199680\"}}, {\"code\": \"ECO:0000269\", \"source\": {\"name\": \"PubMed\", \"id\": \"18239466\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/18239466\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/18239466\"}}, {\"code\": \"ECO:0000269\", \"source\": {\"name\": \"PubMed\", \"id\": \"18513490\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/18513490\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/18513490\"}}, {\"code\": \"ECO:0000269\", \"source\": {\"name\": \"PubMed\", \"id\": \"18619531\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/18619531\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/18619531\"}}, {\"code\": \"ECO:0000269\", \"source\": {\"name\": \"PubMed\", \"id\": \"19193796\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/19193796\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/19193796\"}}, {\"code\": \"ECO:0000269\", \"source\": {\"name\": \"PubMed\", \"id\": \"20091743\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/20091743\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/20091743\"}}, {\"code\": \"ECO:0000269\", \"source\": {\"name\": \"PubMed\", \"id\": \"21046154\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/21046154\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/21046154\"}}, {\"code\": \"ECO:0000269\", \"source\": {\"name\": \"PubMed\", \"id\": \"21798247\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/21798247\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/21798247\"}}]}]}, {\"type\": \"SUBUNIT\", \"text\": [{\"value\": \"Interacts with ATF7IP, ATF7IP2, BAHD1, POGZ, HCFC1, AATF and PHC2. Interacts with HLTF; the"
+      }
+    },
+    {
+      "tool": "get_uniprot_entry_by_accession",
+      "arguments": {
+        "accession": "P08047",
+        "format": "fasta"
+      },
+      "status": "ok",
+      "error": "",
+      "result": {
+        "status_code": 200,
+        "url": "https://www.ebi.ac.uk/proteins/api/proteins/P08047",
+        "data": ">sp|P08047|SP1_HUMAN Transcription factor Sp1 OS=Homo sapiens OX=9606 GN=SP1 PE=1 SV=3\nMSDQDHSMDEMTAVVKIEKGVGGNNGGNGNGGGAFSQARSSSTGSSSSTGGGGQESQPSP\nLALLAATCSRIESPNENSNNSQGPSQSGGTGELDLTATQLSQGANGWQIISSSSGATPTS\nKEQSGSSTNGSNGSESSKNRTVSGGQYVVAAAPNLQNQQVLTGLPGVMPNIQYQVIPQFQ\nTVDGQQLQFAATGAQVQQDGSGQIQIIPGANQQIITNRGSGGNIIAAMPNLLQQAVPLQG\nLANNVLSGQTQYVTNVPVALNGNITLLPVNSVSAATLTPSSQAVTISSSGSQESGSQPVT\nSGTTISSASLVSSQASSSSFFTNANSYSTTTTTSNMGIMNFTTSGSSGTNSQGQTPQRVS\nGLQGSDALNIQQNQTSGGSLQAGQQKEGEQNQQTQQQQILIQPQLVQGGQALQALQAAPL\nSGQTFTTQAISQETLQNLQLQAVPNSGPIIIRTPTVGPNGQVSWQTLQLQNLQVQNPQAQ\nTITLAPMQGVSLGQTSSSNTTLTPIASAASIPAGTVTVNAAQLSSMPGLQTINLSALGTS\nGIQVHPIQGLPLAIANAPGDHGAQLGLHGAGGDGIHDDTAGGEEGENSPDAQPQAGRRTR\nREACTCPYCKDSEGRGSGDPGKKKQHICHIQGCGKVYGKTSHLRAHLRWHTGERPFMCTW\nSYCGKRFTRSDELQRHKRTHTGEKKFACPECPKRFMRSDHLSKHIKTHQNKKGGPGVALS\nVGTLPLDSGAGSEGSGTATPSALITTNMVAMEAICPEGIARLANSGINVMQVADLQSINI\nSGNGF\n"
+      }
+    },
+    {
+      "tool": "get_uniprot_protein_sequence_features_by_accession",
+      "arguments": {
+        "accession": "P08047"
+      },
+      "status": "ok",
+      "error": "",
+      "result": {
+        "truncated": true,
+        "preview": "{\"status_code\": 200, \"url\": \"https://www.ebi.ac.uk/proteins/api/features/P08047\", \"data\": {\"accession\": \"P08047\", \"entryName\": \"SP1_HUMAN\", \"sequence\": \"MSDQDHSMDEMTAVVKIEKGVGGNNGGNGNGGGAFSQARSSSTGSSSSTGGGGQESQPSPLALLAATCSRIESPNENSNNSQGPSQSGGTGELDLTATQLSQGANGWQIISSSSGATPTSKEQSGSSTNGSNGSESSKNRTVSGGQYVVAAAPNLQNQQVLTGLPGVMPNIQYQVIPQFQTVDGQQLQFAATGAQVQQDGSGQIQIIPGANQQIITNRGSGGNIIAAMPNLLQQAVPLQGLANNVLSGQTQYVTNVPVALNGNITLLPVNSVSAATLTPSSQAVTISSSGSQESGSQPVTSGTTISSASLVSSQASSSSFFTNANSYSTTTTTSNMGIMNFTTSGSSGTNSQGQTPQRVSGLQGSDALNIQQNQTSGGSLQAGQQKEGEQNQQTQQQQILIQPQLVQGGQALQALQAAPLSGQTFTTQAISQETLQNLQLQAVPNSGPIIIRTPTVGPNGQVSWQTLQLQNLQVQNPQAQTITLAPMQGVSLGQTSSSNTTLTPIASAASIPAGTVTVNAAQLSSMPGLQTINLSALGTSGIQVHPIQGLPLAIANAPGDHGAQLGLHGAGGDGIHDDTAGGEEGENSPDAQPQAGRRTRREACTCPYCKDSEGRGSGDPGKKKQHICHIQGCGKVYGKTSHLRAHLRWHTGERPFMCTWSYCGKRFTRSDELQRHKRTHTGEKKFACPECPKRFMRSDHLSKHIKTHQNKKGGPGVALSVGTLPLDSGAGSEGSGTATPSALITTNMVAMEAICPEGIARLANSGINVMQVADLQSINISGNGF\", \"sequenceChecksum\": \"43893DBF6518B9EA\", \"taxid\": 9606, \"features\": [{\"type\": \"INIT_MET\", \"category\": \"MOLECULE_PROCESSING\", \"description\": \"Removed\", \"begin\": \"1\", \"end\": \"1\", \"molecule\": \"\", \"evidences\": [{\"code\": \"ECO:0007744\", \"source\": {\"name\": \"PubMed\", \"id\": \"20068231\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/20068231\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/20068231\"}}, {\"code\": \"ECO:0007744\", \"source\": {\"name\": \"PubMed\", \"id\": \"21406692\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/21406692\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/21406692\"}}]}, {\"type\": \"CHAIN\", \"category\": \"MOLECULE_PROCESSING\", \"ftId\": \"PRO_0000047137\", \"description\": \"Transcription factor Sp1\", \"begin\": \"2\", \"end\": \"785\", \"molecule\": \"\"}, {\"type\": \"ZN_FING\", \"category\": \"DOMAINS_AND_SITES\", \"description\": \"C2H2-type 1\", \"begin\": \"626\", \"end\": \"650\", \"molecule\": \"\", \"evidences\": [{\"code\": \"ECO:0000255\", \"source\": {\"name\": \"PROSITE-ProRule\", \"id\": \"PRU00042\", \"url\": \"https://prosite.expasy.org/unirule/PRU00042\"}}]}, {\"type\": \"ZN_FING\", \"category\": \"DOMAINS_AND_SITES\", \"description\": \"C2H2-type 2\", \"begin\": \"656\", \"end\": \"680\", \"molecule\": \"\", \"evidences\": [{\"code\": \"ECO:0000255\", \"source\": {\"name\": \"PROSITE-ProRule\", \"id\": \"PRU00042\", \"url\": \"https://prosite.expasy.org/unirule/PRU00042\"}}]}, {\"type\": \"ZN_FING\", \"category\": \"DOMAINS_AND_SITES\", \"description\": \"C2H2-type 3\", \"begin\": \"686\", \"end\": \"708\", \"molecule\": \"\", \"evidences\": [{\"code\": \"ECO:0000255\", \"source\": {\"name\": \"PROSITE-ProRule\", \"id\": \"PRU00042\", \"url\": \"https://prosite.expasy.org/unirule/PRU00042\"}}]}, {\"type\": \"REGION\", \"category\": \"DOMAINS_AND_SITES\", \"description\": \"Disordered\", \"begin\": \"1\", \"end\": \"93\", \"molecule\": \"\", \"evidences\": [{\"code\": \"ECO:0000256\", \"source\": {\"name\": \"SAM\", \"id\": \"MobiDB-lite\", \"url\": \"https://www.uniprot.org/help/sam\"}}]}, {\"type\": \"REGION\", \"category\": \"DOMAINS_AND_SITES\", \"description\": \"Repressor domain\", \"begin\": \"2\", \"end\": \"82\", \"molecule\": \"\"}, {\"type\": \"REGION\", \"category\": \"DOMAINS_AND_SITES\", \"description\": \"Disordered\", \"begin\": \"109\", \"end\": \"141\", \"molecule\": \"\", \"evidences\": [{\"code\": \"ECO:0000256\", \"source\": {\"name\": \"SAM\", \"id\": \"MobiDB-lite\", \"url\": \"https://www.uniprot.org/help/sam\"}}]}, {\"type\": \"REGION\", \"category\": \"DOMAINS_AND_SITES\", \"description\": \"Transactivation domain A (Gln-rich)\", \"begin\": \"146\", \"end\": \"251\", \"molecule\": \"\"}, {\"type\": \"REGION\", \"category\": \"DOMAINS_AND_SITES\", \"description\": \"Transactivation domain B (Gln-rich)\", \"begin\": \"261\", \"end\": \"495\", \"molecule\": \"\"}, {\"type\": \"REGION\", \"category\": \"DOMAINS_AND_SITES\", \"description\": \"Disordered\", \"begin\": \"329\", \"end\": \"395\", \"molecule\": \"\", \"evidences\": [{\"code\": \"ECO:0000256\", \"source\": {\"name\": \"SAM\", \"id\": \"MobiDB-lite\", \"url\": \"https://www.uniprot.org/help/sam\"}}]}, {\"type\": \"REGION\", \"category\": \"DOMAINS_AND_SITES\", \"description\": \"Transactivation domain C (highly charged)\", \"begin\": \"496\", \"end\": \"610\", \"molecule\": \"\"}, {\"type\": \"REGION\", \"category\": \"DOMAINS_AND_SITES\", \"description\": \"Disordered\", \"begin\": \"567\", \"end\": \"598\", \"molecule\": \"\", \"evidences\": [{\"code\": \"ECO:0000256\", \"source\": {\"name\": \"SAM\", \"id\": \"MobiDB-lite\", \"url\": \"https://www.uniprot.org/help/sam\"}}]}, {\"type\": \"REGION\", \"category\": \"DOMAINS_AND_SITES\", \"description\": \"VZV IE62-binding\", \"begin\": \"619\", \"end\": \"785\", \"molecule\": \"\"}, {\"type\": \"REGION\", \"category\": \"DOMAINS_AND_SITES\", \"description\": \"Domain D\", \"begin\": \"708\", \"end\": \"785\", \"molecule\": \"\"}, {\"type\": \"MOTIF\", \"category\": \"DOMAINS_AND_SITES\", \"description\": \"9aaTAD\", \"begin\": \"462\", \"end\": \"470\", \"molecule\": \"\", \"evidences\": [{\"code\": \"ECO:0000269\", \"source\": {\"name\": \"PubMed\", \"id\": \"31375868\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/31375868\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/31375868\"}}]}, {\"type\": \"COMPBIAS\", \"category\": \"SEQUENCE_INFORMATION\", \"description\": \"Gly residues\", \"begin\": \"20\", \"end\": \"34\", \"molecule\": \"\", \"evidences\": [{\"code\": \"ECO:0000256\", \"source\": {\"name\": \"SAM\", \"id\": \"MobiDB-lite\", \"url\": \"https://www.uniprot.org/help/sam\"}}]}, {\"type\": \"COMPBIAS\", \"category\": \"SEQUENCE_INFORMATION\", \"description\": \"Low complexity\", \"begin\": \"72\", \"end\": \"85\", \"molecule\": \"\", \"evidences\": [{\"code\": \"ECO:0000256\", \"source\": {\"name\": \"SAM\", \"id\": \"MobiDB-lite\", \"url\": \"https://www.uniprot.org/help/sam\"}}]}, {\"type\": \"COMPBIAS\", \"category\": \"SEQUENCE_INFORMATION\", \"description\": \"Polar residues\", \"begin\": \"109\", \"end\": \"123\", \"molecule\": \"\", \"evidences\": [{\"code\": \"ECO:0000256\", \"source\": {\"name\": \"SAM\", \"id\": \"MobiDB-lite\", \"url\": \"https://www.uniprot.org/help/sam\"}}]}, {\"type\": \"COMPBIAS\", \"category\": \"SEQUENCE_INFORMATION\", \"description\": \"Low complexity\", \"begin\": \"124\", \"end\": \"136\", \"molecule\": \"\", \"evidences\": [{\"code\": \"ECO:0000256\", \"source\": {\"name\": \"SAM\", \"id\": \"MobiDB-lite\", \"url\": \"https://www.uniprot.org/help/sam\"}}]}, {\"type\": \"COMPBIAS\", \"category\": \"SEQUENCE_INFORMATION\", \"description\": \"Low complexity\", \"begin\": \"342\", \"end\": \"357\", \"molecule\": \"\", \"evidences\": [{\"code\": \"ECO:0000256\""
+      }
+    }
+  ],
+  "final_answer": "",
+  "errors": [
+    "get_proteins: SSLError: HTTPSConnectionPool(host='oglcnac.mcw.edu', port=443): Max retries exceeded with url: /api/v1/proteins/?query_protein=P08047 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)')))",
+    "max_rounds_reached"
+  ],
+  "elapsed_seconds": 21.083,
+  "exact_sequence": false,
+  "all_expected_called": true,
+  "any_expected_called": true,
+  "expected_steps": 1,
+  "called_steps": 4,
+  "call_successes": 3,
+  "model_calls": 4,
+  "model_responses": [
+    {
+      "round": 1,
+      "elapsed_seconds": 2.005,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 26,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "prompt_tokens": 2470,
+        "prompt_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0
+        },
+        "total_tokens": 2496
+      }
+    },
+    {
+      "round": 2,
+      "elapsed_seconds": 2.483,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 40,
+        "completion_tokens_details": {
+          "reasoning_tokens": 11
+        },
+        "prompt_tokens": 2630,
+        "prompt_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 2432
+        },
+        "total_tokens": 2670
+      }
+    },
+    {
+      "round": 3,
+      "elapsed_seconds": 5.523,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 90,
+        "completion_tokens_details": {
+          "reasoning_tokens": 57
+        },
+        "prompt_tokens": 4869,
+        "prompt_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 2624
+        },
+        "total_tokens": 4959
+      }
+    },
+    {
+      "round": 4,
+      "elapsed_seconds": 4.229,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 46,
+        "completion_tokens_details": {
+          "reasoning_tokens": 14
+        },
+        "prompt_tokens": 5495,
+        "prompt_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 4864
+        },
+        "total_tokens": 5541
+      }
+    }
+  ],
+  "token_usage": {
+    "prompt_tokens": 15464,
+    "completion_tokens": 202,
+    "total_tokens": 15666,
+    "responses_with_usage": 4
+  },
+  "finish_reasons": {
+    "stop": 4
+  }
+}
