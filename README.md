@@ -1,6 +1,6 @@
 # 糖基化分析系统：以蛋白质语言模型预测 N-糖基化位点、以图神经网络解析糖链、并用工具调用智能体把两者串成一个可对话的分析工作台
 
-> 2026-10-27 第一次对齐；2026-10-28 W1 交付闭环与 W2 启动；2026-10-29 W2 核心实验收口；2026-10-30 W2 Day 3 阻断工具修正；2026-10-31 W2 Day 4 可重算记分卡；2026-11-01 W2 Day 5 web 单文件离线交付与录制功能演示；2026-11-04 W3 Day 1 登录与真实位点预测系统纵切
+> 2026-10-27 第一次对齐；2026-10-28 W1 交付闭环与 W2 启动；2026-10-29 W2 核心实验收口；2026-10-30 W2 Day 3 阻断工具修正；2026-10-31 W2 Day 4 可重算记分卡；2026-11-01 W2 Day 5 web 单文件离线交付与录制功能演示；2026-11-04 W3 Day 1 登录与真实位点预测系统纵切；2026-11-05 W3 Day 2 外部模型 F3 轨迹对照
 > 代码状态：W1 的环境、数据集 v0、35M 线性探针、作者 150M LoRA 复算、三方法对拍和 10 个分歧位点人工复核均已完成。
 > 数据口径见 `reports/dataset_v0.md`，探针结果见 `reports/esm35_linear_probe_v0/report.md`，
 > 150M 复算结论见 `reports/mcc_repro.md`，候选位点对拍见 `reports/w1_three_method_v0/report.md`。
@@ -11,15 +11,18 @@
 > 与正式 `web/` 分离的 `video-ui/` 只用于录制周视频。它提供 F1 真实候选与 Sequon 现场规则、F2 任务和 seed 切换、F3 真实工具轨迹逐步骤播放，生成单个 `video-ui/dist/index.html`，不进入正式 W02 交付目录。
 >
 > W3 Day 1 新增独立的 `system/` 交互系统。用户先登录，再提交蛋白序列；后端把任务放入单 GPU 工作队列，加载作者 ESM-2 150M LoRA 检查点，返回全部 N-X-S/T 候选位点。页面现场显示 HEAD、模型来源、任务阶段和真实结果。该服务只允许本机回环地址，不是临床诊断，也不替代实验验证。
+>
+> W3 Day 2 回应导师对本地 4B 模型档位的疑问。同一批 50 题、70 个工具、同一系统提示词和 JSON 动作协议现在分别由 `qwen3:4b` 与 `workbuddy-ai/glm-5.3` 执行。外部模型通过本机 Magpie 的 OpenAI-compatible 网关调用。本地基线参数为 `seed=0`、`num_ctx=8192`、`num_predict=512`、`think=false`；外部批次参数为 `temperature=0`、`max_tokens=512`，未发送 `seed`，上下文窗口由服务端模型控制。两边报告的 token 数不是同一计量口径，不能当作归一化成本。对照只比较工具轨迹、调用状态和最终回答存在性，不评价答案正确率。独立日志总结仍必须由本人改写，证据包在 `reports/w3_day2/log_summary_evidence.md`；项目 AI 会话归档规则在 `agent-sessions/README.md`。
 
 ## 教师建议阅读顺序
 
 1. 先读 `reports/w2_day4/scorecard.md`，这是 F1/F2/F3 指标和工具可行性的唯一汇总入口。需要正式可视化浏览时打开 `web/` 交付界面，数据由 `scripts/build_web_data.py` 生成；需要录屏时打开 `video-ui/dist/index.html`。
 2. 再读 `reports/weekly/W02_2026-11-03_progress.md`，了解 W2 Day 1 至 Day 5 的实验、证据边界和验证结果。
-3. 接着读 `reports/w2_day2/f2_f3_comparison.md` 与 `docs/W2_D3_tool_blocker_triage.txt`，核对论文值、轨迹指标边界和 W2 Day 3 阻断工具分类。
+3. 接着读 `reports/w2_day2/f2_f3_comparison.md`、`reports/w3_day2/f3_glm53_vs_qwen3_4b.md` 与 `docs/W2_D3_tool_blocker_triage.txt`，核对论文值、外部模型轨迹对照和 W2 Day 3 阻断工具分类。
 4. 需要复查 W1 时读 `reports/weekly/W01_2026-10-27_progress.md`，核对交付、130 行评估池和三方法对拍。
-5. 需要重跑时读 `REPRO.md`；原始证据在 `reports/w2_day1/`、`reports/w2_day2/`、`reports/w2_day3/`、`reports/w2_day4/` 和 `reports/w2_day5/`。
+5. 需要重跑时读 `REPRO.md`；原始证据在 `reports/w2_day1/` 至 `reports/w2_day5/`、`reports/w3_day1/` 和 `reports/w3_day2/`。
 6. 需要现场验证 F1 真实推理系统时运行 `scripts/run_w3_system.ps1`，先执行 `doctor`，再执行 `serve`，然后访问 `http://127.0.0.1:8765`。W3 证据在 `reports/w3_day1/`。
+7. 需要重跑外部 F3 对照时读 `reports/w3_day2/README.md`。外部 summary 与本地 summary 分别用 `scripts/summarize_doc2agent_run.py` 复核，再用 `scripts/compare_doc2agent_runs.py` 生成对照。
 
 文档、标题、表头和人工复核说明均使用中文。代码标识、JSON 与 CSV 字段名、状态枚举、模型名、路径、命令和原始软件告警保留英文，确保机器复核和哈希追溯不被破坏。
 
@@ -128,6 +131,12 @@ $env:PYTHONUTF8='1'
 D:\python\python.exe scripts\build_w2_scorecard.py
 D:\python\python.exe scripts\build_w2_scorecard.py --check
 
+# W3 Day 2 外部模型 50 题轨迹对照：先复核两份 summary，再生成 external - local 差值
+$env:PYTHONPATH='D:\wbworkspace\glyco-analysis\.venv\Lib\site-packages'
+$env:PYTHONUTF8='1'
+& 'C:\Users\jostaro\AppData\Roaming\uv\python\cpython-3.12.14-windows-x86_64-none\python.exe' scripts\summarize_doc2agent_run.py --run-dir reports\w3_day2\f3_glm53_50 --expected-tasks 50 --check-summary reports\w3_day2\f3_glm53_50\summary.json
+& 'C:\Users\jostaro\AppData\Roaming\uv\python\cpython-3.12.14-windows-x86_64-none\python.exe' scripts\compare_doc2agent_runs.py
+
 # W3 Day 1 真实 GPU 回归：加载作者检查点并对拍 O75144 的历史位点结果
 $env:PYTHONPATH='D:\wbworkspace\glyco-analysis;D:\wbworkspace\glyco-analysis\.venv\Lib\site-packages'
 $env:HF_HOME='D:\hf'
@@ -159,7 +168,7 @@ MCC 为 **0.000000**。35M 使用窗口化折外预测，150M 使用全序列 Lo
 发布脚本会把本地历史逐提交重放到远端，并校验提交 SHA 与目录树 SHA 都与本地一致，
 不一致就报错退出；空仓库的首次提交由脚本自己播种。脚本会重写远端 `main`，运行前必须确认这次发布是用户要求的。详见 `REPRO.md` 第四节。
 
-远端：https://github.com/jostarooo/glyco-analysis （公开仓库）。2026-11-02 经用户明确授权，REST 发布器把本地历史精确镜像到 `main`，发布后本地、远端和 W2 视频均为 `9b93d60`。普通 `git fetch` 仍受本机到 `github.com:443` 的网络重置影响，远端状态由 GitHub REST API 独立核验。W3 Day 1 提交尚未发布。
+远端：https://github.com/jostarooo/glyco-analysis （公开仓库）。2026-11-02 经用户明确授权，REST 发布器把本地历史精确镜像到 `main`，发布后本地、远端和 W2 视频均为 `9b93d60`。普通 `git fetch` 仍受本机到 `github.com:443` 的网络重置影响，远端状态由 GitHub REST API 独立核验。W3 Day 1 与 Day 2 提交尚未发布。
 
 环境事实见 `REPRO.md`，复现用的三个上游仓库在 `D:\wbworkspace\`（LoRA-N-Gly / GlycanML / Doc2Agent）。
 
@@ -183,6 +192,7 @@ F3 的五个数都是工具轨迹或输出存在性，不是答案正确率；F2
 glyco-analysis/
 ├─ scripts/          可直接运行的脚本（环境、数据、探针、校验、发布与 web 数据契约）
 ├─ reports/          体检、数据集、探针产物与发布记录
+├─ agent-sessions/   本项目 AI 编程会话的脱敏归档目录
 ├─ docs/             设计与说明
 ├─ web/              交付前端界面（React + Vite，数据由 scripts/build_web_data.py 生成）
 ├─ system/           W3 登录、任务队列、真实 ESM-150M 推理服务与单文件 UI
@@ -202,6 +212,8 @@ glyco-analysis/
 - `system/` 的 `serve` 必须装配真实 `Esm150Predictor`，测试替身只能由测试注入；
 - `system/` 默认只绑定 `127.0.0.1`，非回环地址必须配置环境密码哈希，不能用本地演示账号；
 - 页面上的位点概率来自作者检查点现场推理，不是实验阳性证据，也不是临床结论；
+- F3 的 `exact_sequence`、期望工具覆盖、最终回答存在性和工具调用成功数都是轨迹指标，不是答案正确率；
+- 外部模型对照必须复用同一任务、工具目录、系统提示词和动作协议，不能静默改用 provider 原生工具协议；
 
 ## 引用与许可
 

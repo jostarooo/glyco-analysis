@@ -44,6 +44,20 @@ ESM-2 150M LoRA 检查点，返回全部 N-X-S/T 候选位点，浏览器轮询�
 完整结果见 `reports/w3_day1/real_e2e_2026-11-04.json`，周报见
 `reports/weekly/W03_2026-11-10_progress.md`。
 
+### W3 Day 2（2026-11-05，进行中）
+
+W3 Day 2 回应导师关于本地 Qwen3 4B 档位偏小的反馈。Doc2Agent 50 题、70 个工具、
+系统提示词、JSON 动作协议和最大轮数保持不变，只替换模型后端。本地基线仍为
+`reports/w2_day2/f3_qwen3_4b_50/`；外部批次写入 `reports/w3_day2/f3_glm53_50/`，
+模型为 `workbuddy-ai/glm-5.3`，经本机 Magpie OpenAI-compatible 网关调用。
+
+本地基线参数为 `seed=0`、`num_ctx=8192`、`num_predict=512`、`think=false`；外部批次参数为 `temperature=0`、`max_tokens=512`，不发送 `seed`，上下文窗口由服务端模型控制。两边的 token 数是各自 provider 报告值，不能作为归一化成本或模型效率结论。
+
+两批结果都通过 `summarize_doc2agent_run.py --expected-tasks 50 --check-summary`。
+对照报告为 `reports/w3_day2/f3_glm53_vs_qwen3_4b.md`，只比较轨迹指标，不评价答案正确率。
+导师要求的外部接口对照已完成，但独立日志总结仍必须由本人按
+`reports/w3_day2/log_summary_evidence.md` 的原文和问题清单改写。
+
 ## 一、可行性五关（项目级，W1 只验收第 1 至第 3 关）
 
 五关按顺序过，前一关没过不进下一关。每关都留一个可检查的产物。
@@ -333,6 +347,46 @@ $env:PYTHONUTF8='1'
 
 正式 F3 批次是 `qwen3:4b` 的 50 题结果。`reports/w2_day2/f3_qwen3_8b_50_incomplete/` 是中断目录，不是成绩。上游 Claude 18/50 和 Qwen3 15/50 均由 GPT-4o 评分，本轮没有相同评分器，不能直接比较。
 
+### F3 外部模型轨迹对照（2026-11-05，W3 Day 2）
+
+```powershell
+$env:PYTHONPATH='D:\wbworkspace\glyco-analysis\.venv\Lib\site-packages'
+$env:PYTHONUTF8='1'
+$python='C:\Users\jostaro\AppData\Roaming\uv\python\cpython-3.12.14-windows-x86_64-none\python.exe'
+
+# 网关可用后先跑 1 题烟测，再跑正式 50 题
+& $python scripts\run_doc2agent_external.py --limit 1 --out reports\w3_day2\f3_glm53_smoke
+& $python scripts\run_doc2agent_external.py --out reports\w3_day2\f3_glm53_50
+
+& $python scripts\summarize_doc2agent_run.py `
+  --run-dir reports\w3_day2\f3_glm53_50 `
+  --expected-tasks 50 `
+  --check-summary reports\w3_day2\f3_glm53_50\summary.json
+
+& $python scripts\compare_doc2agent_runs.py
+```
+
+本地 Qwen3 4B 使用 `seed=0`、`num_ctx=8192`、`num_predict=512`、`think=false`、`max_rounds=4`；外部模型使用 `temperature=0`、`max_tokens=512`、`max_rounds=4`，不发送 `seed`，上下文窗口由服务端模型控制。两边都不发送 provider 原生 `tools` 或 `tool_choice`。API key 只从环境变量读取，不进入 summary、任务文件或日志。
+外部运行记录 159 次模型调用、568223 个报告 token，其中 4 次 `finish_reason=length`。
+
+DOC2Agent 50 题对照如下：
+
+| 指标 | Qwen3 4B | GLM-5.3 | 外部减本地 |
+|---|---:|---:|---:|
+| `exact_sequence` | 19 | 13 | -6 |
+| `all_expected_called` | 34 | 41 | +7 |
+| `any_expected_called` | 41 | 47 | +6 |
+| `tasks_with_tool_call` | 50 | 49 | -1 |
+| `tasks_with_final_answer` | 39 | 25 | -14 |
+| `tool_call_successes` | 78 | 114 | +36 |
+| `tool_calls` | 110 | 129 | +19 |
+| `tasks_with_max_rounds` | 9 | 20 | +11 |
+| `tool_error_statuses` | 32 | 15 | -17 |
+
+结果说明，外部模型更常调用到期望工具，工具调用成功数也更高，但在当前提示词和 4 轮上限内
+更容易重复调用，20 题达到最大轮数，最终回答数反而更少。这组数字只描述工具轨迹和终止行为，
+不是答案正确率。上游 GPT-4o 评分器没有运行。
+
 ### web 数据契约（2026-10-31 至 2026-11-01，W2 Day 4 至 Day 5）
 
 ```powershell
@@ -420,3 +474,4 @@ F3 计数上限、工具可行性题号集合和 Markdown 参考锚点都必须�
 | 2026-11-01 | W2 Day 5 修复：生产构建可从磁盘直接打开 | 原构建在 `file://` 下被 CORS 拦截外部 JS/CSS；改为单文件内联，Edge 实测四页挂载 | ✅ 静态契约和 Edge `file://` 挂载通过；检查入口见 `scripts/check_web_dist.py --browser` |
 | 2026-11-01 | W2 Day 5 录制台：三项真实功能演示 | 9 页单文件加入 F1 候选与 Sequon 规则、F2 任务与 seed、F3 工具轨迹播放；浏览器实际点击通过 | ✅ 11 项聚焦测试、Edge `file://` 和双分辨率交互检查通过；入口见 `video-ui/dist/index.html` |
 | 2026-11-04 | W3 Day 1：登录与真实位点预测系统纵切 | 真实 O75144 302 aa 经 HTTP 登录、排队、GPU 推理和轮询返回 6 个位点；历史标签与概率逐项对拍 | ✅ 真实 GPU 3/3；聚焦合同测试 25/25；全量 147 项中 139 通过、8 项按设计或 GPU 门控跳过；Edge 现场流程无脚本错误 |
+| 2026-11-05 | W3 Day 2：同 50 题外部模型轨迹对照 | GLM-5.3 与 Qwen3 4B 共用任务、70 个工具、提示词、JSON 动作协议和 4 轮上限；两份 summary 与 50 题对齐检查通过 | ✅ 外部轨迹五项 13/41/47/25/114；聚焦测试 14/14；全量 157 项中 149 通过、8 项门控跳过；报告明确不作为答案正确率 |
