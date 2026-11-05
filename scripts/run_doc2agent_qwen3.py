@@ -13,7 +13,6 @@ import inspect
 import json
 import re
 import time
-from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
@@ -26,10 +25,6 @@ DEFAULT_TASKS = DOC2AGENT_ROOT / "test_glycan" / "glycan_tasks_classified.jsonl"
 DEFAULT_TOOLS = DOC2AGENT_ROOT / "test_glycan" / "MCPTools"
 DEFAULT_OUT = ROOT / "reports" / "w2_day2" / "f3_qwen3_8b"
 OLLAMA_URL = "http://127.0.0.1:11434/api/chat"
-USER_PROMPT_TEMPLATE = (
-    "/no_think\nQuestion: {question}\n"
-    "Choose the next tool or finish. Return JSON only."
-)
 
 
 @dataclass(frozen=True)
@@ -40,17 +35,6 @@ class OllamaConfig:
     num_predict: int
     think: bool
     request_timeout: float
-
-
-@dataclass(frozen=True)
-class ChatReply:
-    content: str
-    elapsed_seconds: float
-    finish_reason: str | None = None
-    usage: dict[str, Any] = field(default_factory=dict)
-
-
-ChatFn = Callable[[list[dict[str, str]]], ChatReply]
 
 
 @dataclass
@@ -70,7 +54,6 @@ class TaskRun:
     final_answer: str = ""
     errors: list[str] = field(default_factory=list)
     elapsed_seconds: float = 0.0
-    model_calls: list[dict[str, Any]] = field(default_factory=list)
 
     def score(self) -> dict[str, Any]:
         called = [call["tool"] for call in self.tool_calls]
@@ -146,10 +129,6 @@ accessions and WURCS strings exactly. Use the supplied tool result as evidence.
 TOOL CATALOG
 {catalog}
 """
-
-
-def user_prompt(question: str) -> str:
-    return USER_PROMPT_TEMPLATE.format(question=question)
 
 
 def parse_json_object(text: str) -> dict[str, Any]:
@@ -242,55 +221,24 @@ def run_task(
     max_rounds: int,
     system: str,
 ) -> TaskRun:
-    def chat(messages: list[dict[str, str]]) -> ChatReply:
-        content, elapsed = call_ollama(messages, config)
-        return ChatReply(content=content, elapsed_seconds=elapsed)
-
-    return run_task_with_chat(
-        task, tools, max_rounds, system, chat, chat_label="ollama"
-    )
-
-
-def run_task_with_chat(
-    task: dict[str, Any],
-    tools: dict[str, Tool],
-    max_rounds: int,
-    system: str,
-    chat_fn: ChatFn,
-    chat_label: str = "chat",
-) -> TaskRun:
     run = TaskRun(task["task_id"], task["question"], task["expected_tools"])
     started = time.perf_counter()
     messages = [
         {"role": "system", "content": system},
-        {"role": "user", "content": user_prompt(task["question"])},
+        {
+            "role": "user",
+            "content": (
+                f"/no_think\nQuestion: {task['question']}\n"
+                "Choose the next tool or finish. Return JSON only."
+            ),
+        },
     ]
-    for round_number in range(1, max_rounds + 1):
-        call_started = time.perf_counter()
+    for _ in range(max_rounds):
         try:
-            reply = chat_fn(messages)
+            content, _ = call_ollama(messages, config)
         except Exception as exc:
-            error = f"{type(exc).__name__}: {exc}"
-            run.model_calls.append(
-                {
-                    "round": round_number,
-                    "elapsed_seconds": round(time.perf_counter() - call_started, 3),
-                    "finish_reason": None,
-                    "usage": {},
-                    "error": error,
-                }
-            )
-            run.errors.append(f"{chat_label}: {error}")
+            run.errors.append(f"ollama: {type(exc).__name__}: {exc}")
             break
-        content = reply.content
-        run.model_calls.append(
-            {
-                "round": round_number,
-                "elapsed_seconds": round(reply.elapsed_seconds, 3),
-                "finish_reason": reply.finish_reason,
-                "usage": dict(reply.usage),
-            }
-        )
         decision = parse_json_object(content)
         action = decision.get("action")
         if action == "finish":
