@@ -58,6 +58,27 @@ W3 Day 2 回应导师关于本地 Qwen3 4B 档位偏小的反馈。Doc2Agent 50 
 导师要求的外部接口对照已完成，但独立日志总结仍必须由本人按
 `reports/w3_day2/log_summary_evidence.md` 的原文和问题清单改写。
 
+### W3 Day 3（2026-11-06，进行中）
+
+W3 Day 3 为 Qwen3 4B 和 GLM-5.3 两份 50 题轨迹补上答案评分。评分输入包括上游题面、
+期望工具、期望答案、最终回答和真实工具证据。缺最终回答记为 `missing_answer`，不调用 judge；
+judge 返回 `SUCCESS` 但没有可用成功工具证据时记为 `manual_review`，不直接算正确。
+
+统一 judge 为 `workbuddy-ai/kimi-k3`，`temperature=0`、`max_tokens=1500`。这是本地证据约束
+评分，不是上游 GPT-4o 评分。Qwen3 4B 为 9 正确、29 错误、1 人工复核、11 缺回答；
+GLM-5.3 为 18 正确、3 错误、4 人工复核、25 缺回答。两批 `judge_unavailable` 和
+`invalid_trace` 均为 0。
+
+| 指标 | Qwen3 4B | GLM-5.3 |
+|---|---:|---:|
+| 有最终回答 | 39/50 | 25/50 |
+| 可判定正确率 | 9/38 | 18/21 |
+| 可判定覆盖率 | 38/50 | 21/50 |
+| 全 50 题中判为正确 | 9/50 | 18/50 |
+
+GLM-5.3 在已有最终回答的题中更容易被判正确，但只对 25/50 题产生最终回答。因此这组结果
+不支持“外部模型整体更好”或“模型更大导致正确率更高”的因果结论。
+
 ## 一、可行性五关（项目级，W1 只验收第 1 至第 3 关）
 
 五关按顺序过，前一关没过不进下一关。每关都留一个可检查的产物。
@@ -387,6 +408,67 @@ DOC2Agent 50 题对照如下：
 更容易重复调用，20 题达到最大轮数，最终回答数反而更少。这组数字只描述工具轨迹和终止行为，
 不是答案正确率。上游 GPT-4o 评分器没有运行。
 
+### F3 答案评分（2026-11-06，W3 Day 3）
+
+评分器读取上游 50 题定义、每题期望答案、最终回答和真实工具证据。缺最终回答时写入
+`missing_answer`，不调用 judge；题面或期望工具与上游不一致时写入 `invalid_trace`；
+judge 返回 `SUCCESS` 但证据全部截断时写入 `manual_review`。`graded_accuracy` 只以
+`correct + incorrect` 为分母，`graded_coverage` 和 `correct_over_task_count` 另外报告。
+
+```powershell
+$env:PYTHONPATH='D:\wbworkspace\glyco-analysis\.venv\Lib\site-packages'
+$env:PYTHONUTF8='1'
+$python='C:\Users\jostaro\AppData\Roaming\uv\python\cpython-3.12.14-windows-x86_64-none\python.exe'
+
+# 已有两份评分可离线复核，不调用网络
+& $python scripts\grade_doc2agent_answers.py --check `
+  --run-dir reports\w2_day2\f3_qwen3_4b_50 `
+  --out-dir reports\w3_day3\answer_grades_kimi_k3\f3_qwen3_4b_50
+
+& $python scripts\grade_doc2agent_answers.py --check `
+  --run-dir reports\w3_day2\f3_glm53_50 `
+  --out-dir reports\w3_day3\answer_grades_kimi_k3\f3_glm53_50
+
+& $python scripts\compare_doc2agent_answer_grades.py
+```
+
+需要重跑评分时使用同一 judge 参数：
+
+```powershell
+& $python scripts\grade_doc2agent_answers.py `
+  --run-dir reports\w2_day2\f3_qwen3_4b_50 `
+  --out-dir reports\w3_day3\answer_grades_kimi_k3\f3_qwen3_4b_50 `
+  --run-id qwen3_4b_50 `
+  --model workbuddy-ai/kimi-k3 `
+  --workers 4
+
+& $python scripts\grade_doc2agent_answers.py `
+  --run-dir reports\w3_day2\f3_glm53_50 `
+  --out-dir reports\w3_day3\answer_grades_kimi_k3\f3_glm53_50 `
+  --run-id glm53_50 `
+  --model workbuddy-ai/kimi-k3 `
+  --workers 4
+```
+
+评分结果：
+
+| 状态或指标 | Qwen3 4B | GLM-5.3 |
+|---|---:|---:|
+| `correct` | 9 | 18 |
+| `incorrect` | 29 | 3 |
+| `manual_review` | 1 | 4 |
+| `missing_answer` | 11 | 25 |
+| `invalid_trace` | 0 | 0 |
+| `judge_unavailable` | 0 | 0 |
+| `graded_accuracy` | 9/38 | 18/21 |
+| `graded_coverage` | 38/50 | 21/50 |
+| `correct_over_task_count` | 9/50 | 18/50 |
+
+50 题中有 32 题状态不同。GLM-5.3 在已有最终回答的题中更容易被判正确，但回答覆盖只有
+25/50，因此不能写成整体模型优劣，也不能把差异单独归因于模型大小。评分器会记录原始 judge
+响应、提示词哈希、源文件哈希和 `judge_response_sha256`；手改任一评分文件后，离线 `--check`
+必须退出 1。结果入口为 `reports/w3_day3/answer_grade_comparison.md`。
+
 ### web 数据契约（2026-10-31 至 2026-11-01，W2 Day 4 至 Day 5）
 
 ```powershell
@@ -475,3 +557,4 @@ F3 计数上限、工具可行性题号集合和 Markdown 参考锚点都必须�
 | 2026-11-01 | W2 Day 5 录制台：三项真实功能演示 | 9 页单文件加入 F1 候选与 Sequon 规则、F2 任务与 seed、F3 工具轨迹播放；浏览器实际点击通过 | ✅ 11 项聚焦测试、Edge `file://` 和双分辨率交互检查通过；入口见 `video-ui/dist/index.html` |
 | 2026-11-04 | W3 Day 1：登录与真实位点预测系统纵切 | 真实 O75144 302 aa 经 HTTP 登录、排队、GPU 推理和轮询返回 6 个位点；历史标签与概率逐项对拍 | ✅ 真实 GPU 3/3；聚焦合同测试 25/25；全量 147 项中 139 通过、8 项按设计或 GPU 门控跳过；Edge 现场流程无脚本错误 |
 | 2026-11-05 | W3 Day 2：同 50 题外部模型轨迹对照 | GLM-5.3 与 Qwen3 4B 共用任务、70 个工具、提示词、JSON 动作协议和 4 轮上限；两份 summary 与 50 题对齐检查通过 | ✅ 外部轨迹五项 13/41/47/25/114；聚焦测试 14/14；全量 157 项中 149 通过、8 项门控跳过；报告明确不作为答案正确率 |
+| 2026-11-06 | W3 Day 3：F3 答案评分与覆盖对照 | 同一 Kimi K3 judge 对两份 50 题轨迹评分；缺回答、无效轨迹、judge 不可用和人工复核分开记录；原始响应哈希可离线复核 | ✅ Qwen3 9 正确/38 可判定，GLM-5.3 18 正确/21 可判定；两份 `--check` PASS；聚焦 18/18；全量 175 项中 167 通过、8 项门控跳过 |
