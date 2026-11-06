@@ -544,6 +544,19 @@ def compute_cache_key(
     )
 
 
+def judge_response_sha256(
+    raw_response: str | None, request_error: str | None
+) -> str:
+    return sha256_text(
+        canonical_json(
+            {
+                "raw_response": raw_response,
+                "request_error": request_error,
+            }
+        )
+    )
+
+
 def build_grade_payload(
     *,
     run_id: str,
@@ -592,6 +605,7 @@ def build_grade_payload(
         "judge_model_config": judge_config.as_dict(),
         "raw_response": raw_response,
         "judge_transport_error": request_error,
+        "judge_response_sha256": judge_response_sha256(raw_response, request_error),
         "parsed_judge": parsed_judge,
         "evidence_audit": audit,
         "status": status,
@@ -999,6 +1013,15 @@ def check_run(
                 prompt_sha256=prompt_sha256,
                 judge_config=judge_config,
             )
+            recorded_response_sha256 = recorded.get("judge_response_sha256")
+            actual_response_sha256 = judge_response_sha256(
+                recorded.get("raw_response"),
+                recorded.get("judge_transport_error"),
+            )
+            if recorded_response_sha256 != actual_response_sha256:
+                errors.append(
+                    f"task {task_id:02d}: judge response SHA256 mismatch"
+                )
             expected = build_grade_payload(
                 run_id=run_id,
                 task=task,

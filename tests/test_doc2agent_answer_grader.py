@@ -408,6 +408,33 @@ class GraderCacheAndCheckTest(unittest.TestCase):
                 )
         self.assertEqual(exit_code, 1)
 
+    def test_check_fails_when_raw_judge_response_was_edited(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            base = Path(temp)
+            tasks_path, run_dir, out_dir = build_complete_grades(base, count=50)
+            grade_path = out_dir / "task_01.json"
+            grade = json.loads(grade_path.read_text(encoding="utf-8"))
+            grade["raw_response"] = grade["raw_response"].replace(
+                "The answer matches", "The answer contradicts"
+            )
+            grade_path.write_text(
+                json.dumps(grade, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+            with contextlib.redirect_stdout(io.StringIO()):
+                exit_code = grader.main(
+                    [
+                        "--check",
+                        "--tasks",
+                        str(tasks_path),
+                        "--run-dir",
+                        str(run_dir),
+                        "--out-dir",
+                        str(out_dir),
+                    ]
+                )
+        self.assertEqual(exit_code, 1)
+
 
 def build_complete_grades(
     base: Path, *, count: int
