@@ -1,0 +1,142 @@
+{
+  "cache_key": "9be406c92e63cdec056a2ed8173bc8fc0d8c2939146a98e8e172537cd94173ff",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "max_rounds_reached"
+    ],
+    "evidence_ids": [
+      "tool_1",
+      "tool_2",
+      "tool_3",
+      "tool_4"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "missing_final_answer",
+      "truncated_results",
+      "runner_errors"
+    ],
+    "has_final_answer": false,
+    "successful_result_tool_calls": 4,
+    "successful_tool_calls": 4,
+    "tool_calls": 4,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "getcolumns": "pdb,uniprot",
+          "isvalue": "Saccharomyces cerevisiae",
+          "limit": 100,
+          "wherecolumn": "species"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": "ERROR: Server Error 1052 (23000): Column 'pdb' in field list is ambiguous",
+          "status_code": 400,
+          "url": "https://unilectin.unige.ch/api/getlectins"
+        },
+        "status": "ok",
+        "tool": "get_lectins",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "getcolumns": "uniprot",
+          "isvalue": "Saccharomyces cerevisiae",
+          "limit": 100,
+          "wherecolumn": "species"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": {
+          "data": [
+            [
+              "uniprot"
+            ],
+            [
+              "Q12396"
+            ],
+            [
+              "P43555"
+            ],
+            [
+              "P38894"
+            ],
+            [
+              "P32768"
+            ]
+          ],
+          "status_code": 200,
+          "url": "https://unilectin.unige.ch/api/getlectins"
+        },
+        "status": "ok",
+        "tool": "get_lectins",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "uniprot_canonical_ac": "Q12396"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_3",
+        "result": {
+          "preview": "{\"status_code\": 200, \"url\": \"https://api.glygen.org/protein/detail/Q12396/\", \"data\": {\"mass\": {\"chemical_mass\": 50947.0}, \"refseq\": {\"ac\": \"NP_013181\", \"name\": \"Emp46p\", \"url\": \"https://www.ncbi.nlm.nih.gov/protein/NP_013181\"}, \"gene_names\": [{\"name\": \"EMP46\", \"type\": \"recommended\", \"evidence\": [{\"id\": \"Q12396\", \"database\": \"UniProtKB\", \"url\": \"https://www.uniprot.org/uniprotkb/Q12396\"}]}, {\"name\": \"EMP46\", \"type\": \"synonym\", \"evidence\": [{\"id\": \"NP_013181\", \"database\": \"RefSeq\", \"url\": \"https://www.ncbi.nlm.nih.gov/protein/NP_013181\"}]}], \"protein_names\": [{\"name\": \"Protein EMP46\", \"type\": \"recommended\", \"evidence\": [{\"id\": \"Q12396\", \"database\": \"UniProtKB\", \"url\": \"https://www.uniprot.org/uniprotkb/Q12396/entry#names_and_taxonomy\"}]}, {\"name\": \"46 kDa endomembrane protein\", \"type\": \"synonym\", \"evidence\": [{\"id\": \"Q12396\", \"database\": \"UniProtKB\", \"url\": \"https://www.uniprot.org/uniprotkb/Q12396/entry#names_and_taxonomy\"}]}, {\"name\": \"Emp46p\", \"type\": \"synonym\", \"evidence\": [{\"id\": \"NP_013181\", \"database\": \"RefSeq\", \"url\": \"https://www.ncbi.nlm.nih.gov/protein/NP_013181\"}]}], \"function\": [{\"annotation\": \"Involved in the secretion of glycoproteins and in nucleus architecture and gene silencing.\", \"evidence\": [{\"database\": \"UniProtKB\", \"id\": \"Q12396\", \"url\": \"https://www.uniprot.org/uniprotkb/Q12396#function\"}, {\"database\": \"PubMed\", \"id\": \"12134087\", \"url\": \"https://glygen.org/publication/PubMed/12134087\"}, {\"database\": \"PubMed\", \"id\": \"14627716\", \"url\": \"https://glygen.org/publication/PubMed/14627716\"}, {\"database\": \"PubMed\", \"id\": \"12206772\", \"url\": \"https://glygen.org/publication/PubMed/12206772\"}]}], \"disease\": [{\"disease_id\": \"DOID:0061042\", \"recommended_name\": {\"id\": \"DOID:0061042\", \"resource\": \"Disease Ontology\", \"url\": \"https://disease-ontology.org/term/DOID:0061042\", \"name\": \"autosomal dominant intellectual developmental disorder 69\", \"description\": \"An autosomal dominant intellectual developmental disorder characterized by developmental delay with variably impaired intellectual development that has_material_basis_in heterozygous mutation in the LMAN2L gene on chromosome 2q11.\"}, \"evidence\": [{\"id\": \"0061042\", \"database\": \"AGR\", \"url\": \"https://www.alliancegenome.org/disease/DOID:0061042\"}]}, {\"disease_id\": \"DOID:0081215\", \"recommended_name\": {\"id\": \"DOID:0081215\", \"resource\": \"Disease Ontology\", \"url\": \"https://disease-ontology.org/term/DOID:0081215\", \"name\": \"autosomal recessive intellectual developmental disorder 52\", \"description\": \"An autosomal recessive intellectual developmental disorder that has_material_basis_in homozygous mutation in the LMAN2L gene on chromosome 2q11.\"}, \"evidence\": [{\"id\": \"0081215\", \"database\": \"AGR\", \"url\": \"https://www.alliancegenome.org/disease/DOID:0081215\"}]}, {\"disease_id\": \"DOID:2211\", \"recommended_name\": {\"id\": \"DOID:2211\", \"resource\": \"Disease Ontology\", \"url\": \"https://disease-ontology.org/term/DOID:2211\", \"name\": \"factor XIII deficiency\", \"description\": \"A blood coagulation disease that is characterized by easy bleeding, has_symptom prolonged umbilical cord bleeding, epistaxis, bleeding of the gums, menorrhagia, recurrent miscarriages, abnormal scar formation and wound healing, and hemarthrosis, and has_material_basis_in autosomal recessive inheritance of mutation of the F13A1 or F13B gene, which encodes Factor XIII, formally known as fibrin stabilizing factor.\"}, \"evidence\": [{\"id\": \"2211\", \"database\": \"AGR\", \"url\": \"https://www.alliancegenome.org/disease/DOID:2211\"}]}, {\"disease_id\": \"DOID:2216\", \"recommended_name\": {\"id\": \"DOID:2216\", \"resource\": \"Disease Ontology\", \"url\": \"https://disease-ontology.org/term/DOID:2216\", \"name\": \"factor V deficiency\"}, \"evidence\": [{\"id\": \"2216\", \"database\": \"AGR\", \"url\": \"https://www.alliancegenome.org/disease/DOID:2216\"}]}], \"mutagenesis\": [{\"start_pos\": 177, \"end_pos\": 177, \"sequence_org\": \"Y\", \"sequence_mut\": \"F\", \"comment\": \"Impairs potassium-binding.\", \"evidence\": [{\"database\": \"UniProtKB\", \"id\": \"Q12396\", \"url\": \"https://www.uniprot.org/uniprotkb/Q12396\"}, {\"database\": \"PubMed\", \"id\": \"16439369\", \"url\": \"https://glygen.org/publication/PubMed/16439369\"}]}, {\"start_pos\": 429, \"end_pos\": 429, \"sequence_org\": \"Y\", \"sequence_mut\": \"A\", \"comment\": \"Impairs interaction with COP1, SEC21 and SEC23 and loss of endoplasmic reticulum exit.\", \"evidence\": [{\"database\": \"UniProtKB\", \"id\": \"Q12396\", \"url\": \"https://www.uniprot.org/uniprotkb/Q12396\"}, {\"database\": \"PubMed\", \"id\": \"12134087\", \"url\": \"https://glygen.org/publication/PubMed/12134087\"}]}, {\"start_pos\": 432, \"end_pos\": 432, \"sequence_org\": \"F\", \"sequence_mut\": \"A\", \"comment\": \"Impairs interaction with COP1, SEC21 and SEC23 and loss of endoplasmic reticulum exit.\", \"evidence\": [{\"database\": \"UniProtKB\", \"id\": \"Q12396\", \"url\": \"https://www.uniprot.org/uniprotkb/Q12396\"}, {\"database\": \"PubMed\", \"id\": \"12134087\", \"url\": \"https://glygen.org/publication/PubMed/12134087\"}]}, {\"start_pos\": 440, \"end_pos\": 442, \"sequence_org\": \"KVK\", \"sequence_mut\": \"RVR\", \"comment\": \"Impairs interaction with COP1 and SEC21 and mislocalizes to the vacuole.\", \"evidence\": [{\"database\": \"UniProtKB\", \"id\": \"Q12396\", \"url\": \"https://www.uniprot.org/uniprotkb/Q12396\"}, {\"database\": \"PubMed\", \"id\": \"12134087\", \"url\": \"https://glygen.org/publication/PubMed/12134087\"}]}, {\"start_pos\": 440, \"end_pos\": 442, \"sequence_org\": \"KVK\", \"sequence_mut\": \"SVS\", \"comment\": \"Impairs interaction with COP1 and SEC21 and mislocalizes to the vacuole.\", \"evidence\": [{\"database\": \"UniProtKB\", \"id\": \"Q12396\", \"url\": \"https://www.uniprot.org/uniprotkb/Q12396\"}, {\"database\": \"PubMed\", \"id\": \"12134087\", \"url\": \"https://glygen.org/publication/PubMed/12134087\"}]}, {\"start_pos\": 440, \"end_pos\": 444, \"sequence_org\": \"KVKLL\", \"comment\": \"Loss of endoplasmic reticulum exit.\", \"evidence\": [{\"database\": \"UniProtKB\", \"id\": \"Q12396\", \"url\": \"https://www.uniprot.org/uniprotkb/Q12396\"}, {\"database\": \"PubMed\", \"id\": \"12134087\", \"url\": \"https://glygen.org/publication/PubMed/12134087\"}]}, {\"start_pos\": 443, \"end_pos\": 444, \"",
+          "truncated": true
+        },
+        "status": "ok",
+        "tool": "protein_detail",
+        "truncated": true
+      },
+      {
+        "arguments": {
+          "uniprot_canonical_ac": "P43555"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_4",
+        "result": {
+          "preview": "{\"status_code\": 200, \"url\": \"https://api.glygen.org/protein/detail/P43555/\", \"data\": {\"mass\": {\"chemical_mass\": 50330.0}, \"refseq\": {\"ac\": \"NP_116606\", \"name\": \"Emp47p\", \"url\": \"https://www.ncbi.nlm.nih.gov/protein/NP_116606\"}, \"gene_names\": [{\"name\": \"EMP47\", \"type\": \"recommended\", \"evidence\": [{\"id\": \"P43555\", \"database\": \"UniProtKB\", \"url\": \"https://www.uniprot.org/uniprotkb/P43555\"}]}, {\"name\": \"EMP47\", \"type\": \"synonym\", \"evidence\": [{\"id\": \"NP_116606\", \"database\": \"RefSeq\", \"url\": \"https://www.ncbi.nlm.nih.gov/protein/NP_116606\"}]}], \"protein_names\": [{\"name\": \"Protein EMP47\", \"type\": \"recommended\", \"evidence\": [{\"id\": \"P43555\", \"database\": \"UniProtKB\", \"url\": \"https://www.uniprot.org/uniprotkb/P43555/entry#names_and_taxonomy\"}]}, {\"name\": \"47 kDa endomembrane protein\", \"type\": \"synonym\", \"evidence\": [{\"id\": \"P43555\", \"database\": \"UniProtKB\", \"url\": \"https://www.uniprot.org/uniprotkb/P43555/entry#names_and_taxonomy\"}]}, {\"name\": \"Emp47p\", \"type\": \"synonym\", \"evidence\": [{\"id\": \"NP_116606\", \"database\": \"RefSeq\", \"url\": \"https://www.ncbi.nlm.nih.gov/protein/NP_116606\"}]}, {\"name\": \"Endosomal P44 protein\", \"type\": \"synonym\", \"evidence\": [{\"id\": \"P43555\", \"database\": \"UniProtKB\", \"url\": \"https://www.uniprot.org/uniprotkb/P43555/entry#names_and_taxonomy\"}]}], \"function\": [{\"annotation\": \"Involved in the secretion of glycoproteins and in nucleus architecture and gene silencing. Required for the endoplasmic reticulum exit of EMP46.\", \"evidence\": [{\"database\": \"UniProtKB\", \"id\": \"P43555\", \"url\": \"https://www.uniprot.org/uniprotkb/P43555#function\"}, {\"database\": \"PubMed\", \"id\": \"14627716\", \"url\": \"https://glygen.org/publication/PubMed/14627716\"}, {\"database\": \"PubMed\", \"id\": \"12134087\", \"url\": \"https://glygen.org/publication/PubMed/12134087\"}]}], \"disease\": [{\"disease_id\": \"DOID:0061042\", \"recommended_name\": {\"id\": \"DOID:0061042\", \"resource\": \"Disease Ontology\", \"url\": \"https://disease-ontology.org/term/DOID:0061042\", \"name\": \"autosomal dominant intellectual developmental disorder 69\", \"description\": \"An autosomal dominant intellectual developmental disorder characterized by developmental delay with variably impaired intellectual development that has_material_basis_in heterozygous mutation in the LMAN2L gene on chromosome 2q11.\"}, \"evidence\": [{\"id\": \"0061042\", \"database\": \"AGR\", \"url\": \"https://www.alliancegenome.org/disease/DOID:0061042\"}]}, {\"disease_id\": \"DOID:0081215\", \"recommended_name\": {\"id\": \"DOID:0081215\", \"resource\": \"Disease Ontology\", \"url\": \"https://disease-ontology.org/term/DOID:0081215\", \"name\": \"autosomal recessive intellectual developmental disorder 52\", \"description\": \"An autosomal recessive intellectual developmental disorder that has_material_basis_in homozygous mutation in the LMAN2L gene on chromosome 2q11.\"}, \"evidence\": [{\"id\": \"0081215\", \"database\": \"AGR\", \"url\": \"https://www.alliancegenome.org/disease/DOID:0081215\"}]}, {\"disease_id\": \"DOID:2211\", \"recommended_name\": {\"id\": \"DOID:2211\", \"resource\": \"Disease Ontology\", \"url\": \"https://disease-ontology.org/term/DOID:2211\", \"name\": \"factor XIII deficiency\", \"description\": \"A blood coagulation disease that is characterized by easy bleeding, has_symptom prolonged umbilical cord bleeding, epistaxis, bleeding of the gums, menorrhagia, recurrent miscarriages, abnormal scar formation and wound healing, and hemarthrosis, and has_material_basis_in autosomal recessive inheritance of mutation of the F13A1 or F13B gene, which encodes Factor XIII, formally known as fibrin stabilizing factor.\"}, \"evidence\": [{\"id\": \"2211\", \"database\": \"AGR\", \"url\": \"https://www.alliancegenome.org/disease/DOID:2211\"}]}, {\"disease_id\": \"DOID:2216\", \"recommended_name\": {\"id\": \"DOID:2216\", \"resource\": \"Disease Ontology\", \"url\": \"https://disease-ontology.org/term/DOID:2216\", \"name\": \"factor V deficiency\"}, \"evidence\": [{\"id\": \"2216\", \"database\": \"AGR\", \"url\": \"https://www.alliancegenome.org/disease/DOID:2216\"}]}], \"species\": [{\"name\": \"Saccharomyces cerevisiae S288C\", \"taxid\": 559292, \"evidence\": [{\"database\": \"UniProtKB\", \"id\": \"P43555\", \"url\": \"https://www.uniprot.org/uniprotkb/P43555\"}], \"common_name\": \"Baker's yeast\", \"glygen_name\": \"Yeast\", \"reference_species\": \"Saccharomyces cerevisiae S288C [559292]\"}], \"gene\": [{\"name\": \"EMP47\", \"url\": \"https://www.uniprot.org/uniprotkb/P43555\", \"locus\": {\"chromosome\": \"VI\", \"start_pos\": 38843, \"end_pos\": 40180, \"strand\": \"+\", \"evidence\": [{\"database\": \"Ensembl Gene\", \"id\": \"YFL048C\", \"url\": \"https://www.ensemblgenomes.org/id/YFL048C\"}]}}], \"crossref\": [{\"id\": \"SGD:S000001846\", \"url\": \"https://alliancegenome.org/gene/SGD:S000001846\", \"database\": \"AGR\", \"categories\": [\"Protein Classification\"]}, {\"id\": \"P43555\", \"url\": \"https://alphafold.ebi.ac.uk/entry/P43555\", \"database\": \"AlphaFoldDB\"}, {\"id\": \"cd06903\", \"url\": \"https://www.ncbi.nlm.nih.gov/Structure/cdd/cddsrv.cgi?uid=cd06903\", \"database\": \"CDD\", \"categories\": [\"Protein Classification\"]}, {\"id\": \"850496\", \"url\": \"https://www.ncbi.nlm.nih.gov/gene/850496\", \"database\": \"GeneID\", \"categories\": [\"Genome Annotation\"]}, {\"id\": \"2A6Y\", \"url\": \"https://www.ncbi.nlm.nih.gov/Structure/icn3d/?mmdbid=2A6Y&bu=0\", \"database\": \"iCn3D\", \"categories\": [\"3D Structure\"]}, {\"id\": \"2A6Z\", \"url\": \"https://www.ncbi.nlm.nih.gov/Structure/icn3d/?mmdbid=2A6Z&bu=0\", \"database\": \"iCn3D\", \"categories\": [\"3D Structure\"]}, {\"id\": \"2A70\", \"url\": \"https://www.ncbi.nlm.nih.gov/Structure/icn3d/?mmdbid=2A70&bu=0\", \"database\": \"iCn3D\", \"categories\": [\"3D Structure\"]}, {\"id\": \"2A71\", \"url\": \"https://www.ncbi.nlm.nih.gov/Structure/icn3d/?mmdbid=2A71&bu=0\", \"database\": \"iCn3D\", \"categories\": [\"3D Structure\"]}, {\"id\": \"P43555\", \"url\": \"https://www.ebi.ac.uk/intact/interactors/id:P43555*\", \"database\": \"IntAct\", \"categories\": [\"Other\"]}, {\"id\": \"IPR005052\", \"url\": \"https://www.ebi.ac.uk/interpro/entry/IPR005052\", \"database\": \"InterPro\", \"categories\": [\"Protein Classification\"]}, {\"id\": \"IPR013320\", \"url\": \"https://www.ebi.ac.uk/interpro/entry/IPR013320\", \"database\": \"InterPro\", \"categories\": [\"Protei",
+          "truncated": true
+        },
+        "status": "ok",
+        "tool": "protein_detail",
+        "truncated": true
+      }
+    ],
+    "truncated_results": 2,
+    "usable_successful_tool_calls": 2
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "opencode-zen/deepseek-v4.1-flash-free",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "62dbc37a17d433b8eac5341f2a88f68e3b819457c3fa31cea8ba6163f2d22e6e",
+  "judge_transport_error": null,
+  "parsed_judge": null,
+  "prompt_sha256": "a6c7d2d8eb9a57eedfee5f050cff61330debb470ea0ba67f285e8c3deea61a36",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": null,
+  "reason_codes": [
+    "missing_final_answer"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "glm53_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "6707950afdf029ab0a5219df957332d1872b0a3f71ba3fc73b8c063ee55645b9",
+    "run_summary_sha256": "9b144e8e7a450caa3f3b2e596ba1a01e26f35485ac3138387b5ff7abdea1dabb",
+    "run_task_sha256": "b7f222a6624357350dc2ebed32b00f8727b76476d4e4168b46e629bfc3e9f6e5",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "missing_answer",
+  "task_id": 50
+}

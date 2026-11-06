@@ -1,0 +1,154 @@
+{
+  "cache_key": "4e5f60c5cbd95aa464bc3e6904a0815d9fe5547dc4550d025a3fd4653b5a3cb7",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "TypeError: search_protein_sequence_features() got an unexpected keyword argument 'type'",
+      "search_protein_sequence_features: TypeError: search_protein_sequence_features() got an unexpected keyword argument 'type'",
+      "max_rounds_reached"
+    ],
+    "evidence_ids": [
+      "tool_1",
+      "tool_2",
+      "tool_3",
+      "tool_4"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "missing_final_answer",
+      "tool_errors",
+      "runner_errors"
+    ],
+    "has_final_answer": false,
+    "successful_result_tool_calls": 3,
+    "successful_tool_calls": 3,
+    "tool_calls": 4,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "accession": "P02765",
+          "categories": "CHARGE_HISTIDINE",
+          "gene": "Hemoglobin",
+          "reviewed": "true",
+          "type": "CHAIN",
+          "types": "CHARGED_HISTIDINE"
+        },
+        "error": "TypeError: search_protein_sequence_features() got an unexpected keyword argument 'type'",
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": null,
+        "status": "error",
+        "tool": "search_protein_sequence_features",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "accession": "P02765",
+          "categories": "CHARGE_HISTIDINE",
+          "gene": "Hemoglobin",
+          "reviewed": "true",
+          "types": "CHARGED_HISTIDINE"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": {
+          "data": {
+            "errorMessage": [
+              "Invalid feature types",
+              "Invalid category types"
+            ],
+            "requestedURL": "https://www.ebi.ac.uk/proteins/api/features?offset=0&size=100&accession=P02765&reviewed=true&gene=Hemoglobin&categories=CHARGE_HISTIDINE&types=CHARGED_HISTIDINE"
+          },
+          "status_code": 400,
+          "url": "https://www.ebi.ac.uk/proteins/api/features?offset=0&size=100&accession=P02765&reviewed=true&gene=Hemoglobin&categories=CHARGE_HISTIDINE&types=CHARGED_HISTIDINE"
+        },
+        "status": "ok",
+        "tool": "search_protein_sequence_features",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "accession": "P02765",
+          "categories": "CHAIN",
+          "gene": "Hemoglobin",
+          "reviewed": "true",
+          "types": "CHARGED_HISTIDINE"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_3",
+        "result": {
+          "data": {
+            "errorMessage": [
+              "Invalid feature types",
+              "Invalid category types"
+            ],
+            "requestedURL": "https://www.ebi.ac.uk/proteins/api/features?offset=0&size=100&accession=P02765&reviewed=true&gene=Hemoglobin&categories=CHAIN&types=CHARGED_HISTIDINE"
+          },
+          "status_code": 400,
+          "url": "https://www.ebi.ac.uk/proteins/api/features?offset=0&size=100&accession=P02765&reviewed=true&gene=Hemoglobin&categories=CHAIN&types=CHARGED_HISTIDINE"
+        },
+        "status": "ok",
+        "tool": "search_protein_sequence_features",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "accession": "P02765",
+          "categories": "CHARGED_HISTIDINE",
+          "gene": "Hemoglobin",
+          "reviewed": "true",
+          "types": "CHAIN"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_4",
+        "result": {
+          "data": {
+            "errorMessage": [
+              "Invalid category types"
+            ],
+            "requestedURL": "https://www.ebi.ac.uk/proteins/api/features?offset=0&size=100&accession=P02765&reviewed=true&gene=Hemoglobin&categories=CHARGED_HISTIDINE&types=CHAIN"
+          },
+          "status_code": 400,
+          "url": "https://www.ebi.ac.uk/proteins/api/features?offset=0&size=100&accession=P02765&reviewed=true&gene=Hemoglobin&categories=CHARGED_HISTIDINE&types=CHAIN"
+        },
+        "status": "ok",
+        "tool": "search_protein_sequence_features",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 3
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "62dbc37a17d433b8eac5341f2a88f68e3b819457c3fa31cea8ba6163f2d22e6e",
+  "judge_transport_error": null,
+  "parsed_judge": null,
+  "prompt_sha256": "b46f990c8b22c4236f79b89fe40901515674a3e73f5a98f714175e686c3e1132",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": null,
+  "reason_codes": [
+    "missing_final_answer"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "qwen3_4b_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "57a6f8141d3d0b906f2aadf6dc00ec2155087544519cde4dabe732d1c905f3e5",
+    "run_summary_sha256": "4ead0e26a15760a34450c55859679a5c5aeee4dd913014826540b77e5b7c66f4",
+    "run_task_sha256": "ac2e2a1d9947452a855c731522f94f657a8048b99438afff42e1f2c6fb44e9bf",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "missing_answer",
+  "task_id": 24
+}

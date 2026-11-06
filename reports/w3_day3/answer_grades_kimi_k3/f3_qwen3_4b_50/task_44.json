@@ -1,0 +1,133 @@
+{
+  "cache_key": "158769c83d86e7949ceb0f443124ec314e3bb30bde5c3e87a86e7feee114c9ad",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "AssertionError: Type must be one of \"html\", \"json\", or \"binary\"",
+      "AssertionError: Format must be either \"png\" or \"svg\"",
+      "generate_glycan_image: AssertionError: Type must be one of \"html\", \"json\", or \"binary\"",
+      "generate_glycan_image: AssertionError: Format must be either \"png\" or \"svg\"",
+      "max_rounds_reached"
+    ],
+    "evidence_ids": [
+      "tool_1",
+      "tool_2",
+      "tool_3",
+      "tool_4"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "missing_final_answer",
+      "tool_errors",
+      "runner_errors"
+    ],
+    "has_final_answer": false,
+    "successful_result_tool_calls": 1,
+    "successful_tool_calls": 1,
+    "tool_calls": 4,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "wurcs": "WURCS=2.0/3,5,4/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3-3/a4-b1_b4-c1_c3-d1_c6-e1"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": [
+            {
+              "m_mapTypeToReports": {
+                "ERROR": [],
+                "UNVERIFIABLE": [],
+                "WARNING": []
+              },
+              "m_sInputString": "WURCS=2.0/3,5,4/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3-3/a4-b1_b4-c1_c3-d1_c6-e1",
+              "m_sStandardString": "WURCS=2.0/3,5,4/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3-3/a4-b1_b4-c1_c3-d1_c6-e1"
+            }
+          ],
+          "status_code": 200,
+          "url": "https://api.glycosmos.org/wurcsframework/1.2.14/wurcsvalidator"
+        },
+        "status": "ok",
+        "tool": "validate_wurcs",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "format": "png",
+          "type": "wurcs",
+          "verify": "true",
+          "wurcs": "WURCS=2.0/3,5,4/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3-3/a4-b1_b4-c1_c3-d1_c6-e1"
+        },
+        "error": "AssertionError: Type must be one of \"html\", \"json\", or \"binary\"",
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": null,
+        "status": "error",
+        "tool": "generate_glycan_image",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "format": "json",
+          "type": "wurcs",
+          "verify": "true",
+          "wurcs": "WURCS=2.0/3,5,4/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3-3/a4-b1_b4-c1_c3-d1_c6-e1"
+        },
+        "error": "AssertionError: Format must be either \"png\" or \"svg\"",
+        "expected_tool": true,
+        "id": "tool_3",
+        "result": null,
+        "status": "error",
+        "tool": "generate_glycan_image",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "format": "svg",
+          "type": "wurcs",
+          "verify": "true",
+          "wurcs": "WURCS=2.0/3,5,4/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3-3/a4-b1_b4-c1_c3-d1_c6-e1"
+        },
+        "error": "AssertionError: Type must be one of \"html\", \"json\", or \"binary\"",
+        "expected_tool": true,
+        "id": "tool_4",
+        "result": null,
+        "status": "error",
+        "tool": "generate_glycan_image",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 1
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "62dbc37a17d433b8eac5341f2a88f68e3b819457c3fa31cea8ba6163f2d22e6e",
+  "judge_transport_error": null,
+  "parsed_judge": null,
+  "prompt_sha256": "d2a1253b3e7cecb306b3a3144ab1058a65b5183fd640411bca3d6129f0c6f108",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": null,
+  "reason_codes": [
+    "missing_final_answer"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "qwen3_4b_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "2687b9d325b9f341a9b139aad785c22b1da8351efdd00568c350469e0e4e3609",
+    "run_summary_sha256": "4ead0e26a15760a34450c55859679a5c5aeee4dd913014826540b77e5b7c66f4",
+    "run_task_sha256": "cb91bc534071945998fcfe1816f41f1eb64c0ed362bc2a482821b69db771346c",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "missing_answer",
+  "task_id": 44
+}

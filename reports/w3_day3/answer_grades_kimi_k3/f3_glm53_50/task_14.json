@@ -1,0 +1,92 @@
+{
+  "cache_key": "181f87cc4915c8139067f48d3c2cbbe774a285a95b2538e50c796372015962f4",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": true,
+    "error_text": [
+      "AssertionError: Missing required parameter: getcolumns",
+      "get_trefoil_lectins: AssertionError: Missing required parameter: getcolumns",
+      "invalid_action: {\"action\":\"finish\",\"answer\":\"Bacterial trefoil lectins from UniLectin (superkingdom = Bacteria, fields: domain, uniprot, superkingdom, limit 2000) fall into three domain families: (1) Ricin-like — the most abundant, including entries with UniProt accessions such as A0A0M1J4I1, A0A2Z5G0X4 (also Entamoeba trefoil lectin-like), A0A2V9P3Z2, A0A2V8LAQ4, A0A2V8HW30, A0A2V8JBK6, A0A2V7UAC4, A0A355EUN2, A0A2V8KG85, A0A3M2C9S5, A0A2V7Y991, A0A2V9RQD3, A0A2V8C6M3, A0A328ZCX3, A0A561XES8, A0A235ETG9, A0A56"
+    ],
+    "evidence_ids": [
+      "tool_1",
+      "tool_2"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "missing_final_answer",
+      "tool_errors",
+      "truncated_results",
+      "all_successful_evidence_truncated",
+      "runner_errors"
+    ],
+    "has_final_answer": false,
+    "successful_result_tool_calls": 1,
+    "successful_tool_calls": 1,
+    "tool_calls": 2,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "isvalue": "Bacteria",
+          "limit": 2000,
+          "wherecolumn": "superkingdom"
+        },
+        "error": "AssertionError: Missing required parameter: getcolumns",
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": null,
+        "status": "error",
+        "tool": "get_trefoil_lectins",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "getcolumns": "domain,uniprot,superkingdom",
+          "isvalue": "Bacteria",
+          "limit": 2000,
+          "wherecolumn": "superkingdom"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": {
+          "preview": "{\"status_code\": 200, \"url\": \"https://unilectin.unige.ch/api/gettreflec\", \"data\": [[\"domain\", \"uniprot\", \"superkingdom\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"A0A0M1J4I1\", \"Bacteria\"], [\"Earthworm lectin-like\", \"\", \"Bacteria\"], [\"Entamoeba trefoil lectin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Earthworm lectin-like\", \"\", \"Bacteria\"], [\"Entamoeba trefoil lectin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Earthworm lectin-like\", \"\", \"Bacteria\"], [\"Entamoeba trefoil lectin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Entamoeba trefoil lectin-like\", \"A0A2Z5G0X4\", \"Bacteria\"], [\"Entamoeba trefoil lectin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"A0A2V9P3Z2\", \"Bacteria\"], [\"Ricin-like\", \"A0A2V8LAQ4\", \"Bacteria\"], [\"Earthworm lectin-like\", \"A0A2V8HW30\", \"Bacteria\"], [\"Entamoeba trefoil lectin-like\", \"A0A2V8HW30\", \"Bacteria\"], [\"Ricin-like\", \"A0A2V8HW30\", \"Bacteria\"], [\"Earthworm lectin-like\", \"A0A2V8JBK6\", \"Bacteria\"], [\"Entamoeba trefoil lectin-like\", \"A0A2V8JBK6\", \"Bacteria\"], [\"Ricin-like\", \"A0A2V8JBK6\", \"Bacteria\"], [\"Ricin-like\", \"A0A2V7UAC4\", \"Bacteria\"], [\"Ricin-like\", \"A0A355EUN2\", \"Bacteria\"], [\"Earthworm lectin-like\", \"A0A2V8KG85\", \"Bacteria\"], [\"Entamoeba trefoil lectin-like\", \"A0A2V8KG85\", \"Bacteria\"], [\"Ricin-like\", \"A0A2V8KG85\", \"Bacteria\"], [\"Ricin-like\", \"A0A3M2C9S5\", \"Bacteria\"], [\"Ricin-like\", \"A0A2V7Y991\", \"Bacteria\"], [\"Ricin-like\", \"A0A2V9RQD3\", \"Bacteria\"], [\"Earthworm lectin-like\", \"A0A2V8C6M3\", \"Bacteria\"], [\"Entamoeba trefoil lectin-like\", \"A0A2V8C6M3\", \"Bacteria\"], [\"Ricin-like\", \"A0A2V8C6M3\", \"Bacteria\"], [\"Entamoeba trefoil lectin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Entamoeba trefoil lectin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Earthworm lectin-like\", \"\", \"Bacteria\"], [\"Entamoeba trefoil lectin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"A0A328ZCX3\", \"Bacteria\"], [\"Ricin-like\", \"A0A561XES8\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"A0A235ETG9\", \"Bacteria\"], [\"Ricin-like\", \"A0A561C605\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"A0A1E3YUH6\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"A0A165LG76\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"A0A519MJ63\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"A0A0A1VFR1\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"A0A0Q4S3R0\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"A0A2R7NR88\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"A0A4D4JLT5\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"K0HUR8\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"A0A3N7EAH3\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"A0A0Q9DIC6\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"A0A2R7ML03\", \"Bacteria\"], [\"Ricin-like\", \"A0A0Q0XG33\", \"Bacteria\"], [\"Ricin-like\", \"A0A2T6JC49\", \"Bacteria\"], [\"Ricin-like\", \"A0A2G6SAU5\", \"Bacteria\"], [\"Ricin-like\", \"J0KFS5\", \"Bacteria\"], [\"Ricin-like\", \"A0A1Q3J845\", \"Bacteria\"], [\"Ricin-like\", \"A0A0Q8TMQ2\", \"Bacteria\"], [\"Ricin-like\", \"A0A1I2CVS2\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"A0A3S9AZ16\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"A0A2L2LXT0\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"A0A372FFG1\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"A0A2A5PEA0\", \"Bacteria\"], [\"Ricin-like\", \"A0A1E8E6B7\", \"Bacteria\"], [\"Ricin-like\", \"A0A5M3WCT8\", \"Bacteria\"], [\"Ricin-like\", \"A0A5M3VZY0\", \"Bacteria\"], [\"Ricin-like\", \"A0A5M3W8W5\", \"Bacteria\"], [\"Ricin-like\", \"A0A5M3WCS0\", \"Bacteria\"], [\"Ricin-like\", \"A0A5M3VTZ9\", \"Bacteria\"], [\"Ricin-like\", \"A0A5M3WCT4\", \"Bacteria\"], [\"Ricin-like\", \"A0A5M3VZC4\", \"Bacteria\"], [\"Ricin-like\", \"A0A5M3W0S4\", \"Bacteria\"], [\"Ricin-like\", \"A0A5M3VR64\", \"Bacteria\"], [\"Ricin-like\", \"A0A5M3W7X1\", \"Bacteria\"], [\"Ricin-like\", \"A0A5M3VZ52\", \"Bacteria\"], [\"Ricin-like\", \"A0A5M3W2K0\", \"Bacteria\"], [\"Ricin-like\", \"A0A5M3WCV7\", \"Bacteria\"], [\"Ricin-like\", \"A0A5M3W7V6\", \"Bacteria\"], [\"Ricin-like\", \"A0A5M3VWG1\", \"Bacteria\"], [\"Ricin-like\", \"A0A5M3WGA7\", \"Bacteria\"], [\"Ricin-like\", \"A0A5M3W782\", \"Bacteria\"], [\"Ricin-like\", \"A0A5M3WCV1\", \"Bacteria\"], [\"Ricin-like\", \"A0A5M3W7X2\", \"Bacteria\"], [\"Ricin-like\", \"A0A5M3WA56\", \"Bacteria\"], [\"Entamoeba trefoil lectin-like\", \"A0A5M3WHS0\", \"Bacteria\"], [\"Ricin-like\", \"A0A5M3WHS0\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Entamoeba trefoil lectin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"\", \"Bacteria\"], [\"Ricin-like\", \"A0A5M3WM01\", \"Bacteria\"], [\"Ricin-like\", \"A0A5M3WT50\", \"Bacteria\"], [\"Ricin-like\", \"A0A5M3WUL8\", \"Bacteria\"], [\"Ricin-like\", \"A0A5M3X028\", \"Bacteria\"], [\"Ricin-like\", \"A0A5M3WH88\", \"Bacteria\"], [\"Ricin-like\", \"A0A5M3X9E1\", \"Bacteria\"], [\"Ricin-like\", \"A0A5M3WRZ8\", \"Bacteria\"], [\"Ricin-like\", \"A0A5M3WFN0\", \"Bacteria\"], [\"Ricin-like\", \"A0A5M3X322\", \"Bacteria\"], [\"Ricin-like\", \"A0A5M3WKX0\", \"Bacteria\"], [\"Ricin-like\", \"A0A5M3WWF5\", ",
+          "truncated": true
+        },
+        "status": "ok",
+        "tool": "get_trefoil_lectins",
+        "truncated": true
+      }
+    ],
+    "truncated_results": 1,
+    "usable_successful_tool_calls": 0
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "62dbc37a17d433b8eac5341f2a88f68e3b819457c3fa31cea8ba6163f2d22e6e",
+  "judge_transport_error": null,
+  "parsed_judge": null,
+  "prompt_sha256": "48176f6b834806b999b2fda20aa4909e7b38eff0040f264637cf7cdabb1b69b8",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": null,
+  "reason_codes": [
+    "missing_final_answer"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "glm53_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "412c1a991047a8fe42dfef7ae0eda9e438bb9698115c332677a600d0711f3af2",
+    "run_summary_sha256": "9b144e8e7a450caa3f3b2e596ba1a01e26f35485ac3138387b5ff7abdea1dabb",
+    "run_task_sha256": "cd358d2d78c8c61162b5f9d061d094276df5e033578ed70f1de2a96c5ae45df9",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "missing_answer",
+  "task_id": 14
+}

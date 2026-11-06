@@ -1,0 +1,82 @@
+{
+  "cache_key": "32840abbfb98172af46ac9918d39ce418009f26eb39701b15a2e86a5d6ed2b25",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [],
+    "evidence_ids": [
+      "answer",
+      "tool_1"
+    ],
+    "expected_tool_called": true,
+    "flags": [],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 1,
+    "successful_tool_calls": 1,
+    "tool_calls": 1,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "getcolumns": "lectin_fold, domain_type",
+          "isvalue": "Candida albicans",
+          "limit": "100",
+          "wherecolumn": "species"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": "ERROR: Server Error with getmycolec endpoint",
+          "status_code": 400,
+          "url": "https://unilectin.unige.ch/api/getmycolec"
+        },
+        "status": "ok",
+        "tool": "get_fungal_lectins",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 1
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "opencode-zen/deepseek-v4.1-flash-free",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "e4ffd9444ea3e0dda9c3c8e7eeba6febe78ffd2c00dd7a778645ca9dd5875671",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "The expected tool was invoked with relevant parameters, but it returned a server error. The answer accurately reflects that tool failure, but tool use did not support producing the requested scientific result.",
+    "critical_issues": [
+      "Missing the required list of fold types and domain types for Candida albicans fungal lectins.",
+      "No confirmed species classification entries are provided.",
+      "The answer reports tool failure instead of delivering the requested scientific data."
+    ],
+    "decision": "FAILURE",
+    "evidence_ids": [
+      "tool_1"
+    ],
+    "reason": "The final answer does not provide the required list of fungal lectin fold and domain types for Candida albicans. It only reports a server error from the UniLectin getmycolec endpoint, which is supported by tool_1 but omits the expected scientific result.",
+    "scientific_accuracy": "unknown"
+  },
+  "prompt_sha256": "c827615800def140a074c19a71a4352f1bfd02c2773c22b1d178af059975213a",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\n  \"decision\": \"FAILURE\",\n  \"reason\": \"The final answer does not provide the required list of fungal lectin fold and domain types for Candida albicans. It only reports a server error from the UniLectin getmycolec endpoint, which is supported by tool_1 but omits the expected scientific result.\",\n  \"critical_issues\": [\n    \"Missing the required list of fold types and domain types for Candida albicans fungal lectins.\",\n    \"No confirmed species classification entries are provided.\",\n    \"The answer reports tool failure instead of delivering the requested scientific data.\"\n  ],\n  \"scientific_accuracy\": \"unknown\",\n  \"api_usage_assessment\": \"The expected tool was invoked with relevant parameters, but it returned a server error. The answer accurately reflects that tool failure, but tool use did not support producing the requested scientific result.\",\n  \"evidence_ids\": [\n    \"tool_1\"\n  ]\n}",
+  "reason_codes": [
+    "judge_failure"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "qwen3_4b_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "0d6815e4104a91993b10310c32c73222557f05a67a2b9b2a33c51b0aaf61c09b",
+    "run_summary_sha256": "4ead0e26a15760a34450c55859679a5c5aeee4dd913014826540b77e5b7c66f4",
+    "run_task_sha256": "35bd9c8975d0daa2ccf3fbc20af04266369e378876731c441ca68440e6652458",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "incorrect",
+  "task_id": 12
+}

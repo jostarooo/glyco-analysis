@@ -1,0 +1,125 @@
+{
+  "cache_key": "ba0fef942815b14f83df0257e9350635d21398af3930baef1f83cd0510054b99",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "TypeError: search_natural_variants() got an unexpected keyword argument 'consequence_type'",
+      "search_natural_variants: TypeError: search_natural_variants() got an unexpected keyword argument 'consequence_type'"
+    ],
+    "evidence_ids": [
+      "answer",
+      "tool_1",
+      "tool_2",
+      "tool_3"
+    ],
+    "expected_tool_called": false,
+    "flags": [
+      "tool_errors",
+      "expected_tool_not_called",
+      "runner_errors"
+    ],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 0,
+    "successful_tool_calls": 0,
+    "tool_calls": 3,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "accession": "NC_000017.11",
+          "consequence_type": "missense",
+          "location": "58223910",
+          "offset": 0,
+          "size": 100,
+          "sourcetype": "NCBI SNP"
+        },
+        "error": "TypeError: search_natural_variants() got an unexpected keyword argument 'consequence_type'",
+        "expected_tool": false,
+        "id": "tool_1",
+        "result": null,
+        "status": "error",
+        "tool": "search_natural_variants",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "accession": "NC_000017.11",
+          "consequence_type": "missense",
+          "location": "58223910",
+          "offset": 0,
+          "size": 100,
+          "sourcetype": "NCBI SNP"
+        },
+        "error": "TypeError: search_natural_variants() got an unexpected keyword argument 'consequence_type'",
+        "expected_tool": false,
+        "id": "tool_2",
+        "result": null,
+        "status": "error",
+        "tool": "search_natural_variants",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "accession": "NC_000017.11",
+          "consequence_type": "missense",
+          "location": "58223910",
+          "offset": 0,
+          "size": 100,
+          "sourcetype": "NCBI SNP"
+        },
+        "error": "TypeError: search_natural_variants() got an unexpected keyword argument 'consequence_type'",
+        "expected_tool": false,
+        "id": "tool_3",
+        "result": null,
+        "status": "error",
+        "tool": "search_natural_variants",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 0
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "opencode-zen/deepseek-v4.1-flash-free",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "2164ead247c11b55ab390747651a26a97c1c256a646c18911212c07c445869bf",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "Tool use was unsuccessful: search_natural_variants calls failed due to an unsupported consequence_type argument, and the expected tool was not used, so the tool evidence does not support the requested scientific result.",
+    "critical_issues": [
+      "Did not retrieve or report any missense natural variants associated with the specified variation.",
+      "Did not answer whether multiple alternative sequences exist or provide their ranges.",
+      "Used an incorrect tool/parameter combination and omitted the expected get_natural_variants_by_hgvs_expression tool."
+    ],
+    "decision": "FAILURE",
+    "evidence_ids": [
+      "tool_1",
+      "tool_2",
+      "tool_3"
+    ],
+    "reason": "The final answer reports a tool parameter error and provides no natural variant records, alternative sequences, amino-acid ranges, source filter, or status code required by the expected answer. The intended tool was not used, and all listed tool calls failed.",
+    "scientific_accuracy": "unknown"
+  },
+  "prompt_sha256": "0c56f617967b87e03f026c412155668811caee648609b3a5f8676611f702a402",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\n  \"decision\": \"FAILURE\",\n  \"reason\": \"The final answer reports a tool parameter error and provides no natural variant records, alternative sequences, amino-acid ranges, source filter, or status code required by the expected answer. The intended tool was not used, and all listed tool calls failed.\",\n  \"critical_issues\": [\n    \"Did not retrieve or report any missense natural variants associated with the specified variation.\",\n    \"Did not answer whether multiple alternative sequences exist or provide their ranges.\",\n    \"Used an incorrect tool/parameter combination and omitted the expected get_natural_variants_by_hgvs_expression tool.\"\n  ],\n  \"scientific_accuracy\": \"unknown\",\n  \"api_usage_assessment\": \"Tool use was unsuccessful: search_natural_variants calls failed due to an unsupported consequence_type argument, and the expected tool was not used, so the tool evidence does not support the requested scientific result.\",\n  \"evidence_ids\": [\n    \"tool_1\",\n    \"tool_2\",\n    \"tool_3\"\n  ]\n}",
+  "reason_codes": [
+    "judge_failure"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "qwen3_4b_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "6bbf6f650c1328104e8cc30a62c0826243cb5dbdc3fcd2a82c16cdb346374adb",
+    "run_summary_sha256": "4ead0e26a15760a34450c55859679a5c5aeee4dd913014826540b77e5b7c66f4",
+    "run_task_sha256": "a9beb364b81168acbec573a43b34ab04d9a3f60d404cc3ac25f36cf41af8f286",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "incorrect",
+  "task_id": 18
+}

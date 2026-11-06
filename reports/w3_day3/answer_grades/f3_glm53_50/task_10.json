@@ -1,0 +1,97 @@
+{
+  "cache_key": "ce6fa9ff81a1bdd68d745ded275df74fede9978aa00a82121bbefb156aded19d",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "TypeError: quote_from_bytes() expected bytes",
+      "search_uniprot_entries_by_taxonomy_and_genomic_coordinates: TypeError: quote_from_bytes() expected bytes"
+    ],
+    "evidence_ids": [
+      "answer",
+      "tool_1",
+      "tool_2"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "tool_errors",
+      "runner_errors"
+    ],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 1,
+    "successful_tool_calls": 1,
+    "tool_calls": 2,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "format": "json",
+          "in_range": true,
+          "locations": [
+            "X:58205437-58219305"
+          ],
+          "offset": 0,
+          "size": 100,
+          "taxonomy": "9606"
+        },
+        "error": "TypeError: quote_from_bytes() expected bytes",
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": null,
+        "status": "error",
+        "tool": "search_uniprot_entries_by_taxonomy_and_genomic_coordinates",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "format": "json",
+          "in_range": true,
+          "locations": "X:58205437-58219305",
+          "offset": 0,
+          "size": 100,
+          "taxonomy": "9606"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": {
+          "data": [],
+          "status_code": 200,
+          "url": "https://www.ebi.ac.uk/proteins/api/coordinates/9606/X%3A58205437-58219305?offset=0&size=100&in_range=True"
+        },
+        "status": "ok",
+        "tool": "search_uniprot_entries_by_taxonomy_and_genomic_coordinates",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 1
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "opencode-zen/deepseek-v4.1-flash-free",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "959fffe8850283129c7bdda2d90ba06d814717225b9a3f9c7ec60d9736263d8a",
+  "judge_transport_error": "empty_judge_content",
+  "parsed_judge": null,
+  "prompt_sha256": "0f57773ef19163971cabebec9ff7d5b9976deb2b14e295ebbd29e550b6bfb2b3",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": null,
+  "reason_codes": [
+    "judge_request_error"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "glm53_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "2ffe00b59f00b4ed36ffe1b4104469435d1c20d5f492fa475859c61e3db61f3e",
+    "run_summary_sha256": "9b144e8e7a450caa3f3b2e596ba1a01e26f35485ac3138387b5ff7abdea1dabb",
+    "run_task_sha256": "cf1f114ff2fecc34eb560011cf756b6408c70cc48cdca076c33f591e8a97d866",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "judge_unavailable",
+  "task_id": 10
+}

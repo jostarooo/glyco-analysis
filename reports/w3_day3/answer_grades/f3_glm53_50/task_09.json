@@ -1,0 +1,136 @@
+{
+  "cache_key": "57b7bc429fe66995588b6de3e9958e32e11b7acbab1145845d43c4c2bf309b88",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [],
+    "evidence_ids": [
+      "answer",
+      "tool_1"
+    ],
+    "expected_tool_called": true,
+    "flags": [],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 1,
+    "successful_tool_calls": 1,
+    "tool_calls": 1,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "MatchCharges": true,
+          "MatchIsotopes": true,
+          "MaxRecords": 50,
+          "MaxSeconds": 60,
+          "output_format": "JSON",
+          "smiles": "C(C1C(C(C(C(O1)O)O)O)O)O"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": {
+            "IdentifierList": {
+              "CID": [
+                5988,
+                14982,
+                73111,
+                5280804,
+                5280805,
+                5793,
+                157355,
+                14969,
+                36462,
+                107971,
+                439503,
+                440936,
+                444041,
+                5281800,
+                11679800,
+                452548,
+                5281233,
+                9549171,
+                16129778,
+                159278,
+                9898279,
+                25147451,
+                6036,
+                7427,
+                10621,
+                11333,
+                656630,
+                6420023,
+                5281377,
+                91440,
+                5281544,
+                5281613,
+                5281771,
+                5318997,
+                6072,
+                28523,
+                442428,
+                5281718,
+                14049689,
+                5486699,
+                441921,
+                11954171,
+                206,
+                64689,
+                442534,
+                6918840,
+                636380,
+                44814423,
+                28620,
+                5360621
+              ]
+            }
+          },
+          "status_code": 200,
+          "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/fastsubstructure/smiles/C%28C1C%28C%28C%28C%28O1%29O%29O%29O%29O%29O/cids/JSON?MatchIsotopes=true&MatchCharges=true&MaxSeconds=60&MaxRecords=50"
+        },
+        "status": "ok",
+        "tool": "structure_search_substructure",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 1
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "opencode-zen/deepseek-v4.1-flash-free",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "13cad521e48d8326a2f5498a697fdadd534e99b1e9104eb52dbbbe31df057165",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "The tool was used correctly with the specified substructure search parameters, and the final answer accurately reports the returned CID list and status.",
+    "critical_issues": [],
+    "decision": "SUCCESS",
+    "evidence_ids": [
+      "tool_1"
+    ],
+    "reason": "The final answer reproduces all 50 CIDs returned by the PubChem substructure search and correctly states the MatchIsotopes, MatchCharges, MaxSeconds, and MaxRecords constraints. This substantively matches the expected result with no critical contradiction.",
+    "scientific_accuracy": "accurate"
+  },
+  "prompt_sha256": "b20333263abaac35e1075f733a283eb5aedc27e6730edd5e3ab51071a405112a",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\n  \"decision\": \"SUCCESS\",\n  \"reason\": \"The final answer reproduces all 50 CIDs returned by the PubChem substructure search and correctly states the MatchIsotopes, MatchCharges, MaxSeconds, and MaxRecords constraints. This substantively matches the expected result with no critical contradiction.\",\n  \"critical_issues\": [],\n  \"scientific_accuracy\": \"accurate\",\n  \"api_usage_assessment\": \"The tool was used correctly with the specified substructure search parameters, and the final answer accurately reports the returned CID list and status.\",\n  \"evidence_ids\": [\"tool_1\"]\n}",
+  "reason_codes": [
+    "judge_success",
+    "successful_tool_evidence"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "glm53_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "db0166186cbe938cec8c7e9db1dd0822f668b53591d96f08473518047c4e5eb8",
+    "run_summary_sha256": "9b144e8e7a450caa3f3b2e596ba1a01e26f35485ac3138387b5ff7abdea1dabb",
+    "run_task_sha256": "5681b65619d4a2c3943c8d148a60cef8bf8059afd74dad60aa75f3d65c693457",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "correct",
+  "task_id": 9
+}

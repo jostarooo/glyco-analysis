@@ -1,0 +1,127 @@
+{
+  "cache_key": "fd17cc180ae7cfe263a2b908645459241c2ffee1932caeb5f8cca69403f0bf6d",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "max_rounds_reached"
+    ],
+    "evidence_ids": [
+      "tool_1",
+      "tool_2",
+      "tool_3",
+      "tool_4"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "missing_final_answer",
+      "runner_errors"
+    ],
+    "has_final_answer": false,
+    "successful_result_tool_calls": 4,
+    "successful_tool_calls": 4,
+    "tool_calls": 4,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "accession": "P05067",
+          "datasource": "MaxQB",
+          "unique": "true"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": [],
+          "status_code": 200,
+          "url": "https://www.ebi.ac.uk/proteins/api/proteomics?offset=0&size=100&accession=P05067&datasource=MaxQB&unique=true"
+        },
+        "status": "ok",
+        "tool": "search_proteomics_peptides",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "accession": "Q9Y6Q9",
+          "datasource": "MaxQB",
+          "unique": "true"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": {
+          "data": [],
+          "status_code": 200,
+          "url": "https://www.ebi.ac.uk/proteins/api/proteomics?offset=0&size=100&accession=Q9Y6Q9&datasource=MaxQB&unique=true"
+        },
+        "status": "ok",
+        "tool": "search_proteomics_peptides",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "accession": "P05067",
+          "datasource": "MaxQB"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_3",
+        "result": {
+          "data": [],
+          "status_code": 200,
+          "url": "https://www.ebi.ac.uk/proteins/api/proteomics?offset=0&size=100&accession=P05067&datasource=MaxQB"
+        },
+        "status": "ok",
+        "tool": "search_proteomics_peptides",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "accession": "Q9Y6Q9",
+          "datasource": "MaxQB"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_4",
+        "result": {
+          "data": [],
+          "status_code": 200,
+          "url": "https://www.ebi.ac.uk/proteins/api/proteomics?offset=0&size=100&accession=Q9Y6Q9&datasource=MaxQB"
+        },
+        "status": "ok",
+        "tool": "search_proteomics_peptides",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 4
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "opencode-zen/deepseek-v4.1-flash-free",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "62dbc37a17d433b8eac5341f2a88f68e3b819457c3fa31cea8ba6163f2d22e6e",
+  "judge_transport_error": null,
+  "parsed_judge": null,
+  "prompt_sha256": "4818232fb97cd2cf051dcaad278085f7103f5bc79e828954381c03b7da8b6ca2",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": null,
+  "reason_codes": [
+    "missing_final_answer"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "glm53_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "82b651af1fac32f23f77ad719ca6c33e2d981d85549d806a991799adeebfc72a",
+    "run_summary_sha256": "9b144e8e7a450caa3f3b2e596ba1a01e26f35485ac3138387b5ff7abdea1dabb",
+    "run_task_sha256": "1b4204c85527c0613e693e7b6adbf83e13f90a03f2f5e2d166126acac37a221d",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "missing_answer",
+  "task_id": 25
+}

@@ -1,0 +1,86 @@
+{
+  "cache_key": "a6b62d02dd6a6cf101d29e4d89a124b3f00d4b618caf67b7e504946e85365273",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "unknown_tool:search_proteomics_ptm"
+    ],
+    "evidence_ids": [
+      "answer",
+      "tool_1"
+    ],
+    "expected_tool_called": false,
+    "flags": [
+      "tool_errors",
+      "unknown_tool",
+      "expected_tool_not_called"
+    ],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 0,
+    "successful_tool_calls": 0,
+    "tool_calls": 1,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "accession": "P00558",
+          "datasource": "PRIDE",
+          "offset": 0,
+          "ptm_confidence": "Gold",
+          "size": 100,
+          "taxid": "9606"
+        },
+        "error": null,
+        "expected_tool": false,
+        "id": "tool_1",
+        "result": null,
+        "status": "unknown_tool",
+        "tool": "search_proteomics_ptm",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 0
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "opencode-zen/deepseek-v4.1-flash-free",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "e567fd70be3a243c9d1ff6863344714190f0f102d326d8e3431181437dffb05f",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "Tool use was unsuccessful: the recorded tool call returned unknown_tool and provided no data to support the requested answer.",
+    "critical_issues": [
+      "No PTM data for human or mouse PGK1 was returned.",
+      "Required peptide sequences, phosphorylation positions, uniqueness details, and PRIDE/PTMExchange source information are missing.",
+      "The attempted tool call failed with unknown_tool, so the answer is not supported by evidence."
+    ],
+    "decision": "FAILURE",
+    "evidence_ids": [
+      "tool_1"
+    ],
+    "reason": "The final answer does not provide any phosphorylation PTM results for PGK1. It only reports that the requested tool is unavailable, so it omits the required peptide sequences, phosphorylation positions, uniqueness details, data sources, and Gold-confidence annotations.",
+    "scientific_accuracy": "unknown"
+  },
+  "prompt_sha256": "5b27ff1e63449432da8e5679702ac914d830b9ab6030b91f910fa2c7265527e5",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\n  \"decision\": \"FAILURE\",\n  \"reason\": \"The final answer does not provide any phosphorylation PTM results for PGK1. It only reports that the requested tool is unavailable, so it omits the required peptide sequences, phosphorylation positions, uniqueness details, data sources, and Gold-confidence annotations.\",\n  \"critical_issues\": [\n    \"No PTM data for human or mouse PGK1 was returned.\",\n    \"Required peptide sequences, phosphorylation positions, uniqueness details, and PRIDE/PTMExchange source information are missing.\",\n    \"The attempted tool call failed with unknown_tool, so the answer is not supported by evidence.\"\n  ],\n  \"scientific_accuracy\": \"unknown\",\n  \"api_usage_assessment\": \"Tool use was unsuccessful: the recorded tool call returned unknown_tool and provided no data to support the requested answer.\",\n  \"evidence_ids\": [\n    \"tool_1\"\n  ]\n}",
+  "reason_codes": [
+    "judge_failure"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "qwen3_4b_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "e7db85ec18a33c0062f4a181e32f3b2490fa79aeea10819e09962b578185bbd6",
+    "run_summary_sha256": "4ead0e26a15760a34450c55859679a5c5aeee4dd913014826540b77e5b7c66f4",
+    "run_task_sha256": "00adb6891696ed1b114cacd4c1a88ac932655c5db5b5e46565185417e4108bbe",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "incorrect",
+  "task_id": 26
+}

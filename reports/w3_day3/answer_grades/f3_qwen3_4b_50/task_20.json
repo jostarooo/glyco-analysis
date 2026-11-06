@@ -1,0 +1,83 @@
+{
+  "cache_key": "dc280fc9509b34535030ac9cc5e58e678df8ba41b5e589f9b7df0253d372ce05",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "TypeError: get_proteins() got an unexpected keyword argument 'accession'",
+      "get_proteins: TypeError: get_proteins() got an unexpected keyword argument 'accession'"
+    ],
+    "evidence_ids": [
+      "answer",
+      "tool_1"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "tool_errors",
+      "runner_errors"
+    ],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 0,
+    "successful_tool_calls": 0,
+    "tool_calls": 1,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "accession": "P08047"
+        },
+        "error": "TypeError: get_proteins() got an unexpected keyword argument 'accession'",
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": null,
+        "status": "error",
+        "tool": "get_proteins",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 0
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "opencode-zen/deepseek-v4.1-flash-free",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "1fb05012087febc9fd4d84790f541f7148692f11a5e501e8dd6772fd02e013bc",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "The get_proteins tool call failed because the answer used an unsupported 'accession' parameter, so no protein data were retrieved. The final answer reports the API error but does not fulfill the scientific request.",
+    "critical_issues": [
+      "Omits the required protein information for P08047.",
+      "Does not provide gene names or complete protein sequence.",
+      "Does not report post-translational modifications, including O-GlcNAcylation sites.",
+      "Does not analyze how O-GlcNAcylation may affect metabolic pathway function.",
+      "Suggests get_uniprot_entry_by_accession without supporting tool evidence."
+    ],
+    "decision": "FAILURE",
+    "evidence_ids": [
+      "tool_1"
+    ],
+    "reason": "The final answer only reports that get_proteins does not accept an accession parameter and suggests an unverified alternative tool. It does not provide the required protein details, O-GlcNAcylation sites, gene names, sequence data, or functional/metabolic pathway analysis.",
+    "scientific_accuracy": "unknown"
+  },
+  "prompt_sha256": "45181d40763e7058066704cf493c7f12c14d8983b2445996bffaa7cdb9d63fee",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\n  \"decision\": \"FAILURE\",\n  \"reason\": \"The final answer only reports that get_proteins does not accept an accession parameter and suggests an unverified alternative tool. It does not provide the required protein details, O-GlcNAcylation sites, gene names, sequence data, or functional/metabolic pathway analysis.\",\n  \"critical_issues\": [\n    \"Omits the required protein information for P08047.\",\n    \"Does not provide gene names or complete protein sequence.\",\n    \"Does not report post-translational modifications, including O-GlcNAcylation sites.\",\n    \"Does not analyze how O-GlcNAcylation may affect metabolic pathway function.\",\n    \"Suggests get_uniprot_entry_by_accession without supporting tool evidence.\"\n  ],\n  \"scientific_accuracy\": \"unknown\",\n  \"api_usage_assessment\": \"The get_proteins tool call failed because the answer used an unsupported 'accession' parameter, so no protein data were retrieved. The final answer reports the API error but does not fulfill the scientific request.\",\n  \"evidence_ids\": [\n    \"tool_1\"\n  ]\n}",
+  "reason_codes": [
+    "judge_failure"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "qwen3_4b_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "f8f521515a865e083368a9c38504661cab947ec1dd40c12714e81df1c9e08579",
+    "run_summary_sha256": "4ead0e26a15760a34450c55859679a5c5aeee4dd913014826540b77e5b7c66f4",
+    "run_task_sha256": "831d8382bbf31899365a156c0c8ad818e3ec0c07ac3f3c24ec61d684a8662f67",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "incorrect",
+  "task_id": 20
+}

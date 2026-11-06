@@ -1,0 +1,293 @@
+{
+  "cache_key": "aeaa3ea4aa4cef8c25744e78d6c20bf6aac9b0c4ff275c70b1e03fa1726717a5",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "invalid_action: {\"action\":\"finish\",\"answer\":\"Reviewed human UniProt entries with CHAIN/CARBOHYD features:\\n\\nHemoglobin (all reviewed, Homo sapiens, CHAIN features only; no CARBOHYD/PTM glycosylation features annotated):\\n- P69905 HBA_HUMAN (Hemoglobin subunit alpha), CHAIN PRO_0000052653, residues 2–142\\n- P68871 HBB_HUMAN (subunit beta), CHAIN PRO_0000052976, residues 2–147\\n- P02042 HBD_HUMAN (subunit delta), CHAIN PRO_0000053167, residues 2–147\\n- P69891 HBG1_HUMAN (subunit gamma-1), CHAIN PRO_0000053253, r"
+    ],
+    "evidence_ids": [
+      "tool_1",
+      "tool_2"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "missing_final_answer",
+      "truncated_results",
+      "runner_errors"
+    ],
+    "has_final_answer": false,
+    "successful_result_tool_calls": 2,
+    "successful_tool_calls": 2,
+    "tool_calls": 2,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "offset": 0,
+          "organism": "Homo sapiens",
+          "protein": "Hemoglobin",
+          "reviewed": true,
+          "size": 10,
+          "types": [
+            "CHAIN",
+            "CARBOHYD"
+          ]
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": [
+            {
+              "accession": "P02008",
+              "entryName": "HBAZ_HUMAN",
+              "features": [
+                {
+                  "begin": "2",
+                  "category": "MOLECULE_PROCESSING",
+                  "description": "Hemoglobin subunit zeta",
+                  "end": "142",
+                  "ftId": "PRO_0000052851",
+                  "molecule": "",
+                  "type": "CHAIN"
+                }
+              ],
+              "sequence": "MSLTKTERTIIVSMWAKISTQADTIGTETLERLFLSHPQTKTYFPHFDLHPGSAQLRAHGSKVVAAVGDAVKSIDDIGGALSKLSELHAYILRVDPVNFKLLSHCLLVTLAARFPADFTAEAHAAWDKFLSVVSSVLTEKYR",
+              "sequenceChecksum": "B62A9B825743A155",
+              "taxid": 9606
+            },
+            {
+              "accession": "P02042",
+              "entryName": "HBD_HUMAN",
+              "features": [
+                {
+                  "begin": "2",
+                  "category": "MOLECULE_PROCESSING",
+                  "description": "Hemoglobin subunit delta",
+                  "end": "147",
+                  "ftId": "PRO_0000053167",
+                  "molecule": "",
+                  "type": "CHAIN"
+                }
+              ],
+              "sequence": "MVHLTPEEKTAVNALWGKVNVDAVGGEALGRLLVVYPWTQRFFESFGDLSSPDAVMGNPKVKAHGKKVLGAFSDGLAHLDNLKGTFSQLSELHCDKLHVDPENFRLLGNVLVCVLARNFGKEFTPQMQAAYQKVVAGVANALAHKYH",
+              "sequenceChecksum": "F86BA4A09A57BB05",
+              "taxid": 9606
+            },
+            {
+              "accession": "P02100",
+              "entryName": "HBE_HUMAN",
+              "features": [
+                {
+                  "begin": "2",
+                  "category": "MOLECULE_PROCESSING",
+                  "description": "Hemoglobin subunit epsilon",
+                  "end": "147",
+                  "ftId": "PRO_0000053212",
+                  "molecule": "",
+                  "type": "CHAIN"
+                }
+              ],
+              "sequence": "MVHFTAEEKAAVTSLWSKMNVEEAGGEALGRLLVVYPWTQRFFDSFGNLSSPSAILGNPKVKAHGKKVLTSFGDAIKNMDNLKPAFAKLSELHCDKLHVDPENFKLLGNVMVIILATHFGKEFTPEVQAAWQKLVSAVAIALAHKYH",
+              "sequenceChecksum": "223388816EDDE8D5",
+              "taxid": 9606
+            },
+            {
+              "accession": "P09105",
+              "entryName": "HBAT_HUMAN",
+              "features": [
+                {
+                  "begin": "1",
+                  "category": "MOLECULE_PROCESSING",
+                  "description": "Hemoglobin subunit theta-1",
+                  "end": "142",
+                  "ftId": "PRO_0000052846",
+                  "molecule": "",
+                  "type": "CHAIN"
+                }
+              ],
+              "sequence": "MALSAEDRALVRALWKKLGSNVGVYTTEALERTFLAFPATKTYFSHLDLSPGSSQVRAHGQKVADALSLAVERLDDLPHALSALSHLHACQLRVDPASFQLLGHCLLVTLARHYPGDFSPALQASLDKFLSHVISALVSEYR",
+              "sequenceChecksum": "9D4F103D758694D6",
+              "taxid": 9606
+            },
+            {
+              "accession": "P68871",
+              "entryName": "HBB_HUMAN",
+              "features": [
+                {
+                  "begin": "2",
+                  "category": "MOLECULE_PROCESSING",
+                  "description": "Hemoglobin subunit beta",
+                  "end": "147",
+                  "ftId": "PRO_0000052976",
+                  "molecule": "",
+                  "type": "CHAIN"
+                }
+              ],
+              "sequence": "MVHLTPEEKSAVTALWGKVNVDEVGGEALGRLLVVYPWTQRFFESFGDLSTPDAVMGNPKVKAHGKKVLGAFSDGLAHLDNLKGTFATLSELHCDKLHVDPENFRLLGNVLVCVLAHHFGKEFTPPVQAAYQKVVAGVANALAHKYH",
+              "sequenceChecksum": "A31F6D621C6556A1",
+              "taxid": 9606
+            },
+            {
+              "accession": "P69891",
+              "entryName": "HBG1_HUMAN",
+              "features": [
+                {
+                  "begin": "2",
+                  "category": "MOLECULE_PROCESSING",
+                  "description": "Hemoglobin subunit gamma-1",
+                  "end": "147",
+                  "ftId": "PRO_0000053253",
+                  "molecule": "",
+                  "type": "CHAIN"
+                }
+              ],
+              "sequence": "MGHFTEEDKATITSLWGKVNVEDAGGETLGRLLVVYPWTQRFFDSFGNLSSASAIMGNPKVKAHGKKVLTSLGDATKHLDDLKGTFAQLSELHCDKLHVDPENFKLLGNVLVTVLAIHFGKEFTPEVQASWQKMVTAVASALSSRYH",
+              "sequenceChecksum": "0CE4D9E932416DCF",
+              "taxid": 9606
+            },
+            {
+              "accession": "P69892",
+              "entryName": "HBG2_HUMAN",
+              "features": [
+                {
+                  "begin": "2",
+                  "category": "MOLECULE_PROCESSING",
+                  "description": "Hemoglobin subunit gamma-2",
+                  "end": "147",
+                  "ftId": "PRO_0000053254",
+                  "molecule": "",
+                  "type": "CHAIN"
+                }
+              ],
+              "sequence": "MGHFTEEDKATITSLWGKVNVEDAGGETLGRLLVVYPWTQRFFDSFGNLSSASAIMGNPKVKAHGKKVLTSLGDAIKHLDDLKGTFAQLSELHCDKLHVDPENFKLLGNVLVTVLAIHFGKEFTPEVQASWQKMVTGVASALSSRYH",
+              "sequenceChecksum": "8FCDC4441B416DDE",
+              "taxid": 9606
+            },
+            {
+              "accession": "P69905",
+              "entryName": "HBA_HUMAN",
+              "features": [
+                {
+                  "begin": "2",
+                  "category": "MOLECULE_PROCESSING",
+                  "description": "Hemoglobin subunit alpha",
+                  "end": "142",
+                  "ftId": "PRO_0000052653",
+                  "molecule": "",
+                  "type": "CHAIN"
+                }
+              ],
+              "sequence": "MVLSPADKTNVKAAWGKVGAHAGEYGAEALERMFLSFPTTKTYFPHFDLSHGSAQVKGHGKKVADALTNAVAHVDDMPNALSALSDLHAHKLRVDPVNFKLLSHCLLVTLAAHLPAEFTPAVHASLDKFLASVSTVLTSKYR",
+              "sequenceChecksum": "15E13666573BBBAE",
+              "taxid": 9606
+            },
+            {
+              "accession": "Q6B0K9",
+              "entryName": "HBM_HUMAN",
+              "features": [
+                {
+                  "begin": "1",
+                  "category": "MOLECULE_PROCESSING",
+                  "description": "Hemoglobin subunit mu",
+                  "end": "141",
+                  "ftId": "PRO_0000282855",
+                  "molecule": "",
+                  "type": "CHAIN"
+                }
+              ],
+              "sequence": "MLSAQERAQIAQVWDLIAGHEAQFGAELLLRLFTVYPSTKVYFPHLSACQDATQLLSHGQRMLAAVGAAVQHVDNLRAALSPLADLHALVLRVDPANFPLLIQCFHVVLASHLQDEFTVQMQAAWDKFLTGVAVVLTEKYR",
+              "sequenceChecksum": "6864266BBE841516",
+              "taxid": 9606
+            },
+            {
+              "accession": "Q86VB7",
+              "entryName": "C163A_HUMAN",
+              "features": [
+                {
+                  "begin": "42",
+                  "category": "MOLECULE_PROCESSING",
+                  "description": "Scavenger receptor cysteine-rich type 1 protein M130",
+                  "end": "1156",
+                  "ftId": "PRO_0000238938",
+                  "molecule": "",
+                  "type": "CHAIN"
+                },
+                {
+                  "begin": "42",
+                  "category": "MOLECULE_PROCESSING",
+                  "description": "Soluble CD163",
+                  "end": "~",
+                  "ftId": "PRO_0000238939",
+                  "molecule": "",
+                  "type": "CHAIN"
+                }
+              ],
+              "sequence": "MSKLRMVLLEDSGSADFRRHFVNLSPFTITVVLLLSACFVTSSLGGTDKELRLVDGENKCSGRVEVKVQEEWGTVCNNGWSMEAVSVICNQLGCPTAIKAPGWANSSAGSGRIWMDHVSCRGNESALWDCKHDGWGKHSNCTHQQDAGVTCSDGSNLEMRLTRGGNMCSGRIEIKFQGRWGTVCDDNFNIDHASVICRQLECGSAVSFSGSSNFGEGSGPIWFDDLICNGNESALWNCKHQGWGKHNCDHAEDAGVICSKGADLSLRLVDGVTECSGRLEVRFQGEWGTICDDGWDSYDAAVACKQLGCPTAVTAIGRVNASKGFGHIWLDSVSCQGHEPAIWQCKHHEWGKHYCNHNEDAGVTCSDGSDLELRLRGGGSRCAGTVEVEIQRLLGKVCDRGWGLKEADVVCRQLGCGSALKTSYQVYSKIQATNTWLFLSSCNGNETSLWDCKNWQWGGLTCDHYEEAKITCSAHREPRLVGGDIPCSGRVEVKHGDTWGSICDSDFSLEAASVLCRELQCGTVVSILGGAHFGEGNGQIWAEEFQCEGHESHLSLCPVAPRPEGTCSHSRDVGVVCSRYTEIRLVNGKTPCEGRVELKTLGAWGSLCNSHWDIEDAHVLCQQLKCGVALSTPGGARFGKGNGQIWRHMFHCTGTEQHMGDCPVTALGASLCPSEQVASVICSGNQSQTLSSCNSSSLGPTRPTIPEESAVACIESGQLRLVNGGGRCAGRVEIYHEGSWGTICDDSWDLSDAHVVCRQLGCGEAINATGSAHFGEGTGPIWLDEMKCNGKESRIWQCHSHGWGQQNCRHKEDAGVICSEFMSLRLTSEASREACAGRLEVFYNGAWGTVGKSSMSETTVGVVCRQLGCADKGKINPASLDKAMSIPMWVDNVQCPKGPDTLWQCPSSPWEKRLASPSEETWITCDNKIRLQEGPTSCSGRVEIWHGGSWGTVCDDSWDLDDAQVVCQQLGCGPALKAFKEAEFGQGTGPIWLNEVKCKGNESSLWDCPARRWGHSECGHKEDAAVNCTDISVQKTPQKATTGRSSRQSSFIAVGILGVVLLAIFVALFFLTKKRRQRQRLAVSSRGENLVHQIQYREMNSCLNADDLDLMNSSENSHESADFSAAELISVSKFLPISGMEKEAILSHTEKENGNL",
+              "sequenceChecksum": "57B49F76DA6C96EB",
+              "taxid": 9606
+            }
+          ],
+          "status_code": 200,
+          "url": "https://www.ebi.ac.uk/proteins/api/features?offset=0&size=10&reviewed=True&protein=Hemoglobin&organism=Homo+sapiens&types=CHAIN&types=CARBOHYD"
+        },
+        "status": "ok",
+        "tool": "search_protein_sequence_features",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "offset": 0,
+          "organism": "Homo sapiens",
+          "protein": "Insulin",
+          "reviewed": true,
+          "size": 10,
+          "types": [
+            "CHAIN",
+            "CARBOHYD"
+          ]
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": {
+          "preview": "{\"status_code\": 200, \"url\": \"https://www.ebi.ac.uk/proteins/api/features?offset=0&size=10&reviewed=True&protein=Insulin&organism=Homo+sapiens&types=CHAIN&types=CARBOHYD\", \"data\": [{\"accession\": \"F8WCM5\", \"entryName\": \"INSR2_HUMAN\", \"sequence\": \"MALWMRLLPLLALLALWGPDPAAAFVNQHLCGSHLVEALYLVCGERGFFYTPKTRREAEDLQASALSLSSSTSTWPEGLDATARAPPALVVTANIGQAGGSSSRQFRQRALGTSDSPVLFIHCPGAAGTAQGLEYRGRRVTTELVWEEVDSSPQPQGSESLPAQPPAQPAPQPEPQQAREPSPEVSCCGLWPRRPQRSQN\", \"sequenceChecksum\": \"CF5F0050FBF099B2\", \"taxid\": 9606, \"features\": [{\"type\": \"CHAIN\", \"category\": \"MOLECULE_PROCESSING\", \"ftId\": \"PRO_0000422829\", \"description\": \"Insulin, isoform 2\", \"begin\": \"1\", \"end\": \"200\", \"molecule\": \"\"}]}, {\"accession\": \"O00425\", \"entryName\": \"IF2B3_HUMAN\", \"sequence\": \"MNKLYIGNLSENAAPSDLESIFKDAKIPVSGPFLVKTGYAFVDCPDESWALKAIEALSGKIELHGKPIEVEHSVPKRQRIRKLQIRNIPPHLQWEVLDSLLVQYGVVESCEQVNTDSETAVVNVTYSSKDQARQALDKLNGFQLENFTLKVAYIPDEMAAQQNPLQQPRGRRGLGQRGSSRQGSPGSVSKQKPCDLPLRLLVPTQFVGAIIGKEGATIRNITKQTQSKIDVHRKENAGAAEKSITILSTPEGTSAACKSILEIMHKEAQDIKFTEEIPLKILAHNNFVGRLIGKEGRNLKKIEQDTDTKITISPLQELTLYNPERTITVKGNVETCAKAEEEIMKKIRESYENDIASMNLQAHLIPGLNLNALGLFPPTSGMPPPTSGPPSAMTPPYPQFEQSETETVHLFIPALSVGAIIGKQGQHIKQLSRFAGASIKIAPAEAPDAKVRMVIITGPPEAQFKAQGRIYGKIKEENFVSPKEEVKLEAHIRVPSFAAGRVIGKGGKTVNELQNLSSAEVVVPRDQTPDENDQVVVKITGHFYACQVAQRKIQEILTQVKQHQQQKALQSGPPQSRRK\", \"sequenceChecksum\": \"78884F56A9D98CDE\", \"taxid\": 9606, \"features\": [{\"type\": \"CHAIN\", \"category\": \"MOLECULE_PROCESSING\", \"ftId\": \"PRO_0000282538\", \"description\": \"Insulin-like growth factor 2 mRNA-binding protein 3\", \"begin\": \"1\", \"end\": \"579\", \"molecule\": \"\"}]}, {\"accession\": \"O00622\", \"entryName\": \"CCN1_HUMAN\", \"sequence\": \"MSSRIARALALVVTLLHLTRLALSTCPAACHCPLEAPKCAPGVGLVRDGCGCCKVCAKQLNEDCSKTQPCDHTKGLECNFGASSTALKGICRAQSEGRPCEYNSRIYQNGESFQPNCKHQCTCIDGAVGCIPLCPQELSLPNLGCPNPRLVKVTGQCCEEWVCDEDSIKDPMEDQDGLLGKELGFDASEVELTRNNELIAVGKGSSLKRLPVFGMEPRILYNPLQGQKCIVQTTSWSQCSKTCGTGISTRVTNDNPECRLVKETRICEVRPCGQPVYSSLKKGKKCSKTKKSPEPVRFTYAGCLSVKKYRPKYCGSCVDGRCCTPQLTRTVKMRFRCEDGETFSKNVMMIQSCKCNYNCPHANEAAFPFYRLFNDIHKFRD\", \"sequenceChecksum\": \"FC0BD39C078CA0B1\", \"taxid\": 9606, \"features\": [{\"type\": \"CHAIN\", \"category\": \"MOLECULE_PROCESSING\", \"ftId\": \"PRO_0000014398\", \"description\": \"CCN family member 1\", \"begin\": \"25\", \"end\": \"381\", \"molecule\": \"\"}]}, {\"accession\": \"O14654\", \"entryName\": \"IRS4_HUMAN\", \"sequence\": \"MASCSFTRDQATRRLRGAAAAAAAALAAVVTTPLLSSGTPTALIGTGSSCPGAMWLSTATGSRSDSESEEEDLPVGEEVCKRGYLRKQKHGHRRYFVLKLETADAPARLEYYENARKFRHSVRAAAAAAAAAASGAAIPPLIPPRRVITLYQCFSVSQRADARYRHLIALFTQDEYFAMVAENESEQESWYLLLSRLILESKRRRCGTLGAQPDGEPAALAAAAAAEPPFYKDVWQVIVKPRGLGHRKELSGVFRLCLTDEEVVFVRLNTEVASVVVQLLSIRRCGHSEQYFFLEVGRSTVIGPGELWMQVDDCVVAQNMHELFLEKMRALCADEYRARCRSYSISIGAHLLTLLSARRHLGLVPLEPGGWLRRSRFEQFCHLRAIGDGEDEMLFTRRFVTPSEPVAHSRRGRLHLPRGRRSRRAVSVPASFFRRLAPSPARPRHPAEAPNNGARLSSEVSGSGSGNFGEEGNPQGKEDQEGSGGDYMPMNNWGSGNGRGSGGGQGSNGQGSSSHSSGGNQCSGEGQGSRGGQGSNGQGSGGNQCSRDGQGTAGGHGSGGGQRPGGGHGSGGGQGPGDGHGSGGGKNSGGGKGSGSGKGSDGDGERGKSLKKRSYFGKLTQSKQQQMPPPPPPPPPPPPAGGTGGKGKSGGRFRLYFCVDRGATKECKEAKEVKDAEIPEGAARGPHRARAFDEDEDDPYVPMRPGVATPLVSSSDYMPMAPQNVSASKKRHSRSPFEDSRGYMMMFPRVSPPPAPSPPKAPDTNKEDDSKDNDSESDYMFMAPGAGAIPKNPRNPQGGSSSKSWSSYFSLPNPFRSSPLGQNDNSEYVPMLPGKFLGRGLDKEVSYNWDPKDAASKPSGEGSFSKPGDGGSPSKPSDHEPPKNKAKRPNRLSFITKGYKIKPKPQKPTHEQREADSSSDYVNMDFTKRESNTPAPSTQGLPDSWGIIAEPRQSAFSNYVNVEFGVPFPNPANDLSDLLRAIPRANPLSLDSARWPLPPLPLSATGSNAIEEEGDYIEVIFNSAMTPAMALADSAIRYDAETGRIYVVDPFSECCMDISLSPSRCSEPPPVARLLQEEEQERRRPQSRSQSFFAAARAAVSAFPTDSLERDLSPSSAPAVASAAEPTLALSQVVAAASALAAAPGIGAAAAAAGFDSASARWFQPVANAADAEAVRGAQDVAGGSNPGAHNPSANLARGDNQAGGAAAAAAAPEPPPRSRRVPRPPEREDSDNDDDTHVRMDFARRDNQFDSPKRGR\", \"sequenceChecksum\": \"4D512D65A7A80374\", \"taxid\": 9606, \"features\": [{\"type\": \"CHAIN\", \"category\": \"MOLECULE_PROCESSING\", \"ftId\": \"PRO_0000314678\", \"description\": \"Insulin receptor substrate 4\", \"begin\": \"1\", \"end\": \"1257\", \"molecule\": \"\"}]}, {\"accession\": \"O15503\", \"entryName\": \"INSI1_HUMAN\", \"sequence\": \"MPRLHDHFWSCSCAHSARRRGPPRASAAGLAAKVGEMINVSVSGPSLLAAHGAPDADPAPRGRSAAMSGPEPGSPYPNTWHHRLLQRSLVLFSVGVVLALVLNLLQIQRNVTLFPEEVIATIFSSAWWVPPCCGTAAAVVGLLYPCIDSHLGEPHKFKREWASVMRCIAVFVGINHASAKLDFANNVQLSLTLAALSLGLWWTFDRSRSGLGLGITIAFLATLITQFLVYNGVYQYTSPDFLYIRSWLPCIFFSGGVTVGNIGRQLAMGVPEKPHSD\", \"sequenceChecksum\": \"198068D53C658A58\", \"taxid\": 9606, \"features\": [{\"type\": \"CHAIN\", \"category\": \"MOLECULE_PROCESSING\", \"ftId\": \"PRO_0000191675\", \"description\": \"Insulin-induced gene 1 protein\", \"begin\": \"1\", \"end\": \"277\", \"molecule\": \"\"}]}, {\"accession\": \"P01344\", \"entryName\": \"IGF2_HUMAN\", \"sequence\": \"MGIPMGKSMLVLLTFLAFASCCIAAYRPSETLCGGELVDTLQFVCGDRGFYFSRPASRVSRRSRGIVEECCFRSCDLALLETYCATPAKSERDVSTPPTVLPDNFPRYPVGKFFQYDTWKQSTQRLRRGLPALLRARRGHVLAKELEAFREAKRHRPLIALPTQDPAHGGAPPEMASNRK\", \"sequenceChecksum\": \"C1B0EB1E016BA37A\", \"taxid\": 9606, \"features\": [{\"type\": \"CHAIN\", \"category\": \"MOLECULE_PROCESSING\", \"ftId\": \"PRO_0000015717\", \"description\": \"Insulin-like growth factor 2\", \"begin\": \"25\", \"end\": \"91\", \"molecule\": \"\"}, {\"type\": \"CHAIN\", \"category\": \"MOLECULE_PROCESSING\", \"ftId\": \"PRO_0000015718\", \"description\": \"Insulin-like growth factor II Ala-25 Del\", \"begin\": \"26\", \"end\": \"91\", \"molecule\": \"\"}]}, {\"accession\": \"P05019\", \"entryName\": \"IGF1_HUMAN\", \"sequence\": \"MGKISSLPTQLFKCCFCDFLKVKMHTMSSSHLFYLALCLLTFTSSATAGPETLCGAELVDALQFVCGDRGFYFNKPTGYGSSSRRAPQTGIVDECCFRSCDLRRLEMYCAPLKPAKSARSVRAQRHTDMPKTQKYQPPSTNKNTKSQRRKGWPKTHPGGEQKEGTEASLQIRGKKKEQRREIGSRNAECRGKKGK\", \"sequenceChecksum\": \"E88A8CFBD1CD1873\", \"taxid\": 9606, \"features\": [{\"type\": \"CHAIN\", \"category\": \"MOLECULE_PROCESSING\", \"ftId\": \"PRO_0000015664\", \"description\": \"Insulin-like growth factor 1\", \"begin\": \"49\", \"end\": \"118\", \"molecule\": \"\"}]}, {\"accession\": \"P06213\", \"entryName\": \"INSR_HUMAN\", \"sequence\": \"MATGGRRGAAAAPLLVAVAALLLGAAGHLYPGEVCPGMDIRNNLTRLHELENCSVIEGHLQILLMFKTRPEDFRDLSFPKLIMITDYLLLFRVYGLESLKDLFPNLTVIRGSRLFFNYALVIFEMVHLKELGLYNLMNITRGSVRIEKNNELCYLATIDWSRILDSVEDNYIVLNKDDNEECGDICPGTAKGKTNCPATVINGQFVERCWTHSHCQKVCPTICKSHGCTAEGLCCHSECLGNCSQPDDPTKCVACRNFYLDGRCVETCPPPYYHFQDWRCVNFSFCQDLHHKCKNSRRQGCHQYVIHNNKCIPECPSGYTMNSSNLLCTPCLGPCP",
+          "truncated": true
+        },
+        "status": "ok",
+        "tool": "search_protein_sequence_features",
+        "truncated": true
+      }
+    ],
+    "truncated_results": 1,
+    "usable_successful_tool_calls": 1
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "62dbc37a17d433b8eac5341f2a88f68e3b819457c3fa31cea8ba6163f2d22e6e",
+  "judge_transport_error": null,
+  "parsed_judge": null,
+  "prompt_sha256": "fb08e68706813f4fd4c97bc7a9c13fc2b4e7b4f2686160c3f431b6043f9f3ddb",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": null,
+  "reason_codes": [
+    "missing_final_answer"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "glm53_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "57a6f8141d3d0b906f2aadf6dc00ec2155087544519cde4dabe732d1c905f3e5",
+    "run_summary_sha256": "9b144e8e7a450caa3f3b2e596ba1a01e26f35485ac3138387b5ff7abdea1dabb",
+    "run_task_sha256": "032ab900a4169b3d41c9b3b28aa19af81a80ba64573b5b377a2565716494e8b4",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "missing_answer",
+  "task_id": 24
+}

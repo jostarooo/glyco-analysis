@@ -1,0 +1,84 @@
+{
+  "cache_key": "c87d8406469acd4954cc67272c0ddd2571f904f42abe5c316b40805a215cbf8c",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [],
+    "evidence_ids": [
+      "answer",
+      "tool_1"
+    ],
+    "expected_tool_called": true,
+    "flags": [],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 1,
+    "successful_tool_calls": 1,
+    "tool_calls": 1,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "getcolumns": "pdb,uniprot",
+          "isvalue": "Saccharomyces cerevisiae",
+          "limit": 100,
+          "wherecolumn": "species"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": "ERROR: Server Error 1052 (23000): Column 'pdb' in field list is ambiguous",
+          "status_code": 400,
+          "url": "https://unilectin.unige.ch/api/getlectins"
+        },
+        "status": "ok",
+        "tool": "get_lectins",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 1
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "dff075010184ec17b25457815af46ae6e24606d6c4332d01a4e8f8195ff17af5",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "The agent attempted the expected get_lectins call with the specified parameters, but the API returned an error and the agent did not recover (e.g., by adjusting column names) nor invoke protein_detail; tool use therefore did not support a substantive answer.",
+    "critical_issues": [
+      "Tool query failed with Server Error 1052 (ambiguous 'pdb' column), yielding no data",
+      "No UniProt IDs or lectin entries from Saccharomyces cerevisiae were retrieved",
+      "protein_detail tool was never called, so no glycosylation site or sequence information was obtained",
+      "Final answer omits all required scientific results"
+    ],
+    "decision": "FAILURE",
+    "evidence_ids": [
+      "answer",
+      "tool_1"
+    ],
+    "reason": "The get_lectins tool call returned a database error (ambiguous column 'pdb'), so no lectins, UniProt IDs, sequences, or glycosylation site data were retrieved. The protein_detail tool was never used. The final answer only reports the error and does not deliver any of the required scientific results (lectin list, UniProt IDs, glycosylation sites, structural data).",
+    "scientific_accuracy": "inaccurate"
+  },
+  "prompt_sha256": "0bcaeacde44fdc425b353f2104bcfb4b50ba6f98e489dbdd8ca0b77e54544076",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\n  \"decision\": \"FAILURE\",\n  \"reason\": \"The get_lectins tool call returned a database error (ambiguous column 'pdb'), so no lectins, UniProt IDs, sequences, or glycosylation site data were retrieved. The protein_detail tool was never used. The final answer only reports the error and does not deliver any of the required scientific results (lectin list, UniProt IDs, glycosylation sites, structural data).\",\n  \"critical_issues\": [\n    \"Tool query failed with Server Error 1052 (ambiguous 'pdb' column), yielding no data\",\n    \"No UniProt IDs or lectin entries from Saccharomyces cerevisiae were retrieved\",\n    \"protein_detail tool was never called, so no glycosylation site or sequence information was obtained\",\n    \"Final answer omits all required scientific results\"\n  ],\n  \"scientific_accuracy\": \"inaccurate\",\n  \"api_usage_assessment\": \"The agent attempted the expected get_lectins call with the specified parameters, but the API returned an error and the agent did not recover (e.g., by adjusting column names) nor invoke protein_detail; tool use therefore did not support a substantive answer.\",\n  \"evidence_ids\": [\"answer\", \"tool_1\"]\n}",
+  "reason_codes": [
+    "judge_failure"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "qwen3_4b_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "6707950afdf029ab0a5219df957332d1872b0a3f71ba3fc73b8c063ee55645b9",
+    "run_summary_sha256": "4ead0e26a15760a34450c55859679a5c5aeee4dd913014826540b77e5b7c66f4",
+    "run_task_sha256": "aeb31a57e5125468f4f04ca28f8bab96c43afa66c22ea4ce5647bc236fc47100",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "incorrect",
+  "task_id": 50
+}

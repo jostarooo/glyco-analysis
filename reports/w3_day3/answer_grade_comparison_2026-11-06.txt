@@ -1,0 +1,30 @@
+COMMAND: C:\Users\jostaro\AppData\Roaming\uv\python\cpython-3.12.14-windows-x86_64-none\python.exe scripts\compare_doc2agent_answer_grades.py
+CWD: D:\Codex\workspace\glyco-analysis-w3-day3-answer-grader
+RUN1_EXIT_CODE: 0
+RUN2_EXIT_CODE: 0
+JSON_BEFORE: 4CFD53063162379939085226CE4F1EC24FE36C79098C2BB141ED2E31CA63D4DE
+JSON_AFTER_RUN1: 4CFD53063162379939085226CE4F1EC24FE36C79098C2BB141ED2E31CA63D4DE
+JSON_AFTER_RUN2: 4CFD53063162379939085226CE4F1EC24FE36C79098C2BB141ED2E31CA63D4DE
+MD_BEFORE: 2538354C0D3339BCD49776B3031BDB27B9A4510682B2520260672F656B1CF072
+MD_AFTER_RUN1: 2538354C0D3339BCD49776B3031BDB27B9A4510682B2520260672F656B1CF072
+MD_AFTER_RUN2: 2538354C0D3339BCD49776B3031BDB27B9A4510682B2520260672F656B1CF072
+JSON_STABLE: True
+MD_STABLE: True
+
+RUN1_STDOUT:
+{
+  "status": "PASS",
+  "comparison_scope": "local_evidence_grading",
+  "upstream_gpt4o_equivalent": false,
+  "tasks_compared": 50,
+  "status_disagreement_count": 32
+}
+
+RUN2_STDOUT:
+{
+  "status": "PASS",
+  "comparison_scope": "local_evidence_grading",
+  "upstream_gpt4o_equivalent": false,
+  "tasks_compared": 50,
+  "status_disagreement_count": 32
+}

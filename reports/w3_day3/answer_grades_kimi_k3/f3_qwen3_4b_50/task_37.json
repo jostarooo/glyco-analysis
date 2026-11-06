@@ -1,0 +1,101 @@
+{
+  "cache_key": "999e3017c6bb285084a06bda58d7864e56a61a3c1329506e47dc9562040a3baf",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [],
+    "evidence_ids": [
+      "answer",
+      "tool_1",
+      "tool_2"
+    ],
+    "expected_tool_called": true,
+    "flags": [],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 2,
+    "successful_tool_calls": 2,
+    "tool_calls": 2,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "text": "Hex(3)HexNAc(2)"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": [
+          {
+            "id": "G14669DU",
+            "wurcs": "WURCS=2.0/2,5,4/[axxxxh-1x_1-5_2*NCC/3=O][axxxxh-1x_1-5]/1-1-2-2-2/a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?_a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?_a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?_a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?"
+          }
+        ],
+        "status": "ok",
+        "tool": "convert_composition_text_to_wurcs_format",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "wurcs": "WURCS=2.0/2,5,4/[axxxxh-1x_1-5_2*NCC/3=O][axxxxh-1x_1-5]/1-1-2-2-2/a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?_a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?_a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?_a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": {
+          "data": [
+            {
+              "input": "WURCS=2.0/2,5,4/[axxxxh-1x_1-5_2*NCC/3=O][axxxxh-1x_1-5]/1-1-2-2-2/a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?_a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?_a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?_a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?",
+              "mass": 910.32778
+            }
+          ],
+          "status_code": 200,
+          "url": "https://api.glycosmos.org/wurcsframework/1.2.14/wurcs2mass"
+        },
+        "status": "ok",
+        "tool": "calculate_mass_from_wurcs",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 2
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "e6a147245b46f4216bd32bc666ec72f6dc0efb35d8d53cb0f5e4500608e751d4",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "Both expected tools were used correctly and in sequence: convert_composition_text_to_wurcs_format produced a valid WURCS string (tool_1), which was passed to calculate_mass_from_wurcs, returning mass 910.32778 (tool_2). The final answer is directly supported by the tool outputs.",
+    "critical_issues": [],
+    "decision": "SUCCESS",
+    "evidence_ids": [
+      "answer",
+      "tool_1",
+      "tool_2"
+    ],
+    "reason": "The composition 'Hex(3)HexNAc(2)' was converted to WURCS format (tool_1), and the resulting WURCS string was used to calculate the molecular mass, which returned 910.32778 (tool_2). The final answer of 910.32778 g/mol exactly matches the tool-computed mass with no contradictions.",
+    "scientific_accuracy": "accurate"
+  },
+  "prompt_sha256": "4859f2dc74d997bfb4bf2fca86c966fb00df5c25837ff96746af0ea12f0129bc",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\n  \"decision\": \"SUCCESS\",\n  \"reason\": \"The composition 'Hex(3)HexNAc(2)' was converted to WURCS format (tool_1), and the resulting WURCS string was used to calculate the molecular mass, which returned 910.32778 (tool_2). The final answer of 910.32778 g/mol exactly matches the tool-computed mass with no contradictions.\",\n  \"critical_issues\": [],\n  \"scientific_accuracy\": \"accurate\",\n  \"api_usage_assessment\": \"Both expected tools were used correctly and in sequence: convert_composition_text_to_wurcs_format produced a valid WURCS string (tool_1), which was passed to calculate_mass_from_wurcs, returning mass 910.32778 (tool_2). The final answer is directly supported by the tool outputs.\",\n  \"evidence_ids\": [\"answer\", \"tool_1\", \"tool_2\"]\n}",
+  "reason_codes": [
+    "judge_success",
+    "successful_tool_evidence"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "qwen3_4b_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "fe3ae428e90aff9973db68801d16a1fbd9f13c251b359dd488cbcbddd0f45404",
+    "run_summary_sha256": "4ead0e26a15760a34450c55859679a5c5aeee4dd913014826540b77e5b7c66f4",
+    "run_task_sha256": "a0dd42a1624195d66f79ba682037fd6f1ae34255466cb8aee6ed44806d564922",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "correct",
+  "task_id": 37
+}

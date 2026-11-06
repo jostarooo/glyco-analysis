@@ -1,0 +1,98 @@
+{
+  "cache_key": "3804024b7a9722a5c22e9f04a646396c705ef7b906e262f8d02a7f1ff5d30ee4",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [],
+    "evidence_ids": [
+      "answer",
+      "tool_1",
+      "tool_2"
+    ],
+    "expected_tool_called": true,
+    "flags": [],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 2,
+    "successful_tool_calls": 2,
+    "tool_calls": 2,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "gws": "freeEnd--?b1D-GlcNAc,p--3b1D-Gal,p--4b1D-Glc,p--6b1D-GlcNAc,p$MONO,Und,0,0,freeEnd"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": [
+          {
+            "GlycoCT": "RES\n1b:b-dglc-HEX-1:5\n2s:n-acetyl\n3b:b-dgal-HEX-1:5\n4b:b-dglc-HEX-1:5\n5b:b-dglc-HEX-1:5\n6s:n-acetyl\nLIN\n1:1d(2+1)2n\n2:1o(3+1)3d\n3:3o(4+1)4d\n4:4o(6+1)5d\n5:5d(2+1)6n",
+            "WURCS": "WURCS=2.0/3,4,3/[a2122h-1b_1-5_2*NCC/3=O][a2112h-1b_1-5][a2122h-1b_1-5]/1-2-3-1/a3-b1_b4-c1_c6-d1",
+            "input": "freeEnd--?b1D-GlcNAc,p--3b1D-Gal,p--4b1D-Glc,p--6b1D-GlcNAc,p$MONO,Und,0,0,freeEnd",
+            "message": "Accession not found.",
+            "wurcs": "WURCS=2.0/3,4,3/[a2122h-1b_1-5_2*NCC/3=O][a2112h-1b_1-5][a2122h-1b_1-5]/1-2-3-1/a3-b1_b4-c1_c6-d1"
+          }
+        ],
+        "status": "ok",
+        "tool": "convert_gws_format_to_wurcs_format",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "wurcs": "WURCS=2.0/3,4,3/[a2122h-1b_1-5_2*NCC/3=O][a2112h-1b_1-5][a2122h-1b_1-5]/1-2-3-1/a3-b1_b4-c1_c6-d1"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": [
+          {
+            "message": "Accession not found."
+          }
+        ],
+        "status": "ok",
+        "tool": "obtain_glytoucan_id_from_wurcs",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 2
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "opencode-zen/deepseek-v4.1-flash-free",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "01d905a65a5f57a3eec02436a4538619e771ad705bd02a50eda74bd8c4f3f6e4",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "Both expected tools were used appropriately: GWS was converted to WURCS, then that WURCS was queried for a GlyTouCan ID. The API results support the final answer.",
+    "critical_issues": [],
+    "decision": "SUCCESS",
+    "evidence_ids": [
+      "tool_1",
+      "tool_2"
+    ],
+    "reason": "The final answer reports the WURCS produced by the conversion tool and correctly states that the subsequent GlyTouCan lookup returned 'Accession not found.' This matches the tool evidence, which shows the same WURCS and no GlyTouCan accession for it.",
+    "scientific_accuracy": "accurate"
+  },
+  "prompt_sha256": "5ac9efe84084fb678dfabbf6c98ae97ee89fdd3726260bd7ed9778e3931db228",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\n  \"decision\": \"SUCCESS\",\n  \"reason\": \"The final answer reports the WURCS produced by the conversion tool and correctly states that the subsequent GlyTouCan lookup returned 'Accession not found.' This matches the tool evidence, which shows the same WURCS and no GlyTouCan accession for it.\",\n  \"critical_issues\": [],\n  \"scientific_accuracy\": \"accurate\",\n  \"api_usage_assessment\": \"Both expected tools were used appropriately: GWS was converted to WURCS, then that WURCS was queried for a GlyTouCan ID. The API results support the final answer.\",\n  \"evidence_ids\": [\n    \"tool_1\",\n    \"tool_2\"\n  ]\n}",
+  "reason_codes": [
+    "judge_success",
+    "successful_tool_evidence"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "glm53_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "0f880dabd3b166b3674d95cb03c123237a147bce26e5d3d69a70a4cd7b45681b",
+    "run_summary_sha256": "9b144e8e7a450caa3f3b2e596ba1a01e26f35485ac3138387b5ff7abdea1dabb",
+    "run_task_sha256": "a655c19100b6d0da06b94a9da21e522ef25b279159b649b7d96d1e2f3f646f3c",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "correct",
+  "task_id": 36
+}

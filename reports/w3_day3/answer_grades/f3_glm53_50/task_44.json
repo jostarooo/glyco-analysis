@@ -1,0 +1,141 @@
+{
+  "cache_key": "a84b8002f2814913ffc49138451e479ac42f399ce888262e72dee60dd1637753",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "AssertionError: Type must be one of \"html\", \"json\", or \"binary\"",
+      "generate_glycan_image: AssertionError: Type must be one of \"html\", \"json\", or \"binary\"",
+      "max_rounds_reached"
+    ],
+    "evidence_ids": [
+      "tool_1",
+      "tool_2",
+      "tool_3",
+      "tool_4"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "missing_final_answer",
+      "tool_errors",
+      "runner_errors"
+    ],
+    "has_final_answer": false,
+    "successful_result_tool_calls": 3,
+    "successful_tool_calls": 3,
+    "tool_calls": 4,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "wurcs": "WURCS=2.0/3,5,4/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3-3/a4-b1_b4-c1_c3-d1_c6-e1"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": [
+            {
+              "m_mapTypeToReports": {
+                "ERROR": [],
+                "UNVERIFIABLE": [],
+                "WARNING": []
+              },
+              "m_sInputString": "WURCS=2.0/3,5,4/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3-3/a4-b1_b4-c1_c3-d1_c6-e1",
+              "m_sStandardString": "WURCS=2.0/3,5,4/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3-3/a4-b1_b4-c1_c3-d1_c6-e1"
+            }
+          ],
+          "status_code": 200,
+          "url": "https://api.glycosmos.org/wurcsframework/1.2.14/wurcsvalidator"
+        },
+        "status": "ok",
+        "tool": "validate_wurcs",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "format": "png",
+          "type": "glycan",
+          "verify": true,
+          "wurcs": "WURCS=2.0/3,5,4/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3-3/a4-b1_b4-c1_c3-d1_c6-e1"
+        },
+        "error": "AssertionError: Type must be one of \"html\", \"json\", or \"binary\"",
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": null,
+        "status": "error",
+        "tool": "generate_glycan_image",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "format": "png",
+          "type": "binary",
+          "verify": true,
+          "wurcs": "WURCS=2.0/3,5,4/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3-3/a4-b1_b4-c1_c3-d1_c6-e1"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_3",
+        "result": {
+          "data": "�PNG\r\n\u001a\n\u0000\u0000\u0000\rIHDR\u0000\u0000\u0000�\u0000\u0000\u0000�\b\u0002\u0000\u0000\u0000U+!B\u0000\u0000\u0006�IDATx^��?n�F\u0014�q\u0002[�pa�R`\bp\u0002��UhwaC��\b��I�s\b�#8W�;�1�\u0014����6:����\u0013ѣ�\u001f�������\u0007\"P���,�Y V�q�\u0003L(�\u001d�~\"e\u0018A�0��a\u0004)�\bR�\u0011�\f#H\u0019F�2� e\u0018A�0��a\u0004)�\bR�\u0011�\f#H\u0019F�2� e\u0018A�0��a\u0004)�\bR�\u0011�\f#H\u0019F�2� e\u0018A�0��a\u0004)ÈYS.����z�ݾ}�������}������\u001f\u0000\u0006�/�/_�\u0014?>+^>-�.�xW��K������n�˧���=&�c�0s�|{{{qqQ\u001c>).O�|�6���'����\u0010�C�Sv]\u0016�\u001f��a�ׯq���=fy��l�\u0019c��\\�<v\u001d��[\\m��\u001e�<t*\u001e\b襛ru}�+>m�^��O�W�^q݌Q\u0014S.˲���\u0003��]���z��=\r\f�����u�~E3�a��ɉ\u001b!\u001e\u0014蠘�v�-�_7\u001b\u001d���v#ă\u0002\u001d\u0014S~��M��]\u001c����;7B<(�A1��y\u001f��@�o\u001f�^�x\u0011\u000f\ntPN���8�����\u0007\u0007\u0007�@\u0007Ŕ��T~*c6�)s��9)��;\u0018��bʉ�+\u001f\u001f\u001f�2�SL�,��z=��}��������&\u001e\u0017h���.�\u001e���+�����\t\u001aC覼�tg���Y}g����1�zʷ����f��ʮ����\u0004�\u0007�����\u0014��fx����=��S$\u0004�\u001es�����j�\\.[?���\u000f�l\u001fA��|)������(�\u0013�\u0004�Ȭ)�#h��;e����<e����7~D���s}q<�����k���g����t�B⧙$\u001eT�ָ\"=�\u0010�\r:�������7i\u001bs�F�zn�LN�\u001b\u0012t�+'e�K�s�w�~��\u0011�z\bz��s夬s�yn�����믿��5�\t��̰rRֹ�<�x�����奅A_]]M�kO��9�\\r�[�cυG�����]9)�\\r�[�c�\r?L��pQ]9)�\\��V�s'~���\u0006�At��o\u0007r��a5�f\u0001���מBjn�\f\u001f<S�Ɍ����\u001f��?\r^ͻY�����'�����4��(��\u000eJ�1��_�ktH�Ajna��� ��@9\u0018�r��I�\bz�\u0005��T5�n�\u0016��ǋ��Tb\u0003e�>4��)畓�r� 5�p�R��\u0019%\u001f�`/�^�k�i��\u0016�Pj�2��L��h=�R�$j\u001dDjn�,&����,�΢T.)��V\u000f��D\u0013Ȍ�_�o�\u0016���o��)\u0019~b�3\u001a��h\u00160j�?l�s\u001b5��$�ʟ�=\u0018�Y\u0019r��\u0007����;��?vk��m�g\f�3���\u0013ɏ�'�;��B\u0019�\u0012\u000e�m�g\f�3���\u0013ɏ��ֈ=�����\u0002B��H��f\u0001��ƀ�\u0017]���N���Ӎ�\u001e��dZ��'���I�\f5�}��\u0007����\u0004i����D\u001cJ_9)<C��V�#�s�yn���},c#�%��4!�*������\u0006l��G�8��\u0014јR�Ɲ_O�s\u001c���&�\t���z\"�5N�ҹ��U�\u000b3M�s\u0013��/�?�VJ��W�4x���&h֗'�\u0002Є�=�3�4����&h�\u0017)�\u0002д��2鍜.�\t��EJ�\u00004-�j�x\\��Ud\u0005��k�l��y�p�C�\u0002Pz�Q��l��y�����/���0�S[�e�\n@�k�\u0018E1��Ojt�\u001b�яX~��S�@��sa�t��b\nJ�j&e�RL��\u0002PXk���J1�*�\u0015�\u000e\u000e\u000e�A�|�^-+�\u001f�E1\u0005�\u0015�|ľc���\u0018�ҵ2�J1e�w0�V�)'��,�\u0002\u0010�\u001f�)�e�^�'����\u0002\u0010�C1�]�=\u0018C�]\u0006j�)�&�\u0019׵\u0002\u0010�C=e�\u0015��\u001e�)��V\u0000\u0002z̑���\u0002\u0010�c��w�+\u0000\u0001=fM\u0019�C�0��a\u0004)�\bR�\u0011�\f#H\u0019F�2� e\u0018A�0��a\u0004)�\bR�\u0011�\f#H\u0019F�2� e\u0018A�0��a\u0004)�\bR�\u0011�\f#H\u0019F�2� e\u0018A�0��a\u0004)�\bR�\u0011�\u0001����C��M\u0000\u0000\u0000\u0000IEND�B`�",
+          "status_code": 200,
+          "url": "https://api.glycosmos.org/wurcs2image/1.25.0"
+        },
+        "status": "ok",
+        "tool": "generate_glycan_image",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "wurcs": "WURCS=2.0/3,5,4/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3-3/a4-b1_b4-c1_c3-d1_c6-e1"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_4",
+        "result": {
+          "data": [
+            {
+              "input": "WURCS=2.0/3,5,4/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3-3/a4-b1_b4-c1_c3-d1_c6-e1",
+              "valid": true
+            }
+          ],
+          "status_code": 200,
+          "url": "https://api.glycosmos.org/wurcsframework/1.2.14/compositionvalidator"
+        },
+        "status": "ok",
+        "tool": "validate_composition_for_glycosylation",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 3
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "opencode-zen/deepseek-v4.1-flash-free",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "62dbc37a17d433b8eac5341f2a88f68e3b819457c3fa31cea8ba6163f2d22e6e",
+  "judge_transport_error": null,
+  "parsed_judge": null,
+  "prompt_sha256": "89051114dbb22f9490538b98f90ce89e596e513195a4e3ade5474b8e6567c53e",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": null,
+  "reason_codes": [
+    "missing_final_answer"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "glm53_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "2687b9d325b9f341a9b139aad785c22b1da8351efdd00568c350469e0e4e3609",
+    "run_summary_sha256": "9b144e8e7a450caa3f3b2e596ba1a01e26f35485ac3138387b5ff7abdea1dabb",
+    "run_task_sha256": "076c36b8b4ec388e3464282b0f5cde1e34463c57d89d50573e34985dbaacd46e",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "missing_answer",
+  "task_id": 44
+}

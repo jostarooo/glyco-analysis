@@ -1,0 +1,122 @@
+{
+  "cache_key": "8345ab925dfc00f1c1fd40b9c7f03499b9b0ddb0b0eb89b3e98aba2639febb33",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [],
+    "evidence_ids": [
+      "answer",
+      "tool_1",
+      "tool_2",
+      "tool_3"
+    ],
+    "expected_tool_called": true,
+    "flags": [],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 3,
+    "successful_tool_calls": 3,
+    "tool_calls": 3,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "gws": "freeEnd--?b1D-GlcNAc,p--4b1D-GlcNAc,p--4b1D-Man,p--?a1D-Man,p$MONO,Und,0,0,freeEnd"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": [
+          {
+            "GlycoCT": "RES\n1b:b-dglc-HEX-1:5\n2s:n-acetyl\n3b:b-dglc-HEX-1:5\n4s:n-acetyl\n5b:b-dman-HEX-1:5\n6b:a-dman-HEX-1:5\nLIN\n1:1d(2+1)2n\n2:1o(4+1)3d\n3:3d(2+1)4n\n4:3o(4+1)5d\n5:5o(-1+1)6d",
+            "WURCS": "WURCS=2.0/3,4,3/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3/a4-b1_b4-c1_c?-d1",
+            "id": "G03717EM",
+            "input": "freeEnd--?b1D-GlcNAc,p--4b1D-GlcNAc,p--4b1D-Man,p--?a1D-Man,p$MONO,Und,0,0,freeEnd",
+            "wurcs": "WURCS=2.0/3,4,3/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3/a4-b1_b4-c1_c?-d1"
+          }
+        ],
+        "status": "ok",
+        "tool": "convert_gws_format_to_wurcs_format",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "wurcs": "WURCS=2.0/3,4,3/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3/a4-b1_b4-c1_c?-d1"
+        },
+        "error": null,
+        "expected_tool": false,
+        "id": "tool_2",
+        "result": [
+          {
+            "id": "G03717EM",
+            "wurcs": "WURCS=2.0/3,4,3/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3/a4-b1_b4-c1_c?-d1"
+          }
+        ],
+        "status": "ok",
+        "tool": "obtain_glytoucan_id_from_wurcs",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "gtcid": "G03717EM"
+        },
+        "error": null,
+        "expected_tool": false,
+        "id": "tool_3",
+        "result": {
+          "data": [
+            {
+              "id": "G03717EM",
+              "wurcs": "WURCS=2.0/3,4,3/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3/a4-b1_b4-c1_c?-d1"
+            }
+          ],
+          "status_code": 200,
+          "url": "https://api.glycosmos.org/sparqlist/gtcid2seqs"
+        },
+        "status": "ok",
+        "tool": "obtain_wurcs_and_glycoct_from_glytoucan_id",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 3
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "opencode-zen/deepseek-v4.1-flash-free",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "1be7ebc128765b99677f086218b80fff653178cb0b338d4d384d5755e901ce41",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "Tool use appropriately supported the conversion, ID lookup, and confirmation against the registered GlyTouCan record.",
+    "critical_issues": [],
+    "decision": "SUCCESS",
+    "evidence_ids": [
+      "tool_1",
+      "tool_2",
+      "tool_3"
+    ],
+    "reason": "The final answer provides the converted WURCS, identifies GlyTouCan ID G03717EM, and confirms that the GlyTouCan lookup returns the same WURCS with no structural or ID discrepancy. This is supported by tool_1, tool_2, and tool_3.",
+    "scientific_accuracy": "accurate"
+  },
+  "prompt_sha256": "f4dcc4b5191aeacc1d25e119c2d4d8d005b7d3209d573b242543f6f2d018da79",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\n  \"decision\": \"SUCCESS\",\n  \"reason\": \"The final answer provides the converted WURCS, identifies GlyTouCan ID G03717EM, and confirms that the GlyTouCan lookup returns the same WURCS with no structural or ID discrepancy. This is supported by tool_1, tool_2, and tool_3.\",\n  \"critical_issues\": [],\n  \"scientific_accuracy\": \"accurate\",\n  \"api_usage_assessment\": \"Tool use appropriately supported the conversion, ID lookup, and confirmation against the registered GlyTouCan record.\",\n  \"evidence_ids\": [\"tool_1\", \"tool_2\", \"tool_3\"]\n}",
+  "reason_codes": [
+    "judge_success",
+    "successful_tool_evidence"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "glm53_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "03e25e3bf9355b0b63473d44c4581c6f8a35fd6fa130dd9fd94755b9fc4b2ae4",
+    "run_summary_sha256": "9b144e8e7a450caa3f3b2e596ba1a01e26f35485ac3138387b5ff7abdea1dabb",
+    "run_task_sha256": "f94696fb02542cc27fd1766b3d4af014f62845b2cf1cd45b73830d6e88fca9ae",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "correct",
+  "task_id": 11
+}

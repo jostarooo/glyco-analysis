@@ -1,0 +1,211 @@
+{
+  "cache_key": "0eaf409d900b3299da1ee0ce5a9e5a38af16290ce03f107ae960f76e789a9e83",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [],
+    "evidence_ids": [
+      "answer",
+      "tool_1"
+    ],
+    "expected_tool_called": true,
+    "flags": [],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 1,
+    "successful_tool_calls": 1,
+    "tool_calls": 1,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "getcolumns": "fold,domain,species",
+          "limit": "1000"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": [
+            [
+              "fold",
+              "domain",
+              "species"
+            ],
+            [
+              "a/b mixed / LysM domain",
+              "LysM-like",
+              "Sclerotinia sclerotiorum"
+            ],
+            [
+              "b-trefoil",
+              "Ricin-like",
+              "Sclerotinia sclerotiorum"
+            ],
+            [
+              "ab hairpin  non-globular proline-rich",
+              "calnexin-calreticulin like",
+              "Sclerotinia sclerotiorum"
+            ],
+            [
+              "small protein / Knottin",
+              "hevein-like",
+              "Sclerotinia sclerotiorum"
+            ],
+            [
+              "b-trefoil",
+              "Laetiporus trefoil lectin-like",
+              "Sclerotinia sclerotiorum"
+            ],
+            [
+              "small protein / Knottin",
+              "hevein-like",
+              "Sclerotinia sclerotiorum"
+            ],
+            [
+              "a/b barrel / TIM",
+              "chi-lectin (TCLL)",
+              "Sclerotinia sclerotiorum"
+            ],
+            [
+              "b-sandwich / PA14 adhesin",
+              "PA14 yeast adhesin",
+              "Sclerotinia sclerotiorum"
+            ],
+            [
+              "small protein / Knottin",
+              "hevein-like",
+              "Sclerotinia sclerotiorum"
+            ],
+            [
+              "b-trefoil",
+              "Sclerotinia trefoil lectin-like",
+              "Sclerotinia sclerotiorum"
+            ],
+            [
+              "b-prism I",
+              "Jacalin-like",
+              "Sclerotinia sclerotiorum"
+            ],
+            [
+              "a/b barrel / TIM",
+              "chi-lectin (TCLL)",
+              "Sclerotinia sclerotiorum"
+            ],
+            [
+              "b-barrel",
+              "P-type lectin-like",
+              "Sclerotinia sclerotiorum"
+            ],
+            [
+              "b-propeller",
+              "PLL-like (PropLec7A)",
+              "Sclerotinia sclerotiorum"
+            ],
+            [
+              "small protein / Knottin",
+              "hevein-like",
+              "Sclerotinia sclerotiorum"
+            ],
+            [
+              "b-sandwich / cytolysin-like",
+              "Oomycete cytolysin",
+              "Sclerotinia sclerotiorum"
+            ],
+            [
+              "small protein / Knottin",
+              "hevein-like",
+              "Sclerotinia sclerotiorum"
+            ],
+            [
+              "b-sandwich / cyanovirin-like",
+              "cyanovirin-like",
+              "Sclerotinia sclerotiorum"
+            ],
+            [
+              "b-sandwich / ConA-like",
+              "ERGIC-VIP L-type",
+              "Sclerotinia sclerotiorum"
+            ],
+            [
+              "b-sandwich / ConA-like",
+              "ERGIC-VIP L-type",
+              "Sclerotinia sclerotiorum"
+            ],
+            [
+              "b-sandwich / ConA-like",
+              "Yeast Emp L-type",
+              "Sclerotinia sclerotiorum"
+            ],
+            [
+              "small protein / Knottin",
+              "hevein-like",
+              "Sclerotinia sclerotiorum"
+            ],
+            [
+              "b-sandwich / cyanovirin-like",
+              "cyanovirin-like",
+              "Sclerotinia sclerotiorum"
+            ],
+            [
+              "b-sandwich / cytolysin-like",
+              "Oomycete cytolysin",
+              "Sclerotinia sclerotiorum"
+            ],
+            [
+              "small protein / Knottin",
+              "hevein-like",
+              "Sclerotinia sclerotiorum"
+            ]
+          ],
+          "status_code": 200,
+          "url": "https://unilectin.unige.ch/api/getmycolec"
+        },
+        "status": "ok",
+        "tool": "get_fungal_lectins",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 1
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "opencode-zen/deepseek-v4.1-flash-free",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "b62415ce2bb340ea242651f32b3221c490b1e6cc69d5c5c4e1cfa1671be0b08a",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "The tool was called with the intended columns and limit, but the returned data were for Sclerotinia sclerotiorum; the final answer misrepresented this evidence as Aspergillus niger data.",
+    "critical_issues": [
+      "Species mismatch: tool_1 returned Sclerotinia sclerotiorum entries, not Aspergillus niger.",
+      "The answer makes an unsupported claim that the listed folds are from Aspergillus niger.",
+      "The answer does not list or compare per-entry fold, domain, and species data as expected."
+    ],
+    "decision": "FAILURE",
+    "evidence_ids": [
+      "tool_1"
+    ],
+    "reason": "The final answer incorrectly attributes the retrieved fold/domain data to Aspergillus niger, while tool_1 shows all returned entries are for Sclerotinia sclerotiorum. It therefore does not substantively provide the requested Aspergillus niger structural fold/domain results.",
+    "scientific_accuracy": "inaccurate"
+  },
+  "prompt_sha256": "35f1af504fa1e6fa01da215bfe2b721882049b0482e9022f67c1fddd4b8acdf7",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\n  \"decision\": \"FAILURE\",\n  \"reason\": \"The final answer incorrectly attributes the retrieved fold/domain data to Aspergillus niger, while tool_1 shows all returned entries are for Sclerotinia sclerotiorum. It therefore does not substantively provide the requested Aspergillus niger structural fold/domain results.\",\n  \"critical_issues\": [\n    \"Species mismatch: tool_1 returned Sclerotinia sclerotiorum entries, not Aspergillus niger.\",\n    \"The answer makes an unsupported claim that the listed folds are from Aspergillus niger.\",\n    \"The answer does not list or compare per-entry fold, domain, and species data as expected.\"\n  ],\n  \"scientific_accuracy\": \"inaccurate\",\n  \"api_usage_assessment\": \"The tool was called with the intended columns and limit, but the returned data were for Sclerotinia sclerotiorum; the final answer misrepresented this evidence as Aspergillus niger data.\",\n  \"evidence_ids\": [\n    \"tool_1\"\n  ]\n}",
+  "reason_codes": [
+    "judge_failure"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "qwen3_4b_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "93b4c36c0307dc65bbb7c9b0220496b1c8c578da14eb758692bab875a6c4f69a",
+    "run_summary_sha256": "4ead0e26a15760a34450c55859679a5c5aeee4dd913014826540b77e5b7c66f4",
+    "run_task_sha256": "4c4fa83e3c4d8d7b61ab6e70dd791bb8077764affa9b2f25bc80945859ded5bb",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "incorrect",
+  "task_id": 23
+}

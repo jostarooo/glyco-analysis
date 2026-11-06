@@ -1,0 +1,134 @@
+{
+  "cache_key": "3a4f8aa82a2df95f1a6deedae6ad135a0eea81ee38f2b04c5d54b23305ae1448",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "max_rounds_reached"
+    ],
+    "evidence_ids": [
+      "tool_1",
+      "tool_2",
+      "tool_3",
+      "tool_4"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "missing_final_answer",
+      "runner_errors"
+    ],
+    "has_final_answer": false,
+    "successful_result_tool_calls": 4,
+    "successful_tool_calls": 4,
+    "tool_calls": 4,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "text": "Hex(3)HexNAc(2)"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": [
+          {
+            "id": "G14669DU",
+            "wurcs": "WURCS=2.0/2,5,4/[axxxxh-1x_1-5_2*NCC/3=O][axxxxh-1x_1-5]/1-1-2-2-2/a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?_a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?_a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?_a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?"
+          }
+        ],
+        "status": "ok",
+        "tool": "convert_composition_text_to_wurcs_format",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "wurcs": "WURCS=2.0/2,5,4/[axxxxh-1x_1-5_2*NCC/3=O][axxxxh-1x_1-5]/1-1-2-2-2/a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?_a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?_a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?_a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?_a?|b?|c?|d?|e?"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": {
+          "data": [
+            {
+              "input": "WURCS=2.0/2,5,4/[axxxxh-1x_1-5_2*NCC/3=O][axxxxh-1x_1-5]/1-1-2-2-2/a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?_a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?_a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?_a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?_a?|b?|c?|d?|e?",
+              "message": "org.glycoinfo.WURCSFramework.util.array.WURCSFormatException: Number of LIN is not correct."
+            }
+          ],
+          "status_code": 200,
+          "url": "https://api.glycosmos.org/wurcsframework/1.2.14/wurcs2mass"
+        },
+        "status": "ok",
+        "tool": "calculate_mass_from_wurcs",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "composition": "Hex(3)HexNAc(2)"
+        },
+        "error": null,
+        "expected_tool": false,
+        "id": "tool_3",
+        "result": {
+          "data": {
+            "message": "500 Internal Server Error"
+          },
+          "status_code": 500,
+          "url": "https://api.glycosmos.org/glycancompositionconverter/1.0.0/composition2wurcs/Hex%283%29HexNAc%282%29"
+        },
+        "status": "ok",
+        "tool": "convert_composition_to_wurcs",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "gtcid": "G14669DU"
+        },
+        "error": null,
+        "expected_tool": false,
+        "id": "tool_4",
+        "result": {
+          "data": [
+            {
+              "id": "G14669DU",
+              "wurcs": "WURCS=2.0/2,5,4/[axxxxh-1x_1-5_2*NCC/3=O][axxxxh-1x_1-5]/1-1-2-2-2/a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?_a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?_a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?_a?|b?|c?|d?|e?}-{a?|b?|c?|d?|e?"
+            }
+          ],
+          "status_code": 200,
+          "url": "https://api.glycosmos.org/sparqlist/gtcid2seqs"
+        },
+        "status": "ok",
+        "tool": "obtain_wurcs_and_glycoct_from_glytoucan_id",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 4
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "62dbc37a17d433b8eac5341f2a88f68e3b819457c3fa31cea8ba6163f2d22e6e",
+  "judge_transport_error": null,
+  "parsed_judge": null,
+  "prompt_sha256": "1c3a474822ad61d8232b210d70a54dc4a5718721dd04fa3a7140dee83ab9aa36",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": null,
+  "reason_codes": [
+    "missing_final_answer"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "glm53_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "fe3ae428e90aff9973db68801d16a1fbd9f13c251b359dd488cbcbddd0f45404",
+    "run_summary_sha256": "9b144e8e7a450caa3f3b2e596ba1a01e26f35485ac3138387b5ff7abdea1dabb",
+    "run_task_sha256": "ac1e6af4a71e9354e1ffc786952e901dcc1a311d071d3c4a4314323e2d42c320",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "missing_answer",
+  "task_id": 37
+}

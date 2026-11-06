@@ -1,0 +1,81 @@
+{
+  "cache_key": "b394032c0f47e926f1f8aa209fb14e02cc67cc247877a06c500d0eca57ad450e",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [],
+    "evidence_ids": [
+      "answer",
+      "tool_1"
+    ],
+    "expected_tool_called": true,
+    "flags": [],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 1,
+    "successful_tool_calls": 1,
+    "tool_calls": 1,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "database": "compound",
+          "option": "exact_mass=286.2",
+          "query": "flavonoids"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": "",
+          "status_code": 400,
+          "url": "https://rest.kegg.jp/find/compound/flavonoids/exact_mass=286.2"
+        },
+        "status": "ok",
+        "tool": "find",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 1
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "b7712ca5b90ca00009a6329c604984060c68c3b92cbd6d049d0dcbd5841d55a1",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "The correct tool (find) was used, but the query combined a text term ('flavonoids') with the exact_mass option in a way the KEGG REST API does not support, producing a 400 error with empty data (tool_1). The agent treated this failed call as a definitive negative result instead of reformulating the request, so tool use did not support the answer.",
+    "critical_issues": [
+      "Omitted the required result: no KEGG compound IDs or names were provided",
+      "Misinterpreted an HTTP 400 request-syntax error as evidence that no matching compounds exist",
+      "Did not retry with a corrected KEGG find query after the malformed request failed"
+    ],
+    "decision": "FAILURE",
+    "evidence_ids": [
+      "tool_1"
+    ],
+    "reason": "The expected answer required a list of KEGG compound entries with exact mass 286.2 g/mol (compound IDs and names). The final answer provided no such list, instead concluding the entries 'were not found' based on a status 400 error from a malformed query (tool_1). A 400 error indicates an invalid request syntax, not an absence of matching compounds — flavonoids such as luteolin and kaempferol are known KEGG compounds near this mass, so the agent should have corrected the query (e.g., searching by exact_mass alone) and retried rather than reporting failure.",
+    "scientific_accuracy": "inaccurate"
+  },
+  "prompt_sha256": "c65e80e0863d9e65b23f0cc5d051087baa8c67be160b1b7e49518b093f5f41a5",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\n  \"decision\": \"FAILURE\",\n  \"reason\": \"The expected answer required a list of KEGG compound entries with exact mass 286.2 g/mol (compound IDs and names). The final answer provided no such list, instead concluding the entries 'were not found' based on a status 400 error from a malformed query (tool_1). A 400 error indicates an invalid request syntax, not an absence of matching compounds — flavonoids such as luteolin and kaempferol are known KEGG compounds near this mass, so the agent should have corrected the query (e.g., searching by exact_mass alone) and retried rather than reporting failure.\",\n  \"critical_issues\": [\n    \"Omitted the required result: no KEGG compound IDs or names were provided\",\n    \"Misinterpreted an HTTP 400 request-syntax error as evidence that no matching compounds exist\",\n    \"Did not retry with a corrected KEGG find query after the malformed request failed\"\n  ],\n  \"scientific_accuracy\": \"inaccurate\",\n  \"api_usage_assessment\": \"The correct tool (find) was used, but the query combined a text term ('flavonoids') with the exact_mass option in a way the KEGG REST API does not support, producing a 400 error with empty data (tool_1). The agent treated this failed call as a definitive negative result instead of reformulating the request, so tool use did not support the answer.\",\n  \"evidence_ids\": [\"tool_1\"]\n}",
+  "reason_codes": [
+    "judge_failure"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "qwen3_4b_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "04f7daa3555cee8f829c989d5fcbda5e82e978fd5da3ab9270e30e9cdbb6c190",
+    "run_summary_sha256": "4ead0e26a15760a34450c55859679a5c5aeee4dd913014826540b77e5b7c66f4",
+    "run_task_sha256": "ba1d00d604fba9383b187c7b9381ff634fb4b00de04582871a59f57805c056ff",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "incorrect",
+  "task_id": 28
+}

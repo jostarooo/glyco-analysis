@@ -1,0 +1,112 @@
+{
+  "cache_key": "f2d8d9296a7c96b726319b7130231b3e2eb63c5f64f966b654befcdca8e009ea",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [],
+    "evidence_ids": [
+      "answer",
+      "tool_1",
+      "tool_2"
+    ],
+    "expected_tool_called": true,
+    "flags": [],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 2,
+    "successful_tool_calls": 2,
+    "tool_calls": 2,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "accession": "P12345",
+          "alternativesequence": "V,-",
+          "consequencetype": "missense,stop gained",
+          "dbid": "rs121918508",
+          "dbtype": "dbSNP,ClinVar",
+          "disease": "Alzheimer's disease 1",
+          "location": "10-60",
+          "sourcetype": "UniProt,ClinVar",
+          "taxid": 9606,
+          "wildtype": "A"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": [],
+          "status_code": 200,
+          "url": "https://www.ebi.ac.uk/proteins/api/variation?offset=0&size=100&sourcetype=UniProt%2CClinVar&consequencetype=missense%2Cstop+gained&wildtype=A&alternativesequence=V%2C-&location=10-60&accession=P12345&disease=Alzheimer%27s+disease+1&taxid=9606&dbtype=dbSNP%2CClinVar&dbid=rs121918508"
+        },
+        "status": "ok",
+        "tool": "search_natural_variants",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "accession": "Q67890",
+          "alternativesequence": "V,-",
+          "consequencetype": "missense,stop gained",
+          "dbid": "rs121918508",
+          "dbtype": "dbSNP,ClinVar",
+          "disease": "Alzheimer's disease 1",
+          "location": "10-60",
+          "sourcetype": "UniProt,ClinVar",
+          "taxid": 9606,
+          "wildtype": "A"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": {
+          "data": [],
+          "status_code": 200,
+          "url": "https://www.ebi.ac.uk/proteins/api/variation?offset=0&size=100&sourcetype=UniProt%2CClinVar&consequencetype=missense%2Cstop+gained&wildtype=A&alternativesequence=V%2C-&location=10-60&accession=Q67890&disease=Alzheimer%27s+disease+1&taxid=9606&dbtype=dbSNP%2CClinVar&dbid=rs121918508"
+        },
+        "status": "ok",
+        "tool": "search_natural_variants",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 2
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "90b6b80186042b1b55ece440a62d52dc22113f544d055bc112d5dd410140043e",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "Both expected-tool calls were made with parameters matching all query criteria and returned successful (200) empty result sets; the answer is fully supported by this tool evidence and does not overstate the findings.",
+    "critical_issues": [],
+    "decision": "SUCCESS",
+    "evidence_ids": [
+      "tool_1",
+      "tool_2"
+    ],
+    "reason": "The final answer faithfully reports the tool evidence: both search_natural_variants calls (tool_1 for P12345, tool_2 for Q67890) used the correct filters (sources UniProt/ClinVar, consequences missense/stop gained, wildtype A, alternatives V/-, location 10-60, Alzheimer's disease 1, taxid 9606, dbSNP/ClinVar, rs121918508) and returned HTTP 200 with empty data arrays. Reporting 'no variants found' is an accurate, non-contradictory reflection of the retrieved data, and the answer transparently describes the applied filters.",
+    "scientific_accuracy": "accurate"
+  },
+  "prompt_sha256": "cd9539ab333029b9918b4abad272a80f14a89e31b1b0b351b28dbdad02254385",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\n  \"decision\": \"SUCCESS\",\n  \"reason\": \"The final answer faithfully reports the tool evidence: both search_natural_variants calls (tool_1 for P12345, tool_2 for Q67890) used the correct filters (sources UniProt/ClinVar, consequences missense/stop gained, wildtype A, alternatives V/-, location 10-60, Alzheimer's disease 1, taxid 9606, dbSNP/ClinVar, rs121918508) and returned HTTP 200 with empty data arrays. Reporting 'no variants found' is an accurate, non-contradictory reflection of the retrieved data, and the answer transparently describes the applied filters.\",\n  \"critical_issues\": [],\n  \"scientific_accuracy\": \"accurate\",\n  \"api_usage_assessment\": \"Both expected-tool calls were made with parameters matching all query criteria and returned successful (200) empty result sets; the answer is fully supported by this tool evidence and does not overstate the findings.\",\n  \"evidence_ids\": [\"tool_1\", \"tool_2\"]\n}",
+  "reason_codes": [
+    "judge_success",
+    "successful_tool_evidence"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "glm53_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "b9b7d3af2d54f14058c2d533dd22bb4619d05ecae71bb8c003dfea57334023ab",
+    "run_summary_sha256": "9b144e8e7a450caa3f3b2e596ba1a01e26f35485ac3138387b5ff7abdea1dabb",
+    "run_task_sha256": "b71402739615016737902288e9da5f5eab6d05f6ec9b32fca6064a32badbbd88",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "correct",
+  "task_id": 30
+}

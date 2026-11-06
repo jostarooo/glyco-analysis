@@ -1,0 +1,107 @@
+{
+  "cache_key": "4bae7e3db0a4f05b522113510d0c19c50ddb58d5e4103d38cabed2491fa4f71e",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [],
+    "evidence_ids": [
+      "answer",
+      "tool_1",
+      "tool_2"
+    ],
+    "expected_tool_called": true,
+    "flags": [],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 2,
+    "successful_tool_calls": 2,
+    "tool_calls": 2,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "format": "png",
+          "type": "html",
+          "wurcs": "WURCS=2.0/3,5,4/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3-3/a4-b1_b4-c1_c3-d1_c6-e1"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": "<img src=\"data:image/png;base64,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\">",
+          "status_code": 200,
+          "url": "https://api.glycosmos.org/wurcs2image/1.25.0"
+        },
+        "status": "ok",
+        "tool": "generate_glycan_image",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "wurcs": "WURCS=2.0/3,5,4/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3-3/a4-b1_b4-c1_c3-d1_c6-e1"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": {
+          "data": [
+            {
+              "m_mapTypeToReports": {
+                "ERROR": [],
+                "UNVERIFIABLE": [],
+                "WARNING": []
+              },
+              "m_sInputString": "WURCS=2.0/3,5,4/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3-3/a4-b1_b4-c1_c3-d1_c6-e1",
+              "m_sStandardString": "WURCS=2.0/3,5,4/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3-3/a4-b1_b4-c1_c3-d1_c6-e1"
+            }
+          ],
+          "status_code": 200,
+          "url": "https://api.glycosmos.org/wurcsframework/1.2.14/wurcsvalidator"
+        },
+        "status": "ok",
+        "tool": "validate_wurcs",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 2
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "7404a677252505d59b302a4f45e45c640e41cc093065fe6ba09124c5943197e1",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "Both expected tools were used correctly: generate_glycan_image with format 'png' and type 'html' produced a valid embedded PNG image (tool_1), and validate_wurcs confirmed the WURCS notation is error-free with all report categories empty (tool_2). Tool use fully supports the answer's claims.",
+    "critical_issues": [],
+    "decision": "SUCCESS",
+    "evidence_ids": [
+      "answer",
+      "tool_1",
+      "tool_2"
+    ],
+    "reason": "The final answer accurately reports both required results: the glycan image was generated in PNG format as an HTML base64-embedded image with status 200 from the GlycoSMOS wurcs2image service (tool_1), and the WURCS validation returned empty ERROR, WARNING, and UNVERIFIABLE lists with the standard string matching the input (tool_2). The answer's claims match the tool evidence with no contradictions.",
+    "scientific_accuracy": "accurate"
+  },
+  "prompt_sha256": "7baec460180b281b37034cdb14e6533c2ffa7bd56c8fd170cb9dc6c242db29a0",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\n  \"decision\": \"SUCCESS\",\n  \"reason\": \"The final answer accurately reports both required results: the glycan image was generated in PNG format as an HTML base64-embedded image with status 200 from the GlycoSMOS wurcs2image service (tool_1), and the WURCS validation returned empty ERROR, WARNING, and UNVERIFIABLE lists with the standard string matching the input (tool_2). The answer's claims match the tool evidence with no contradictions.\",\n  \"critical_issues\": [],\n  \"scientific_accuracy\": \"accurate\",\n  \"api_usage_assessment\": \"Both expected tools were used correctly: generate_glycan_image with format 'png' and type 'html' produced a valid embedded PNG image (tool_1), and validate_wurcs confirmed the WURCS notation is error-free with all report categories empty (tool_2). Tool use fully supports the answer's claims.\",\n  \"evidence_ids\": [\"answer\", \"tool_1\", \"tool_2\"]\n}",
+  "reason_codes": [
+    "judge_success",
+    "successful_tool_evidence"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "glm53_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "af65d3144477e0486f22dbaeea03e6bf1bc5562bcf4c41b86ce29fde1e3d4859",
+    "run_summary_sha256": "9b144e8e7a450caa3f3b2e596ba1a01e26f35485ac3138387b5ff7abdea1dabb",
+    "run_task_sha256": "2cca53f04d5543bb4333a8be627bf0cec43a46a7da7c29bb4ee85482db3503eb",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "correct",
+  "task_id": 35
+}

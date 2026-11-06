@@ -1,0 +1,78 @@
+{
+  "cache_key": "27b0483deca20138a0b8987f93ac83cc81f00ef4c853ecd265c0ad28e543097e",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [],
+    "evidence_ids": [
+      "answer",
+      "tool_1"
+    ],
+    "expected_tool_called": true,
+    "flags": [],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 1,
+    "successful_tool_calls": 1,
+    "tool_calls": 1,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "iupacextended": "α-D-Manp-(1→3)[α-D-Manp-(1→6)]-β-D-Manp-(1→4)-β-D-GlcpNAc-(1→4)-β-D-GlcpNAc-(1→)"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "message": "java.lang.StringIndexOutOfBoundsException: index 80, length 80"
+        },
+        "status": "ok",
+        "tool": "convert_iupac_extended_to_wurcs",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 1
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "b8b653cf6c148002a9964284088f69c8233a04dfd27363132f87cc33450878c6",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "Only convert_iupac_extended_to_wurcs was called and it returned an error (tool_1); the agent did not attempt error recovery (e.g., correcting the malformed input) nor invoke the other two expected tools, so tool use does not support the expected answer.",
+    "critical_issues": [
+      "No WURCS representation or GlyTouCan accession ID provided",
+      "generate_glycan_image and validate_wurcs were never executed, so no image or validation results exist",
+      "Final answer contains none of the required documented outputs"
+    ],
+    "decision": "FAILURE",
+    "evidence_ids": [
+      "answer",
+      "tool_1"
+    ],
+    "reason": "The final answer reports only a conversion error and explicitly stops; it omits all three required results: the WURCS string/GlyTouCan accession, the generated image, and the validation results. Only the convert tool was invoked, and it returned an error message rather than a WURCS output (tool_1).",
+    "scientific_accuracy": "inaccurate"
+  },
+  "prompt_sha256": "1625886e2484236c5b033d6b121c8da981cd2866709de90edb51cff5de2d0821",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\n  \"decision\": \"FAILURE\",\n  \"reason\": \"The final answer reports only a conversion error and explicitly stops; it omits all three required results: the WURCS string/GlyTouCan accession, the generated image, and the validation results. Only the convert tool was invoked, and it returned an error message rather than a WURCS output (tool_1).\",\n  \"critical_issues\": [\n    \"No WURCS representation or GlyTouCan accession ID provided\",\n    \"generate_glycan_image and validate_wurcs were never executed, so no image or validation results exist\",\n    \"Final answer contains none of the required documented outputs\"\n  ],\n  \"scientific_accuracy\": \"inaccurate\",\n  \"api_usage_assessment\": \"Only convert_iupac_extended_to_wurcs was called and it returned an error (tool_1); the agent did not attempt error recovery (e.g., correcting the malformed input) nor invoke the other two expected tools, so tool use does not support the expected answer.\",\n  \"evidence_ids\": [\"answer\", \"tool_1\"]\n}",
+  "reason_codes": [
+    "judge_failure"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "qwen3_4b_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "7d5e63ccf673bdff4426d9bf846a5677d8c53cbb48aca852c62a875f835dc7f6",
+    "run_summary_sha256": "4ead0e26a15760a34450c55859679a5c5aeee4dd913014826540b77e5b7c66f4",
+    "run_task_sha256": "c5c8d623f51734ad7ac0a40c13a126af29b47c4cea19361ddb483eda1119650c",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "incorrect",
+  "task_id": 32
+}

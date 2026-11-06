@@ -1,0 +1,101 @@
+{
+  "cache_key": "a12dac3f56a77ad83b202c5d2a2c181434f8895d82ecfda3845aa1d061671f74",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "AssertionError: Format must be either \"png\" or \"svg\"",
+      "generate_glycan_image: AssertionError: Format must be either \"png\" or \"svg\""
+    ],
+    "evidence_ids": [
+      "answer",
+      "tool_1",
+      "tool_2"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "tool_errors",
+      "runner_errors"
+    ],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 0,
+    "successful_tool_calls": 0,
+    "tool_calls": 2,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "format": "SVG",
+          "type": "wurcs",
+          "verify": "true",
+          "wurcs": "WURCS=2.0/3,5,4/[a1221h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3-3/a4-b1_b4-c1_c3-d1_c6-e1"
+        },
+        "error": "AssertionError: Format must be either \"png\" or \"svg\"",
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": null,
+        "status": "error",
+        "tool": "generate_glycan_image",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "format": "PNG",
+          "type": "wurcs",
+          "verify": "true",
+          "wurcs": "WURCS=2.0/3,5,4/[a1221h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3-3/a4-b1_b4-c1_c3-d1_c6-e1"
+        },
+        "error": "AssertionError: Format must be either \"png\" or \"svg\"",
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": null,
+        "status": "error",
+        "tool": "generate_glycan_image",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 0
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "opencode-zen/deepseek-v4.1-flash-free",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "b77102f3b914a971a8f6178991af5d0eaff7aa1fdbe9d0054136eceecb7ce23e",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "Tool usage was attempted for both SVG and PNG, but both calls errored because the format parameter was uppercase rather than lowercase; the failed tool outputs do not support the expected visual/structural comparison.",
+    "critical_issues": [
+      "No generated glycan images in SVG or PNG format were included.",
+      "No substantive comparison of structural details, stereochemistry, or topology was provided.",
+      "The answer relies on generic format properties rather than analysis of the requested glycan visualization."
+    ],
+    "decision": "FAILURE",
+    "evidence_ids": [
+      "tool_1",
+      "tool_2"
+    ],
+    "reason": "The final answer does not provide the generated SVG and PNG glycan images or compare actual structural representation details, visual clarity, stereochemistry, or topology as required. Instead, both tool calls failed with a format-validation error, so the answer only gives generic SVG/PNG differences and an error explanation.",
+    "scientific_accuracy": "partially_accurate"
+  },
+  "prompt_sha256": "f8501369d384abbfa0ae9e9c0a91356e64fc2285f296c45acc945efa1536d3f0",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\n  \"decision\": \"FAILURE\",\n  \"reason\": \"The final answer does not provide the generated SVG and PNG glycan images or compare actual structural representation details, visual clarity, stereochemistry, or topology as required. Instead, both tool calls failed with a format-validation error, so the answer only gives generic SVG/PNG differences and an error explanation.\",\n  \"critical_issues\": [\n    \"No generated glycan images in SVG or PNG format were included.\",\n    \"No substantive comparison of structural details, stereochemistry, or topology was provided.\",\n    \"The answer relies on generic format properties rather than analysis of the requested glycan visualization.\"\n  ],\n  \"scientific_accuracy\": \"partially_accurate\",\n  \"api_usage_assessment\": \"Tool usage was attempted for both SVG and PNG, but both calls errored because the format parameter was uppercase rather than lowercase; the failed tool outputs do not support the expected visual/structural comparison.\",\n  \"evidence_ids\": [\n    \"tool_1\",\n    \"tool_2\"\n  ]\n}",
+  "reason_codes": [
+    "judge_failure"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "qwen3_4b_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "24664cb03db1b4f155135c6846f5873940bbc79c6bdd3392b68dc523698d0237",
+    "run_summary_sha256": "4ead0e26a15760a34450c55859679a5c5aeee4dd913014826540b77e5b7c66f4",
+    "run_task_sha256": "940448599c4afbfcdbc522b5c18c74f6629f147e3f8c531f4a6a6f6aa82e34f1",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "incorrect",
+  "task_id": 16
+}

@@ -1,0 +1,142 @@
+{
+  "cache_key": "de88eac4130eeba43c427e7013c004ec5c91cdd63be7d68dc32f621c503c6c91",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "TypeError: search_uniprot_entries() got an unexpected keyword argument 'query'",
+      "search_uniprot_entries: TypeError: search_uniprot_entries() got an unexpected keyword argument 'query'",
+      "max_rounds_reached"
+    ],
+    "evidence_ids": [
+      "tool_1",
+      "tool_2",
+      "tool_3",
+      "tool_4"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "missing_final_answer",
+      "tool_errors",
+      "truncated_results",
+      "runner_errors"
+    ],
+    "has_final_answer": false,
+    "successful_result_tool_calls": 3,
+    "successful_tool_calls": 3,
+    "tool_calls": 4,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "goterms": "GO:0005975",
+          "offset": 0,
+          "protein": "Glycosyltransferase",
+          "query": null,
+          "reviewed": true,
+          "seqLength": null,
+          "size": 100,
+          "taxid": 559292
+        },
+        "error": "TypeError: search_uniprot_entries() got an unexpected keyword argument 'query'",
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": null,
+        "status": "error",
+        "tool": "search_uniprot_entries",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "goterms": "GO:0005975",
+          "offset": 0,
+          "protein": "Glycosyltransferase",
+          "reviewed": true,
+          "size": 100,
+          "taxid": 559292
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": {
+          "data": "<?xml version='1.0' encoding='UTF-8'?><uniprot xmlns=\"http://uniprot.org/uniprot\" xsi:schemaLocation=\"http://uniprot.org/uniprot http://www.uniprot.org/support/docs/uniprot.xsd\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/>",
+          "status_code": 200,
+          "url": "https://www.ebi.ac.uk/proteins/api/proteins?offset=0&size=100&reviewed=True&goterms=GO%3A0005975&protein=Glycosyltransferase&taxid=559292"
+        },
+        "status": "ok",
+        "tool": "search_uniprot_entries",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "offset": 0,
+          "protein": "Glycosyltransferase",
+          "reviewed": true,
+          "size": 100,
+          "taxid": 559292
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_3",
+        "result": {
+          "preview": "{\"status_code\": 200, \"url\": \"https://www.ebi.ac.uk/proteins/api/proteins?offset=0&size=100&reviewed=True&protein=Glycosyltransferase&taxid=559292\", \"data\": \"<?xml version='1.0' encoding='UTF-8'?><uniprot xmlns=\\\"http://uniprot.org/uniprot\\\" xsi:schemaLocation=\\\"http://uniprot.org/uniprot http://www.uniprot.org/support/docs/uniprot.xsd\\\" xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\"><entry xmlns=\\\"https://uniprot.org/uniprot\\\" dataset=\\\"Swiss-Prot\\\" created=\\\"1994-02-01\\\" modified=\\\"2026-11-04\\\" version=\\\"207\\\"><accession>P33767</accession><accession>D3DLP5</accession><name>OSTB_YEAST</name><protein><recommendedName><fullName>Dolichyl-diphosphooligosaccharide--protein glycosyltransferase subunit WBP1</fullName><shortName>Oligosaccharyl transferase subunit WBP1</shortName></recommendedName><alternativeName><fullName>Oligosaccharyl transferase subunit beta</fullName></alternativeName></protein><gene><name type=\\\"primary\\\">WBP1</name><name type=\\\"ordered locus\\\">YEL002C</name></gene><organism><name type=\\\"scientific\\\">Saccharomyces cerevisiae (strain ATCC 204508 / S288c)</name><name type=\\\"common\\\">Baker's yeast</name><dbReference type=\\\"NCBI Taxonomy\\\" id=\\\"559292\\\"/><lineage><taxon>Eukaryota</taxon><taxon>Fungi</taxon><taxon>Dikarya</taxon><taxon>Ascomycota</taxon><taxon>Saccharomycotina</taxon><taxon>Saccharomycetes</taxon><taxon>Saccharomycetales</taxon><taxon>Saccharomycetaceae</taxon><taxon>Saccharomyces</taxon></lineage></organism><reference key=\\\"1\\\"><citation type=\\\"journal article\\\" date=\\\"1991\\\" name=\\\"Eur. J. Cell Biol.\\\" volume=\\\"56\\\" first=\\\"8\\\" last=\\\"18\\\"><title>An essential 45 kDa yeast transmembrane protein reacts with anti-nuclear pore antibodies: purification of the protein, immunolocalization and cloning of the gene.</title><authorList><person name=\\\"Te Heesen S.\\\"/><person name=\\\"Rauhut R.\\\"/><person name=\\\"Aebersold R.\\\"/><person name=\\\"Abelson J.\\\"/><person name=\\\"Aebi M.\\\"/><person name=\\\"Clark M.W.\\\"/></authorList><dbReference type=\\\"PubMed\\\" id=\\\"1724755\\\"/></citation><scope>NUCLEOTIDE SEQUENCE [GENOMIC DNA]</scope><scope>PROTEIN SEQUENCE OF N-TERMINUS</scope><scope>SUBCELLULAR LOCATION</scope><scope>TOPOLOGY</scope></reference><reference key=\\\"2\\\"><citation type=\\\"journal article\\\" date=\\\"1997\\\" name=\\\"Nature\\\" volume=\\\"387\\\" first=\\\"78\\\" last=\\\"81\\\"><title>The nucleotide sequence of Saccharomyces cerevisiae chromosome V.</title><authorList><person name=\\\"Dietrich F.S.\\\"/><person name=\\\"Mulligan J.T.\\\"/><person name=\\\"Hennessy K.M.\\\"/><person name=\\\"Yelton M.A.\\\"/><person name=\\\"Allen E.\\\"/><person name=\\\"Araujo R.\\\"/><person name=\\\"Aviles E.\\\"/><person name=\\\"Berno A.\\\"/><person name=\\\"Brennan T.\\\"/><person name=\\\"Carpenter J.\\\"/><person name=\\\"Chen E.\\\"/><person name=\\\"Cherry J.M.\\\"/><person name=\\\"Chung E.\\\"/><person name=\\\"Duncan M.\\\"/><person name=\\\"Guzman E.\\\"/><person name=\\\"Hartzell G.\\\"/><person name=\\\"Hunicke-Smith S.\\\"/><person name=\\\"Hyman R.W.\\\"/><person name=\\\"Kayser A.\\\"/><person name=\\\"Komp C.\\\"/><person name=\\\"Lashkari D.\\\"/><person name=\\\"Lew H.\\\"/><person name=\\\"Lin D.\\\"/><person name=\\\"Mosedale D.\\\"/><person name=\\\"Nakahara K.\\\"/><person name=\\\"Namath A.\\\"/><person name=\\\"Norgren R.\\\"/><person name=\\\"Oefner P.\\\"/><person name=\\\"Oh C.\\\"/><person name=\\\"Petel F.X.\\\"/><person name=\\\"Roberts D.\\\"/><person name=\\\"Sehl P.\\\"/><person name=\\\"Schramm S.\\\"/><person name=\\\"Shogren T.\\\"/><person name=\\\"Smith V.\\\"/><person name=\\\"Taylor P.\\\"/><person name=\\\"Wei Y.\\\"/><person name=\\\"Botstein D.\\\"/><person name=\\\"Davis R.W.\\\"/></authorList><dbReference type=\\\"PubMed\\\" id=\\\"9169868\\\"/><dbReference type=\\\"DOI\\\" id=\\\"10.1038/387s078\\\"/></citation><scope>NUCLEOTIDE SEQUENCE [LARGE SCALE GENOMIC DNA]</scope><source><strain>ATCC 204508 / S288c</strain></source></reference><reference key=\\\"3\\\"><citation type=\\\"journal article\\\" date=\\\"2014\\\" name=\\\"G3 (Bethesda)\\\" volume=\\\"4\\\" first=\\\"389\\\" last=\\\"398\\\"><title>The reference genome sequence of Saccharomyces cerevisiae: Then and now.</title><authorList><person name=\\\"Engel S.R.\\\"/><person name=\\\"Dietrich F.S.\\\"/><person name=\\\"Fisk D.G.\\\"/><person name=\\\"Binkley G.\\\"/><person name=\\\"Balakrishnan R.\\\"/><person name=\\\"Costanzo M.C.\\\"/><person name=\\\"Dwight S.S.\\\"/><person name=\\\"Hitz B.C.\\\"/><person name=\\\"Karra K.\\\"/><person name=\\\"Nash R.S.\\\"/><person name=\\\"Weng S.\\\"/><person name=\\\"Wong E.D.\\\"/><person name=\\\"Lloyd P.\\\"/><person name=\\\"Skrzypek M.S.\\\"/><person name=\\\"Miyasato S.R.\\\"/><person name=\\\"Simison M.\\\"/><person name=\\\"Cherry J.M.\\\"/></authorList><dbReference type=\\\"PubMed\\\" id=\\\"24374639\\\"/><dbReference type=\\\"DOI\\\" id=\\\"10.1534/g3.113.008995\\\"/></citation><scope>GENOME REANNOTATION</scope><source><strain>ATCC 204508 / S288c</strain></source></reference><reference key=\\\"4\\\"><citation type=\\\"journal article\\\" date=\\\"1995\\\" name=\\\"Biochemistry\\\" volume=\\\"34\\\" first=\\\"4179\\\" last=\\\"4185\\\"><title>Sulfhydryl modification of the yeast Wbp1p inhibits oligosaccharyl transferase activity.</title><authorList><person name=\\\"Pathak R.\\\"/><person name=\\\"Hendrickson T.L.\\\"/><person name=\\\"Imperiali B.\\\"/></authorList><dbReference type=\\\"PubMed\\\" id=\\\"7703229\\\"/><dbReference type=\\\"DOI\\\" id=\\\"10.1021/bi00013a005\\\"/></citation><scope>PROTEIN SEQUENCE OF 21-40</scope></reference><reference key=\\\"5\\\"><citation type=\\\"journal article\\\" date=\\\"1992\\\" name=\\\"EMBO J.\\\" volume=\\\"11\\\" first=\\\"2071\\\" last=\\\"2075\\\"><title>The yeast WBP1 is essential for oligosaccharyl transferase activity in vivo and in vitro.</title><authorList><person name=\\\"Te Heesen S.\\\"/><person name=\\\"Janetzky B.\\\"/><person name=\\\"Lehle L.\\\"/><person name=\\\"Aebi M.\\\"/></authorList><dbReference type=\\\"PubMed\\\" id=\\\"1600939\\\"/><dbReference type=\\\"DOI\\\" id=\\\"10.1002/j.1460-2075.1992.tb05265.x\\\"/></citation><scope>CHARACTERIZATION</scope></reference><reference key=\\\"6\\\"><citation type=\\\"journal article\\\" date=\\\"1994\\\" name=\\\"FEBS Lett.\\\" volume=\\\"344\\\" first=\\\"83\\\" last=\\\"86\\\"><title>The N-oligosaccharyltransferase complex from yeast.</title><authorList>",
+          "truncated": true
+        },
+        "status": "ok",
+        "tool": "search_uniprot_entries",
+        "truncated": true
+      },
+      {
+        "arguments": {
+          "goterms": "GO:0005975",
+          "offset": 0,
+          "protein": "Glycosyltransferase",
+          "reviewed": true,
+          "seqLength": "400-800",
+          "size": 100,
+          "taxid": 559292
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_4",
+        "result": {
+          "data": "<?xml version='1.0' encoding='UTF-8'?><uniprot xmlns=\"http://uniprot.org/uniprot\" xsi:schemaLocation=\"http://uniprot.org/uniprot http://www.uniprot.org/support/docs/uniprot.xsd\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/>",
+          "status_code": 200,
+          "url": "https://www.ebi.ac.uk/proteins/api/proteins?offset=0&size=100&reviewed=True&goterms=GO%3A0005975&protein=Glycosyltransferase&taxid=559292&seqLength=400-800"
+        },
+        "status": "ok",
+        "tool": "search_uniprot_entries",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 1,
+    "usable_successful_tool_calls": 2
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "62dbc37a17d433b8eac5341f2a88f68e3b819457c3fa31cea8ba6163f2d22e6e",
+  "judge_transport_error": null,
+  "parsed_judge": null,
+  "prompt_sha256": "2d985daf835745920cfa469b9258d37756ad871c07f3eb5454ea8b1006c0cfbe",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": null,
+  "reason_codes": [
+    "missing_final_answer"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "glm53_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "5f447d35eb255639322b2c1cb3e03b926c52884bdd6fde1ed4222a8fbd47a7ef",
+    "run_summary_sha256": "9b144e8e7a450caa3f3b2e596ba1a01e26f35485ac3138387b5ff7abdea1dabb",
+    "run_task_sha256": "3e16918e20da3b22793dc1f0acda82dc0cee0274e87a2c4dc9b2cc77fd99ba82",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "missing_answer",
+  "task_id": 2
+}

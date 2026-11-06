@@ -1,0 +1,84 @@
+{
+  "cache_key": "3c7cb1427225cec7710bc3e67f2aa1d6f50029fcecdc11a589745c1c01c298cb",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [],
+    "evidence_ids": [
+      "answer",
+      "tool_1"
+    ],
+    "expected_tool_called": true,
+    "flags": [],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 1,
+    "successful_tool_calls": 1,
+    "tool_calls": 1,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "dbid": "RefSeq",
+          "format": "json",
+          "offset": 0,
+          "rfActive": true,
+          "rfDbid": "XP_006524055",
+          "rfDdtype": "protein",
+          "rfTaxId": 9606,
+          "size": 100
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": [],
+          "status_code": 200,
+          "url": "https://www.ebi.ac.uk/proteins/api/uniparc/dbreference/RefSeq?offset=0&size=100&rfDdtype=protein&rfDbid=XP_006524055&rfActive=True&rfTaxId=9606"
+        },
+        "status": "ok",
+        "tool": "get_uniparc_entries_by_cross_reference_accessions",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 1
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "16364048154a0d411e37e487ddebf9e5b105be69ae81a7645c6c5687ec49df92",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "The expected tool was called with all required filters (active cross-references, RefSeq database, human TaxId 9606, JSON format). The response was a valid empty result, and the final answer faithfully represents this outcome rather than inventing entries.",
+    "critical_issues": [],
+    "decision": "SUCCESS",
+    "evidence_ids": [
+      "answer",
+      "tool_1"
+    ],
+    "reason": "The final answer accurately reflects the tool output: the get_uniparc_entries_by_cross_reference_accessions call (tool_1) was executed with the correct parameters (RefSeq accession XP_006524055, rfActive=true, rfTaxId=9606, JSON format) and returned an empty data array with HTTP 200. The answer correctly reports that no UniParc entries matched the filtered criteria and does not fabricate results.",
+    "scientific_accuracy": "accurate"
+  },
+  "prompt_sha256": "0e2b7cfc7e7b073cb1508702dcc7c7fb449449e4dace9cc3fd6f34ea73b8fc1a",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\n  \"decision\": \"SUCCESS\",\n  \"reason\": \"The final answer accurately reflects the tool output: the get_uniparc_entries_by_cross_reference_accessions call (tool_1) was executed with the correct parameters (RefSeq accession XP_006524055, rfActive=true, rfTaxId=9606, JSON format) and returned an empty data array with HTTP 200. The answer correctly reports that no UniParc entries matched the filtered criteria and does not fabricate results.\",\n  \"critical_issues\": [],\n  \"scientific_accuracy\": \"accurate\",\n  \"api_usage_assessment\": \"The expected tool was called with all required filters (active cross-references, RefSeq database, human TaxId 9606, JSON format). The response was a valid empty result, and the final answer faithfully represents this outcome rather than inventing entries.\",\n  \"evidence_ids\": [\"answer\", \"tool_1\"]\n}",
+  "reason_codes": [
+    "judge_success",
+    "successful_tool_evidence"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "qwen3_4b_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "3e59c84ae7c9265e365581af6dec9e3f783ba0831f49340a94b232db5f0e743f",
+    "run_summary_sha256": "4ead0e26a15760a34450c55859679a5c5aeee4dd913014826540b77e5b7c66f4",
+    "run_task_sha256": "38193b8f87f502deaac26f406c7d1c8d4c2cff45a39c462e56211cb679db9e0c",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "correct",
+  "task_id": 4
+}

@@ -1,0 +1,128 @@
+{
+  "cache_key": "d8f5d8d1f12d6fd268b75f6f2a1316a14bc977457d28ae897d41452d7c1e4a55",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "max_rounds_reached"
+    ],
+    "evidence_ids": [
+      "tool_1",
+      "tool_2",
+      "tool_3",
+      "tool_4"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "missing_final_answer",
+      "runner_errors"
+    ],
+    "has_final_answer": false,
+    "successful_result_tool_calls": 4,
+    "successful_tool_calls": 4,
+    "tool_calls": 4,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "getcolumns": "uniprot,pdb,fold,species",
+          "isvalue": "Homo sapiens",
+          "limit": 1000,
+          "wherecolumn": "species"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": "ERROR: Server Error 1052 (23000): Column 'pdb' in field list is ambiguous",
+          "status_code": 400,
+          "url": "https://unilectin.unige.ch/api/getlectins"
+        },
+        "status": "ok",
+        "tool": "get_lectins",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "getcolumns": "uniprot,pdbid,fold,species",
+          "isvalue": "Homo sapiens",
+          "limit": 1000,
+          "wherecolumn": "species"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": {
+          "data": "ERROR: Server Error 1054 (42S22): Unknown column 'pdbid' in 'field list'",
+          "status_code": 400,
+          "url": "https://unilectin.unige.ch/api/getlectins"
+        },
+        "status": "ok",
+        "tool": "get_lectins",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "getcolumns": "uniprot,fold,species",
+          "limit": 5
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_3",
+        "result": {
+          "data": "ERROR: Server Error 1052 (23000): Column 'pdb' in where clause is ambiguous",
+          "status_code": 400,
+          "url": "https://unilectin.unige.ch/api/getlectins"
+        },
+        "status": "ok",
+        "tool": "get_lectins",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "getcolumns": "uniprot,fold"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_4",
+        "result": {
+          "data": "ERROR: Server Error 1052 (23000): Column 'pdb' in where clause is ambiguous",
+          "status_code": 400,
+          "url": "https://unilectin.unige.ch/api/getlectins"
+        },
+        "status": "ok",
+        "tool": "get_lectins",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 4
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "opencode-zen/deepseek-v4.1-flash-free",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "62dbc37a17d433b8eac5341f2a88f68e3b819457c3fa31cea8ba6163f2d22e6e",
+  "judge_transport_error": null,
+  "parsed_judge": null,
+  "prompt_sha256": "7bdcaec2f007a203bd6fc7bd2949dc831a2a0ccd0183fb0746fb20cccf182fda",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": null,
+  "reason_codes": [
+    "missing_final_answer"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "glm53_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "f0384cfefc6e8d090d40dc93d6d6f8aebf66320ad7acb08e004ef28b7d1f738a",
+    "run_summary_sha256": "9b144e8e7a450caa3f3b2e596ba1a01e26f35485ac3138387b5ff7abdea1dabb",
+    "run_task_sha256": "a26533cc9c7e17995029c643e36884603bcd6da5194f070a882dbe96b153e0ee",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "missing_answer",
+  "task_id": 5
+}

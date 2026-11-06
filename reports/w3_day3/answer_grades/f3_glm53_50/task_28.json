@@ -1,0 +1,128 @@
+{
+  "cache_key": "92306fff3d4d1f66af3bfbc9f3af1a7c3f4ec311f25afd4d74752b7ccad1e0b8",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "max_rounds_reached"
+    ],
+    "evidence_ids": [
+      "tool_1",
+      "tool_2",
+      "tool_3",
+      "tool_4"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "missing_final_answer",
+      "runner_errors"
+    ],
+    "has_final_answer": false,
+    "successful_result_tool_calls": 4,
+    "successful_tool_calls": 4,
+    "tool_calls": 4,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "database": "compound",
+          "query": "flavonoid"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": "C01579\tFlavonoid\nC02790\t3'-Hydroxyflavonoid\n",
+          "status_code": 200,
+          "url": "https://rest.kegg.jp/find/compound/flavonoid"
+        },
+        "status": "ok",
+        "tool": "find",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "dbentries": [
+            "C01579",
+            "C02790"
+          ],
+          "option": "formula"
+        },
+        "error": null,
+        "expected_tool": false,
+        "id": "tool_2",
+        "result": {
+          "data": "",
+          "status_code": 400,
+          "url": "https://rest.kegg.jp/get/%5B'C01579',%20'C02790'%5D/formula"
+        },
+        "status": "ok",
+        "tool": "get",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "dbentries": "C01579 C02790",
+          "option": "formula"
+        },
+        "error": null,
+        "expected_tool": false,
+        "id": "tool_3",
+        "result": {
+          "data": "",
+          "status_code": 400,
+          "url": "https://rest.kegg.jp/get/C01579%20C02790/formula"
+        },
+        "status": "ok",
+        "tool": "get",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "dbentries": "C01579",
+          "option": "formula"
+        },
+        "error": null,
+        "expected_tool": false,
+        "id": "tool_4",
+        "result": {
+          "data": "",
+          "status_code": 400,
+          "url": "https://rest.kegg.jp/get/C01579/formula"
+        },
+        "status": "ok",
+        "tool": "get",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 4
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "opencode-zen/deepseek-v4.1-flash-free",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "62dbc37a17d433b8eac5341f2a88f68e3b819457c3fa31cea8ba6163f2d22e6e",
+  "judge_transport_error": null,
+  "parsed_judge": null,
+  "prompt_sha256": "aad28cb3056bb9583442c4f7ec59aec1af7fdc85a124af370ceb48b63e22031e",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": null,
+  "reason_codes": [
+    "missing_final_answer"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "glm53_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "04f7daa3555cee8f829c989d5fcbda5e82e978fd5da3ab9270e30e9cdbb6c190",
+    "run_summary_sha256": "9b144e8e7a450caa3f3b2e596ba1a01e26f35485ac3138387b5ff7abdea1dabb",
+    "run_task_sha256": "fef8d917e4dbc42d9b000f81cffa865a33f2d7892e6a899cccd0ba022f569465",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "missing_answer",
+  "task_id": 28
+}

@@ -1,0 +1,81 @@
+{
+  "cache_key": "86f40bec768e6d415cdc8e2fbca15c8ae892df1fbddfb028d5ef6de8933da87b",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [],
+    "evidence_ids": [
+      "answer",
+      "tool_1"
+    ],
+    "expected_tool_called": true,
+    "flags": [],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 1,
+    "successful_tool_calls": 1,
+    "tool_calls": 1,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "getcolumns": "uniprot_canonical_ac, domain, superkingdom",
+          "isvalue": "true",
+          "limit": "2000",
+          "wherecolumn": "superkingdom = 'Bacteria'"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": "ERROR: Forbidden characters that pose a risk of SQL injection have been provided, please review the provided arguments",
+          "status_code": 400,
+          "url": "https://unilectin.unige.ch/api/gettreflec"
+        },
+        "status": "ok",
+        "tool": "get_trefoil_lectins",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 1
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "671e9ce334579e41ce99b4303d6f02c8e3be5e80f739ccef75c7298aef54f6d1",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "The expected tool was attempted, but its arguments triggered a 400 rejection and returned an error rather than usable records; therefore tool use did not support the expected answer.",
+    "critical_issues": [
+      "Required result omitted: no domain, UniProt identifier, and superkingdom entries for bacterial trefoil lectins were retrieved or summarized.",
+      "The tool call failed due to forbidden characters/SQL injection risk in the wherecolumn argument, so the final answer cannot substantively match the expected scientific result."
+    ],
+    "decision": "FAILURE",
+    "evidence_ids": [
+      "tool_1"
+    ],
+    "reason": "The final answer does not provide the required trefoil lectin results for Bacteria; it only reports that the UniLectin request was rejected. Tool evidence tool_1 shows the expected get_trefoil_lectins call returned HTTP 400 with an SQL-injection/forbidden-characters error and no data rows.",
+    "scientific_accuracy": "inaccurate"
+  },
+  "prompt_sha256": "936320b5de358466948d306b7e9433e3d68ef25c8e67b27e00dbf0a839bc581c",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\n  \"decision\": \"FAILURE\",\n  \"reason\": \"The final answer does not provide the required trefoil lectin results for Bacteria; it only reports that the UniLectin request was rejected. Tool evidence tool_1 shows the expected get_trefoil_lectins call returned HTTP 400 with an SQL-injection/forbidden-characters error and no data rows.\",\n  \"critical_issues\": [\n    \"Required result omitted: no domain, UniProt identifier, and superkingdom entries for bacterial trefoil lectins were retrieved or summarized.\",\n    \"The tool call failed due to forbidden characters/SQL injection risk in the wherecolumn argument, so the final answer cannot substantively match the expected scientific result.\"\n  ],\n  \"scientific_accuracy\": \"inaccurate\",\n  \"api_usage_assessment\": \"The expected tool was attempted, but its arguments triggered a 400 rejection and returned an error rather than usable records; therefore tool use did not support the expected answer.\",\n  \"evidence_ids\": [\"tool_1\"]\n}",
+  "reason_codes": [
+    "judge_failure"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "qwen3_4b_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "412c1a991047a8fe42dfef7ae0eda9e438bb9698115c332677a600d0711f3af2",
+    "run_summary_sha256": "4ead0e26a15760a34450c55859679a5c5aeee4dd913014826540b77e5b7c66f4",
+    "run_task_sha256": "d464a137b40542c1953aa34cac2316d6566c241e36e546206d5991160bfb6997",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "incorrect",
+  "task_id": 14
+}

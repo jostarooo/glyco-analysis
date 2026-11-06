@@ -1,0 +1,82 @@
+{
+  "cache_key": "824d53064db03e64a6a7f4480d5522f7144d97e7d94be21b9589664167383d1a",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "TypeError: get_proteins() got an unexpected keyword argument 'accession'",
+      "get_proteins: TypeError: get_proteins() got an unexpected keyword argument 'accession'"
+    ],
+    "evidence_ids": [
+      "answer",
+      "tool_1"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "tool_errors",
+      "runner_errors"
+    ],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 0,
+    "successful_tool_calls": 0,
+    "tool_calls": 1,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "accession": "P08047"
+        },
+        "error": "TypeError: get_proteins() got an unexpected keyword argument 'accession'",
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": null,
+        "status": "error",
+        "tool": "get_proteins",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 0
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "a5981a5844789d1ed7a5338f28826eee1118356ac5e34dd89788b0118901f465",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "Tool use did not support the answer: get_proteins was invoked with an unsupported 'accession' keyword and returned a TypeError, yielding no usable data.",
+    "critical_issues": [
+      "Required biological content is entirely omitted",
+      "Expected tool call errored and no successful retrieval occurred",
+      "Final answer substitutes tool-routing advice for the requested scientific result"
+    ],
+    "decision": "FAILURE",
+    "evidence_ids": [
+      "answer",
+      "tool_1"
+    ],
+    "reason": "The final answer did not provide any protein details for UniProtKB P08047: no gene names, sequence, O-GlcNAcylation sites, other PTMs, or metabolic-pathway analysis. The only recorded use of the expected tool failed with a parameter error, and the answer merely redirected to another tool rather than reporting results.",
+    "scientific_accuracy": "unknown"
+  },
+  "prompt_sha256": "45181d40763e7058066704cf493c7f12c14d8983b2445996bffaa7cdb9d63fee",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\n  \"decision\": \"FAILURE\",\n  \"reason\": \"The final answer did not provide any protein details for UniProtKB P08047: no gene names, sequence, O-GlcNAcylation sites, other PTMs, or metabolic-pathway analysis. The only recorded use of the expected tool failed with a parameter error, and the answer merely redirected to another tool rather than reporting results.\",\n  \"critical_issues\": [\n    \"Required biological content is entirely omitted\",\n    \"Expected tool call errored and no successful retrieval occurred\",\n    \"Final answer substitutes tool-routing advice for the requested scientific result\"\n  ],\n  \"scientific_accuracy\": \"unknown\",\n  \"api_usage_assessment\": \"Tool use did not support the answer: get_proteins was invoked with an unsupported 'accession' keyword and returned a TypeError, yielding no usable data.\",\n  \"evidence_ids\": [\n    \"answer\",\n    \"tool_1\"\n  ]\n}",
+  "reason_codes": [
+    "judge_failure"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "qwen3_4b_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "f8f521515a865e083368a9c38504661cab947ec1dd40c12714e81df1c9e08579",
+    "run_summary_sha256": "4ead0e26a15760a34450c55859679a5c5aeee4dd913014826540b77e5b7c66f4",
+    "run_task_sha256": "831d8382bbf31899365a156c0c8ad818e3ec0c07ac3f3c24ec61d684a8662f67",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "incorrect",
+  "task_id": 20
+}

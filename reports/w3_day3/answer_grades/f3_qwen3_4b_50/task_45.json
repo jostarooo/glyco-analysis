@@ -1,0 +1,140 @@
+{
+  "cache_key": "32f4278d4de4c6d1ff9220a6b055dd86eccd9abf6fd050efa51ac5e8895a6338",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [],
+    "evidence_ids": [
+      "answer",
+      "tool_1",
+      "tool_2"
+    ],
+    "expected_tool_called": true,
+    "flags": [],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 2,
+    "successful_tool_calls": 2,
+    "tool_calls": 2,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "gene": "BRCA1",
+          "offset": 0,
+          "size": 1
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": [
+            {
+              "gene": {
+                "accession": "A0A8V1A3R7",
+                "entryType": "TrEMBL",
+                "geneName": "ENSGALG00010024722",
+                "geneNameType": "Ensembl",
+                "length": 1725
+              },
+              "relatedGene": [
+                {
+                  "accession": "A0A8V1A1R6",
+                  "entryType": "TrEMBL",
+                  "geneName": "BRCA1",
+                  "geneNameType": "Gene name",
+                  "length": 1723
+                },
+                {
+                  "accession": "A0A8V1A1R6",
+                  "entryType": "TrEMBL",
+                  "geneName": "ENSGALG00010024722",
+                  "geneNameType": "Ensembl",
+                  "length": 1723
+                },
+                {
+                  "accession": "A0A8V1A3P9",
+                  "entryType": "TrEMBL",
+                  "geneName": "BRCA1",
+                  "geneNameType": "Gene name",
+                  "length": 1578
+                },
+                {
+                  "accession": "A0A8V1A3P9",
+                  "entryType": "TrEMBL",
+                  "geneName": "ENSGALG00010024722",
+                  "geneNameType": "Ensembl",
+                  "length": 1578
+                },
+                {
+                  "accession": "A0A8V1A3R7",
+                  "entryType": "TrEMBL",
+                  "geneName": "BRCA1",
+                  "geneNameType": "Gene name",
+                  "length": 1725
+                }
+              ]
+            }
+          ],
+          "status_code": 200,
+          "url": "https://www.ebi.ac.uk/proteins/api/genecentric?offset=0&size=1&gene=BRCA1"
+        },
+        "status": "ok",
+        "tool": "search_gene_centric_proteins",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "accession": "A0A8V1A3R7",
+          "confidence_score": [
+            "Gold"
+          ]
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": {
+          "data": {
+            "errorMessage": [
+              "Can not find PTM features for accession: {A0A8V1A3R7}; the accession may be obsolete, please check https://www.uniprot.org/ to verify it."
+            ],
+            "requestedURL": "https://www.ebi.ac.uk/proteins/api/proteomics-ptm/A0A8V1A3R7?confidence_score=Gold"
+          },
+          "status_code": 404,
+          "url": "https://www.ebi.ac.uk/proteins/api/proteomics-ptm/A0A8V1A3R7?confidence_score=Gold"
+        },
+        "status": "ok",
+        "tool": "get_proteomics_peptide_ptm",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 2
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "opencode-zen/deepseek-v4.1-flash-free",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "959fffe8850283129c7bdda2d90ba06d814717225b9a3f9c7ec60d9736263d8a",
+  "judge_transport_error": "empty_judge_content",
+  "parsed_judge": null,
+  "prompt_sha256": "42298ed9d3780920fdae9c38a7f711be87645b2d55113f9b5a9342f016caa5f3",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": null,
+  "reason_codes": [
+    "judge_request_error"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "qwen3_4b_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "2787b6b61b9d0b83bff50cbd6408535865ddb17d1dd9b598f15c48168d44ab71",
+    "run_summary_sha256": "4ead0e26a15760a34450c55859679a5c5aeee4dd913014826540b77e5b7c66f4",
+    "run_task_sha256": "1063ad3319f005a290c942adac188c40502159ad30b4eee5d4e39f15531d4c8b",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "judge_unavailable",
+  "task_id": 45
+}

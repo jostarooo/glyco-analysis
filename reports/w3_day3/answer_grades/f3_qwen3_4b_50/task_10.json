@@ -1,0 +1,81 @@
+{
+  "cache_key": "d4d896d0593429cdd1a5c26b433db0e03d3f9b2c64453d6ef2d0cc2e297676a1",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [],
+    "evidence_ids": [
+      "answer",
+      "tool_1"
+    ],
+    "expected_tool_called": true,
+    "flags": [],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 1,
+    "successful_tool_calls": 1,
+    "tool_calls": 1,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "format": "json",
+          "in_range": "true",
+          "locations": "X:58205437-58219305",
+          "offset": "0",
+          "size": "100",
+          "taxonomy": "9606"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": [],
+          "status_code": 200,
+          "url": "https://www.ebi.ac.uk/proteins/api/coordinates/9606/X%3A58205437-58219305?offset=0&size=100&in_range=true"
+        },
+        "status": "ok",
+        "tool": "search_uniprot_entries_by_taxonomy_and_genomic_coordinates",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 1
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "opencode-zen/deepseek-v4.1-flash-free",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "52cbc0da77419570e6470dfca3bd678c916c8b27e298931ae56ddff06417e760",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "The API was used correctly with the specified parameters; the empty response supports the final answer rather than contradicting it.",
+    "critical_issues": [],
+    "decision": "SUCCESS",
+    "evidence_ids": [
+      "tool_1"
+    ],
+    "reason": "The tool was called with the required taxonomy, chromosome range, JSON format, in-range filter, and size limit. Tool evidence returned an empty data list with status 200, supporting the final answer that no entries were found in the specified range.",
+    "scientific_accuracy": "accurate"
+  },
+  "prompt_sha256": "aefee72081a441bc2af9c3fea77a349d04e12a57eeb98e97cdc4a96990da327a",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\n  \"decision\": \"SUCCESS\",\n  \"reason\": \"The tool was called with the required taxonomy, chromosome range, JSON format, in-range filter, and size limit. Tool evidence returned an empty data list with status 200, supporting the final answer that no entries were found in the specified range.\",\n  \"critical_issues\": [],\n  \"scientific_accuracy\": \"accurate\",\n  \"api_usage_assessment\": \"The API was used correctly with the specified parameters; the empty response supports the final answer rather than contradicting it.\",\n  \"evidence_ids\": [\"tool_1\"]\n}",
+  "reason_codes": [
+    "judge_success",
+    "successful_tool_evidence"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "qwen3_4b_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "2ffe00b59f00b4ed36ffe1b4104469435d1c20d5f492fa475859c61e3db61f3e",
+    "run_summary_sha256": "4ead0e26a15760a34450c55859679a5c5aeee4dd913014826540b77e5b7c66f4",
+    "run_task_sha256": "cf38140468401acc23e509897bb6cf35b4e7c7243a09fc4f07a4ad29b718f06a",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "correct",
+  "task_id": 10
+}

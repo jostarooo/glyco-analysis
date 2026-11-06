@@ -1,0 +1,115 @@
+{
+  "cache_key": "c1794780f0319ef4eb332fb57c73d48759a0e24cf034ddab1195432410f89de5",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [],
+    "evidence_ids": [
+      "answer",
+      "tool_1"
+    ],
+    "expected_tool_called": true,
+    "flags": [],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 1,
+    "successful_tool_calls": 1,
+    "tool_calls": 1,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "isvalue": "Candida albicans",
+          "limit": 100,
+          "wherecolumn": "species"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": [
+            [
+              "fold",
+              "domain",
+              "species"
+            ],
+            [
+              "a/b barrel / TIM",
+              "chi-lectin (TCLL)",
+              "Candida albicans"
+            ],
+            [
+              "b-sandwich / ConA-like",
+              "Yeast Emp L-type",
+              "Candida albicans"
+            ],
+            [
+              "a/b barrel / TIM",
+              "chi-lectin (TCLL)",
+              "Candida albicans"
+            ],
+            [
+              "a/b barrel / TIM",
+              "chi-lectin (TCLL)",
+              "Candida albicans"
+            ],
+            [
+              "ab hairpin  non-globular proline-rich",
+              "calnexin-calreticulin like",
+              "Candida albicans"
+            ],
+            [
+              "b-sandwich / ConA-like",
+              "ERGIC-VIP L-type",
+              "Candida albicans"
+            ]
+          ],
+          "status_code": 200,
+          "url": "https://unilectin.unige.ch/api/getmycolec"
+        },
+        "status": "ok",
+        "tool": "get_fungal_lectins",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 1
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "152902ae90effb9948cd8bdb99522416f6a2b0319c861df3431495d9ded0e320",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "The expected tool get_fungal_lectins was called with appropriate parameters (species='Candida albicans', limit=100) and returned 6 entries; the final answer faithfully aggregates this data without unsupported additions or omissions, noting correctly that only 6 entries were returned within the first 100 results.",
+    "critical_issues": [],
+    "decision": "SUCCESS",
+    "evidence_ids": [
+      "answer",
+      "tool_1"
+    ],
+    "reason": "The final answer accurately reflects the tool_1 data from the UniLectin get_fungal_lectins query for species 'Candida albicans' with limit 100. The tool returned 6 entries: 3 with 'a/b barrel / TIM' fold and 'chi-lectin (TCLL)' domain, 1 with 'b-sandwich / ConA-like' fold and 'Yeast Emp L-type' domain, 1 with 'b-sandwich / ConA-like' fold and 'ERGIC-VIP L-type' domain, and 1 with 'ab hairpin non-globular proline-rich' fold and 'calnexin-calreticulin like' domain. The final answer enumerates all four fold/domain combinations with correct counts and species classification, matching the expected answer's requirements.",
+    "scientific_accuracy": "accurate"
+  },
+  "prompt_sha256": "51cd19a2f2cfcc6caaadf9f05dbfe113fa5903e8629191712aeee20b17ab927f",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\n  \"decision\": \"SUCCESS\",\n  \"reason\": \"The final answer accurately reflects the tool_1 data from the UniLectin get_fungal_lectins query for species 'Candida albicans' with limit 100. The tool returned 6 entries: 3 with 'a/b barrel / TIM' fold and 'chi-lectin (TCLL)' domain, 1 with 'b-sandwich / ConA-like' fold and 'Yeast Emp L-type' domain, 1 with 'b-sandwich / ConA-like' fold and 'ERGIC-VIP L-type' domain, and 1 with 'ab hairpin non-globular proline-rich' fold and 'calnexin-calreticulin like' domain. The final answer enumerates all four fold/domain combinations with correct counts and species classification, matching the expected answer's requirements.\",\n  \"critical_issues\": [],\n  \"scientific_accuracy\": \"accurate\",\n  \"api_usage_assessment\": \"The expected tool get_fungal_lectins was called with appropriate parameters (species='Candida albicans', limit=100) and returned 6 entries; the final answer faithfully aggregates this data without unsupported additions or omissions, noting correctly that only 6 entries were returned within the first 100 results.\",\n  \"evidence_ids\": [\"answer\", \"tool_1\"]\n}",
+  "reason_codes": [
+    "judge_success",
+    "successful_tool_evidence"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "glm53_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "0d6815e4104a91993b10310c32c73222557f05a67a2b9b2a33c51b0aaf61c09b",
+    "run_summary_sha256": "9b144e8e7a450caa3f3b2e596ba1a01e26f35485ac3138387b5ff7abdea1dabb",
+    "run_task_sha256": "efa358c37778266afb2826a60fcb3c8aa0e78ebf0185054dcb544b18b1edd6d5",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "correct",
+  "task_id": 12
+}

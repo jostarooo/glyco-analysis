@@ -1,0 +1,95 @@
+{
+  "cache_key": "a0d4a02667fb320475dcc7768ea775814b88e68cb8309345c931157bbbd2f2a5",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [],
+    "evidence_ids": [
+      "answer",
+      "tool_1",
+      "tool_2"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "truncated_results"
+    ],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 2,
+    "successful_tool_calls": 2,
+    "tool_calls": 2,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "accession": "P0DTC2"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "preview": "{\"status_code\": 200, \"url\": \"https://www.ebi.ac.uk/proteins/api/epitope?offset=0&size=100&accession=P0DTC2\", \"data\": [{\"accession\": \"P0DTC2\", \"entryName\": \"SPIKE_SARS2\", \"sequence\": \"MFVFLVLLPLVSSQCVNLTTRTQLPPAYTNSFTRGVYYPDKVFRSSVLHSTQDLFLPFFSNVTWFHAIHVSGTNGTKRFDNPVLPFNDGVYFASTEKSNIIRGWIFGTTLDSKTQSLLIVNNATNVVIKVCEFQFCNDPFLGVYYHKNNKSWMESEFRVYSSANNCTFEYVSQPFLMDLEGKQGNFKNLREFVFKNIDGYFKIYSKHTPINLVRDLPQGFSALEPLVDLPIGINITRFQTLLALHRSYLTPGDSSSGWTAGAAAYYVGYLQPRTFLLKYNENGTITDAVDCALDPLSETKCTLKSFTVEKGIYQTSNFRVQPTESIVRFPNITNLCPFGEVFNATRFASVYAWNRKRISNCVADYSVLYNSASFSTFKCYGVSPTKLNDLCFTNVYADSFVIRGDEVRQIAPGQTGKIADYNYKLPDDFTGCVIAWNSNNLDSKVGGNYNYLYRLFRKSNLKPFERDISTEIYQAGSTPCNGVEGFNCYFPLQSYGFQPTNGVGYQPYRVVVLSFELLHAPATVCGPKKSTNLVKNKCVNFNFNGLTGTGVLTESNKKFLPFQQFGRDIADTTDAVRDPQTLEILDITPCSFGGVSVITPGTNTSNQVAVLYQDVNCTEVPVAIHADQLTPTWRVYSTGSNVFQTRAGCLIGAEHVNNSYECDIPIGAGICASYQTQTNSPRRARSVASQSIIAYTMSLGAENSVAYSNNSIAIPTNFTISVTTEILPVSMTKTSVDCTMYICGDSTECSNLLLQYGSFCTQLNRALTGIAVEQDKNTQEVFAQVKQIYKTPPIKDFGGFNFSQILPDPSKPSKRSFIEDLLFNKVTLADAGFIKQYGDCLGDIAARDLICAQKFNGLTVLPPLLTDEMIAQYTSALLAGTITSGWTFGAGAALQIPFAMQMAYRFNGIGVTQNVLYENQKLIANQFNSAIGKIQDSLSSTASALGKLQDVVNQNAQALNTLVKQLSSNFGAISSVLNDILSRLDKVEAEVQIDRLITGRLQSLQTYVTQQLIRAAEIRASANLAATKMSECVLGQSKRVDFCGKGYHLMSFPQSAPHGVVFLHVTYVPAQEKNFTTAPAICHDGKAHFPREGVFVSNGTHWFVTQRNFYEPQIITTDNTFVSGNCDVVIGIVNNTVYDPLQPELDSFKEELDKYFKNHTSPDVDLGDISGINASVVNIQKEIDRLNEVAKNLNESLIDLQELGKYEQYIKWPWYIWLGFIAGLIAIVMVTIMLCCMTSCCSCLKGCCSCGSCCKFDEDDSEPVLKGVKLHYT\", \"sequenceChecksum\": \"12789069390587161140\", \"taxid\": 2697049, \"features\": [{\"type\": \"EPITOPE\", \"description\": \"AEVQIDRLI is a linear peptidic epitope (epitope ID 1220) tested in 5 T cell assays and 7 MHC ligand assays.\", \"begin\": \"989\", \"end\": \"997\", \"xrefs\": [{\"name\": \"IEDB\", \"id\": \"1220\", \"url\": \"https://www.iedb.org/epitope/1220\", \"properties\": {\"URL\": \"https://www.iedb.org/epitope/1220\"}}], \"evidences\": [{\"code\": \"ECO:0000213\", \"source\": {\"name\": \"PubMed\", \"id\": \"35383307\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/35383307\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/35383307\"}}], \"epitopeSequence\": \"AEVQIDRLI\", \"matchScore\": 100}, {\"type\": \"EPITOPE\", \"description\": \"ALNTLVKQL is a linear peptidic epitope (epitope ID 2801) tested in 41 T cell assays and 7 MHC ligand assays.\", \"begin\": \"958\", \"end\": \"966\", \"xrefs\": [{\"name\": \"IEDB\", \"id\": \"2801\", \"url\": \"https://www.iedb.org/epitope/2801\", \"properties\": {\"URL\": \"https://www.iedb.org/epitope/2801\"}}], \"evidences\": [{\"code\": \"ECO:0000213\", \"source\": {\"name\": \"PubMed\", \"id\": \"34222571\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/34222571\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/34222571\"}}, {\"code\": \"ECO:0000213\", \"source\": {\"name\": \"PubMed\", \"id\": \"34968416\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/34968416\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/34968416\"}}, {\"code\": \"ECO:0000213\", \"source\": {\"name\": \"PubMed\", \"id\": \"38257752\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/38257752\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/38257752\"}}, {\"code\": \"ECO:0000213\", \"source\": {\"name\": \"PubMed\", \"id\": \"38605956\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/38605956\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/38605956\"}}, {\"code\": \"ECO:0000213\", \"source\": {\"name\": \"PubMed\", \"id\": \"38608022\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/38608022\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/38608022\"}}, {\"code\": \"ECO:0000213\", \"source\": {\"name\": \"PubMed\", \"id\": \"33911008\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/33911008\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/33911008\"}}], \"epitopeSequence\": \"ALNTLVKQL\", \"matchScore\": 100}, {\"type\": \"EPITOPE\", \"description\": \"APHGVVFLHV is a linear peptidic epitope (epitope ID 3589) tested in 1 T cell assay and 5 MHC ligand assays.\", \"begin\": \"1056\", \"end\": \"1065\", \"xrefs\": [{\"name\": \"IEDB\", \"id\": \"3589\", \"url\": \"https://www.iedb.org/epitope/3589\", \"properties\": {\"URL\": \"https://www.iedb.org/epitope/3589\"}}], \"evidences\": [{\"code\": \"ECO:0000213\", \"source\": {\"name\": \"PubMed\", \"id\": \"33853928\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/33853928\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/33853928\"}}], \"epitopeSequence\": \"APHGVVFLHV\", \"matchScore\": 100}, {\"type\": \"EPITOPE\", \"description\": \"AQKFNGLTVLPPLLT is a linear peptidic epitope (epitope ID 3982) tested in 16 T cell assays, 8 B cell assays and 8 MHC ligand assays.\", \"begin\": \"852\", \"end\": \"866\", \"xrefs\": [{\"name\": \"IEDB\", \"id\": \"3982\", \"url\": \"https://www.iedb.org/epitope/3982\", \"properties\": {\"URL\": \"https://www.iedb.org/epitope/3982\"}}], \"evidences\": [{\"code\": \"ECO:0000213\", \"source\": {\"name\": \"PubMed\", \"id\": \"35891550\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/35891550\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/35891550\"}}], \"epitopeSequence\": \"AQKFNGLTVLPPLLT\", \"matchScore\": 100}, {\"type\": \"EPITOPE\", \"description\": \"ASANLAATK is a linear peptidic epitope (epitope ID 4321) tested in 10 T cell assays and 7 MHC ligand assays.\", \"begin\": \"1020\", \"end\": \"1028\", \"xrefs\": [{\"name\": \"IEDB\", \"id\": \"4321\", \"url\": \"https://www.iedb.org/epitope/4321\", \"properties\": {\"URL\": \"https://www.iedb.org/epitope/4321\"}}], \"evidences\": [{\"code\": \"ECO:0000213\", \"source\": {\"name\": \"PubMed\", \"id\": \"34728796\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/34728796\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/34728796\"}}], \"epitopeSequence\": \"ASANLAATK\", \"matchScore\": 100}, {\"type\": \"EPITOPE\", \"description\": \"CVADYSVLY is a linear peptidic epitope (epitope ID 7247) tested in 19 T cell assays, 9 MHC ligand assays and has 3D structure(s) 8xkc.\", \"begin\": \"361\", \"end\": \"369\", \"xrefs\": [{\"name\": \"IEDB\", \"id\": \"7247\", \"url\": \"https://www.iedb.org/epitope/7247\", \"properties\": {\"URL\": \"https://www.iedb.org/epitope/7247\"}}], \"evidences\": [{\"code\": \"ECO:0000213\", \"source\": {\"name\": \"PubMed\", \"id\": \"34968416\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/34968416\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/34968416\"}}, {\"c",
+          "truncated": true
+        },
+        "status": "ok",
+        "tool": "search_epitope",
+        "truncated": true
+      },
+      {
+        "arguments": {
+          "isvalue": "%extracted_epitope_identifier%",
+          "wherecolumn": "ligand_id"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": [],
+        "status": "ok",
+        "tool": "get_ligands",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 1,
+    "usable_successful_tool_calls": 1
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "opencode-zen/deepseek-v4.1-flash-free",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "5b5c55e9c37195d946d1c3c9a4d5e920d89fe32c15a7dc8234d6c3a68a046a49",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "search_epitope returned valid epitope records, but the required extraction and substitution into get_ligands was not performed; the get_ligands result is therefore not valid evidence for absence of ligands.",
+    "critical_issues": [
+      "The get_ligands call used an unsubstituted placeholder instead of a real epitope identifier from search_epitope.",
+      "The final answer fails to provide the expected list of ligands with IDs and IUPAC names.",
+      "The claim that there may be no known interacting ligands is unsupported by the empty placeholder-based result."
+    ],
+    "decision": "FAILURE",
+    "evidence_ids": [
+      "tool_1",
+      "tool_2"
+    ],
+    "reason": "The final answer concludes that no known UniLectin ligands exist for SARS-CoV-2 spike epitopes, but tool_2 used the unsubstituted placeholder `%extracted_epitope_identifier%` rather than an actual epitope identifier extracted from tool_1, so the empty result does not support that conclusion. The expected ligand list with IDs and IUPAC names is omitted.",
+    "scientific_accuracy": "inaccurate"
+  },
+  "prompt_sha256": "86600399a89898d40044fa704a335e181afee718d9ed5492e1b1d113562307c4",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\n  \"decision\": \"FAILURE\",\n  \"reason\": \"The final answer concludes that no known UniLectin ligands exist for SARS-CoV-2 spike epitopes, but tool_2 used the unsubstituted placeholder `%extracted_epitope_identifier%` rather than an actual epitope identifier extracted from tool_1, so the empty result does not support that conclusion. The expected ligand list with IDs and IUPAC names is omitted.\",\n  \"critical_issues\": [\n    \"The get_ligands call used an unsubstituted placeholder instead of a real epitope identifier from search_epitope.\",\n    \"The final answer fails to provide the expected list of ligands with IDs and IUPAC names.\",\n    \"The claim that there may be no known interacting ligands is unsupported by the empty placeholder-based result.\"\n  ],\n  \"scientific_accuracy\": \"inaccurate\",\n  \"api_usage_assessment\": \"search_epitope returned valid epitope records, but the required extraction and substitution into get_ligands was not performed; the get_ligands result is therefore not valid evidence for absence of ligands.\",\n  \"evidence_ids\": [\n    \"tool_1\",\n    \"tool_2\"\n  ]\n}",
+  "reason_codes": [
+    "judge_failure"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "qwen3_4b_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "a4fb8efa5d3e27b519160e4aa83441c6705ed4dba0d288953101f0b2f7aac6cc",
+    "run_summary_sha256": "4ead0e26a15760a34450c55859679a5c5aeee4dd913014826540b77e5b7c66f4",
+    "run_task_sha256": "151d19ae8ab2f55f8a741883716c6abbf417f9c1bb6cc3ae430cb3b3667fbc98",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "incorrect",
+  "task_id": 48
+}

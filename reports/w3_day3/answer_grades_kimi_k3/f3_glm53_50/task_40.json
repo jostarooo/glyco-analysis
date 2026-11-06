@@ -1,0 +1,183 @@
+{
+  "cache_key": "bc9eddd6a2fc1a3fbb751d9869cc3fb8258860735915bd28d02acf172633f9bb",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "ConnectionError: HTTPSConnectionPool(host='api.glygen.org', port=443): Read timed out.",
+      "protein_detail: ConnectionError: HTTPSConnectionPool(host='api.glygen.org', port=443): Read timed out.",
+      "max_rounds_reached"
+    ],
+    "evidence_ids": [
+      "tool_1",
+      "tool_2",
+      "tool_3",
+      "tool_4"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "missing_final_answer",
+      "tool_errors",
+      "truncated_results",
+      "runner_errors"
+    ],
+    "has_final_answer": false,
+    "successful_result_tool_calls": 3,
+    "successful_tool_calls": 3,
+    "tool_calls": 4,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "getcolumns": "RefSeqID,UniProt_ID",
+          "isvalue": "%SIGLEC%",
+          "limit": 1000,
+          "wherecolumn": "common_protein_name"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": [
+            [
+              "RefSeqID",
+              "UniProt_ID"
+            ],
+            [
+              "NP_001092082",
+              "Q08ET2"
+            ],
+            [
+              "NP_001236",
+              "O43699"
+            ],
+            [
+              "NP_001335293",
+              "A6NMB1"
+            ],
+            [
+              "NP_001762",
+              "P20273"
+            ],
+            [
+              "NP_001763",
+              "P20138"
+            ],
+            [
+              "NP_002352",
+              "P20916"
+            ],
+            [
+              "NP_003821",
+              "O15389"
+            ],
+            [
+              "NP_055200",
+              "Q9Y286"
+            ],
+            [
+              "NP_055256",
+              "Q9Y336"
+            ],
+            [
+              "NP_055257",
+              "Q9NYZ4"
+            ],
+            [
+              "NP_075556",
+              "Q9BZZ2"
+            ],
+            [
+              "NP_149121",
+              "Q96LC7"
+            ],
+            [
+              "NP_443116",
+              "Q96RL6"
+            ],
+            [
+              "NP_998767",
+              "Q6ZMC9"
+            ]
+          ],
+          "status_code": 200,
+          "url": "https://unilectin.unige.ch/api/gethumanlectome"
+        },
+        "status": "ok",
+        "tool": "get_human_lectome",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "uniprot_canonical_ac": "O43699"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": {
+          "preview": "{\"status_code\": 200, \"url\": \"https://api.glygen.org/protein/detail/O43699/\", \"data\": {\"mass\": {\"chemical_mass\": 49913.0}, \"refseq\": {\"ac\": \"NP_001171018\", \"name\": \"sialic acid-binding Ig-like lectin 6 isoform 4\", \"summary\": \"This gene encodes a member of the SIGLEC (sialic acid binding immunoglobulin-like lectin) family of proteins. The encoded transmembrane receptor binds sialyl-TN glycans and leptin. Placental expression of the encoded protein is upregulated in preeclampsia. [provided by RefSeq, Jul 2016].\", \"url\": \"https://www.ncbi.nlm.nih.gov/protein/NP_001171018\"}, \"gene_names\": [{\"name\": \"SIGLEC6\", \"type\": \"recommended\", \"evidence\": [{\"id\": \"O43699\", \"database\": \"UniProtKB\", \"url\": \"https://www.uniprot.org/uniprotkb/O43699\"}]}, {\"name\": \"CD327\", \"type\": \"synonym\", \"evidence\": [{\"id\": \"NP_001171018\", \"database\": \"RefSeq\", \"url\": \"https://www.ncbi.nlm.nih.gov/protein/NP_001171018\"}]}, {\"name\": \"CD33L1\", \"type\": \"synonym\", \"evidence\": [{\"id\": \"NP_001171018\", \"database\": \"RefSeq\", \"url\": \"https://www.ncbi.nlm.nih.gov/protein/NP_001171018\"}, {\"id\": \"O43699\", \"database\": \"UniProtKB\", \"url\": \"https://www.uniprot.org/uniprotkb/O43699\"}]}, {\"name\": \"CD33L2\", \"type\": \"synonym\", \"evidence\": [{\"id\": \"NP_001171018\", \"database\": \"RefSeq\", \"url\": \"https://www.ncbi.nlm.nih.gov/protein/NP_001171018\"}]}, {\"name\": \"CD33L\", \"type\": \"synonym\", \"evidence\": [{\"id\": \"NP_001171018\", \"database\": \"RefSeq\", \"url\": \"https://www.ncbi.nlm.nih.gov/protein/NP_001171018\"}, {\"id\": \"O43699\", \"database\": \"UniProtKB\", \"url\": \"https://www.uniprot.org/uniprotkb/O43699\"}]}, {\"name\": \"CDW327\", \"type\": \"synonym\", \"evidence\": [{\"id\": \"NP_001171018\", \"database\": \"RefSeq\", \"url\": \"https://www.ncbi.nlm.nih.gov/protein/NP_001171018\"}]}, {\"name\": \"OBBP1\", \"type\": \"synonym\", \"evidence\": [{\"id\": \"NP_001171018\", \"database\": \"RefSeq\", \"url\": \"https://www.ncbi.nlm.nih.gov/protein/NP_001171018\"}, {\"id\": \"O43699\", \"database\": \"UniProtKB\", \"url\": \"https://www.uniprot.org/uniprotkb/O43699\"}]}, {\"name\": \"SIGLEC6\", \"type\": \"synonym\", \"evidence\": [{\"id\": \"NP_001171018\", \"database\": \"RefSeq\", \"url\": \"https://www.ncbi.nlm.nih.gov/protein/NP_001171018\"}]}], \"protein_names\": [{\"name\": \"Sialic acid-binding Ig-like lectin 6\", \"type\": \"recommended\", \"evidence\": [{\"id\": \"O43699\", \"database\": \"UniProtKB\", \"url\": \"https://www.uniprot.org/uniprotkb/O43699/entry#names_and_taxonomy\"}]}, {\"name\": \"CD33 antigen-like 1\", \"type\": \"synonym\", \"evidence\": [{\"id\": \"NP_001171018\", \"database\": \"RefSeq\", \"url\": \"https://www.ncbi.nlm.nih.gov/protein/NP_001171018\"}, {\"id\": \"O43699\", \"database\": \"UniProtKB\", \"url\": \"https://www.uniprot.org/uniprotkb/O43699/entry#names_and_taxonomy\"}]}, {\"name\": \"CDw327\", \"type\": \"synonym\", \"evidence\": [{\"id\": \"O43699\", \"database\": \"UniProtKB\", \"url\": \"https://www.uniprot.org/uniprotkb/O43699/entry#names_and_taxonomy\"}]}, {\"name\": \"OB-BP1\", \"type\": \"synonym\", \"evidence\": [{\"id\": \"O43699\", \"database\": \"UniProtKB\", \"url\": \"https://www.uniprot.org/uniprotkb/O43699/entry#names_and_taxonomy\"}]}, {\"name\": \"Obesity-binding protein 1\", \"type\": \"synonym\", \"evidence\": [{\"id\": \"O43699\", \"database\": \"UniProtKB\", \"url\": \"https://www.uniprot.org/uniprotkb/O43699/entry#names_and_taxonomy\"}]}, {\"name\": \"Siglec-6\", \"type\": \"synonym\", \"evidence\": [{\"id\": \"O43699\", \"database\": \"UniProtKB\", \"url\": \"https://www.uniprot.org/uniprotkb/O43699/entry#names_and_taxonomy\"}]}, {\"name\": \"obesity-binding protein 1\", \"type\": \"synonym\", \"evidence\": [{\"id\": \"NP_001171018\", \"database\": \"RefSeq\", \"url\": \"https://www.ncbi.nlm.nih.gov/protein/NP_001171018\"}]}, {\"name\": \"sialic acid-binding Ig-like lectin 6 isoform 4\", \"type\": \"synonym\", \"evidence\": [{\"id\": \"NP_001171018\", \"database\": \"RefSeq\", \"url\": \"https://www.ncbi.nlm.nih.gov/protein/NP_001171018\"}]}], \"function\": [{\"annotation\": \"Elevated trophoblastic Siglec6 contributes to the impairment of vascular endothelial cell functions by downregulating Wnt6/beta-catenin signaling in preeclampsia.\", \"evidence\": [{\"database\": \"RefSeq\", \"id\": \"NP_001171018\", \"url\": \"https://www.ncbi.nlm.nih.gov/protein/NP_001171018\"}, {\"database\": \"PubMed\", \"id\": \"36113626\", \"url\": \"https://glygen.org/publication/PubMed/36113626\"}]}, {\"annotation\": \"Expression and regulation of Siglec-6 (CD327) on human mast cells and basophils.\", \"evidence\": [{\"database\": \"RefSeq\", \"id\": \"NP_001171018\", \"url\": \"https://www.ncbi.nlm.nih.gov/protein/NP_001171018\"}, {\"database\": \"PubMed\", \"id\": \"35953001\", \"url\": \"https://glygen.org/publication/PubMed/35953001\"}]}, {\"annotation\": \"Functional and Phenotypic Characterization of Siglec-6 on Human Mast Cells. Publication Status: Online-Only\", \"evidence\": [{\"database\": \"RefSeq\", \"id\": \"NP_001171018\", \"url\": \"https://www.ncbi.nlm.nih.gov/protein/NP_001171018\"}, {\"database\": \"PubMed\", \"id\": \"35406705\", \"url\": \"https://glygen.org/publication/PubMed/35406705\"}]}, {\"annotation\": \"Observational study of gene-disease association. (HuGE Navigator)\", \"evidence\": [{\"database\": \"RefSeq\", \"id\": \"NP_001171018\", \"url\": \"https://www.ncbi.nlm.nih.gov/protein/NP_001171018\"}, {\"database\": \"PubMed\", \"id\": \"20237496\", \"url\": \"https://glygen.org/publication/PubMed/20237496\"}]}, {\"annotation\": \"Preeclampsia involves changes in the gene expression of SIGLEC6 in placental cytotrophoblasts. Review article\", \"evidence\": [{\"database\": \"RefSeq\", \"id\": \"NP_001171018\", \"url\": \"https://www.ncbi.nlm.nih.gov/protein/NP_001171018\"}, {\"database\": \"PubMed\", \"id\": \"18818296\", \"url\": \"https://glygen.org/publication/PubMed/18818296\"}]}, {\"annotation\": \"Putative adhesion molecule that mediates sialic-acid dependent binding to cells. Binds to alpha-2,6-linked sialic acid. The sialic acid recognition site may be masked by cis interactions with sialic acids on the same cell surface.\", \"evidence\": [{\"database\": \"UniProtKB\", \"id\": \"O43699\", \"url\": \"https://www.uniprot.org/uniprotkb/O43699#function\"}]}, {\"annotation\": \"Siglec-6 Signaling Uses Src Kinase Tyrosine Phosphorylation and SHP-2 Recruitment. Publication Status: Online-Only\", \"evidence\": [{\"database\": \"Re",
+          "truncated": true
+        },
+        "status": "ok",
+        "tool": "protein_detail",
+        "truncated": true
+      },
+      {
+        "arguments": {
+          "uniprot_canonical_ac": "P20273"
+        },
+        "error": "ConnectionError: HTTPSConnectionPool(host='api.glygen.org', port=443): Read timed out.",
+        "expected_tool": true,
+        "id": "tool_3",
+        "result": null,
+        "status": "error",
+        "tool": "protein_detail",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "uniprot_canonical_ac": "P20273"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_4",
+        "result": {
+          "preview": "{\"status_code\": 200, \"url\": \"https://api.glygen.org/protein/detail/P20273/\", \"data\": {\"mass\": {\"chemical_mass\": 95348.0}, \"refseq\": {\"ac\": \"NP_001172028\", \"name\": \"B-cell receptor CD22 isoform 2 precursor\", \"url\": \"https://www.ncbi.nlm.nih.gov/protein/NP_001172028\"}, \"gene_names\": [{\"name\": \"CD22\", \"type\": \"recommended\", \"evidence\": [{\"id\": \"P20273\", \"database\": \"UniProtKB\", \"url\": \"https://www.uniprot.org/uniprotkb/P20273\"}]}, {\"name\": \"CD22\", \"type\": \"synonym\", \"evidence\": [{\"id\": \"NP_001172028\", \"database\": \"RefSeq\", \"url\": \"https://www.ncbi.nlm.nih.gov/protein/NP_001172028\"}]}, {\"name\": \"SIGLEC-2\", \"type\": \"synonym\", \"evidence\": [{\"id\": \"NP_001172028\", \"database\": \"RefSeq\", \"url\": \"https://www.ncbi.nlm.nih.gov/protein/NP_001172028\"}]}, {\"name\": \"SIGLEC2\", \"type\": \"synonym\", \"evidence\": [{\"id\": \"NP_001172028\", \"database\": \"RefSeq\", \"url\": \"https://www.ncbi.nlm.nih.gov/protein/NP_001172028\"}, {\"id\": \"P20273\", \"database\": \"UniProtKB\", \"url\": \"https://www.uniprot.org/uniprotkb/P20273\"}]}], \"protein_names\": [{\"name\": \"B-cell receptor CD22\", \"type\": \"recommended\", \"evidence\": [{\"id\": \"P20273\", \"database\": \"UniProtKB\", \"url\": \"https://www.uniprot.org/uniprotkb/P20273/entry#names_and_taxonomy\"}]}, {\"name\": \"B-cell receptor CD22 isoform 2 precursor\", \"type\": \"synonym\", \"evidence\": [{\"id\": \"NP_001172028\", \"database\": \"RefSeq\", \"url\": \"https://www.ncbi.nlm.nih.gov/protein/NP_001172028\"}]}, {\"name\": \"B-cell receptor CD22\", \"type\": \"synonym\", \"evidence\": [{\"id\": \"NP_001172028\", \"database\": \"RefSeq\", \"url\": \"https://www.ncbi.nlm.nih.gov/protein/NP_001172028\"}]}, {\"name\": \"B-lymphocyte cell adhesion molecule\", \"type\": \"synonym\", \"evidence\": [{\"id\": \"NP_001172028\", \"database\": \"RefSeq\", \"url\": \"https://www.ncbi.nlm.nih.gov/protein/NP_001172028\"}, {\"id\": \"P20273\", \"database\": \"UniProtKB\", \"url\": \"https://www.uniprot.org/uniprotkb/P20273/entry#names_and_taxonomy\"}]}, {\"name\": \"BL-CAM\", \"type\": \"synonym\", \"evidence\": [{\"id\": \"NP_001172028\", \"database\": \"RefSeq\", \"url\": \"https://www.ncbi.nlm.nih.gov/protein/NP_001172028\"}, {\"id\": \"P20273\", \"database\": \"UniProtKB\", \"url\": \"https://www.uniprot.org/uniprotkb/P20273/entry#names_and_taxonomy\"}]}, {\"name\": \"CD22 antigen\", \"type\": \"synonym\", \"evidence\": [{\"id\": \"NP_001172028\", \"database\": \"RefSeq\", \"url\": \"https://www.ncbi.nlm.nih.gov/protein/NP_001172028\"}]}, {\"name\": \"Sialic acid-binding Ig-like lectin 2\", \"type\": \"synonym\", \"evidence\": [{\"id\": \"P20273\", \"database\": \"UniProtKB\", \"url\": \"https://www.uniprot.org/uniprotkb/P20273/entry#names_and_taxonomy\"}]}, {\"name\": \"Siglec-2\", \"type\": \"synonym\", \"evidence\": [{\"id\": \"P20273\", \"database\": \"UniProtKB\", \"url\": \"https://www.uniprot.org/uniprotkb/P20273/entry#names_and_taxonomy\"}]}, {\"name\": \"T-cell surface antigen Leu-14\", \"type\": \"synonym\", \"evidence\": [{\"id\": \"NP_001172028\", \"database\": \"RefSeq\", \"url\": \"https://www.ncbi.nlm.nih.gov/protein/NP_001172028\"}, {\"id\": \"P20273\", \"database\": \"UniProtKB\", \"url\": \"https://www.uniprot.org/uniprotkb/P20273/entry#names_and_taxonomy\"}]}, {\"name\": \"sialic acid-binding Ig-like lectin 2\", \"type\": \"synonym\", \"evidence\": [{\"id\": \"NP_001172028\", \"database\": \"RefSeq\", \"url\": \"https://www.ncbi.nlm.nih.gov/protein/NP_001172028\"}]}], \"function\": [{\"annotation\": \"Associations of plasma soluble CD22 levels with brain amyloid burden and cognitive decline in Alzheimer's disease.\", \"evidence\": [{\"database\": \"RefSeq\", \"id\": \"NP_001172028\", \"url\": \"https://www.ncbi.nlm.nih.gov/protein/NP_001172028\"}, {\"database\": \"PubMed\", \"id\": \"35363517\", \"url\": \"https://glygen.org/publication/PubMed/35363517\"}]}, {\"annotation\": \"B-cell immune dysregulation with low soluble CD22 levels in refractory seronegative myasthenia gravis. Publication Status: Online-Only\", \"evidence\": [{\"database\": \"RefSeq\", \"id\": \"NP_001172028\", \"url\": \"https://www.ncbi.nlm.nih.gov/protein/NP_001172028\"}, {\"database\": \"PubMed\", \"id\": \"38711503\", \"url\": \"https://glygen.org/publication/PubMed/38711503\"}]}, {\"annotation\": \"CAR T cells with dual targeting of CD19 and CD22 in pediatric and young adult patients with relapsed or refractory B cell acute lymphoblastic leukemia: a phase 1 trial.\", \"evidence\": [{\"database\": \"RefSeq\", \"id\": \"NP_001172028\", \"url\": \"https://www.ncbi.nlm.nih.gov/protein/NP_001172028\"}, {\"database\": \"PubMed\", \"id\": \"34642489\", \"url\": \"https://glygen.org/publication/PubMed/34642489\"}]}, {\"annotation\": \"Deciphering prognostic value of CD22 and its contribution to suppression of proinflammatory cytokines production in patients with IgA nephropathy.\", \"evidence\": [{\"database\": \"RefSeq\", \"id\": \"NP_001172028\", \"url\": \"https://www.ncbi.nlm.nih.gov/protein/NP_001172028\"}, {\"database\": \"PubMed\", \"id\": \"36848961\", \"url\": \"https://glygen.org/publication/PubMed/36848961\"}]}, {\"annotation\": \"Immunotherapy-resistant acute lymphoblastic leukemia cells exhibit reduced CD19 and CD22 expression and BTK pathway dependency. Publication Status: Online-Only\", \"evidence\": [{\"database\": \"RefSeq\", \"id\": \"NP_001172028\", \"url\": \"https://www.ncbi.nlm.nih.gov/protein/NP_001172028\"}, {\"database\": \"PubMed\", \"id\": \"38376944\", \"url\": \"https://glygen.org/publication/PubMed/38376944\"}]}, {\"annotation\": \"Most highly expressed siglec (sialic acid-binding immunoglobulin-like lectin) on B-cells that plays a role in various aspects of B-cell biology including differentiation, antigen presentation, and trafficking to bone marrow (PubMed:34330755, PubMed:8627166). Binds to alpha 2,6-linked sialic acid residues of surface molecules such as CD22 itself, CD45 and IgM in a cis configuration. Can also bind to ligands on other cells as an adhesion molecule in a trans configuration (PubMed:20172905). Acts as an inhibitory coreceptor on the surface of B-cells and inhibits B-cell receptor induced signaling, characterized by inhibition of the calcium mobilization and cellular activation. Mechanistically, the immunoreceptor tyrosine-based inhibitory motif domain is phosphorylated by the Src kinase LYN, which in turn leads to the recruitment of the protein tyrosine",
+          "truncated": true
+        },
+        "status": "ok",
+        "tool": "protein_detail",
+        "truncated": true
+      }
+    ],
+    "truncated_results": 2,
+    "usable_successful_tool_calls": 1
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "62dbc37a17d433b8eac5341f2a88f68e3b819457c3fa31cea8ba6163f2d22e6e",
+  "judge_transport_error": null,
+  "parsed_judge": null,
+  "prompt_sha256": "6d84dd7b0823cd7a2f971d171b40df00d4d07972b9bab37a175bc9188b12ad74",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": null,
+  "reason_codes": [
+    "missing_final_answer"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "glm53_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "01dea137ec4f6b7c91e576cfb4e7210027edc76c16cfd2ede67d7986ce97cf7b",
+    "run_summary_sha256": "9b144e8e7a450caa3f3b2e596ba1a01e26f35485ac3138387b5ff7abdea1dabb",
+    "run_task_sha256": "aacdc7de255f8112086491afd7e51b87f6b400b279cc5363f03427c4c25ac984",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "missing_answer",
+  "task_id": 40
+}

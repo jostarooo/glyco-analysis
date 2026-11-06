@@ -1,0 +1,125 @@
+{
+  "cache_key": "116b33692cfc905e04a21a0f521d07f60ba0e72f07b00f4eace3f16480ed73a9",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "AssertionError: Format must be either \"png\" or \"svg\"",
+      "AssertionError: Type must be one of \"html\", \"json\", or \"binary\"",
+      "OSError: Could not find a suitable TLS CA certificate bundle, invalid path: true",
+      "generate_glycan_image: AssertionError: Format must be either \"png\" or \"svg\"",
+      "generate_glycan_image: AssertionError: Type must be one of \"html\", \"json\", or \"binary\"",
+      "generate_glycan_image: OSError: Could not find a suitable TLS CA certificate bundle, invalid path: true",
+      "max_rounds_reached"
+    ],
+    "evidence_ids": [
+      "tool_1",
+      "tool_2",
+      "tool_3",
+      "tool_4"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "missing_final_answer",
+      "tool_errors",
+      "runner_errors"
+    ],
+    "has_final_answer": false,
+    "successful_result_tool_calls": 1,
+    "successful_tool_calls": 1,
+    "tool_calls": 4,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "iupacextended": "α-D-Manp-(1→3)[α-D-Manp-(1→6)]-β-D-Manp-(1→4)-β-D-GlcpNAc-(1→4)-β-D-GlcpNAc-(1→"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "WURCS": "WURCS=2.0/3,5,4/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3-3/a4-b1_b4-c1_c3-d1_c6-e1",
+          "id": "G22768VO",
+          "wurcs": "WURCS=2.0/3,5,4/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3-3/a4-b1_b4-c1_c3-d1_c6-e1"
+        },
+        "status": "ok",
+        "tool": "convert_iupac_extended_to_wurcs",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "format": "image/png",
+          "type": "image",
+          "verify": "true",
+          "wurcs": "WURCS=2.0/3,5,4/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3-3/a4-b1_b4-c1_c3-d1_c6-e1"
+        },
+        "error": "AssertionError: Format must be either \"png\" or \"svg\"",
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": null,
+        "status": "error",
+        "tool": "generate_glycan_image",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "format": "png",
+          "type": "image",
+          "verify": "true",
+          "wurcs": "WURCS=2.0/3,5,4/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3-3/a4-b1_b4-c1_c3-d1_c6-e1"
+        },
+        "error": "AssertionError: Type must be one of \"html\", \"json\", or \"binary\"",
+        "expected_tool": true,
+        "id": "tool_3",
+        "result": null,
+        "status": "error",
+        "tool": "generate_glycan_image",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "format": "png",
+          "type": "binary",
+          "verify": "true",
+          "wurcs": "WURCS=2.0/3,5,4/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3-3/a4-b1_b4-c1_c3-d1_c6-e1"
+        },
+        "error": "OSError: Could not find a suitable TLS CA certificate bundle, invalid path: true",
+        "expected_tool": true,
+        "id": "tool_4",
+        "result": null,
+        "status": "error",
+        "tool": "generate_glycan_image",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 1
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "62dbc37a17d433b8eac5341f2a88f68e3b819457c3fa31cea8ba6163f2d22e6e",
+  "judge_transport_error": null,
+  "parsed_judge": null,
+  "prompt_sha256": "e2b2e6764e40850b4a0f20726b1d37462a0f051f9095e0acd1efd04565a3e47d",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": null,
+  "reason_codes": [
+    "missing_final_answer"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "glm53_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "7d5e63ccf673bdff4426d9bf846a5677d8c53cbb48aca852c62a875f835dc7f6",
+    "run_summary_sha256": "9b144e8e7a450caa3f3b2e596ba1a01e26f35485ac3138387b5ff7abdea1dabb",
+    "run_task_sha256": "a3c19c2e6c2507aa5aa165e8aaf491139388515e699f4f8739f5916be258157b",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "missing_answer",
+  "task_id": 32
+}

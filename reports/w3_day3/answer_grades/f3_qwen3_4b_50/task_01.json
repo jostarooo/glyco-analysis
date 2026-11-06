@@ -1,0 +1,81 @@
+{
+  "cache_key": "00a221c3f1fa7c1846be4bcb6e79eaf636a30a94dabdf63a590764e3920067a5",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "unknown_tool:convert_iupac_extended_to_wurcs_format"
+    ],
+    "evidence_ids": [
+      "answer",
+      "tool_1"
+    ],
+    "expected_tool_called": false,
+    "flags": [
+      "tool_errors",
+      "unknown_tool",
+      "expected_tool_not_called"
+    ],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 0,
+    "successful_tool_calls": 0,
+    "tool_calls": 1,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "iupacextended": "α-D-Manp-(1→3)[α-D-Manp-(1→6)]-β-D-Manp-(1→4)-β-D-GlcpNAc-(1→4)-β-D-GlcpNAc-(1→4)-β-D-Glcp-(1→O)Cer"
+        },
+        "error": null,
+        "expected_tool": false,
+        "id": "tool_1",
+        "result": null,
+        "status": "unknown_tool",
+        "tool": "convert_iupac_extended_to_wurcs_format",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 0
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "opencode-zen/deepseek-v4.1-flash-free",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "24b06120916b876933475fe76efaf9c5f9c9b53614968fb09821f2fd8eaee889",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "Tool use did not support the answer: the attempted conversion tool was unknown and produced no WURCS output or accession ID.",
+    "critical_issues": [
+      "Omits the required WURCS format representation and GlyTouCan accession ID.",
+      "Tool evidence shows the conversion attempt failed with status 'unknown_tool' and a null result.",
+      "The final answer relies on a tool name that differs from the expected conversion tool."
+    ],
+    "decision": "FAILURE",
+    "evidence_ids": [
+      "tool_1"
+    ],
+    "reason": "The final answer does not provide the WURCS representation or GlyTouCan accession ID required by the expected result. It only states that conversion should be performed and notes that the WURCS is unavailable in the tool catalog. The attempted tool call used an unknown tool and returned no result.",
+    "scientific_accuracy": "partially_accurate"
+  },
+  "prompt_sha256": "04f8adf79c4131535e04a0cbb705e3fd23f8e91da85b0ca780b29d63ae0eed52",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\n  \"decision\": \"FAILURE\",\n  \"reason\": \"The final answer does not provide the WURCS representation or GlyTouCan accession ID required by the expected result. It only states that conversion should be performed and notes that the WURCS is unavailable in the tool catalog. The attempted tool call used an unknown tool and returned no result.\",\n  \"critical_issues\": [\n    \"Omits the required WURCS format representation and GlyTouCan accession ID.\",\n    \"Tool evidence shows the conversion attempt failed with status 'unknown_tool' and a null result.\",\n    \"The final answer relies on a tool name that differs from the expected conversion tool.\"\n  ],\n  \"scientific_accuracy\": \"partially_accurate\",\n  \"api_usage_assessment\": \"Tool use did not support the answer: the attempted conversion tool was unknown and produced no WURCS output or accession ID.\",\n  \"evidence_ids\": [\n    \"tool_1\"\n  ]\n}",
+  "reason_codes": [
+    "judge_failure"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "qwen3_4b_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "76370a24d90785ec566a8cb89ea4c1f987ad1ccd5835709c9dea2885ff6305d7",
+    "run_summary_sha256": "4ead0e26a15760a34450c55859679a5c5aeee4dd913014826540b77e5b7c66f4",
+    "run_task_sha256": "95a20a01d320d70967193458a679ac6d407435f2faf2d285ad6e9684ab17c998",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "incorrect",
+  "task_id": 1
+}

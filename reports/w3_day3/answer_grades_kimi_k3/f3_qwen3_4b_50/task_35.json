@@ -1,0 +1,111 @@
+{
+  "cache_key": "1f0a777bc9cd9987cd763a98633b8ff3228226cad60fbbb050e1b020ac89313c",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "OSError: Could not find a suitable TLS CA certificate bundle, invalid path: true",
+      "generate_glycan_image: OSError: Could not find a suitable TLS CA certificate bundle, invalid path: true"
+    ],
+    "evidence_ids": [
+      "answer",
+      "tool_1",
+      "tool_2"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "tool_errors",
+      "runner_errors"
+    ],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 1,
+    "successful_tool_calls": 1,
+    "tool_calls": 2,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "format": "png",
+          "type": "html",
+          "verify": "true",
+          "wurcs": "WURCS=2.0/3,5,4/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3-3/a4-b1_b4-c1_c3-d1_c6-e1"
+        },
+        "error": "OSError: Could not find a suitable TLS CA certificate bundle, invalid path: true",
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": null,
+        "status": "error",
+        "tool": "generate_glycan_image",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "wurcs": "WURCS=2.0/3,5,4/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3-3/a4-b1_b4-c1_c3-d1_c6-e1"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": {
+          "data": [
+            {
+              "m_mapTypeToReports": {
+                "ERROR": [],
+                "UNVERIFIABLE": [],
+                "WARNING": []
+              },
+              "m_sInputString": "WURCS=2.0/3,5,4/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3-3/a4-b1_b4-c1_c3-d1_c6-e1",
+              "m_sStandardString": "WURCS=2.0/3,5,4/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3-3/a4-b1_b4-c1_c3-d1_c6-e1"
+            }
+          ],
+          "status_code": 200,
+          "url": "https://api.glycosmos.org/wurcsframework/1.2.14/wurcsvalidator"
+        },
+        "status": "ok",
+        "tool": "validate_wurcs",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 1
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "b054b9d2a400fc4ba8672d4a3209b7910e7bc087c553d3a83f46dc3f91b2a6e9",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "Both expected tools were invoked. validate_wurcs succeeded and supports the validation claim; generate_glycan_image errored, so the answer cannot support the required visual dataset output.",
+    "critical_issues": [
+      "Required glycan PNG image from generate_glycan_image is missing due to tool error",
+      "Final answer provides troubleshooting advice but does not satisfy the image-generation deliverable"
+    ],
+    "decision": "FAILURE",
+    "evidence_ids": [
+      "tool_1",
+      "tool_2"
+    ],
+    "reason": "The answer correctly reports that validate_wurcs found no errors/warnings and echoes the WURCS standard string (tool_2), but the required PNG glycan image was not produced because generate_glycan_image failed with a TLS CA certificate error (tool_1). The final answer omits a required expected result rather than providing the image.",
+    "scientific_accuracy": "partially_accurate"
+  },
+  "prompt_sha256": "701ddab155697702ce1fa647ee917123d8e0f672dd780105b35f8bb61065a72a",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\n  \"decision\": \"FAILURE\",\n  \"reason\": \"The answer correctly reports that validate_wurcs found no errors/warnings and echoes the WURCS standard string (tool_2), but the required PNG glycan image was not produced because generate_glycan_image failed with a TLS CA certificate error (tool_1). The final answer omits a required expected result rather than providing the image.\",\n  \"critical_issues\": [\n    \"Required glycan PNG image from generate_glycan_image is missing due to tool error\",\n    \"Final answer provides troubleshooting advice but does not satisfy the image-generation deliverable\"\n  ],\n  \"scientific_accuracy\": \"partially_accurate\",\n  \"api_usage_assessment\": \"Both expected tools were invoked. validate_wurcs succeeded and supports the validation claim; generate_glycan_image errored, so the answer cannot support the required visual dataset output.\",\n  \"evidence_ids\": [\"tool_1\", \"tool_2\"]\n}",
+  "reason_codes": [
+    "judge_failure"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "qwen3_4b_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "af65d3144477e0486f22dbaeea03e6bf1bc5562bcf4c41b86ce29fde1e3d4859",
+    "run_summary_sha256": "4ead0e26a15760a34450c55859679a5c5aeee4dd913014826540b77e5b7c66f4",
+    "run_task_sha256": "dda7ee3a357c04d9cd93e9c5729b6dee04d8e514e900f697fb54e3b51367c88c",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "incorrect",
+  "task_id": 35
+}

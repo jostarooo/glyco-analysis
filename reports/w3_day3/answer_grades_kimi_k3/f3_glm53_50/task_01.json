@@ -1,0 +1,94 @@
+{
+  "cache_key": "9904a4cec1e23021c595315940ff07155f40eff84b5d5dd4f87c2d320f0cfac7",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [],
+    "evidence_ids": [
+      "answer",
+      "tool_1",
+      "tool_2"
+    ],
+    "expected_tool_called": true,
+    "flags": [],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 2,
+    "successful_tool_calls": 2,
+    "tool_calls": 2,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "iupacextended": "α-D-Manp-(1→3)[α-D-Manp-(1→6)]-β-D-Manp-(1→4)-β-D-GlcpNAc-(1→4)-β-D-GlcpNAc-(1→4)-β-D-Glcp-(1→O)Cer"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "WURCS": "WURCS=2.0/4,6,5/[a2122h-1b_1-5][a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-2-2-3-4-4/a4-b1_b4-c1_c4-d1_d3-e1_d6-f1",
+          "message": "Accession not found."
+        },
+        "status": "ok",
+        "tool": "convert_iupac_extended_to_wurcs",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "wurcs": "WURCS=2.0/4,6,5/[a2122h-1b_1-5][a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-2-2-3-4-4/a4-b1_b4-c1_c4-d1_d3-e1_d6-f1"
+        },
+        "error": null,
+        "expected_tool": false,
+        "id": "tool_2",
+        "result": [
+          {
+            "message": "Accession not found."
+          }
+        ],
+        "status": "ok",
+        "tool": "obtain_glytoucan_id_from_wurcs",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 2
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "97bf7b0615d547c35b74258bd132500680cc41e4fff2aaec15675c5c656c5a7d",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "Tool use was appropriate and fully supports the answer: tool_1 performed the IUPAC Extended to WURCS conversion and tool_2 confirmed the GlyTouCan lookup result. The answer faithfully reflects both tool outputs without overclaiming.",
+    "critical_issues": [],
+    "decision": "SUCCESS",
+    "evidence_ids": [
+      "answer",
+      "tool_1",
+      "tool_2"
+    ],
+    "reason": "The final answer reports the WURCS representation exactly as returned by tool_1 (WURCS=2.0/4,6,5/[a2122h-1b_1-5][a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-2-2-3-4-4/a4-b1_b4-c1_c4-d1_d3-e1_d6-f1), provides an accurate structural interpretation of the residue patterns and linkages, and honestly reports that no GlyTouCan accession was found, consistent with the 'Accession not found.' messages in tool_1 and tool_2. Rather than fabricating an accession ID to match the expected answer's assumption, it accurately reflects the actual tool output.",
+    "scientific_accuracy": "accurate"
+  },
+  "prompt_sha256": "8502ff6d661b245839641cd1d18f6dd006e66c59ed4a73dea60ff53a9691534e",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\n  \"decision\": \"SUCCESS\",\n  \"reason\": \"The final answer reports the WURCS representation exactly as returned by tool_1 (WURCS=2.0/4,6,5/[a2122h-1b_1-5][a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-2-2-3-4-4/a4-b1_b4-c1_c4-d1_d3-e1_d6-f1), provides an accurate structural interpretation of the residue patterns and linkages, and honestly reports that no GlyTouCan accession was found, consistent with the 'Accession not found.' messages in tool_1 and tool_2. Rather than fabricating an accession ID to match the expected answer's assumption, it accurately reflects the actual tool output.\",\n  \"critical_issues\": [],\n  \"scientific_accuracy\": \"accurate\",\n  \"api_usage_assessment\": \"Tool use was appropriate and fully supports the answer: tool_1 performed the IUPAC Extended to WURCS conversion and tool_2 confirmed the GlyTouCan lookup result. The answer faithfully reflects both tool outputs without overclaiming.\",\n  \"evidence_ids\": [\"answer\", \"tool_1\", \"tool_2\"]\n}",
+  "reason_codes": [
+    "judge_success",
+    "successful_tool_evidence"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "glm53_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "76370a24d90785ec566a8cb89ea4c1f987ad1ccd5835709c9dea2885ff6305d7",
+    "run_summary_sha256": "9b144e8e7a450caa3f3b2e596ba1a01e26f35485ac3138387b5ff7abdea1dabb",
+    "run_task_sha256": "1aa5decbd3189f8b19ca849143afa11861c6144c5e4c3162d55a1ffabbd68ef2",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "correct",
+  "task_id": 1
+}

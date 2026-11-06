@@ -1,0 +1,122 @@
+{
+  "cache_key": "07eed330d66ee53e2561a78255621f09d926892f5be0b74164a50d87a652295b",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "SSLError: HTTPSConnectionPool(host='oglcnac.mcw.edu', port=443): Max retries exceeded with url: /api/v1/proteins/?query_protein=Q9NXB0 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)')))",
+      "unknown_tool:search_proteomics_peptides_by_accession",
+      "get_proteins: SSLError: HTTPSConnectionPool(host='oglcnac.mcw.edu', port=443): Max retries exceeded with url: /api/v1/proteins/?query_protein=Q9NXB0 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)')))",
+      "max_rounds_reached"
+    ],
+    "evidence_ids": [
+      "tool_1",
+      "tool_2",
+      "tool_3",
+      "tool_4"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "missing_final_answer",
+      "tool_errors",
+      "unknown_tool",
+      "truncated_results",
+      "runner_errors"
+    ],
+    "has_final_answer": false,
+    "successful_result_tool_calls": 2,
+    "successful_tool_calls": 2,
+    "tool_calls": 4,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "accession": "Q9NXB0-3",
+          "rfActive": "true",
+          "rfDdtype": "EMBL,RefSeq",
+          "rfTaxId": "9606"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": ">UPI0000E0384E status=inactive\nMAVPVSSFAQRTRSRFRVHLQRITSSNFLHYQPAAELGKDLIDLATFRPQPTASGHRPEE\nDEEEEIVIGWQEKLFSQFEVDLYQNETACQSPLDYQYRQEILKLENSGGKKNRRIFTYTD\nSDRYTNLEEHCQRMTTAASEVPSFLVERMANVRRRRQDRRGMEGGILKSRIVTWEPSEEF\nVRNNHVINTPLQTMHIMADLGPYKKLGYKKYEHVLCTLKVDSNGVITVKPDFTGLKGPYR\nIETEGEKQELWKYTIDNVSPHAQPEEEERERRVFKDLYGRHKEYLSSLVGTDFEMTVPGA\nLRLFVNGEVVSAQGYEYDNLYVHFFVELPTAHWSSPAFQQLSGVTQTCTTKSLAMDKVAH\nFSYPFTFEAFFLHEDESSDALPEWPVLYCEVLSLDFWQRYRVEGYGAVVLPATPGSHTLT\nVSTWRPVELGTVAELRRFFIGGSLELEDLSYVRIPGSFKGERLSRFGLRTETTGTVTFRL\nHCLQQSRAFMESSSLQKRMRSVLDRLEGFSQQSSIHNVLEAFRRARRRMQEARESLPQDL\nVSPSGTLVS\n",
+          "status_code": 200,
+          "url": "https://www.ebi.ac.uk/proteins/api/uniparc/accession/Q9NXB0-3?rfDdtype=EMBL%2CRefSeq&rfActive=true&rfTaxId=9606"
+        },
+        "status": "ok",
+        "tool": "get_uniparc_entry_by_uniprot_accession",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "query_protein": "Q9NXB0"
+        },
+        "error": "SSLError: HTTPSConnectionPool(host='oglcnac.mcw.edu', port=443): Max retries exceeded with url: /api/v1/proteins/?query_protein=Q9NXB0 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)')))",
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": null,
+        "status": "error",
+        "tool": "get_proteins",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "accession": "Q9NXB0"
+        },
+        "error": null,
+        "expected_tool": false,
+        "id": "tool_3",
+        "result": null,
+        "status": "unknown_tool",
+        "tool": "search_proteomics_peptides_by_accession",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "accession": "Q9NXB0",
+          "taxid": "9606"
+        },
+        "error": null,
+        "expected_tool": false,
+        "id": "tool_4",
+        "result": {
+          "preview": "{\"status_code\": 200, \"url\": \"https://www.ebi.ac.uk/proteins/api/proteomics?offset=0&size=100&accession=Q9NXB0&taxid=9606\", \"data\": [{\"accession\": \"Q9NXB0\", \"entryName\": \"MKS1_HUMAN\", \"sequence\": \"MAETVWSTDTGEAVYRSRDPVRNLRLRVHLQRITSSNFLHYQPAAELGKDLIDLATFRPQPTASGHRPEEDEEEEIVIGWQEKLFSQFEVDLYQNETACQSPLDYQYRQEILKLENSGGKKNRRIFTYTDSDRYTNLEEHCQRMTTAASEVPSFLVERMANVRRRRQDRRGMEGGILKSRIVTWEPSEEFVRNNHVINTPLQTMHIMADLGPYKKLGYKKYEHVLCTLKVDSNGVITVKPDFTGLKGPYRIETEGEKQELWKYTIDNVSPHAQPEEEERERRVFKDLYGRHKEYLSSLVGTDFEMTVPGALRLFVNGEVVSAQGYEYDNLYVHFFVELPTAHWSSPAFQQLSGVTQTCTTKSLAMDKVAHFSYPFTFEAFFLHEDESSDALPEWPVLYCEVLSLDFWQRYRVEGYGAVVLPATPGSHTLTVSTWRPVELGTVAELRRFFIGGSLELEDLSYVRIPGSFKGERLSRFGLRTETTGTVTFRLHCLQQSRAFMESSSLQKRMRSVLDRLEGFSQQSSIHNVLEAFRRARRRMQEARESLPQDLVSPSGTLVS\", \"sequenceChecksum\": \"3E4EBFDAFA8FB39D\", \"taxid\": 9606, \"features\": [{\"type\": \"PROTEOMICS\", \"begin\": \"480\", \"end\": \"489\", \"xrefs\": [{\"name\": \"Proteomes\", \"id\": \"UP000005640\", \"url\": \"https://www.uniprot.org/proteomes/UP000005640\"}], \"evidences\": [{\"code\": \"ECO:0007829\", \"source\": {\"name\": \"PeptideAtlas\", \"id\": \"PAp01640832\", \"url\": \"https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetPeptide?atlas_build_name=Human 2026-01&action=QUERY&searchWithinThis=Peptide+Name&searchForThis=PAp01640832\", \"properties\": {\"Number of sample\": \"15\", \"Best Probability\": \"1.000\", \"Number of protein mappings\": \"12\", \"Times of observations\": \"31\"}}}], \"peptide\": \"TETTGTVTFR\", \"unique\": false}, {\"type\": \"PROTEOMICS\", \"begin\": \"372\", \"end\": \"380\", \"xrefs\": [{\"name\": \"Proteomes\", \"id\": \"UP000005640\", \"url\": \"https://www.uniprot.org/proteomes/UP000005640\"}], \"evidences\": [{\"code\": \"ECO:0007829\", \"source\": {\"name\": \"PeptideAtlas\", \"id\": \"PAp12764598\", \"url\": \"https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetPeptide?atlas_build_name=Human 2026-01&action=QUERY&searchWithinThis=Peptide+Name&searchForThis=PAp12764598\", \"properties\": {\"Number of sample\": \"18\", \"Best Probability\": \"1.000\", \"Number of protein mappings\": \"26\", \"Times of observations\": \"119\"}}}], \"peptide\": \"SYPFTFEAF\", \"unique\": false}, {\"type\": \"PROTEOMICS\", \"begin\": \"84\", \"end\": \"108\", \"xrefs\": [{\"name\": \"Proteomes\", \"id\": \"UP000005640\", \"url\": \"https://www.uniprot.org/proteomes/UP000005640\"}], \"evidences\": [{\"code\": \"ECO:0007829\", \"source\": {\"name\": \"PeptideAtlas\", \"id\": \"PAp11194245\", \"url\": \"https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetPeptide?atlas_build_name=Human 2026-01&action=QUERY&searchWithinThis=Peptide+Name&searchForThis=PAp11194245\", \"properties\": {\"Number of sample\": \"4\", \"Best Probability\": \"1.000\", \"Number of protein mappings\": \"25\", \"Times of observations\": \"7\"}}}], \"peptide\": \"LFSQFEVDLYQNETACQSPLDYQYR\", \"unique\": false}, {\"type\": \"PROTEOMICS\", \"begin\": \"181\", \"end\": \"192\", \"xrefs\": [{\"name\": \"Proteomes\", \"id\": \"UP000005640\", \"url\": \"https://www.uniprot.org/proteomes/UP000005640\"}], \"evidences\": [{\"code\": \"ECO:0007829\", \"source\": {\"name\": \"PeptideAtlas\", \"id\": \"PAp02451578\", \"url\": \"https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetPeptide?atlas_build_name=Human 2026-01&action=QUERY&searchWithinThis=Peptide+Name&searchForThis=PAp02451578\", \"properties\": {\"Number of sample\": \"45\", \"Best Probability\": \"1.000\", \"Number of protein mappings\": \"26\", \"Times of observations\": \"83\"}}}, {\"code\": \"ECO:0007829\", \"source\": {\"name\": \"ProteomicsDB\", \"id\": \"Q9NXB0\", \"url\": \"https://www.proteomicsdb.org/vue/protein/83068/summary\", \"properties\": {\"Best Mascot score\": \"25.45\", \"Best MaxQuant score\": \"130.01\", \"Number of PSMs\": \"15\", \"q value\": \"0.000900646758235794\"}}}, {\"code\": \"ECO:0007829\", \"source\": {\"id\": \"PXD063082\", \"url\": \"https://proteomics.bio.cam.ac.uk\", \"properties\": {\"Source name\": \"Cambridge Centre for Proteomics\", \"Number of precursors\": \"1\", \"Q-value\": \"0.000546241\", \"PubMed ID\": \"40783120\"}}}], \"peptide\": \"IVTWEPSEEFVR\", \"unique\": false}, {\"type\": \"PROTEOMICS\", \"begin\": \"33\", \"end\": \"49\", \"xrefs\": [{\"name\": \"Proteomes\", \"id\": \"UP000005640\", \"url\": \"https://www.uniprot.org/proteomes/UP000005640\"}], \"evidences\": [{\"code\": \"ECO:0007829\", \"source\": {\"name\": \"PeptideAtlas\", \"id\": \"PAp00499171\", \"url\": \"https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetPeptide?atlas_build_name=Human 2026-01&action=QUERY&searchWithinThis=Peptide+Name&searchForThis=PAp00499171\", \"properties\": {\"Number of sample\": \"61\", \"Best Probability\": \"1.000\", \"Number of protein mappings\": \"28\", \"Times of observations\": \"131\"}}}, {\"code\": \"ECO:0007829\", \"source\": {\"name\": \"ProteomicsDB\", \"id\": \"Q9NXB0\", \"url\": \"https://www.proteomicsdb.org/vue/protein/83068/summary\", \"properties\": {\"Best Mascot score\": \"61.41\", \"Best MaxQuant score\": \"164.02\", \"Number of PSMs\": \"8\", \"q value\": \"0.000005128483458081099\"}}}], \"peptide\": \"ITSSNFLHYQPAAELGK\", \"unique\": false}, {\"type\": \"PROTEOMICS\", \"begin\": \"464\", \"end\": \"472\", \"xrefs\": [{\"name\": \"Proteomes\", \"id\": \"UP000005640\", \"url\": \"https://www.uniprot.org/proteomes/UP000005640\"}], \"evidences\": [{\"code\": \"ECO:0007829\", \"source\": {\"name\": \"PeptideAtlas\", \"id\": \"PAp08669284\", \"url\": \"https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetPeptide?atlas_build_name=Human 2026-01&action=QUERY&searchWithinThis=Peptide+Name&searchForThis=PAp08669284\", \"properties\": {\"Number of sample\": \"2\", \"Best Probability\": \"1.000\", \"Number of protein mappings\": \"8\", \"Times of observations\": \"14\"}}}, {\"code\": \"ECO:0007829\", \"source\": {\"name\": \"ProteomicsDB\", \"id\": \"Q9NXB0\", \"url\": \"https://www.proteomicsdb.org/vue/protein/83068/summary\", \"properties\": {\"Best Mascot score\": \"49.95\", \"Best MaxQuant score\": \"51.436\", \"Number of PSMs\": \"4\", \"q value\": \"0.004625276944685123\"}}}], \"peptide\": \"IPGSFKGER\", \"unique\": false}, {\"type\": \"PROTEOMICS\", \"begin\": \"171\", \"end\": \"180\", \"xrefs\": [{\"name\": \"Proteomes\", \"id\": \"UP000005640\", \"url\": \"https://www.uniprot.org/proteomes/UP000005640\"}], \"evidences\": [{\"code\": \"ECO:0007829\", \"source\": {\"name\": \"PeptideAtlas\", \"id\": \"PAp06619018\", \"url\": \"https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetPeptide?atlas_build_name=Human 2026-01&action=",
+          "truncated": true
+        },
+        "status": "ok",
+        "tool": "search_proteomics_peptides",
+        "truncated": true
+      }
+    ],
+    "truncated_results": 1,
+    "usable_successful_tool_calls": 1
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "opencode-zen/deepseek-v4.1-flash-free",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "62dbc37a17d433b8eac5341f2a88f68e3b819457c3fa31cea8ba6163f2d22e6e",
+  "judge_transport_error": null,
+  "parsed_judge": null,
+  "prompt_sha256": "6dc5e36d11f52b2b66cc1a3dc8b16cb39dd2b17dce859d93e2f6fe68a81651cc",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": null,
+  "reason_codes": [
+    "missing_final_answer"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "glm53_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "638c39f92dfca2b0de6d964584ed75d08a0f443ab0bb582cf762ea2982a22583",
+    "run_summary_sha256": "9b144e8e7a450caa3f3b2e596ba1a01e26f35485ac3138387b5ff7abdea1dabb",
+    "run_task_sha256": "63361871d009d5f3e26eef5945ce041c6103066a8e8c3258fddb29cd564f1234",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "missing_answer",
+  "task_id": 46
+}

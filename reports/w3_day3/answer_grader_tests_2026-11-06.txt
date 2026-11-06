@@ -1,0 +1,27 @@
+COMMAND: C:\Users\jostaro\AppData\Roaming\uv\python\cpython-3.12.14-windows-x86_64-none\python.exe -m unittest tests.test_doc2agent_answer_grader -v
+CWD: D:\Codex\workspace\glyco-analysis-w3-day3-answer-grader
+EXIT_CODE: 0
+
+test_comparison_requires_same_judge_and_marks_local_scope (tests.test_doc2agent_answer_grader.ComparisonTest.test_comparison_requires_same_judge_and_marks_local_scope) ... ok
+test_cache_hit_keeps_bytes_and_mtime_without_calling_judge (tests.test_doc2agent_answer_grader.GraderCacheAndCheckTest.test_cache_hit_keeps_bytes_and_mtime_without_calling_judge) ... ok
+test_check_fails_when_one_of_50_tasks_is_missing (tests.test_doc2agent_answer_grader.GraderCacheAndCheckTest.test_check_fails_when_one_of_50_tasks_is_missing) ... ok
+test_check_fails_when_raw_judge_response_was_edited (tests.test_doc2agent_answer_grader.GraderCacheAndCheckTest.test_check_fails_when_raw_judge_response_was_edited) ... ok
+test_check_fails_when_summary_was_edited (tests.test_doc2agent_answer_grader.GraderCacheAndCheckTest.test_check_fails_when_summary_was_edited) ... ok
+test_empty_judge_content_is_retried (tests.test_doc2agent_answer_grader.GraderStatusTest.test_empty_judge_content_is_retried) ... ok
+test_failed_and_unknown_tools_are_not_silently_correct (tests.test_doc2agent_answer_grader.GraderStatusTest.test_failed_and_unknown_tools_are_not_silently_correct) ... ok
+test_failure_is_incorrect (tests.test_doc2agent_answer_grader.GraderStatusTest.test_failure_is_incorrect) ... ok
+test_inconclusive_is_manual_review (tests.test_doc2agent_answer_grader.GraderStatusTest.test_inconclusive_is_manual_review) ... ok
+test_invalid_evidence_reference_is_manual_review (tests.test_doc2agent_answer_grader.GraderStatusTest.test_invalid_evidence_reference_is_manual_review) ... ok
+test_judge_request_error_is_judge_unavailable (tests.test_doc2agent_answer_grader.GraderStatusTest.test_judge_request_error_is_judge_unavailable) ... ok
+test_malformed_judge_is_judge_unavailable (tests.test_doc2agent_answer_grader.GraderStatusTest.test_malformed_judge_is_judge_unavailable) ... ok
+test_missing_answer_does_not_call_judge (tests.test_doc2agent_answer_grader.GraderStatusTest.test_missing_answer_does_not_call_judge) ... ok
+test_structured_expected_answer_is_supported (tests.test_doc2agent_answer_grader.GraderStatusTest.test_structured_expected_answer_is_supported) ... ok
+test_success_with_only_truncated_evidence_is_manual_review (tests.test_doc2agent_answer_grader.GraderStatusTest.test_success_with_only_truncated_evidence_is_manual_review) ... ok
+test_success_with_successful_tool_evidence_is_correct (tests.test_doc2agent_answer_grader.GraderStatusTest.test_success_with_successful_tool_evidence_is_correct) ... ok
+test_success_without_successful_evidence_is_manual_review (tests.test_doc2agent_answer_grader.GraderStatusTest.test_success_without_successful_evidence_is_manual_review) ... ok
+test_upstream_question_or_tools_mismatch_is_invalid_trace (tests.test_doc2agent_answer_grader.GraderStatusTest.test_upstream_question_or_tools_mismatch_is_invalid_trace) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 3.921s
+
+OK

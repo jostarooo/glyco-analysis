@@ -1,0 +1,101 @@
+{
+  "cache_key": "f55a9d48a0c189b12ad2ffdcf11332f529316ab31d2258fa526be4807fa2ebf4",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [],
+    "evidence_ids": [
+      "answer",
+      "tool_1",
+      "tool_2"
+    ],
+    "expected_tool_called": true,
+    "flags": [],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 2,
+    "successful_tool_calls": 2,
+    "tool_calls": 2,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "accession": "P12345",
+          "alternativesequence": "V,-",
+          "consequencetype": "missense,stop gained",
+          "dbid": "rs121918508",
+          "dbtype": "dbSNP,ClinVar",
+          "disease": "Alzheimer's disease 1",
+          "location": "10-60",
+          "sourcetype": "UniProt,ClinVar",
+          "taxid": 9606,
+          "wildtype": "A"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": [],
+          "status_code": 200,
+          "url": "https://www.ebi.ac.uk/proteins/api/variation?offset=0&size=100&sourcetype=UniProt%2CClinVar&consequencetype=missense%2Cstop+gained&wildtype=A&alternativesequence=V%2C-&location=10-60&accession=P12345&disease=Alzheimer%27s+disease+1&taxid=9606&dbtype=dbSNP%2CClinVar&dbid=rs121918508"
+        },
+        "status": "ok",
+        "tool": "search_natural_variants",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "accession": "Q67890",
+          "alternativesequence": "V,-",
+          "consequencetype": "missense,stop gained",
+          "dbid": "rs121918508",
+          "dbtype": "dbSNP,ClinVar",
+          "disease": "Alzheimer's disease 1",
+          "location": "10-60",
+          "sourcetype": "UniProt,ClinVar",
+          "taxid": 9606,
+          "wildtype": "A"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": {
+          "data": [],
+          "status_code": 200,
+          "url": "https://www.ebi.ac.uk/proteins/api/variation?offset=0&size=100&sourcetype=UniProt%2CClinVar&consequencetype=missense%2Cstop+gained&wildtype=A&alternativesequence=V%2C-&location=10-60&accession=Q67890&disease=Alzheimer%27s+disease+1&taxid=9606&dbtype=dbSNP%2CClinVar&dbid=rs121918508"
+        },
+        "status": "ok",
+        "tool": "search_natural_variants",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 2
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "opencode-zen/deepseek-v4.1-flash-free",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "a30777240fb6d5732af9a87128673fc873b1f3858e1be15a2a5b4e901be6599e",
+  "judge_transport_error": "http_error:status=429:body={\"error\":{\"code\":null,\"message\":\"OpenCode Zen: Free usage limit reached. Free models work in OpenCode (https://opencode.ai); subscribe to OpenCode Go to keep going: https://opencode.ai/go (out of its allowance: not asked again before 13:27 UTC+8)\",\"param\":null,\"type\":\"rate_limit_error\"}}\n",
+  "parsed_judge": null,
+  "prompt_sha256": "cd9539ab333029b9918b4abad272a80f14a89e31b1b0b351b28dbdad02254385",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": null,
+  "reason_codes": [
+    "judge_request_error"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "glm53_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "b9b7d3af2d54f14058c2d533dd22bb4619d05ecae71bb8c003dfea57334023ab",
+    "run_summary_sha256": "9b144e8e7a450caa3f3b2e596ba1a01e26f35485ac3138387b5ff7abdea1dabb",
+    "run_task_sha256": "b71402739615016737902288e9da5f5eab6d05f6ec9b32fca6064a32badbbd88",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "judge_unavailable",
+  "task_id": 30
+}

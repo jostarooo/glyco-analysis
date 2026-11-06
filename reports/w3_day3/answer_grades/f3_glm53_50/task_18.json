@@ -1,0 +1,85 @@
+{
+  "cache_key": "c9022c19400876ecaf1a0cc9d265ade8cdd10905d592e681da15b38a07b1cd07",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [],
+    "evidence_ids": [
+      "answer",
+      "tool_1",
+      "tool_2"
+    ],
+    "expected_tool_called": true,
+    "flags": [],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 2,
+    "successful_tool_calls": 2,
+    "tool_calls": 2,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "consequencetype": "missense",
+          "hgvs": "NC_000017.11:g.58223910G>A",
+          "sourcetype": "large scale study"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": [],
+          "status_code": 200,
+          "url": "https://www.ebi.ac.uk/proteins/api/variation/hgvs/NC_000017.11%3Ag.58223910G%3EA?offset=0&size=100&sourcetype=large+scale+study&consequencetype=missense"
+        },
+        "status": "ok",
+        "tool": "get_natural_variants_by_hgvs_expression",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "hgvs": "NC_000017.11:g.58223910G>A"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": {
+          "data": [],
+          "status_code": 200,
+          "url": "https://www.ebi.ac.uk/proteins/api/variation/hgvs/NC_000017.11%3Ag.58223910G%3EA?offset=0&size=100"
+        },
+        "status": "ok",
+        "tool": "get_natural_variants_by_hgvs_expression",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 2
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "opencode-zen/deepseek-v4.1-flash-free",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "a30777240fb6d5732af9a87128673fc873b1f3858e1be15a2a5b4e901be6599e",
+  "judge_transport_error": "http_error:status=429:body={\"error\":{\"code\":null,\"message\":\"OpenCode Zen: Free usage limit reached. Free models work in OpenCode (https://opencode.ai); subscribe to OpenCode Go to keep going: https://opencode.ai/go (out of its allowance: not asked again before 13:27 UTC+8)\",\"param\":null,\"type\":\"rate_limit_error\"}}\n",
+  "parsed_judge": null,
+  "prompt_sha256": "476a32fd9823eefcc234c4397d4aed66be53a57907e538e5440ec909ba7fd094",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": null,
+  "reason_codes": [
+    "judge_request_error"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "glm53_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "6bbf6f650c1328104e8cc30a62c0826243cb5dbdc3fcd2a82c16cdb346374adb",
+    "run_summary_sha256": "9b144e8e7a450caa3f3b2e596ba1a01e26f35485ac3138387b5ff7abdea1dabb",
+    "run_task_sha256": "f385ccc496ce63daa6d2ef0efc8d9898d7ff9052688092f05ccd5e08a2173aa5",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "judge_unavailable",
+  "task_id": 18
+}

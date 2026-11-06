@@ -1,0 +1,125 @@
+{
+  "cache_key": "d8ea959e45057fc0c67d22e40dda74391748de1e2fe4f8d4061fdfe518b06db1",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "TypeError: search_protein_sequence_features() got an unexpected keyword argument 'location'",
+      "TypeError: search_protein_sequence_features_by_type() got an unexpected keyword argument 'location'",
+      "search_protein_sequence_features: TypeError: search_protein_sequence_features() got an unexpected keyword argument 'location'",
+      "search_protein_sequence_features_by_type: TypeError: search_protein_sequence_features_by_type() got an unexpected keyword argument 'location'"
+    ],
+    "evidence_ids": [
+      "answer",
+      "tool_1",
+      "tool_2",
+      "tool_3"
+    ],
+    "expected_tool_called": false,
+    "flags": [
+      "tool_errors",
+      "expected_tool_not_called",
+      "runner_errors"
+    ],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 0,
+    "successful_tool_calls": 0,
+    "tool_calls": 3,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "accession": "Hemoglobin alpha chain",
+          "categories": "function",
+          "location": "140-160",
+          "types": "GO:0015671"
+        },
+        "error": "TypeError: search_protein_sequence_features() got an unexpected keyword argument 'location'",
+        "expected_tool": false,
+        "id": "tool_1",
+        "result": null,
+        "status": "error",
+        "tool": "search_protein_sequence_features",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "categories": "function",
+          "location": "140-160",
+          "offset": 0,
+          "size": 100,
+          "terms": "Hemoglobin alpha chain",
+          "type": "GO:0015671",
+          "types": "GO:0015671"
+        },
+        "error": "TypeError: search_protein_sequence_features_by_type() got an unexpected keyword argument 'location'",
+        "expected_tool": false,
+        "id": "tool_2",
+        "result": null,
+        "status": "error",
+        "tool": "search_protein_sequence_features_by_type",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "accession": "Hemoglobin alpha chain",
+          "categories": "function",
+          "location": "140-160",
+          "types": "GO:0015671"
+        },
+        "error": "TypeError: search_protein_sequence_features() got an unexpected keyword argument 'location'",
+        "expected_tool": false,
+        "id": "tool_3",
+        "result": null,
+        "status": "error",
+        "tool": "search_protein_sequence_features",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 0
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "edbf128a8dae5d9e174429b61afa2b3e50ce9f62925b80ada390bfbf8bbda555",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "Tool use failed to support the answer: the agent never used the expected search_uniprot_entries tool and instead made three erroneous calls to sequence-feature search tools with unsupported 'location' parameters, yielding no data.",
+    "critical_issues": [
+      "Omits the required numeric count and entry details",
+      "Incorrectly claims no available tool supports the query, despite search_uniprot_entries being the expected and capable tool",
+      "All tool calls errored due to invalid arguments and no results were retrieved"
+    ],
+    "decision": "FAILURE",
+    "evidence_ids": [
+      "answer",
+      "tool_1",
+      "tool_2",
+      "tool_3"
+    ],
+    "reason": "The final answer omits the required result entirely—it provides no count of reviewed UniProt entries and no accession numbers or gene names. The expected tool 'search_uniprot_entries' was available to answer this query, but the agent instead repeatedly called inappropriate tools (search_protein_sequence_features variants) with invalid 'location' arguments, all of which errored (tool_1, tool_2, tool_3). The claim that the available tools cannot support the query is a critical unsupported/incorrect claim.",
+    "scientific_accuracy": "inaccurate"
+  },
+  "prompt_sha256": "197dc47a35b10aced1ae1ebd993fb75bc6809a79e54da97e5008bb23d4c029b0",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\n  \"decision\": \"FAILURE\",\n  \"reason\": \"The final answer omits the required result entirely—it provides no count of reviewed UniProt entries and no accession numbers or gene names. The expected tool 'search_uniprot_entries' was available to answer this query, but the agent instead repeatedly called inappropriate tools (search_protein_sequence_features variants) with invalid 'location' arguments, all of which errored (tool_1, tool_2, tool_3). The claim that the available tools cannot support the query is a critical unsupported/incorrect claim.\",\n  \"critical_issues\": [\n    \"Omits the required numeric count and entry details\",\n    \"Incorrectly claims no available tool supports the query, despite search_uniprot_entries being the expected and capable tool\",\n    \"All tool calls errored due to invalid arguments and no results were retrieved\"\n  ],\n  \"scientific_accuracy\": \"inaccurate\",\n  \"api_usage_assessment\": \"Tool use failed to support the answer: the agent never used the expected search_uniprot_entries tool and instead made three erroneous calls to sequence-feature search tools with unsupported 'location' parameters, yielding no data.\",\n  \"evidence_ids\": [\"answer\", \"tool_1\", \"tool_2\", \"tool_3\"]\n}",
+  "reason_codes": [
+    "judge_failure"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "qwen3_4b_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "f15efca7182c23b7a070c0301cc1a6ddc4d654b0db1f43bd035f1fffb30f3674",
+    "run_summary_sha256": "4ead0e26a15760a34450c55859679a5c5aeee4dd913014826540b77e5b7c66f4",
+    "run_task_sha256": "4478653264c2d268d6f87ae6b11e06946e4ff25dfbdddecb369689d189bcc89b",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "incorrect",
+  "task_id": 7
+}

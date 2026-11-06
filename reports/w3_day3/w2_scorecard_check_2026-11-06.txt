@@ -1,0 +1,5 @@
+COMMAND: C:\Users\jostaro\AppData\Roaming\uv\python\cpython-3.12.14-windows-x86_64-none\python.exe scripts\build_w2_scorecard.py --check
+CWD: D:\Codex\workspace\glyco-analysis-w3-day3-answer-grader
+EXIT_CODE: 0
+
+PASS: scorecard outputs are current

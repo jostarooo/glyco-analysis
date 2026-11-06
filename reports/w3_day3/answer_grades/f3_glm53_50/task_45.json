@@ -1,0 +1,189 @@
+{
+  "cache_key": "8865e1163cecc1d2784cd6213826bcd4dc4547448dd4a1beae412c5e8048e82a",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "max_rounds_reached"
+    ],
+    "evidence_ids": [
+      "tool_1",
+      "tool_2",
+      "tool_3",
+      "tool_4"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "missing_final_answer",
+      "truncated_results",
+      "runner_errors"
+    ],
+    "has_final_answer": false,
+    "successful_result_tool_calls": 4,
+    "successful_tool_calls": 4,
+    "tool_calls": 4,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "gene": "BRCA1",
+          "offset": 0,
+          "size": 1
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": [
+            {
+              "gene": {
+                "accession": "A0A8V1A3R7",
+                "entryType": "TrEMBL",
+                "geneName": "ENSGALG00010024722",
+                "geneNameType": "Ensembl",
+                "length": 1725
+              },
+              "relatedGene": [
+                {
+                  "accession": "A0A8V1A3P9",
+                  "entryType": "TrEMBL",
+                  "geneName": "BRCA1",
+                  "geneNameType": "Gene name",
+                  "length": 1578
+                },
+                {
+                  "accession": "A0A8V1A3P9",
+                  "entryType": "TrEMBL",
+                  "geneName": "ENSGALG00010024722",
+                  "geneNameType": "Ensembl",
+                  "length": 1578
+                },
+                {
+                  "accession": "A0A8V1A1R6",
+                  "entryType": "TrEMBL",
+                  "geneName": "BRCA1",
+                  "geneNameType": "Gene name",
+                  "length": 1723
+                },
+                {
+                  "accession": "A0A8V1A3R7",
+                  "entryType": "TrEMBL",
+                  "geneName": "BRCA1",
+                  "geneNameType": "Gene name",
+                  "length": 1725
+                },
+                {
+                  "accession": "A0A8V1A1R6",
+                  "entryType": "TrEMBL",
+                  "geneName": "ENSGALG00010024722",
+                  "geneNameType": "Ensembl",
+                  "length": 1723
+                }
+              ]
+            }
+          ],
+          "status_code": 200,
+          "url": "https://www.ebi.ac.uk/proteins/api/genecentric?offset=0&size=1&gene=BRCA1"
+        },
+        "status": "ok",
+        "tool": "search_gene_centric_proteins",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "accession": "A0A8V1A3R7",
+          "confidence_score": [
+            "Gold"
+          ]
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": {
+          "data": {
+            "errorMessage": [
+              "Can not find PTM features for accession: {A0A8V1A3R7}; the accession may be obsolete, please check https://www.uniprot.org/ to verify it."
+            ],
+            "requestedURL": "https://www.ebi.ac.uk/proteins/api/proteomics-ptm/A0A8V1A3R7?confidence_score=Gold"
+          },
+          "status_code": 404,
+          "url": "https://www.ebi.ac.uk/proteins/api/proteomics-ptm/A0A8V1A3R7?confidence_score=Gold"
+        },
+        "status": "ok",
+        "tool": "get_proteomics_peptide_ptm",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "accession": "A0A8V1A3P9",
+          "confidence_score": [
+            "Gold"
+          ]
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_3",
+        "result": {
+          "data": {
+            "errorMessage": [
+              "Can not find PTM features for accession: {A0A8V1A3P9}; the accession may be obsolete, please check https://www.uniprot.org/ to verify it."
+            ],
+            "requestedURL": "https://www.ebi.ac.uk/proteins/api/proteomics-ptm/A0A8V1A3P9?confidence_score=Gold"
+          },
+          "status_code": 404,
+          "url": "https://www.ebi.ac.uk/proteins/api/proteomics-ptm/A0A8V1A3P9?confidence_score=Gold"
+        },
+        "status": "ok",
+        "tool": "get_proteomics_peptide_ptm",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "accession": "P38398",
+          "confidence_score": [
+            "Gold"
+          ]
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_4",
+        "result": {
+          "preview": "{\"status_code\": 200, \"url\": \"https://www.ebi.ac.uk/proteins/api/proteomics-ptm/P38398?confidence_score=Gold\", \"data\": {\"accession\": \"P38398\", \"entryName\": \"BRCA1_HUMAN\", \"sequence\": \"MDLSALRVEEVQNVINAMQKILECPICLELIKEPVSTKCDHIFCKFCMLKLLNQKKGPSQCPLCKNDITKRSLQESTRFSQLVEELLKIICAFQLDTGLEYANSYNFAKKENNSPEHLKDEVSIIQSMGYRNRAKRLLQSEPENPSLQETSLSVQLSNLGTVRTLRTKQRIQPQKTSVYIELGSDSSEDTVNKATYCSVGDQELLQITPQGTRDEISLDSAKKAACEFSETDVTNTEHHQPSNNDLNTTEKRAAERHPEKYQGSSVSNLHVEPCGTNTHASSLQHENSSLLLTKDRMNVEKAEFCNKSKQPGLARSQHNRWAGSKETCNDRRTPSTEKKVDLNADPLCERKEWNKQKLPCSENPRDTEDVPWITLNSSIQKVNEWFSRSDELLGSDDSHDGESESNAKVADVLDVLNEVDEYSGSSEKIDLLASDPHEALICKSERVHSKSVESNIEDKIFGKTYRKKASLPNLSHVTENLIIGAFVTEPQIIQERPLTNKLKRKRRPTSGLHPEDFIKKADLAVQKTPEMINQGTNQTEQNGQVMNITNSGHENKTKGDSIQNEKNPNPIESLEKESAFKTKAEPISSSISNMELELNIHNSKAPKKNRLRRKSSTRHIHALELVVSRNLSPPNCTELQIDSCSSSEEIKKKKYNQMPVRHSRNLQLMEGKEPATGAKKSNKPNEQTSKRHDSDTFPELKLTNAPGSFTKCSNTSELKEFVNPSLPREEKEEKLETVKVSNNAEDPKDLMLSGERVLQTERSVESSSISLVPGTDYGTQESISLLEVSTLGKAKTEPNKCVSQCAAFENPKGLIHGCSKDNRNDTEGFKYPLGHEVNHSRETSIEMEESELDAQYLQNTFKVSKRQSFAPFSNPGNAEEECATFSAHSGSLKKQSPKVTFECEQKEENQGKNESNIKPVQTVNITAGFPVVGQKDKPVDNAKCSIKGGSRFCLSSQFRGNETGLITPNKHGLLQNPYRIPPLFPIKSFVKTKCKKNLLEENFEEHSMSPEREMGNENIPSTVSTISRNNIRENVFKEASSSNINEVGSSTNEVGSSINEIGSSDENIQAELGRNRGPKLNAMLRLGVLQPEVYKQSLPGSNCKHPEIKKQEYEEVVQTVNTDFSPYLISDNLEQPMGSSHASQVCSETPDDLLDDGEIKEDTSFAENDIKESSAVFSKSVQKGELSRSPSPFTHTHLAQGYRRGAKKLESSEENLSSEDEELPCFQHLLFGKVNNIPSQSTRHSTVATECLSKNTEENLLSLKNSLNDCSNQVILAKASQEHHLSEETKCSASLFSSQCSELEDLTANTNTQDPFLIGSSKQMRHQSESQGVGLSDKELVSDDEERGTGLEENNQEEQSMDSNLGEAASGCESETSVSEDCSGLSSQSDILTTQQRDTMQHNLIKLQQEMAELEAVLEQHGSQPSNSYPSIISDSSALEDLRNPEQSTSEKAVLTSQKSSEYPISQNPEGLSADKFEVSADSSTSKNKEPGVERSSPSKCPSLDDRWYMHSCSGSLQNRNYPSQEELIKVVDVEEQQLEESGPHDLTETSYLPRQDLEGTPYLESGISLFSDDPESDPSEDRAPESARVGNIPSSTSALKVPQLKVAESAQSPAAAHTTDTAGYNAMEESVSREKPELTASTERVNKRMSMVVSGLTPEEFMLVYKFARKHHITLTNLITEETTHVVMKTDAEFVCERTLKYFLGIAGGKWVVSYFWVTQSIKERKMLNEHDFEVRGDVVNGRNHQGPKRARESQDRKIFRGLEICCYGPFTNMPTDQLEWMVQLCGASVVKELSSFTLGTGVHPIVVVQPDAWTEDNGFHAIGQMCEAPVVTREWVLDSVALYQCQELDTYLIPQIPHSHY\", \"sequenceChecksum\": \"89C6D83FF56312AF\", \"taxid\": 9606, \"features\": [{\"type\": \"PROTEOMICS_PTM\", \"begin\": \"111\", \"end\": \"131\", \"xrefs\": [{\"name\": \"Proteomes\", \"id\": \"UP000005640\", \"url\": \"https://www.uniprot.org/proteomes/UP000005640\"}], \"evidences\": [{\"code\": \"ECO:0007829\", \"source\": {\"id\": \"ENNSPEHLKDEVSIIQSMGYR\", \"url\": \"https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetPeptide?atlas_build_id=596&action=QUERY&searchWithinThis=Peptide+Sequence&searchForThis=ENNSPEHLKDEVSIIQSMGYR\"}}], \"peptide\": \"ENNSPEHLKDEVSIIQSMGYR\", \"unique\": false, \"ptms\": [{\"name\": \"SUMOylation\", \"position\": 9, \"sources\": [\"PTMeXchange\"], \"dbReferences\": [{\"id\": \"PXD005296\", \"properties\": {\"Pubmed ID\": \"28112733\", \"PeptideAtlas URL\": \"https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetPeptide?atlas_build_id=596&action=QUERY&searchWithinThis=Peptide+Sequence&searchForThis=ENNSPEHLKDEVSIIQSMGYR\", \"Universal Spectrum Id\": \"mzspec:PXD005296:QE6_LC12_IAH_SUMO_U2OS_CI_3_F3.mzML:scan:15477:ENNSPEHLK[QQTGG]DEVSIIQSMGYR/4\", \"Final site probability\": \"0.999974799472515\", \"PSM Probability\": \"1.0\", \"url\": \"https://www.ebi.ac.uk/pride/archive/projects/PXD005296\", \"Proforma\": \"ENNSPEHLK[QQTGG]DEVSIIQSMGYR\", \"Confidence score\": \"Gold\", \"Site q value\": \"0.0\", \"Sumo isoforms\": \"SUMO2\", \"Dataset ID\": \"PXD005296\", \"PSM Count (0.05 gFLR)\": \"4\"}}, {\"id\": \"PXD004927\", \"properties\": {\"Pubmed ID\": \"28112733\", \"PeptideAtlas URL\": \"https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetPeptide?atlas_build_id=596&action=QUERY&searchWithinThis=Peptide+Sequence&searchForThis=ENNSPEHLKDEVSIIQSMGYR\", \"Universal Spectrum Id\": \"mzspec:PXD004927:QE6_LC6_IAH_SUMO_HeLa_M_3_F3.mzML:scan:30911:ENNSPEHLK[QQTGG]DEVSIIQSMGYR/3\", \"Final site probability\": \"1.0\", \"PSM Probability\": \"1.0\", \"url\": \"https://www.ebi.ac.uk/pride/archive/projects/PXD004927\", \"Proforma\": \"ENNSPEHLK[QQTGG]DEVSIIQSMGYR\", \"Confidence score\": \"Gold\", \"Site q value\": \"0.0\", \"Sumo isoforms\": \"SUMO2\", \"Dataset ID\": \"PXD004927\", \"PSM Count (0.05 gFLR)\": \"18\"}}]}]}, {\"type\": \"PROTEOMICS_PTM\", \"begin\": \"261\", \"end\": \"296\", \"xrefs\": [{\"name\": \"Proteomes\", \"id\": \"UP000005640\", \"url\": \"https://www.uniprot.org/proteomes/UP000005640\"}], \"evidences\": [{\"code\": \"ECO:0007829\", \"source\": {\"id\": \"YQGSSVSNLHVEPCGTNTHASSLQHENSSLLLTKDR\", \"url\": \"https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetPeptide?atlas_build_id=604&action=QUERY&searchWithinThis=Peptide+Sequence&searchForThis=YQGSSVSNLHVEPCGTNTHASSLQHENSSLLLTKDR\"}}], \"peptide\": \"YQGSSVSNLHVEPCGTNTHASSLQHENSSLLLTKDR\", \"unique\": false, \"ptms\": [{\"name\": \"Ubiquitinylation\", \"position\": 34, \"sources\": [\"PTMeXchange\"], \"dbReferences\": [{\"id\": \"PXD006201\", \"properties\": {\"Pubmed ID\": \"29967540\", \"Confidence score\": \"Gold\", \"Site q value\": \"0.003579278\", \"PeptideAtlas URL\": \"https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetPeptide?atlas_build_id=604&action=QUERY&searchWithinThis=Peptide+Sequence&searchForThis=YQGSSVSNLHVEPCGTNTHASSLQHENSSLLLTKDR\", \"Dataset ID\": \"PXD006201\", \"Universal Spectrum Id\": \"mzspec:PXD006201:20150923SL_Qe1_0619a19r_JURKAT_UBISITE_HpH_rep1_A15_12.mzML:scan:20104:YQGSSVSNLHVEPC[Carbamidomethyl]GTNTHASSLQHENSSLLLTK[UNIMOD:121]DR/5\", \"Final site probability\": \"0.9995\", \"PSM Probability\": \"1\", \"PSM Count (0.05 gFLR)\": \"15\", \"url\": \"https://www.ebi.ac.uk/pride/archive/projects/PXD006201\", \"Proforma\": \"YQGSSVSNLHVEPC[Carbamidomethyl]GTNTHASSLQHENSSLLLTK[GlyGly]DR\"}}, {\"id\": \"PXD027328\", \"properties\": {\"Pubmed ID\": \"35585066\", \"Confidence score\": \"Gold\", \"Site q value\": \"0.007990436\", \"PeptideAtlas URL\": \"https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetPeptide?atlas_build_id=604&action=QUERY&searchWithinThis=Peptide+Sequence&searchForThis=YQGSSVSNLHVEPCGTNTHASSLQHENSSLLLTKDR\", \"Dataset ID\": \"PXD027328\", \"Universal Spectrum Id\": \"mzspec:PXD027328:20191027_SL_QexXn2_1023_22cmr2um_FRED_PR2_RT_HpH_11.mzML:scan:23354:YQGSSVSNLHVEPC[Carbamidomethyl]GTNTHASSLQHENSSLLLTK[UNIMOD:121]DR/5\", \"Final site",
+          "truncated": true
+        },
+        "status": "ok",
+        "tool": "get_proteomics_peptide_ptm",
+        "truncated": true
+      }
+    ],
+    "truncated_results": 1,
+    "usable_successful_tool_calls": 3
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "opencode-zen/deepseek-v4.1-flash-free",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "62dbc37a17d433b8eac5341f2a88f68e3b819457c3fa31cea8ba6163f2d22e6e",
+  "judge_transport_error": null,
+  "parsed_judge": null,
+  "prompt_sha256": "ecd5eb4ba748832843af285270fa681225197a8bdc6cf38ef96e25385ce1019c",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": null,
+  "reason_codes": [
+    "missing_final_answer"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "glm53_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "2787b6b61b9d0b83bff50cbd6408535865ddb17d1dd9b598f15c48168d44ab71",
+    "run_summary_sha256": "9b144e8e7a450caa3f3b2e596ba1a01e26f35485ac3138387b5ff7abdea1dabb",
+    "run_task_sha256": "203890f783a1bb2af204f37ddbee87ca3f68574cd85ed491d8d553260c060847",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "missing_answer",
+  "task_id": 45
+}

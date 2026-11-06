@@ -1,0 +1,101 @@
+{
+  "cache_key": "51a173c27bb9515758c5062066848eebe02c7fc1d64b0c086be468002f2c8d65",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "AssertionError: Type must be one of \"html\", \"json\", or \"binary\"",
+      "generate_glycan_image: AssertionError: Type must be one of \"html\", \"json\", or \"binary\""
+    ],
+    "evidence_ids": [
+      "answer",
+      "tool_1",
+      "tool_2"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "tool_errors",
+      "runner_errors"
+    ],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 1,
+    "successful_tool_calls": 1,
+    "tool_calls": 2,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "pUUID": "a997768f-6097-4aa6-9789-c756252358df"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "absolute_conformer_path": "",
+          "default_conformer_id": "structure",
+          "status": "submitted"
+        },
+        "status": "ok",
+        "tool": "poll_project_status",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "format": "png",
+          "type": "wurcs",
+          "verify": "false",
+          "wurcs": "WURCS=2.0/3,5,4/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3-3/a4-b1_b4-c1_c3-d1_c6-e1"
+        },
+        "error": "AssertionError: Type must be one of \"html\", \"json\", or \"binary\"",
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": null,
+        "status": "error",
+        "tool": "generate_glycan_image",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 1
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "opencode-zen/deepseek-v4.1-flash-free",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "c3e91d7221e5a8bfa21e6afee1309c63da2934a37ef6bb21d593ed6fd6498099",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "The status poll was used correctly, but image generation was invoked unnecessarily for an incomplete project and with an invalid type argument; the resulting error was misinterpreted.",
+    "critical_issues": [
+      "Incorrectly claims the requested PNG format is unsupported; the tool error was due to type not being one of 'html', 'json', or 'binary'.",
+      "Attempted image generation even though project status 'submitted' did not satisfy the 'All complete' condition."
+    ],
+    "decision": "FAILURE",
+    "evidence_ids": [
+      "tool_1",
+      "tool_2"
+    ],
+    "reason": "The final answer correctly reports the project status as 'submitted' from tool_1, but it makes an unsupported and incorrect claim that PNG format is not supported. Tool_2 shows the error was actually caused by an invalid 'type' argument, not by the 'png' format. Also, because the status was not complete, image generation was not required by the conditional task.",
+    "scientific_accuracy": "partially_accurate"
+  },
+  "prompt_sha256": "b54b87c1aaf55ee9e0aa62d3bf22aebea31014fa9960c959a4d593550f591914",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\"decision\":\"FAILURE\",\"reason\":\"The final answer correctly reports the project status as 'submitted' from tool_1, but it makes an unsupported and incorrect claim that PNG format is not supported. Tool_2 shows the error was actually caused by an invalid 'type' argument, not by the 'png' format. Also, because the status was not complete, image generation was not required by the conditional task.\",\"critical_issues\":[\"Incorrectly claims the requested PNG format is unsupported; the tool error was due to type not being one of 'html', 'json', or 'binary'.\",\"Attempted image generation even though project status 'submitted' did not satisfy the 'All complete' condition.\"],\"scientific_accuracy\":\"partially_accurate\",\"api_usage_assessment\":\"The status poll was used correctly, but image generation was invoked unnecessarily for an incomplete project and with an invalid type argument; the resulting error was misinterpreted.\",\"evidence_ids\":[\"tool_1\",\"tool_2\"]}",
+  "reason_codes": [
+    "judge_failure"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "qwen3_4b_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "93d440035b97dff614789ffa333c2d1eb8de64579a2ae16d62ed2a9398067da0",
+    "run_summary_sha256": "4ead0e26a15760a34450c55859679a5c5aeee4dd913014826540b77e5b7c66f4",
+    "run_task_sha256": "819747ff3846f39e46c16be641ef4fe3926d4b4ebddc253cb9b56e230e90891c",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "incorrect",
+  "task_id": 42
+}

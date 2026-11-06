@@ -1,0 +1,67 @@
+{
+  "cache_key": "a689195cc7117bdd87547583c6fc20362615a3efb1f4cd61784c7a6b1f78ba51",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [],
+    "evidence_ids": [
+      "answer",
+      "tool_1"
+    ],
+    "expected_tool_called": true,
+    "flags": [],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 1,
+    "successful_tool_calls": 1,
+    "tool_calls": 1,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "cid": "5090,7859,3615",
+          "property_tags": "MolecularWeight,CanonicalSMILES"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": "\"CID\",\"MolecularWeight\",\"ConnectivitySMILES\"\n5090,314.4,\"CS(=O)(=O)C1=CC=C(C=C1)C2=C(C(=O)OC2)C3=CC=CC=C3\"\n7859,56.06,\"C#CCO\"\n3615,125.17,\"CC(CC1=CN=CN1)N\"\n",
+          "status_code": 200,
+          "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/5090%2C7859%2C3615/property/MolecularWeight%2CCanonicalSMILES/CSV"
+        },
+        "status": "ok",
+        "tool": "compound_property_tables",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 1
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "opencode-zen/deepseek-v4.1-flash-free",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "a30777240fb6d5732af9a87128673fc873b1f3858e1be15a2a5b4e901be6599e",
+  "judge_transport_error": "http_error:status=429:body={\"error\":{\"code\":null,\"message\":\"OpenCode Zen: Free usage limit reached. Free models work in OpenCode (https://opencode.ai); subscribe to OpenCode Go to keep going: https://opencode.ai/go (out of its allowance: not asked again before 13:27 UTC+8)\",\"param\":null,\"type\":\"rate_limit_error\"}}\n",
+  "parsed_judge": null,
+  "prompt_sha256": "16138259ecc2733b495b0e7c4c63eb0b3fb11bc64091cda3a193714c936b721b",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": null,
+  "reason_codes": [
+    "judge_request_error"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "glm53_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "b2f6faa4a208243fb4b8ae6a8340d72cf646710715f50e480cfdec452593e32e",
+    "run_summary_sha256": "9b144e8e7a450caa3f3b2e596ba1a01e26f35485ac3138387b5ff7abdea1dabb",
+    "run_task_sha256": "2b2956f4cd645042afdc639d4ba3c8fd265f7b8c98e1d9eeb9dceb98e0730133",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "judge_unavailable",
+  "task_id": 13
+}

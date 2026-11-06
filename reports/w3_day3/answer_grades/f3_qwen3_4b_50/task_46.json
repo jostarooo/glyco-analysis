@@ -1,0 +1,103 @@
+{
+  "cache_key": "30e6a3d33062f77c7d0681e317bd67c6055b3faea64b76b271e2d1b7d382cdf8",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "SSLError: HTTPSConnectionPool(host='oglcnac.mcw.edu', port=443): Max retries exceeded with url: /api/v1/proteins/?query_protein=Q9NXB0-3 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)')))",
+      "get_proteins: SSLError: HTTPSConnectionPool(host='oglcnac.mcw.edu', port=443): Max retries exceeded with url: /api/v1/proteins/?query_protein=Q9NXB0-3 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)')))"
+    ],
+    "evidence_ids": [
+      "answer",
+      "tool_1",
+      "tool_2"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "tool_errors",
+      "runner_errors"
+    ],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 1,
+    "successful_tool_calls": 1,
+    "tool_calls": 2,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "accession": "Q9NXB0-3",
+          "rfActive": "true",
+          "rfDdtype": "EMBL,RefSeq",
+          "rfTaxId": "9606"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": ">UPI0000E0384E status=inactive\nMAVPVSSFAQRTRSRFRVHLQRITSSNFLHYQPAAELGKDLIDLATFRPQPTASGHRPEE\nDEEEEIVIGWQEKLFSQFEVDLYQNETACQSPLDYQYRQEILKLENSGGKKNRRIFTYTD\nSDRYTNLEEHCQRMTTAASEVPSFLVERMANVRRRRQDRRGMEGGILKSRIVTWEPSEEF\nVRNNHVINTPLQTMHIMADLGPYKKLGYKKYEHVLCTLKVDSNGVITVKPDFTGLKGPYR\nIETEGEKQELWKYTIDNVSPHAQPEEEERERRVFKDLYGRHKEYLSSLVGTDFEMTVPGA\nLRLFVNGEVVSAQGYEYDNLYVHFFVELPTAHWSSPAFQQLSGVTQTCTTKSLAMDKVAH\nFSYPFTFEAFFLHEDESSDALPEWPVLYCEVLSLDFWQRYRVEGYGAVVLPATPGSHTLT\nVSTWRPVELGTVAELRRFFIGGSLELEDLSYVRIPGSFKGERLSRFGLRTETTGTVTFRL\nHCLQQSRAFMESSSLQKRMRSVLDRLEGFSQQSSIHNVLEAFRRARRRMQEARESLPQDL\nVSPSGTLVS\n",
+          "status_code": 200,
+          "url": "https://www.ebi.ac.uk/proteins/api/uniparc/accession/Q9NXB0-3?rfDdtype=EMBL%2CRefSeq&rfActive=true&rfTaxId=9606"
+        },
+        "status": "ok",
+        "tool": "get_uniparc_entry_by_uniprot_accession",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "query_protein": "Q9NXB0-3"
+        },
+        "error": "SSLError: HTTPSConnectionPool(host='oglcnac.mcw.edu', port=443): Max retries exceeded with url: /api/v1/proteins/?query_protein=Q9NXB0-3 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)')))",
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": null,
+        "status": "error",
+        "tool": "get_proteins",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 1
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "opencode-zen/deepseek-v4.1-flash-free",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "4e8b82c3e5260a2fa885a90e1d17eb2d96fc80a1abc30afdb086b8c7c9a126f2",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "Tool use was insufficient: tool_1 returned usable UniParc data, but the final answer did not report it; tool_2 failed with an SSL error, so O-GlcNAc details could not be obtained or discussed.",
+    "critical_issues": [
+      "Omits the cross-reference and sequence/status information retrieved by tool_1.",
+      "Fails to provide any detailed O-GlcNAc modification sites or glycosylation patterns.",
+      "Incorrectly generalizes the tool_2 SSL error to the entire retrieval attempt, despite tool_1 returning data.",
+      "Includes a speculative statement about evolutionary implications and O-GlcNAc modifications without supporting details."
+    ],
+    "decision": "FAILURE",
+    "evidence_ids": [
+      "tool_1",
+      "tool_2"
+    ],
+    "reason": "The final answer does not provide the required cross-reference details or O-GlcNAc modification information. It incorrectly states that the information could not be retrieved, even though tool_1 successfully returned UniParc entry data for Q9NXB0-3, while tool_2 failed only for the O-GlcNAc database query.",
+    "scientific_accuracy": "partially_accurate"
+  },
+  "prompt_sha256": "6666fbdb67030b6e6ce48aa43ac449403a8662c0e5ce7088057090d766c4a39b",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\n  \"decision\": \"FAILURE\",\n  \"reason\": \"The final answer does not provide the required cross-reference details or O-GlcNAc modification information. It incorrectly states that the information could not be retrieved, even though tool_1 successfully returned UniParc entry data for Q9NXB0-3, while tool_2 failed only for the O-GlcNAc database query.\",\n  \"critical_issues\": [\n    \"Omits the cross-reference and sequence/status information retrieved by tool_1.\",\n    \"Fails to provide any detailed O-GlcNAc modification sites or glycosylation patterns.\",\n    \"Incorrectly generalizes the tool_2 SSL error to the entire retrieval attempt, despite tool_1 returning data.\",\n    \"Includes a speculative statement about evolutionary implications and O-GlcNAc modifications without supporting details.\"\n  ],\n  \"scientific_accuracy\": \"partially_accurate\",\n  \"api_usage_assessment\": \"Tool use was insufficient: tool_1 returned usable UniParc data, but the final answer did not report it; tool_2 failed with an SSL error, so O-GlcNAc details could not be obtained or discussed.\",\n  \"evidence_ids\": [\n    \"tool_1\",\n    \"tool_2\"\n  ]\n}",
+  "reason_codes": [
+    "judge_failure"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "qwen3_4b_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "638c39f92dfca2b0de6d964584ed75d08a0f443ab0bb582cf762ea2982a22583",
+    "run_summary_sha256": "4ead0e26a15760a34450c55859679a5c5aeee4dd913014826540b77e5b7c66f4",
+    "run_task_sha256": "a9c9b709a0262d47b8de5163202dd1fbd253a198f5c1ab83374f37fa714dee26",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "incorrect",
+  "task_id": 46
+}

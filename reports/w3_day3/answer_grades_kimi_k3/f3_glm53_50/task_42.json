@@ -1,0 +1,96 @@
+{
+  "cache_key": "ccb0d4d3dc0a1518045e8f04f01c15b1abe628c21aabb798755bb4f6ce43df8e",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "ConnectionError: ('Connection aborted.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None))",
+      "poll_project_status: ConnectionError: ('Connection aborted.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None))"
+    ],
+    "evidence_ids": [
+      "answer",
+      "tool_1",
+      "tool_2"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "tool_errors",
+      "runner_errors"
+    ],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 1,
+    "successful_tool_calls": 1,
+    "tool_calls": 2,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "pUUID": "a997768f-6097-4aa6-9789-c756252358df"
+        },
+        "error": "ConnectionError: ('Connection aborted.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None))",
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": null,
+        "status": "error",
+        "tool": "poll_project_status",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "pUUID": "a997768f-6097-4aa6-9789-c756252358df"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": {
+          "absolute_conformer_path": "",
+          "default_conformer_id": "structure",
+          "status": "submitted"
+        },
+        "status": "ok",
+        "tool": "poll_project_status",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 1
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "c23faf22035cf8c0b40622bc08dabe3483785adce2ff44e7083fd3c568de5b8f",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "Tool use supports the answer: poll_project_status was attempted, failed once due to a connection error, then succeeded and returned status 'submitted'; generate_glycan_image was correctly not called because completion was not indicated.",
+    "critical_issues": [],
+    "decision": "SUCCESS",
+    "evidence_ids": [
+      "tool_1",
+      "tool_2"
+    ],
+    "reason": "The final answer correctly reports the project status as 'submitted' and therefore not complete, matching the successful poll result in tool_2. It appropriately does not generate a PNG because the status is not 'All complete'. The earlier tool_1 connection error does not contradict the later successful status.",
+    "scientific_accuracy": "accurate"
+  },
+  "prompt_sha256": "de29da8d9bd31b56d6fda71e9d8527e6786f55c1b18ca1e5f4470c53165df35c",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\n  \"decision\": \"SUCCESS\",\n  \"reason\": \"The final answer correctly reports the project status as 'submitted' and therefore not complete, matching the successful poll result in tool_2. It appropriately does not generate a PNG because the status is not 'All complete'. The earlier tool_1 connection error does not contradict the later successful status.\",\n  \"critical_issues\": [],\n  \"scientific_accuracy\": \"accurate\",\n  \"api_usage_assessment\": \"Tool use supports the answer: poll_project_status was attempted, failed once due to a connection error, then succeeded and returned status 'submitted'; generate_glycan_image was correctly not called because completion was not indicated.\",\n  \"evidence_ids\": [\"tool_1\", \"tool_2\"]\n}",
+  "reason_codes": [
+    "judge_success",
+    "successful_tool_evidence"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "glm53_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "93d440035b97dff614789ffa333c2d1eb8de64579a2ae16d62ed2a9398067da0",
+    "run_summary_sha256": "9b144e8e7a450caa3f3b2e596ba1a01e26f35485ac3138387b5ff7abdea1dabb",
+    "run_task_sha256": "c679971db434ae6f207db2d88ecaac1868ab5e8ee7ca4ec460d895543df6949c",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "correct",
+  "task_id": 42
+}

@@ -1,0 +1,81 @@
+{
+  "cache_key": "f78ec5d31532eb41b24e09826f551301963090bb12bc2727717c9ad3633f5d02",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": true,
+    "error_text": [],
+    "evidence_ids": [
+      "answer",
+      "tool_1"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "truncated_results",
+      "all_successful_evidence_truncated"
+    ],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 1,
+    "successful_tool_calls": 1,
+    "tool_calls": 1,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "getcolumns": "fold,domain,species",
+          "isvalue": "Aspergillus niger",
+          "limit": 1000,
+          "wherecolumn": "species"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "preview": "{\"status_code\": 200, \"url\": \"https://unilectin.unige.ch/api/getmycolec\", \"data\": [[\"fold\", \"domain\", \"species\"], [\"a/b barrel / TIM\", \"chi-lectin (TCLL)\", \"Aspergillus niger\"], [\"b-sandwich / cyanovirin-like\", \"cyanovirin-like\", \"Aspergillus niger\"], [\"b-prism I\", \"Jacalin-like\", \"Aspergillus niger\"], [\"small protein / Knottin\", \"hevein-like\", \"Aspergillus niger\"], [\"b-sandwich / cytolysin-like\", \"Fungal fruit body lectin\", \"Aspergillus niger\"], [\"a/b mixed / LysM domain\", \"LysM-like\", \"Aspergillus niger\"], [\"b-sandwich / cytolysin-like\", \"Oomycete cytolysin\", \"Aspergillus niger\"], [\"b-barrel\", \"P-type lectin-like\", \"Aspergillus niger\"], [\"b-sandwich / ConA-like\", \"ERGIC-VIP L-type\", \"Aspergillus niger\"], [\"b-prism I\", \"Jacalin-like\", \"Aspergillus niger\"], [\"ab hairpin  non-globular proline-rich\", \"calnexin-calreticulin like\", \"Aspergillus niger\"], [\"a/b mixed / LysM domain\", \"LysM-like\", \"Aspergillus niger\"], [\"b-sandwich / cyanovirin-like\", \"cyanovirin-like\", \"Aspergillus niger\"], [\"b-trefoil\", \"Ricin-like\", \"Aspergillus niger\"], [\"b-sandwich / ConA-like\", \"ERGIC-VIP L-type\", \"Aspergillus niger\"], [\"b-sandwich / ConA-like\", \"Yeast Emp L-type\", \"Aspergillus niger\"], [\"b-sandwich / cyanovirin-like\", \"cyanovirin-like\", \"Aspergillus niger\"], [\"a/b mixed / LysM domain\", \"LysM-like\", \"Aspergillus niger\"], [\"a/b mixed / LysM domain\", \"LysM-like\", \"Aspergillus niger\"], [\"a/b barrel / TIM\", \"chi-lectin (TCLL)\", \"Aspergillus niger\"], [\"small protein / Knottin\", \"Lyophyllum ginkbilobin-like\", \"Aspergillus niger\"], [\"a/b mixed / LysM domain\", \"LysM-like\", \"Aspergillus niger\"], [\"small protein / Knottin\", \"hevein-like\", \"Aspergillus niger\"], [\"small protein / Knottin\", \"hevein-like\", \"Aspergillus niger\"], [\"a/b mixed / LysM domain\", \"LysM-like\", \"Aspergillus niger\"], [\"b-sandwich / Galactose-binding domain-like\", \"H-type lectin\", \"Aspergillus niger\"], [\"b-trefoil\", \"Laetiporus trefoil lectin-like\", \"Aspergillus niger\"], [\"small protein / Knottin\", \"hevein-like\", \"Aspergillus niger\"], [\"ab hairpin  non-globular proline-rich\", \"calnexin-calreticulin like\", \"Aspergillus niger\"], [\"b-trefoil\", \"Ricin-like\", \"Aspergillus niger\"], [\"b-sandwich / Galactose-binding domain-like\", \"H-type lectin\", \"Aspergillus niger\"], [\"a/b mixed / LysM domain\", \"LysM-like\", \"Aspergillus niger\"], [\"small protein / Knottin\", \"hevein-like\", \"Aspergillus niger\"], [\"a/b mixed / LysM domain\", \"LysM-like\", \"Aspergillus niger\"], [\"b-prism I\", \"Jacalin-like\", \"Aspergillus niger\"], [\"b-sandwich / cyanovirin-like\", \"cyanovirin-like\", \"Aspergillus niger\"], [\"b-sandwich / ConA-like\", \"ERGIC-VIP L-type\", \"Aspergillus niger\"], [\"small protein / Knottin\", \"hevein-like\", \"Aspergillus niger\"], [\"a/b mixed / LysM domain\", \"LysM-like\", \"Aspergillus niger\"], [\"small protein / Knottin\", \"hevein-like\", \"Aspergillus niger\"], [\"a/b barrel / TIM\", \"chi-lectin (TCLL)\", \"Aspergillus niger\"], [\"b-sandwich / cyanovirin-like\", \"cyanovirin-like\", \"Aspergillus niger\"], [\"small protein / Knottin\", \"hevein-like\", \"Aspergillus niger\"], [\"b-barrel\", \"P-type lectin-like\", \"Aspergillus niger\"], [\"b-sandwich / ConA-like\", \"ERGIC-VIP L-type\", \"Aspergillus niger\"], [\"b-sandwich / ConA-like\", \"Yeast Emp L-type\", \"Aspergillus niger\"], [\"b-prism I\", \"Jacalin-like\", \"Aspergillus niger\"], [\"a/b mixed / LysM domain\", \"LysM-like\", \"Aspergillus niger\"], [\"a/b mixed / LysM domain\", \"LysM-like\", \"Aspergillus niger\"], [\"a/b barrel / TIM\", \"chi-lectin (TCLL)\", \"Aspergillus niger\"], [\"b-trefoil\", \"Laetiporus trefoil lectin-like\", \"Aspergillus niger\"], [\"b-sandwich / cytolysin-like\", \"Oomycete cytolysin\", \"Aspergillus niger\"], [\"b-sandwich / cyanovirin-like\", \"cyanovirin-like\", \"Aspergillus niger\"], [\"a/b mixed / LysM domain\", \"LysM-like\", \"Aspergillus niger\"], [\"a/b barrel / TIM\", \"chi-lectin (TCLL)\", \"Aspergillus niger\"], [\"a/b mixed / LysM domain\", \"LysM-like\", \"Aspergillus niger\"], [\"small protein / Knottin\", \"hevein-like\", \"Aspergillus niger\"], [\"a/b mixed / LysM domain\", \"LysM-like\", \"Aspergillus niger\"], [\"a/b barrel / TIM\", \"chi-lectin (TCLL)\", \"Aspergillus niger\"], [\"b-sandwich / ConA-like\", \"ERGIC-VIP L-type\", \"Aspergillus niger\"], [\"b-prism I\", \"Jacalin-like\", \"Aspergillus niger\"], [\"b-sandwich / cyanovirin-like\", \"cyanovirin-like\", \"Aspergillus niger\"], [\"b-sandwich / cyanovirin-like\", \"cyanovirin-like\", \"Aspergillus niger\"], [\"a/b mixed / LysM domain\", \"LysM-like\", \"Aspergillus niger\"], [\"b-trefoil\", \"Ricin-like\", \"Aspergillus niger\"], [\"ab hairpin  non-globular proline-rich\", \"calnexin-calreticulin like\", \"Aspergillus niger\"], [\"b-barrel\", \"P-type lectin-like\", \"Aspergillus niger\"], [\"small protein / Knottin\", \"hevein-like\", \"Aspergillus niger\"], [\"b-sandwich / Galactose-binding domain-like\", \"H-type lectin\", \"Aspergillus niger\"], [\"b-sandwich / cytolysin-like\", \"Oomycete cytolysin\", \"Aspergillus niger\"], [\"b-sandwich / ConA-like\", \"ERGIC-VIP L-type\", \"Aspergillus niger\"], [\"b-sandwich / ConA-like\", \"Yeast Emp L-type\", \"Aspergillus niger\"], [\"a/b mixed / LysM domain\", \"LysM-like\", \"Aspergillus niger\"], [\"b-sandwich / cyanovirin-like\", \"cyanovirin-like\", \"Aspergillus niger\"], [\"small protein / Knottin\", \"hevein-like\", \"Aspergillus niger\"], [\"a/b mixed / LysM domain\", \"LysM-like\", \"Aspergillus niger\"], [\"small protein / Knottin\", \"hevein-like\", \"Aspergillus niger\"], [\"small protein / Knottin\", \"Lyophyllum ginkbilobin-like\", \"Aspergillus niger\"], [\"b-prism I\", \"Jacalin-like\", \"Aspergillus niger\"], [\"a/b mixed / LysM domain\", \"LysM-like\", \"Aspergillus niger\"], [\"b-trefoil\", \"Laetiporus trefoil lectin-like\", \"Aspergillus niger\"], [\"a/b mixed / LysM domain\", \"LysM-like\", \"Aspergillus niger\"], [\"b-sandwich / cyanovirin-like\", \"cyanovirin-like\", \"Aspergillus niger\"], [\"ab hairpin  non-globular proline-rich\", \"calnexin-calreticulin like\", \"Aspergillus niger\"], [\"a/b mixed / LysM domain\", \"LysM-like\", \"Aspergillus niger\"], [\"b-sandwich / ConA-like\", \"ERGIC-VIP L-type\", \"Aspergillus niger\"], [\"b-prism I\", \"Jacalin-like\", \"Aspergillus niger\"], [\"a/b mixed / LysM domain\", \"Lys",
+          "truncated": true
+        },
+        "status": "ok",
+        "tool": "get_fungal_lectins",
+        "truncated": true
+      }
+    ],
+    "truncated_results": 1,
+    "usable_successful_tool_calls": 0
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "f171731053184b45211899f25d51ca8b76c87ba8960e924ea46423c24a9db4ac",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "The expected tool get_fungal_lectins was called with correct parameters (columns fold,domain,species; filter species=Aspergillus niger; limit 1000), and the final answer faithfully reflects the returned data, including an accurate prevalence comparison derived from the entries.",
+    "critical_issues": [],
+    "decision": "SUCCESS",
+    "evidence_ids": [
+      "answer",
+      "tool_1"
+    ],
+    "reason": "The final answer accurately enumerates all fold–domain combinations present in the UniLectin data for Aspergillus niger retrieved via get_fungal_lectins (tool_1): a/b barrel TIM–chi-lectin (TCLL), b-sandwich/cyanovirin-like, b-prism I–Jacalin-like, Knottin–hevein-like and Lyophyllum ginkbilobin-like, cytolysin-like (Fungal fruit body lectin, Oomycete cytolysin), LysM-like, b-barrel–P-type lectin-like, ConA-like (ERGIC-VIP L-type, Yeast Emp L-type), b-trefoil (Ricin-like, Laetiporus trefoil lectin-like), Galactose-binding–H-type lectin, and ab hairpin–calnexin-calreticulin-like. The comparative claim that b-sandwich folds and LysM/Knottin entries are most recurrent is consistent with the entry counts in the tool output. The query was correctly limited to species='Aspergillus niger', columns fold/domain/species, limit 1000.",
+    "scientific_accuracy": "accurate"
+  },
+  "prompt_sha256": "c6c06c328ed8291a578a442f4f40ca05a0e41c77ee068170ba3060f04245c535",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\n  \"decision\": \"SUCCESS\",\n  \"reason\": \"The final answer accurately enumerates all fold–domain combinations present in the UniLectin data for Aspergillus niger retrieved via get_fungal_lectins (tool_1): a/b barrel TIM–chi-lectin (TCLL), b-sandwich/cyanovirin-like, b-prism I–Jacalin-like, Knottin–hevein-like and Lyophyllum ginkbilobin-like, cytolysin-like (Fungal fruit body lectin, Oomycete cytolysin), LysM-like, b-barrel–P-type lectin-like, ConA-like (ERGIC-VIP L-type, Yeast Emp L-type), b-trefoil (Ricin-like, Laetiporus trefoil lectin-like), Galactose-binding–H-type lectin, and ab hairpin–calnexin-calreticulin-like. The comparative claim that b-sandwich folds and LysM/Knottin entries are most recurrent is consistent with the entry counts in the tool output. The query was correctly limited to species='Aspergillus niger', columns fold/domain/species, limit 1000.\",\n  \"critical_issues\": [],\n  \"scientific_accuracy\": \"accurate\",\n  \"api_usage_assessment\": \"The expected tool get_fungal_lectins was called with correct parameters (columns fold,domain,species; filter species=Aspergillus niger; limit 1000), and the final answer faithfully reflects the returned data, including an accurate prevalence comparison derived from the entries.\",\n  \"evidence_ids\": [\"answer\", \"tool_1\"]\n}",
+  "reason_codes": [
+    "success_with_only_truncated_tool_evidence"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "glm53_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "93b4c36c0307dc65bbb7c9b0220496b1c8c578da14eb758692bab875a6c4f69a",
+    "run_summary_sha256": "9b144e8e7a450caa3f3b2e596ba1a01e26f35485ac3138387b5ff7abdea1dabb",
+    "run_task_sha256": "1ce1fcadde3d5f60b366c5988566625bd7524b70f831ac33be37925c6f9a2e44",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "manual_review",
+  "task_id": 23
+}

@@ -1,0 +1,149 @@
+{
+  "cache_key": "22dbada9c2ec45c91f70b6f62eaf4bed4492d6201174335943a2b46955481afa",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "max_rounds_reached"
+    ],
+    "evidence_ids": [
+      "tool_1",
+      "tool_2",
+      "tool_3",
+      "tool_4"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "missing_final_answer",
+      "runner_errors"
+    ],
+    "has_final_answer": false,
+    "successful_result_tool_calls": 4,
+    "successful_tool_calls": 4,
+    "tool_calls": 4,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "wurcs": "WURCS=2.0/5,5,4/[a2122h-1x_1-5][a2112h-1b_1-5][a2112h-1a_1-5][a2112h-1b_1-5_2*NCC/3=O][a2112h-1a_1-5_2*NCC/3=O]/1-2-3-4-5/a4-b1_b3-c1_c3-d1_d3-e1"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": [
+            {
+              "id": "G48061MK",
+              "wurcs": "WURCS=2.0/5,5,4/[a2122h-1x_1-5][a2112h-1b_1-5][a2112h-1a_1-5][a2112h-1b_1-5_2*NCC/3=O][a2112h-1a_1-5_2*NCC/3=O]/1-2-3-4-5/a4-b1_b3-c1_c3-d1_d3-e1"
+            },
+            {
+              "id": "G51197ZR",
+              "wurcs": "WURCS=2.0/5,5,4/[a2122h-1b_1-5][a2112h-1b_1-5][a2112h-1a_1-5][a2112h-1b_1-5_2*NCC/3=O][a2112h-1a_1-5_2*NCC/3=O]/1-2-3-4-5/a4-b1_b3-c1_c3-d1_d3-e1"
+            },
+            {
+              "id": "G44161QY",
+              "wurcs": "WURCS=2.0/7,9,8/[a2122h-1b_1-5][a2112h-1b_1-5][a2112h-1a_1-5][a2112h-1b_1-5_2*NCC/3=O][a2112h-1a_1-5_2*NCC/3=O][a2122h-1b_1-5_2*NCC/3=O][Aad21122h-2a_2-6_5*NCC/3=O]/1-2-3-4-5-6-2-7-4/a4-b1_b3-c1_b6-f1_c3-d1_d3-e1_f4-g1_g3-h2_g4-i1"
+            }
+          ],
+          "status_code": 200,
+          "url": "https://api.glycosmos.org/partialmatch/wurcsrdf?wurcs=WURCS%3D2.0%2F5%2C5%2C4%2F%5Ba2122h-1x_1-5%5D%5Ba2112h-1b_1-5%5D%5Ba2112h-1a_1-5%5D%5Ba2112h-1b_1-5_2%2ANCC%2F3%3DO%5D%5Ba2112h-1a_1-5_2%2ANCC%2F3%3DO%5D%2F1-2-3-4-5%2Fa4-b1_b3-c1_c3-d1_d3-e1"
+        },
+        "status": "ok",
+        "tool": "partial_match_wurcs_rdf",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "gtcid": "G48061MK"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": {
+          "data": [
+            {
+              "id": "G48061MK",
+              "wurcs": "WURCS=2.0/5,5,4/[a2122h-1x_1-5][a2112h-1b_1-5][a2112h-1a_1-5][a2112h-1b_1-5_2*NCC/3=O][a2112h-1a_1-5_2*NCC/3=O]/1-2-3-4-5/a4-b1_b3-c1_c3-d1_d3-e1"
+            }
+          ],
+          "status_code": 200,
+          "url": "https://api.glycosmos.org/sparqlist/gtcid2seqs"
+        },
+        "status": "ok",
+        "tool": "obtain_wurcs_and_glycoct_from_glytoucan_id",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "gtcid": "G51197ZR"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_3",
+        "result": {
+          "data": [
+            {
+              "id": "G51197ZR",
+              "wurcs": "WURCS=2.0/5,5,4/[a2122h-1b_1-5][a2112h-1b_1-5][a2112h-1a_1-5][a2112h-1b_1-5_2*NCC/3=O][a2112h-1a_1-5_2*NCC/3=O]/1-2-3-4-5/a4-b1_b3-c1_c3-d1_d3-e1"
+            }
+          ],
+          "status_code": 200,
+          "url": "https://api.glycosmos.org/sparqlist/gtcid2seqs"
+        },
+        "status": "ok",
+        "tool": "obtain_wurcs_and_glycoct_from_glytoucan_id",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "gtcid": "G44161QY"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_4",
+        "result": {
+          "data": [
+            {
+              "id": "G44161QY",
+              "wurcs": "WURCS=2.0/7,9,8/[a2122h-1b_1-5][a2112h-1b_1-5][a2112h-1a_1-5][a2112h-1b_1-5_2*NCC/3=O][a2112h-1a_1-5_2*NCC/3=O][a2122h-1b_1-5_2*NCC/3=O][Aad21122h-2a_2-6_5*NCC/3=O]/1-2-3-4-5-6-2-7-4/a4-b1_b3-c1_b6-f1_c3-d1_d3-e1_f4-g1_g3-h2_g4-i1"
+            }
+          ],
+          "status_code": 200,
+          "url": "https://api.glycosmos.org/sparqlist/gtcid2seqs"
+        },
+        "status": "ok",
+        "tool": "obtain_wurcs_and_glycoct_from_glytoucan_id",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 4
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "opencode-zen/deepseek-v4.1-flash-free",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "62dbc37a17d433b8eac5341f2a88f68e3b819457c3fa31cea8ba6163f2d22e6e",
+  "judge_transport_error": null,
+  "parsed_judge": null,
+  "prompt_sha256": "56d2b6f36a0daea4bda1ee6663ab55603b41471b7fdd1cb2fd2b0e08a369f42e",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": null,
+  "reason_codes": [
+    "missing_final_answer"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "glm53_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "e468166abcdae639e6045a89e0d7178f5c70bf6dfb9754f94d4559e49d4dc869",
+    "run_summary_sha256": "9b144e8e7a450caa3f3b2e596ba1a01e26f35485ac3138387b5ff7abdea1dabb",
+    "run_task_sha256": "d1552cf4bc2c78afd083dcf951be5b631518b61be8b74b67715daa11561211d9",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "missing_answer",
+  "task_id": 33
+}

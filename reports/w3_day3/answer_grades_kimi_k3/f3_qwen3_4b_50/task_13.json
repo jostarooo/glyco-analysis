@@ -1,0 +1,118 @@
+{
+  "cache_key": "c95aae4e3d54145f18fe16ae8bfccd9aef6e383eef81b21f63dddc082409ebb0",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [],
+    "evidence_ids": [
+      "answer",
+      "tool_1",
+      "tool_2",
+      "tool_3"
+    ],
+    "expected_tool_called": true,
+    "flags": [],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 3,
+    "successful_tool_calls": 3,
+    "tool_calls": 3,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "cid": "5090",
+          "property_tags": "molecular_weight,canonical_smiles"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": "Status: 400\nCode: PUGREST.BadRequest\nMessage: Invalid property\n",
+          "status_code": 400,
+          "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/5090/property/molecular_weight%2Ccanonical_smiles/CSV"
+        },
+        "status": "ok",
+        "tool": "compound_property_tables",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "cid": "7859",
+          "property_tags": "molecular_weight,canonical_smiles"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": {
+          "data": "Status: 400\nCode: PUGREST.BadRequest\nMessage: Invalid property\n",
+          "status_code": 400,
+          "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/7859/property/molecular_weight%2Ccanonical_smiles/CSV"
+        },
+        "status": "ok",
+        "tool": "compound_property_tables",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "cid": "3615",
+          "property_tags": "molecular_weight,canonical_smiles"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_3",
+        "result": {
+          "data": "Status: 400\nCode: PUGREST.BadRequest\nMessage: Invalid property\n",
+          "status_code": 400,
+          "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/3615/property/molecular_weight%2Ccanonical_smiles/CSV"
+        },
+        "status": "ok",
+        "tool": "compound_property_tables",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 3
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "9ec661ae075b9c88e1226ad59e13dbeb7510133c55af277cbb332b8bcb5e4560",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "The expected compound_property_tables tool was used, but with unsupported property tags, producing PUGREST.BadRequest responses; no successful retry or corrected API call supported the final answer.",
+    "critical_issues": [
+      "Required molecular weight and canonical SMILES results are absent",
+      "Invalid PubChem property tags caused 400 errors and were not corrected",
+      "Final answer reports retrieval failure instead of the expected CSV property data"
+    ],
+    "decision": "FAILURE",
+    "evidence_ids": [
+      "tool_1",
+      "tool_2",
+      "tool_3"
+    ],
+    "reason": "The final answer omits the required MolecularWeight and CanonicalSMILES CSV data for CIDs 5090, 7859, and 3615. Tool evidence shows the expected tool was called but PubChem returned 400 Invalid property for each request (tool_1, tool_2, tool_3), and the run did not recover with valid property tags or provide the expected values.",
+    "scientific_accuracy": "unknown"
+  },
+  "prompt_sha256": "3a98ec672208f5081006afb66db3ff09b2176feaf5ffe2944502812fc9414d63",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\n  \"decision\": \"FAILURE\",\n  \"reason\": \"The final answer omits the required MolecularWeight and CanonicalSMILES CSV data for CIDs 5090, 7859, and 3615. Tool evidence shows the expected tool was called but PubChem returned 400 Invalid property for each request (tool_1, tool_2, tool_3), and the run did not recover with valid property tags or provide the expected values.\",\n  \"critical_issues\": [\n    \"Required molecular weight and canonical SMILES results are absent\",\n    \"Invalid PubChem property tags caused 400 errors and were not corrected\",\n    \"Final answer reports retrieval failure instead of the expected CSV property data\"\n  ],\n  \"scientific_accuracy\": \"unknown\",\n  \"api_usage_assessment\": \"The expected compound_property_tables tool was used, but with unsupported property tags, producing PUGREST.BadRequest responses; no successful retry or corrected API call supported the final answer.\",\n  \"evidence_ids\": [\"tool_1\", \"tool_2\", \"tool_3\"]\n}",
+  "reason_codes": [
+    "judge_failure"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "qwen3_4b_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "b2f6faa4a208243fb4b8ae6a8340d72cf646710715f50e480cfdec452593e32e",
+    "run_summary_sha256": "4ead0e26a15760a34450c55859679a5c5aeee4dd913014826540b77e5b7c66f4",
+    "run_task_sha256": "3bb3abfa2f6c863e54ef0ce0e2a3f072342c56e71a448da62072686d73381420",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "incorrect",
+  "task_id": 13
+}

@@ -1,0 +1,17 @@
+COMMAND: C:\Users\jostaro\AppData\Roaming\uv\python\cpython-3.12.14-windows-x86_64-none\python.exe scripts\summarize_doc2agent_run.py --run-dir reports\w2_day2\f3_qwen3_4b_50 --expected-tasks 50 --check-summary reports\w2_day2\f3_qwen3_4b_50\summary.json
+CWD: D:\Codex\workspace\glyco-analysis-w3-day3-answer-grader
+EXIT_CODE: 0
+
+{
+  "status": "PASS",
+  "metrics": {
+    "tasks_run": 50,
+    "exact_sequence": 19,
+    "all_expected_called": 34,
+    "any_expected_called": 41,
+    "tasks_with_tool_call": 50,
+    "tasks_with_final_answer": 39,
+    "tool_call_successes": 78,
+    "tool_calls": 110
+  }
+}

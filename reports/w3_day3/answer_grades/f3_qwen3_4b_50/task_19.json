@@ -1,0 +1,180 @@
+{
+  "cache_key": "9323f3947c1e64cb2f0d7720695a53d32731baf7ba313eee2fcaa700186fe54c",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "max_rounds_reached"
+    ],
+    "evidence_ids": [
+      "tool_1",
+      "tool_2",
+      "tool_3",
+      "tool_4"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "missing_final_answer",
+      "runner_errors"
+    ],
+    "has_final_answer": false,
+    "successful_result_tool_calls": 4,
+    "successful_tool_calls": 4,
+    "tool_calls": 4,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "accession": "BRCA1",
+          "chromosome": "yes",
+          "ensembl": "yes",
+          "format": "json",
+          "gene": "yes",
+          "location": "yes",
+          "offset": 0,
+          "protein": "yes",
+          "size": 1000,
+          "taxid": 9606
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": {
+            "errorMessage": [
+              "Invalid genome location parameter. It should be a range such as 58205437-58219305 (genome start to genome end).",
+              "The accession parameter 'BRCA1' has invalid format. It should be a valid UniProtKB accession.",
+              "ensembl parameter size should be between 6 and 100"
+            ],
+            "requestedURL": "https://www.ebi.ac.uk/proteins/api/coordinates?offset=0&size=1000&accession=BRCA1&chromosome=yes&ensembl=yes&gene=yes&protein=yes&taxid=9606&location=yes"
+          },
+          "status_code": 400,
+          "url": "https://www.ebi.ac.uk/proteins/api/coordinates?offset=0&size=1000&accession=BRCA1&chromosome=yes&ensembl=yes&gene=yes&protein=yes&taxid=9606&location=yes"
+        },
+        "status": "ok",
+        "tool": "search_genomic_coordinates",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "accession": "BRCA1",
+          "chromosome": "yes",
+          "ensembl": "yes",
+          "format": "json",
+          "gene": "yes",
+          "location": "58205437-58219305",
+          "offset": 0,
+          "protein": "yes",
+          "size": 100,
+          "taxid": 9606
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": {
+          "data": {
+            "errorMessage": [
+              "The accession parameter 'BRCA1' has invalid format. It should be a valid UniProtKB accession.",
+              "ensembl parameter size should be between 6 and 100"
+            ],
+            "requestedURL": "https://www.ebi.ac.uk/proteins/api/coordinates?offset=0&size=100&accession=BRCA1&chromosome=yes&ensembl=yes&gene=yes&protein=yes&taxid=9606&location=58205437-58219305"
+          },
+          "status_code": 400,
+          "url": "https://www.ebi.ac.uk/proteins/api/coordinates?offset=0&size=100&accession=BRCA1&chromosome=yes&ensembl=yes&gene=yes&protein=yes&taxid=9606&location=58205437-58219305"
+        },
+        "status": "ok",
+        "tool": "search_genomic_coordinates",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "accession": "Q9BRH2",
+          "chromosome": "yes",
+          "ensembl": "yes",
+          "format": "json",
+          "gene": "yes",
+          "location": "58205437-58219305",
+          "offset": 0,
+          "protein": "yes",
+          "size": 100,
+          "taxid": 9606
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_3",
+        "result": {
+          "data": {
+            "errorMessage": [
+              "ensembl parameter size should be between 6 and 100"
+            ],
+            "requestedURL": "https://www.ebi.ac.uk/proteins/api/coordinates?offset=0&size=100&accession=Q9BRH2&chromosome=yes&ensembl=yes&gene=yes&protein=yes&taxid=9606&location=58205437-58219305"
+          },
+          "status_code": 400,
+          "url": "https://www.ebi.ac.uk/proteins/api/coordinates?offset=0&size=100&accession=Q9BRH2&chromosome=yes&ensembl=yes&gene=yes&protein=yes&taxid=9606&location=58205437-58219305"
+        },
+        "status": "ok",
+        "tool": "search_genomic_coordinates",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "accession": "Q9BRH2",
+          "chromosome": "yes",
+          "ensembl": "yes",
+          "format": "json",
+          "gene": "yes",
+          "location": "58205437-58219305",
+          "offset": 0,
+          "protein": "yes",
+          "size": 60,
+          "taxid": 9606
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_4",
+        "result": {
+          "data": {
+            "errorMessage": [
+              "ensembl parameter size should be between 6 and 100"
+            ],
+            "requestedURL": "https://www.ebi.ac.uk/proteins/api/coordinates?offset=0&size=60&accession=Q9BRH2&chromosome=yes&ensembl=yes&gene=yes&protein=yes&taxid=9606&location=58205437-58219305"
+          },
+          "status_code": 400,
+          "url": "https://www.ebi.ac.uk/proteins/api/coordinates?offset=0&size=60&accession=Q9BRH2&chromosome=yes&ensembl=yes&gene=yes&protein=yes&taxid=9606&location=58205437-58219305"
+        },
+        "status": "ok",
+        "tool": "search_genomic_coordinates",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 4
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "opencode-zen/deepseek-v4.1-flash-free",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "62dbc37a17d433b8eac5341f2a88f68e3b819457c3fa31cea8ba6163f2d22e6e",
+  "judge_transport_error": null,
+  "parsed_judge": null,
+  "prompt_sha256": "eb082937ad6c48ea5c880e3e5edc780baa610971169b176b46d7e9f7d5dcc359",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": null,
+  "reason_codes": [
+    "missing_final_answer"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "qwen3_4b_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "c69b79456cd1ca140c95f214eba8cae6c2e309c0b8555c47b8f8d79b100e8d9d",
+    "run_summary_sha256": "4ead0e26a15760a34450c55859679a5c5aeee4dd913014826540b77e5b7c66f4",
+    "run_task_sha256": "1cd75ef052750f8ea8401cc1d2d1fd4cbaeb07880e6488ec948c18cc26626311",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "missing_answer",
+  "task_id": 19
+}

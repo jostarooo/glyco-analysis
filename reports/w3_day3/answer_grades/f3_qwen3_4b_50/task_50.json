@@ -1,0 +1,83 @@
+{
+  "cache_key": "c05fcd5e0336f94984a0aa6fba8939328f0d2878847ff230849f467cf781d38c",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [],
+    "evidence_ids": [
+      "answer",
+      "tool_1"
+    ],
+    "expected_tool_called": true,
+    "flags": [],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 1,
+    "successful_tool_calls": 1,
+    "tool_calls": 1,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "getcolumns": "pdb,uniprot",
+          "isvalue": "Saccharomyces cerevisiae",
+          "limit": 100,
+          "wherecolumn": "species"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": "ERROR: Server Error 1052 (23000): Column 'pdb' in field list is ambiguous",
+          "status_code": 400,
+          "url": "https://unilectin.unige.ch/api/getlectins"
+        },
+        "status": "ok",
+        "tool": "get_lectins",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 1
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "opencode-zen/deepseek-v4.1-flash-free",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "02bbbc3e021ea074efb8766b6608e97524a142696cca32870143cfb872a9a439",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "Tool use was insufficient: get_lectins returned a server error due to an ambiguous 'pdb' column, and no corrective query or protein_detail calls were performed, so the tool evidence did not support the expected answer.",
+    "critical_issues": [
+      "Omits the required list of UniProt IDs for Saccharomyces cerevisiae lectins.",
+      "Omits detailed protein information, glycosylation sites, and structural data.",
+      "Does not use or report protein_detail results for any UniProt ID.",
+      "Stops at the get_lectins error instead of completing or resolving the requested scientific task."
+    ],
+    "decision": "FAILURE",
+    "evidence_ids": [
+      "tool_1"
+    ],
+    "reason": "The final answer only reports a get_lectins API error and does not provide the expected UniProt IDs, protein details, glycosylation sites, or structural data for Saccharomyces cerevisiae lectins. Tool evidence confirms the retrieval failed and no protein_detail results were obtained.",
+    "scientific_accuracy": "unknown"
+  },
+  "prompt_sha256": "0bcaeacde44fdc425b353f2104bcfb4b50ba6f98e489dbdd8ca0b77e54544076",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\n  \"decision\": \"FAILURE\",\n  \"reason\": \"The final answer only reports a get_lectins API error and does not provide the expected UniProt IDs, protein details, glycosylation sites, or structural data for Saccharomyces cerevisiae lectins. Tool evidence confirms the retrieval failed and no protein_detail results were obtained.\",\n  \"critical_issues\": [\n    \"Omits the required list of UniProt IDs for Saccharomyces cerevisiae lectins.\",\n    \"Omits detailed protein information, glycosylation sites, and structural data.\",\n    \"Does not use or report protein_detail results for any UniProt ID.\",\n    \"Stops at the get_lectins error instead of completing or resolving the requested scientific task.\"\n  ],\n  \"scientific_accuracy\": \"unknown\",\n  \"api_usage_assessment\": \"Tool use was insufficient: get_lectins returned a server error due to an ambiguous 'pdb' column, and no corrective query or protein_detail calls were performed, so the tool evidence did not support the expected answer.\",\n  \"evidence_ids\": [\n    \"tool_1\"\n  ]\n}",
+  "reason_codes": [
+    "judge_failure"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "qwen3_4b_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "6707950afdf029ab0a5219df957332d1872b0a3f71ba3fc73b8c063ee55645b9",
+    "run_summary_sha256": "4ead0e26a15760a34450c55859679a5c5aeee4dd913014826540b77e5b7c66f4",
+    "run_task_sha256": "aeb31a57e5125468f4f04ca28f8bab96c43afa66c22ea4ce5647bc236fc47100",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "incorrect",
+  "task_id": 50
+}

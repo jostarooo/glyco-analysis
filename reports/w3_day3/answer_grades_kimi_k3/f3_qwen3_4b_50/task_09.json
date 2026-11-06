@@ -1,0 +1,93 @@
+{
+  "cache_key": "8d1051695e7d454c54e87b13b1b793cab1fbb3ac5bd895fd9b6c623ac12e2f65",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "TypeError: structure_search_substructure() got an unexpected keyword argument 'MatchIsotopes?'",
+      "structure_search_substructure: TypeError: structure_search_substructure() got an unexpected keyword argument 'MatchIsotopes?'"
+    ],
+    "evidence_ids": [
+      "answer",
+      "tool_1"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "tool_errors",
+      "runner_errors"
+    ],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 0,
+    "successful_tool_calls": 0,
+    "tool_calls": 1,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "ChainsMatchRings?": true,
+          "MatchCharges?": true,
+          "MatchIsotopes?": true,
+          "MaxRecords?": 50,
+          "MaxSeconds?": 60,
+          "RingsNotEmbedded?": false,
+          "SingleDoubleBondsMatch?": true,
+          "Stereo?": true,
+          "StripHydrogen?": false,
+          "output_format": "json",
+          "smiles": "C(C1C(C(C(C(O1)O)O)O)O"
+        },
+        "error": "TypeError: structure_search_substructure() got an unexpected keyword argument 'MatchIsotopes?'",
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": null,
+        "status": "error",
+        "tool": "structure_search_substructure",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 0
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "b20795e3e5a07c6ad8c671303ada38332ed6fecccf88cd4b9f6e9c9a52c744e3",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "Tool use did not support the answer: the single expected tool errored due to unexpected keyword arguments and returned null, providing no usable PubChem data.",
+    "critical_issues": [
+      "No PubChem CIDs, isotopic matches, or charge profiles were returned",
+      "Required JSON result is entirely omitted and replaced by an error message",
+      "Tool call used invalid keyword arguments with trailing '?' (e.g., 'MatchIsotopes?') causing a TypeError",
+      "Input SMILES in tool_1 appears malformed/missing a closing parenthesis relative to the prompt"
+    ],
+    "decision": "FAILURE",
+    "evidence_ids": [
+      "answer",
+      "tool_1"
+    ],
+    "reason": "The run returned only a tool-error message and omitted the required result: a JSON list of PubChem CIDs with isotopic matches and charge profiles. tool_1 shows structure_search_substructure failed with TypeError from invalid parameter names such as 'MatchIsotopes?' and never produced data, so the expected scientific result was not obtained.",
+    "scientific_accuracy": "unknown"
+  },
+  "prompt_sha256": "c76838f7bdcb255ef294b2c2f07f732c9286fc8745400f7b069fe5f919bf5a2f",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\n  \"decision\": \"FAILURE\",\n  \"reason\": \"The run returned only a tool-error message and omitted the required result: a JSON list of PubChem CIDs with isotopic matches and charge profiles. tool_1 shows structure_search_substructure failed with TypeError from invalid parameter names such as 'MatchIsotopes?' and never produced data, so the expected scientific result was not obtained.\",\n  \"critical_issues\": [\n    \"No PubChem CIDs, isotopic matches, or charge profiles were returned\",\n    \"Required JSON result is entirely omitted and replaced by an error message\",\n    \"Tool call used invalid keyword arguments with trailing '?' (e.g., 'MatchIsotopes?') causing a TypeError\",\n    \"Input SMILES in tool_1 appears malformed/missing a closing parenthesis relative to the prompt\"\n  ],\n  \"scientific_accuracy\": \"unknown\",\n  \"api_usage_assessment\": \"Tool use did not support the answer: the single expected tool errored due to unexpected keyword arguments and returned null, providing no usable PubChem data.\",\n  \"evidence_ids\": [\"answer\", \"tool_1\"]\n}",
+  "reason_codes": [
+    "judge_failure"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "qwen3_4b_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "db0166186cbe938cec8c7e9db1dd0822f668b53591d96f08473518047c4e5eb8",
+    "run_summary_sha256": "4ead0e26a15760a34450c55859679a5c5aeee4dd913014826540b77e5b7c66f4",
+    "run_task_sha256": "9e1e5310ff3c7f74cb1ebbbe89bad6fd4e3977a09f7e81cc6a26e17b8d5d7199",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "incorrect",
+  "task_id": 9
+}

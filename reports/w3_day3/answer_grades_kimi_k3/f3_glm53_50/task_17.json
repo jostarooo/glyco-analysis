@@ -1,0 +1,125 @@
+{
+  "cache_key": "465e87c7e91ca84c0dbd3b5e72fa25765d58e2aa92c50d5e1d4fc0add275d8ec",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "max_rounds_reached"
+    ],
+    "evidence_ids": [
+      "tool_1",
+      "tool_2",
+      "tool_3",
+      "tool_4"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "missing_final_answer",
+      "truncated_results",
+      "runner_errors"
+    ],
+    "has_final_answer": false,
+    "successful_result_tool_calls": 4,
+    "successful_tool_calls": 4,
+    "tool_calls": 4,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "antigen_id": "HPA000123",
+          "match_score": 50
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": [],
+          "status_code": 200,
+          "url": "https://www.ebi.ac.uk/proteins/api/antigen?offset=0&size=100&antigen_id=HPA000123&match_score=50"
+        },
+        "status": "ok",
+        "tool": "search_antigens",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "antigen_id": "HPA000456",
+          "match_score": 50
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": {
+          "data": [],
+          "status_code": 200,
+          "url": "https://www.ebi.ac.uk/proteins/api/antigen?offset=0&size=100&antigen_id=HPA000456&match_score=50"
+        },
+        "status": "ok",
+        "tool": "search_antigens",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "dbid": "ENSG00000139618",
+          "dbtype": "Ensembl"
+        },
+        "error": null,
+        "expected_tool": false,
+        "id": "tool_3",
+        "result": {
+          "preview": "{\"status_code\": 200, \"url\": \"https://www.ebi.ac.uk/proteins/api/coordinates/Ensembl:ENSG00000139618?offset=0&size=100\", \"data\": \"<?xml version='1.0' encoding='UTF-8'?><gnEntries><gnEntry xmlns:ns2=\\\"http://www.ebi.ac.uk/proteins/api/doc/xsd/feature\\\"><accession>A0A590UJ24</accession><name>A0A590UJ24_HUMAN</name><taxid>9606</taxid><sequence>MPIGSKERPTFFEIFKTRCNKADLGPISLNWFEELSSEAPPYNSEPAEESEHKNNNYEPNLFKTPQRKPSYNQLASTPIIFKEQGLTLPLYQSPVKELDKFKLDLGRNVPNSRHKSLRTVKTKMDQADDVSCPLLNSCLSESPVVLQCTHVTPQRDKSVVCGSLFHTPKFVKGRQTPKHISESLGAEVDPDMSWSSSLATPPTLSSTVLIVRNEEASETVFPHDTTANVKSYFSNHDESLKKNDRFIASVTDSENTNQREAASHGFGKTSGNSFKVNSCKDHIGKSMPNVLEDEVYETVVDTSEEDSFSLCFSKCRTKNLQKVRTSKTRKKIFHEANADECEKSKNQVKEKYSFVSEVEPNDTDPLDSNVANQKPFESGSDKISKEVVPSLACEWSQLTLSGLNGAQMEKIPLLHISSCDQNISEKDLLDTENKRKKDFLTSENSLPRISSLPKSEKPLNEETVVNKRDEEQHLESHTDCILAVKQAISGTSPVASSFQGIKKSIFRIRESPKETFNASFSGHMTDPNFKKETEASESGLEIHTVCSQKEDSLCPNLIDNGSWPATTTQNSVALKNAGLISTLKKKTNKFIYAIHDETSYKGKKIPKDQKSELINCSAQFEANAFEAPLTFANADSGLLHSSVKRSCSQNDSEEPTLSLTSSFGTILRKCSRNETCSNNTVISQDLDYKEAKCNKEKLQLFITPEADSLSCLQEGQCENDPKSKKVSDIKEEVLAAACHPVQHSKVEYSDTDFQSQKSLLYDHENASTLILTPTSKDVLSNLVMISRGKESYKMSDKLKGNNYESDVELTKNIPMEKNQDVCALNENYKNVELLPPEKYMRVASPSRKVQFNQNTNLRVIQKNQEETTSISKITVNPDSEELFSDNENNFVFQVANERNNLALGNTKELHETDLTCVNEPIFKNSTMVLYGDTGDKQATQVSIKKDLVYVLAEENKNSVKQHIKMTLGQDLKSDISLNIDKIPEKNNDYMNKWAGLLGPISNHSFGGSFRTASNKEIKLSEHNIKKSKMFFKDIEEQYPTSLACVEIVNTLALDNQKKLSKPQSINTVSAHLQSSVVVSDCKNSHITPQMLFSKQDFNSNHNLTPSQKAEITELSTILEESGSQFEFTQFRKPSYILQKSTFEVPENQMTILKTTSEECRDADLHVIMNAPSIGQVDSSKQFEGTVEIKRKFAGLLKNDCNKSASGYLTDENEVGFRGFYSAHGTKLNVSTEALQKAVKLFSDIENISEETSAEVHPISLSSSKCHDSVVSMFKIENHNDKTVSEKNNKCQLILQNNIEMTTGTFVEEITENYKRNTENEDNKYTAASRNSHNLEFDGSDSSKNDTVCIHKDETDLLFTDQHNICLKLSGQFMKEGNTQIKEDLSDLTFLEVAKAQEACHGNTSNKEQLTATKTEQNIKDFETSDTFFQTASGKNISVAKESFNKIVNFFDQKPEELHNFSLNSELHSDIRKNKMDILSYEETDIVKHKILKESVPVGTGNQLVTFQGQPERDEKIKEPTLLGFHTASGKKVKIAKESLDKVKNLFDEKEQGTSEITSFSHQWAKTLKYREACKDLELACETIEITAAPKCKEMQNSLNNDKNLVSIETVVPPKLLSDNLCRQTENLKTSKSIFLKVKVHENVEKETAKSPATCYTNQSPYSVIENSALAFYTSCSRKTSVSQTSLLEAKKWLREGIFDGQPERINTADYVGNYLYENNSNSTIAENDKNHLSEKQDTYLSNSSMSNSYSYHSDEVYNDSGYLSKNKLDSGIEPVLKNVEDQKNTSFSKVISNVKDANAYPQTVNEDICVEELVTSSSPCKNKNAAIKLSISNSNNFEVGPPAFRIASGKIVCVSHETIKKVKDIFTDSFSKVIKENNENKSKICQTKIMAGCYEALDDSEDILHNSLDNDECSTHSHKVFADIQSEEILQHNQNMSGLEKVSKISPCDVSLETSDICKCSIGKLHKSVSSANTCGIFSTASGKSVQVSDASLQNARQVFSEIEDSTKQVFSKVLFKSNEHSDQLTREENTAIRTPEHLISQKGFSYNVVNSSAFSGFSTASGKQVSILESSLHKVKGVLEEFDLIRTEHSLHYSPTSRQNVSKILPRVDKRNPEHCVNSEMEKTCSKEFKLSNNLNVEGGSSENNHSIKVSPYLSQFQQDKQQLVLGTKVSLVENIHVLGKEQASPKNVKMEIGKTETFSDVPVKTNIEVCSTYSKDSENYFETEAVEIAKAFMEDDELTDSKLPSHATHSLFTCPENEEMVLSNSRIGKRRGEPLILVGEPSIKRNLLNEFDRIIENQEKSLKASKSTPDGTIKDRRLFMHHVSLEPITCVPFRTTKERQEIQNPNFTAPGQEFLSKSHLYEHLTLEKSSSNLAVSGHPFYQVSATRNEKMRHLITTGRPTKVFVPPFKTKSHFHRVEQCVRNINLEENRQKQNIDGHGSDDSKNKINDNEIHQFNKNNSNQAVAVTFTKCEEEPLDLITSLQNARDIQDMRIKKKQRQRVFPQPGSLYLAKTSTLPRISLKAAVGGQVPSACSHKQLYTYGVSKHCIKINSKNAESFQFHTEDYFGKESLWTGKGIQLADGGWLIPSNDGKAGKEEFYRALCDTPGVDPKLISRIWVYNHYRWIIWKLAAMECAFPKEFANRCLSPERVLLQLKYRYDTEIDRSRRSAIKKIMERDDTAAKTLVLCVSDIISLSANISETSSNKTSSADTQKVAIIELTDGWYAVKAQLDPPLLAVLKNGRLTVGQKIILHGAELVGSPDACTPLEAPESLMLKISANSTRPARWYTKLGFFPDPRPFPLPLSSLFSDGGNVGCVDVIIQRAYPIQWMEKTSSGLYIFRNEREEEKEAAKYVEAQQKRLEALFTKIQEEFEEHEENTTKPYLPSRALTRQQVRALQDGAELYEAVKNAADPAYLEGYFSEEQLRALNNHRQMLNDKKQAQIQLEIRKAMESAEQKEQGLSRDVTTVWKLRIVSYSKKEKDSVILSIWRPSSDLYSLLTEGKRYRIYHLATSKSKSKSERANIQLAATKKTQYQQLPVSDEILFQIYQPREPLHFSKFLDPDFQPSCSEVDLIGFVVSVVKKTVSYQWKIEDMII</sequence><protein><recommendedName><fullName>Tower domain-containing protein</fullName></recommendedName><submittedName><fullName>BRCA2 DNA repair associated</fullName></submittedName></protein><gene type=\\\"primary\\\">BRCA2</gene><gnCoordinate ensembl_gene_id=\\\"ENSG00000139618\\\" ensembl_transcript_id=\\\"ENST00000666593\\\" ensembl_translation_id=\\\"ENSP00000499256\\\"><genomicLocation chromosome=\\\"13\\\" start=\\\"32316461\\\" end=\\\"32383927\\\" reverse_strand=\\\"false\\\" nucleotideId=\\\"CM000675.2\\\" assemblyName=\\\"GRCh38\\\"><exon id=\\\"ENSE00001484009\\\"><proteinLocation><ns2:begin position=\\\"1\\\"/><ns2:end position=\\\"23\\\"/></proteinLocation><genomeLocation><ns2:begin position=\\\"32316461\\\"/><ns2:end position=\\\"32316527\\\"/></genomeLocation></exon><exon id=\\\"ENSE00003666217\\\"><proteinLocation><ns2:begin position=\\\"23\\\"/><ns2:end position=\\\"106\\\"/></proteinLocation><genomeLocation><ns2:begin position=\\\"32319077\\\"/><ns2:end position=\\\"32319325\\\"/></genomeLocation></exon><exon id=\\\"ENSE00003659301\\\"><proteinLocation><ns2:begin position=\\\"106\\\"/><ns2:end position=\\\"142\\\"/></proteinLocation><genomeLocation><ns2:begin position=\\\"32325076\\\"/><ns2:end position=\\\"32325184\\\"/></genomeLocation></exon><exon id=\\\"ENSE00003739878\\\"><proteinLocation><ns2:begin position=\\\"142\\\"/><ns2:end position=\\\"159\\\"/></proteinLocation><genomeLocation><ns2:begin position=\\\"32326101\\\"/><ns2:end position=\\\"32326150\\\"/></genomeLocation></exon><exon id=\\\"ENSE00003747332\\\"><proteinLocation><ns2:begin position=\\\"159\\\"/><ns2:end position=\\\"172\\\"/></proteinLocation><genomeLocation><ns2:begin position=\\\"32326242\\\"/><ns2:end position=\\\"32326282\\\"/></genomeLocation></exon><exon id=\\\"ENSE00003749714\\\"><proteinLocation><ns2:begin position=\\\"173\\\"/><ns2:end position=\\\"211\\\"/></proteinLocation><genomeLocation><ns2:begin position=\\\"32326499\\\"/><ns2:end position=\\\"32326613\\\"/></genomeLocation></exon><exon id=\\\"ENSE00003714754\\\"><proteinLocation><ns2:begin position=\\\"211\\\"/><ns2:end position=\\\"227\\\"/></proteinLocation><genomeLocation><ns2:begin position=\\\"32329443\\\"/><ns2:end position=\\\"32329492\\\"/></genomeLocation></exon><exon id=\\\"ENSE00003731761\\\"><proteinLocation><ns2:begin position=\\\"228\\\"/><ns2:end position=\\\"265\\\"/></proteinLocation><genomeLocation><ns2:begin position=\\\"32330919\\\"/><ns2:end position=\\\"32331030\\\"/></genomeLocation></exon><exon id=\\\"ENSE00000939167\\\"><proteinLocation><ns2:begin position=\\\"265\\\"/><ns2:end position=\\\"637\\\"/></proteinLocation><genomeLocation><ns2:begin position=\\\"32332272\\\"/><ns2:end position=\\\"32333387\\\"/></genomeLocation></exon><exon id=\\\"ENSE00",
+          "truncated": true
+        },
+        "status": "ok",
+        "tool": "get_uniprot_entries_by_genomic_database_cross_reference_ids",
+        "truncated": true
+      },
+      {
+        "arguments": {
+          "dbid": "ENSG00000248378",
+          "dbtype": "Ensembl"
+        },
+        "error": null,
+        "expected_tool": false,
+        "id": "tool_4",
+        "result": {
+          "data": "<?xml version='1.0' encoding='UTF-8'?><gnEntries/>",
+          "status_code": 200,
+          "url": "https://www.ebi.ac.uk/proteins/api/coordinates/Ensembl:ENSG00000248378?offset=0&size=100"
+        },
+        "status": "ok",
+        "tool": "get_uniprot_entries_by_genomic_database_cross_reference_ids",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 1,
+    "usable_successful_tool_calls": 3
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "62dbc37a17d433b8eac5341f2a88f68e3b819457c3fa31cea8ba6163f2d22e6e",
+  "judge_transport_error": null,
+  "parsed_judge": null,
+  "prompt_sha256": "bfd2dcb212f594df95b00bc44a62621c9346b5d25f61ad88925ff71e28ee5fa7",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": null,
+  "reason_codes": [
+    "missing_final_answer"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "glm53_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "b7d34ed1231e9a5f20afa4595fc05fbfa6ee1410cc6fc3fbf632d5a62d6b7969",
+    "run_summary_sha256": "9b144e8e7a450caa3f3b2e596ba1a01e26f35485ac3138387b5ff7abdea1dabb",
+    "run_task_sha256": "a925595f42cedc22295b5e4ddfbfa551ff96458ef02b55e5b127f0a395221566",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "missing_answer",
+  "task_id": 17
+}
