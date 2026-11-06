@@ -9,6 +9,7 @@ import time
 import unittest
 from pathlib import Path
 from typing import Any, Callable
+from unittest import mock
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -153,6 +154,31 @@ def grade_one(
 
 
 class GraderStatusTest(unittest.TestCase):
+    def test_empty_judge_content_is_retried(self) -> None:
+        class FakeResponse:
+            ok = True
+            status_code = 200
+            text = ""
+
+            def __init__(self, content: str) -> None:
+                self.content = content
+
+            def json(self) -> dict[str, Any]:
+                return {
+                    "choices": [
+                        {"message": {"content": self.content}}
+                    ]
+                }
+
+        responses = [FakeResponse(""), FakeResponse('{"decision": "SUCCESS"}')]
+        with mock.patch.object(
+            grader.requests, "post", side_effect=responses
+        ) as post:
+            with mock.patch.object(grader.time, "sleep"):
+                result = grader.call_judge("prompt", grader.JudgeConfig())
+        self.assertEqual(result.raw_response, '{"decision": "SUCCESS"}')
+        self.assertEqual(post.call_count, 2)
+
     def test_missing_answer_does_not_call_judge(self) -> None:
         calls: list[str] = []
         with tempfile.TemporaryDirectory() as temp:

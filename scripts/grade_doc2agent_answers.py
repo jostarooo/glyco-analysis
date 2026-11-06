@@ -7,6 +7,7 @@ import hashlib
 import json
 import os
 import tempfile
+import time
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from pathlib import Path
@@ -27,6 +28,8 @@ DEFAULT_MODEL = "opencode-zen/deepseek-v4.1-flash-free"
 DEFAULT_API_KEY_ENV = "DOC2AGENT_JUDGE_API_KEY"
 DEFAULT_MAX_TOKENS = 1500
 DEFAULT_REQUEST_TIMEOUT = 180.0
+JUDGE_EMPTY_RESPONSE_ATTEMPTS = 3
+JUDGE_RETRY_DELAY_SECONDS = 2.0
 
 SCHEMA_VERSION = 1
 RUBRIC_VERSION = "doc2agent-answer-rubric-v1"
@@ -629,35 +632,42 @@ def call_judge(prompt: str, config: JudgeConfig) -> JudgeResponse:
         "max_tokens": config.max_tokens,
         "stream": False,
     }
-    try:
-        response = requests.post(
-            config.endpoint,
-            json=body,
-            headers=headers,
-            timeout=config.request_timeout,
-        )
-    except requests.RequestException as exc:
-        detail = _redact(str(exc), api_key)
-        return JudgeResponse(
-            request_error=f"network_error:{type(exc).__name__}:{detail}"
-        )
-    if not response.ok:
-        detail = _redact(response.text[:500], api_key)
-        return JudgeResponse(
-            request_error=f"http_error:status={response.status_code}:body={detail}"
-        )
-    try:
-        data = response.json()
-    except ValueError as exc:
-        detail = _redact(str(exc), api_key)
-        return JudgeResponse(request_error=f"invalid_http_json:{detail}")
-    try:
-        content = data["choices"][0]["message"]["content"]
-    except (KeyError, IndexError, TypeError):
-        return JudgeResponse(request_error="malformed_response:missing_content")
-    if not isinstance(content, str):
-        return JudgeResponse(request_error="malformed_response:content_not_string")
-    return JudgeResponse(raw_response=content)
+    for attempt in range(JUDGE_EMPTY_RESPONSE_ATTEMPTS):
+        try:
+            response = requests.post(
+                config.endpoint,
+                json=body,
+                headers=headers,
+                timeout=config.request_timeout,
+            )
+        except requests.RequestException as exc:
+            detail = _redact(str(exc), api_key)
+            return JudgeResponse(
+                request_error=f"network_error:{type(exc).__name__}:{detail}"
+            )
+        if not response.ok:
+            detail = _redact(response.text[:500], api_key)
+            return JudgeResponse(
+                request_error=f"http_error:status={response.status_code}:body={detail}"
+            )
+        try:
+            data = response.json()
+        except ValueError as exc:
+            detail = _redact(str(exc), api_key)
+            return JudgeResponse(request_error=f"invalid_http_json:{detail}")
+        try:
+            content = data["choices"][0]["message"]["content"]
+        except (KeyError, IndexError, TypeError):
+            return JudgeResponse(request_error="malformed_response:missing_content")
+        if not isinstance(content, str):
+            return JudgeResponse(
+                request_error="malformed_response:content_not_string"
+            )
+        if content.strip():
+            return JudgeResponse(raw_response=content)
+        if attempt + 1 < JUDGE_EMPTY_RESPONSE_ATTEMPTS:
+            time.sleep(JUDGE_RETRY_DELAY_SECONDS)
+    return JudgeResponse(request_error="empty_judge_content")
 
 
 def aggregate_grade_metrics(grades: Iterable[dict[str, Any]]) -> dict[str, Any]:
