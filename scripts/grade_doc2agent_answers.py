@@ -22,9 +22,15 @@ DEFAULT_TASKS = Path(
     r"D:\wbworkspace\Doc2Agent\test_glycan\glycan_tasks_classified.jsonl"
 )
 DEFAULT_RUN_DIR = ROOT / "reports" / "w2_day2" / "f3_qwen3_4b_50"
-DEFAULT_OUT_DIR = ROOT / "reports" / "w3_day3" / "answer_grades" / "f3_qwen3_4b_50"
+DEFAULT_OUT_DIR = (
+    ROOT
+    / "reports"
+    / "w3_day3"
+    / "answer_grades_kimi_k3"
+    / "f3_qwen3_4b_50"
+)
 DEFAULT_ENDPOINT = "http://127.0.0.1:3425/v1/chat/completions"
-DEFAULT_MODEL = "opencode-zen/deepseek-v4.1-flash-free"
+DEFAULT_MODEL = "workbuddy-ai/kimi-k3"
 DEFAULT_API_KEY_ENV = "DOC2AGENT_JUDGE_API_KEY"
 DEFAULT_MAX_TOKENS = 1500
 DEFAULT_REQUEST_TIMEOUT = 180.0
@@ -698,6 +704,7 @@ def aggregate_grade_metrics(grades: Iterable[dict[str, Any]]) -> dict[str, Any]:
         "graded_incorrect": graded_incorrect,
         "graded_accuracy": ratio(graded_correct, graded_total),
         "graded_coverage": ratio(graded_total, total),
+        "correct_over_task_count": ratio(graded_correct, total),
         "answer_available_rate": ratio(answer_available, total),
     }
 

@@ -17,8 +17,20 @@ from grade_doc2agent_answers import (
 )
 
 
-DEFAULT_LOCAL = ROOT / "reports" / "w3_day3" / "answer_grades" / "f3_qwen3_4b_50"
-DEFAULT_EXTERNAL = ROOT / "reports" / "w3_day3" / "answer_grades" / "f3_glm53_50"
+DEFAULT_LOCAL = (
+    ROOT
+    / "reports"
+    / "w3_day3"
+    / "answer_grades_kimi_k3"
+    / "f3_qwen3_4b_50"
+)
+DEFAULT_EXTERNAL = (
+    ROOT
+    / "reports"
+    / "w3_day3"
+    / "answer_grades_kimi_k3"
+    / "f3_glm53_50"
+)
 DEFAULT_JSON_OUT = ROOT / "reports" / "w3_day3" / "answer_grade_comparison.json"
 DEFAULT_MD_OUT = ROOT / "reports" / "w3_day3" / "answer_grade_comparison.md"
 COMPARISON_SCOPE = "local_evidence_grading"
@@ -207,7 +219,12 @@ def render_markdown(report: dict[str, Any]) -> str:
             "|---|---|---|",
         ]
     )
-    for metric in ("graded_accuracy", "graded_coverage", "answer_available_rate"):
+    for metric in (
+        "graded_accuracy",
+        "graded_coverage",
+        "correct_over_task_count",
+        "answer_available_rate",
+    ):
         lines.append(
             f"| `{metric}` | {format_ratio(local[metric])} | "
             f"{format_ratio(external[metric])} |"

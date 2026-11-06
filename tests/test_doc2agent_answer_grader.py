@@ -229,7 +229,7 @@ class GraderStatusTest(unittest.TestCase):
         self.assertEqual(len(grade["prompt_sha256"]), 64)
         self.assertEqual(
             grade["judge_model_config"]["model"],
-            "opencode-zen/deepseek-v4.1-flash-free",
+            "workbuddy-ai/kimi-k3",
         )
 
     def test_success_without_successful_evidence_is_manual_review(self) -> None:
@@ -500,6 +500,12 @@ class ComparisonTest(unittest.TestCase):
             )
             self.assertFalse(report["upstream_gpt4o_equivalent"])
             self.assertEqual(report["validation"]["tasks_compared"], 50)
+            self.assertEqual(
+                report["runs"]["local"]["correct_over_task_count"][
+                    "numerator"
+                ],
+                50,
+            )
             self.assertTrue(json_out.is_file())
             self.assertIn(
                 "not equivalent to the upstream GPT-4o grader",
