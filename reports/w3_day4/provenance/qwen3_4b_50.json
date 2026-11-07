@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "run_id": "qwen3_4b_50",
+  "runner_commit": "8fc1da6",
+  "verification_method": "historical_code_provenance_not_runtime_recorded",
+  "runtime_recorded": false,
+  "prompt_hashes": {
+    "system": "ea6dbf107e44cf10e1e9430375c0d081b02184ea28fdefab7ba75ed5f4554e83",
+    "user_template": "91061473cda7ffc953222b6a91d3d40d6e566f4db558059c9e1dc978ce8ed74d",
+    "tool_catalog": "1c21bc74329197112b45d0f2b93c826294ce7df1067f6409ded9b59841510e3e"
+  },
+  "historical_facts": {
+    "runner_commit": "8fc1da6",
+    "system_prompt_unchanged_since_runner_commit": true,
+    "compact_tool_catalog_unchanged_since_runner_commit": true,
+    "inline_user_prompt_byte_identical_to_current_template": true,
+    "tool_catalog_size": 70,
+    "recomputed_from": "unchanged 70-tool catalog at current code"
+  }
+}

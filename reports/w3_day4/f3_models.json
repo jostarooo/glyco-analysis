@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "reference_model": "qwen3_4b",
+  "models": [
+    {
+      "key": "qwen3_4b",
+      "label": "Qwen3 4B",
+      "provider": "ollama",
+      "model": "qwen3:4b",
+      "run_dir": "reports/w2_day2/f3_qwen3_4b_50",
+      "grade_dir": "reports/w3_day3/answer_grades_kimi_k3/f3_qwen3_4b_50",
+      "provenance_sidecar": "reports/w3_day4/provenance/qwen3_4b_50.json"
+    },
+    {
+      "key": "glm_5_3",
+      "label": "GLM-5.3",
+      "provider": "local_magpie",
+      "model": "workbuddy-ai/glm-5.3",
+      "run_dir": "reports/w3_day2/f3_glm53_50",
+      "grade_dir": "reports/w3_day3/answer_grades_kimi_k3/f3_glm53_50"
+    },
+    {
+      "key": "deepseek_v41_flash",
+      "label": "DeepSeek V4.1 Flash",
+      "provider": "local_magpie",
+      "model": "opencode-zen/deepseek-v4.1-flash-free",
+      "run_dir": "reports/w3_day4/f3_deepseek_v41_50",
+      "grade_dir": "reports/w3_day4/answer_grades_kimi_k3/f3_deepseek_v41_50"
+    }
+  ]
+}
