@@ -79,6 +79,26 @@ GLM-5.3 为 18 正确、3 错误、4 人工复核、25 缺回答。两批 `judge
 GLM-5.3 在已有最终回答的题中更容易被判正确，但只对 25/50 题产生最终回答。因此这组结果
 不支持“外部模型整体更好”或“模型更大导致正确率更高”的因果结论。
 
+### W3 Day 4（2026-11-07，进行中）
+
+W3 Day 4 把 F3 扩展为三模型对照。先尝试 Magpie 免费路由
+`opencode-zen/deepseek-v4.1-flash-free`，但 50 题运行中返回 17 次 HTTP 429，
+23 题没有产生工具调用，只有 9 题产生最终回答。该批次只作为配额失败证据，不能当作模型
+能力结果。最终第三模型改用 `qoder-cn/dfmodel`，Magpie 显示名为
+`DeepSeek-Flash · Qoder CN`。
+
+Qoder DeepSeek-Flash 使用同一批 50 题、70 个工具、系统提示词、JSON 动作协议和
+`max_rounds=4` 完成运行：`exact_sequence=13`、`all_expected_called=42`、
+`any_expected_called=48`、`tasks_with_tool_call=50`、`tasks_with_final_answer=22`，
+148 次工具调用中 115 次成功。同一 Kimi K3 judge 评分为 15 正确、5 错误、2 人工复核、
+28 缺回答，可判定正确率 15/20，可判定覆盖率 20/50。
+
+三模型报告由 `reports/w3_day4/f3_models.json` 驱动，输出
+`reports/w3_day4/f3_three_model_report.json` 和
+`reports/w3_day4/f3_three_model_report.md`。生成器校验三份运行的题目、
+expected tools、prompt/rubric 契约、summary 哈希、50 个运行 task、
+50 个评分 task 以及输出幂等性。完整说明见 `reports/w3_day4/README.md`。
+
 ## 一、可行性五关（项目级，W1 只验收第 1 至第 3 关）
 
 五关按顺序过，前一关没过不进下一关。每关都留一个可检查的产物。
@@ -469,6 +489,34 @@ $python='C:\Users\jostaro\AppData\Roaming\uv\python\cpython-3.12.14-windows-x86_
 响应、提示词哈希、源文件哈希和 `judge_response_sha256`；手改任一评分文件后，离线 `--check`
 必须退出 1。结果入口为 `reports/w3_day3/answer_grade_comparison.md`。
 
+### F3 三模型报告（2026-11-07，W3 Day 4）
+
+```powershell
+$env:PYTHONPATH='D:\wbworkspace\glyco-analysis\.venv\Lib\site-packages'
+$env:PYTHONUTF8='1'
+$python='C:\Users\jostaro\AppData\Roaming\uv\python\cpython-3.12.14-windows-x86_64-none\python.exe'
+
+& $python scripts\summarize_doc2agent_run.py `
+  --run-dir reports\w3_day4\f3_deepseek_flash_qoder_50 `
+  --expected-tasks 50 `
+  --check-summary reports\w3_day4\f3_deepseek_flash_qoder_50\summary.json
+
+& $python scripts\grade_doc2agent_answers.py --check `
+  --run-dir reports\w3_day4\f3_deepseek_flash_qoder_50 `
+  --out-dir reports\w3_day4\answer_grades_kimi_k3\f3_deepseek_flash_qoder_50
+
+& 'D:\python\python.exe' scripts\doc2agent_three_model_report.py `
+  --manifest reports\w3_day4\f3_models.json `
+  --json-out reports\w3_day4\f3_three_model_report.json `
+  --md-out reports\w3_day4\f3_three_model_report.md `
+  --check
+```
+
+三份运行的 task 数量、expected tools、prompt/rubric 契约和 answer-grade
+summary 必须同时通过。`V4.1 Flash` 的失败运行不属于三模型 manifest，
+只保留在 `reports/w3_day4/f3_deepseek_v41_50/` 和
+`reports/w3_day4/deepseek_v41_quota_failure.md` 作为配额失败证据。
+
 ### web 数据契约（2026-10-31 至 2026-11-01，W2 Day 4 至 Day 5）
 
 ```powershell
@@ -558,3 +606,4 @@ F3 计数上限、工具可行性题号集合和 Markdown 参考锚点都必须�
 | 2026-11-04 | W3 Day 1：登录与真实位点预测系统纵切 | 真实 O75144 302 aa 经 HTTP 登录、排队、GPU 推理和轮询返回 6 个位点；历史标签与概率逐项对拍 | ✅ 真实 GPU 3/3；聚焦合同测试 25/25；全量 147 项中 139 通过、8 项按设计或 GPU 门控跳过；Edge 现场流程无脚本错误 |
 | 2026-11-05 | W3 Day 2：同 50 题外部模型轨迹对照 | GLM-5.3 与 Qwen3 4B 共用任务、70 个工具、提示词、JSON 动作协议和 4 轮上限；两份 summary 与 50 题对齐检查通过 | ✅ 外部轨迹五项 13/41/47/25/114；聚焦测试 14/14；全量 157 项中 149 通过、8 项门控跳过；报告明确不作为答案正确率 |
 | 2026-11-06 | W3 Day 3：F3 答案评分与覆盖对照 | 同一 Kimi K3 judge 对两份 50 题轨迹评分；缺回答、无效轨迹、judge 不可用和人工复核分开记录；原始响应哈希可离线复核 | ✅ Qwen3 9 正确/38 可判定，GLM-5.3 18 正确/21 可判定；两份 `--check` PASS；聚焦 18/18；全量 175 项中 167 通过、8 项门控跳过 |
+| 2026-11-07 | W3 Day 4：三模型 F3 轨迹与答案评分 | 同一 50 题、70 个工具和动作协议增加 DeepSeek-Flash；V4.1 免费路由 17 次 429 只作为失败证据；三模型报告由 manifest 驱动并校验源哈希 | ✅ Qoder DeepSeek-Flash 轨迹 13/42/48/22/115/148，评分 15/20、覆盖 20/50；聚焦 10/10；全量 185 项中 177 通过、8 项门控跳过；输出连续两跑字节和 mtime 不变 |
