@@ -4,7 +4,7 @@
   "models": [
     {
       "key": "qwen3_4b",
-      "label": "Qwen3 4B",
+      "label": "Qwen3 4B (Ollama)",
       "provider": "ollama",
       "model": "qwen3:4b",
       "run_dir": "reports/w2_day2/f3_qwen3_4b_50",
@@ -13,19 +13,19 @@
     },
     {
       "key": "glm_5_3",
-      "label": "GLM-5.3",
+      "label": "GLM-5.3 (Magpie)",
       "provider": "local_magpie",
       "model": "workbuddy-ai/glm-5.3",
       "run_dir": "reports/w3_day2/f3_glm53_50",
       "grade_dir": "reports/w3_day3/answer_grades_kimi_k3/f3_glm53_50"
     },
     {
-      "key": "deepseek_v41_flash",
-      "label": "DeepSeek V4.1 Flash",
+      "key": "deepseek_flash_qoder",
+      "label": "DeepSeek-Flash (Qoder CN)",
       "provider": "local_magpie",
-      "model": "opencode-zen/deepseek-v4.1-flash-free",
-      "run_dir": "reports/w3_day4/f3_deepseek_v41_50",
-      "grade_dir": "reports/w3_day4/answer_grades_kimi_k3/f3_deepseek_v41_50"
+      "model": "qoder-cn/dfmodel",
+      "run_dir": "reports/w3_day4/f3_deepseek_flash_qoder_50",
+      "grade_dir": "reports/w3_day4/answer_grades_kimi_k3/f3_deepseek_flash_qoder_50"
     }
   ]
 }

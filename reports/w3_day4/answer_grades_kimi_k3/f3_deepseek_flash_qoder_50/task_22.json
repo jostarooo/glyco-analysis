@@ -1,0 +1,367 @@
+{
+  "cache_key": "656521de5314f5c3729bf0c22083b4008eedb315e0dee1f70a05f8a8c2b7b3e4",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "max_rounds_reached"
+    ],
+    "evidence_ids": [
+      "tool_1",
+      "tool_2",
+      "tool_3",
+      "tool_4"
+    ],
+    "expected_tool_called": false,
+    "flags": [
+      "missing_final_answer",
+      "expected_tool_not_called",
+      "runner_errors"
+    ],
+    "has_final_answer": false,
+    "successful_result_tool_calls": 4,
+    "successful_tool_calls": 4,
+    "tool_calls": 4,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "accession": "P69905",
+          "categories": "POST_TRANSLATIONAL_MODIFICATIONS",
+          "types": "CARBOHYD"
+        },
+        "error": null,
+        "expected_tool": false,
+        "id": "tool_1",
+        "result": {
+          "data": {
+            "errorMessage": [
+              "Invalid feature types",
+              "The categories should have between 1 and 20 comma separated items",
+              "Invalid category types"
+            ],
+            "requestedURL": "https://www.ebi.ac.uk/proteins/api/features/P69905?categories=P,O,S,T,_,T,R,A,N,S,L,A,T,I,O,N,A,L,_,M,O,D,I,F,I,C,A,T,I,O,N,S&types=C,A,R,B,O,H,Y,D"
+          },
+          "status_code": 400,
+          "url": "https://www.ebi.ac.uk/proteins/api/features/P69905?categories=P%2CO%2CS%2CT%2C_%2CT%2CR%2CA%2CN%2CS%2CL%2CA%2CT%2CI%2CO%2CN%2CA%2CL%2C_%2CM%2CO%2CD%2CI%2CF%2CI%2CC%2CA%2CT%2CI%2CO%2CN%2CS&types=C%2CA%2CR%2CB%2CO%2CH%2CY%2CD"
+        },
+        "status": "ok",
+        "tool": "get_uniprot_protein_sequence_features_by_accession",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "accession": "P68871",
+          "categories": [
+            "PTM"
+          ],
+          "types": [
+            "CARBOHYD"
+          ]
+        },
+        "error": null,
+        "expected_tool": false,
+        "id": "tool_2",
+        "result": {
+          "data": {
+            "accession": "P68871",
+            "entryName": "HBB_HUMAN",
+            "features": [
+              {
+                "begin": "2",
+                "category": "PTM",
+                "description": "N-linked (Glc) (glycation) valine; in Hb A1c",
+                "end": "2",
+                "evidences": [
+                  {
+                    "code": "ECO:0000269",
+                    "source": {
+                      "alternativeUrl": "https://europepmc.org/abstract/MED/635569",
+                      "id": "635569",
+                      "name": "PubMed",
+                      "url": "http://www.ncbi.nlm.nih.gov/pubmed/635569"
+                    }
+                  }
+                ],
+                "ftId": "",
+                "molecule": "",
+                "type": "CARBOHYD"
+              },
+              {
+                "begin": "9",
+                "category": "PTM",
+                "description": "N-linked (Glc) (glycation) lysine",
+                "end": "9",
+                "evidences": [
+                  {
+                    "code": "ECO:0000269",
+                    "source": {
+                      "alternativeUrl": "https://europepmc.org/abstract/MED/7358733",
+                      "id": "7358733",
+                      "name": "PubMed",
+                      "url": "http://www.ncbi.nlm.nih.gov/pubmed/7358733"
+                    }
+                  }
+                ],
+                "ftId": "",
+                "molecule": "",
+                "type": "CARBOHYD"
+              },
+              {
+                "begin": "18",
+                "category": "PTM",
+                "description": "N-linked (Glc) (glycation) lysine",
+                "end": "18",
+                "evidences": [
+                  {
+                    "code": "ECO:0000269",
+                    "source": {
+                      "alternativeUrl": "https://europepmc.org/abstract/MED/7358733",
+                      "id": "7358733",
+                      "name": "PubMed",
+                      "url": "http://www.ncbi.nlm.nih.gov/pubmed/7358733"
+                    }
+                  }
+                ],
+                "ftId": "",
+                "molecule": "",
+                "type": "CARBOHYD"
+              },
+              {
+                "begin": "67",
+                "category": "PTM",
+                "description": "N-linked (Glc) (glycation) lysine",
+                "end": "67",
+                "evidences": [
+                  {
+                    "code": "ECO:0000269",
+                    "source": {
+                      "alternativeUrl": "https://europepmc.org/abstract/MED/7358733",
+                      "id": "7358733",
+                      "name": "PubMed",
+                      "url": "http://www.ncbi.nlm.nih.gov/pubmed/7358733"
+                    }
+                  }
+                ],
+                "ftId": "",
+                "molecule": "",
+                "type": "CARBOHYD"
+              },
+              {
+                "begin": "121",
+                "category": "PTM",
+                "description": "N-linked (Glc) (glycation) lysine",
+                "end": "121",
+                "evidences": [
+                  {
+                    "code": "ECO:0000269",
+                    "source": {
+                      "alternativeUrl": "https://europepmc.org/abstract/MED/7358733",
+                      "id": "7358733",
+                      "name": "PubMed",
+                      "url": "http://www.ncbi.nlm.nih.gov/pubmed/7358733"
+                    }
+                  }
+                ],
+                "ftId": "",
+                "molecule": "",
+                "type": "CARBOHYD"
+              },
+              {
+                "begin": "145",
+                "category": "PTM",
+                "description": "N-linked (Glc) (glycation) lysine; alternate",
+                "end": "145",
+                "evidences": [
+                  {
+                    "code": "ECO:0000269",
+                    "source": {
+                      "alternativeUrl": "https://europepmc.org/abstract/MED/7358733",
+                      "id": "7358733",
+                      "name": "PubMed",
+                      "url": "http://www.ncbi.nlm.nih.gov/pubmed/7358733"
+                    }
+                  }
+                ],
+                "ftId": "",
+                "molecule": "",
+                "type": "CARBOHYD"
+              }
+            ],
+            "sequence": "MVHLTPEEKSAVTALWGKVNVDEVGGEALGRLLVVYPWTQRFFESFGDLSTPDAVMGNPKVKAHGKKVLGAFSDGLAHLDNLKGTFATLSELHCDKLHVDPENFRLLGNVLVCVLAHHFGKEFTPPVQAAYQKVVAGVANALAHKYH",
+            "sequenceChecksum": "A31F6D621C6556A1",
+            "taxid": 9606
+          },
+          "status_code": 200,
+          "url": "https://www.ebi.ac.uk/proteins/api/features/P68871?categories=PTM&types=CARBOHYD"
+        },
+        "status": "ok",
+        "tool": "get_uniprot_protein_sequence_features_by_accession",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "accession": "P69905",
+          "categories": "PTM",
+          "types": "CARBOHYD"
+        },
+        "error": null,
+        "expected_tool": false,
+        "id": "tool_3",
+        "result": {
+          "data": {
+            "errorMessage": [
+              "Invalid feature types",
+              "Invalid category types"
+            ],
+            "requestedURL": "https://www.ebi.ac.uk/proteins/api/features/P69905?categories=P,T,M&types=C,A,R,B,O,H,Y,D"
+          },
+          "status_code": 400,
+          "url": "https://www.ebi.ac.uk/proteins/api/features/P69905?categories=P%2CT%2CM&types=C%2CA%2CR%2CB%2CO%2CH%2CY%2CD"
+        },
+        "status": "ok",
+        "tool": "get_uniprot_protein_sequence_features_by_accession",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "accession": "P69905",
+          "categories": [
+            "PTM"
+          ],
+          "types": [
+            "CARBOHYD"
+          ]
+        },
+        "error": null,
+        "expected_tool": false,
+        "id": "tool_4",
+        "result": {
+          "data": {
+            "accession": "P69905",
+            "entryName": "HBA_HUMAN",
+            "features": [
+              {
+                "begin": "8",
+                "category": "PTM",
+                "description": "N-linked (Glc) (glycation) lysine; alternate",
+                "end": "8",
+                "evidences": [
+                  {
+                    "code": "ECO:0000269",
+                    "source": {
+                      "alternativeUrl": "https://europepmc.org/abstract/MED/7358733",
+                      "id": "7358733",
+                      "name": "PubMed",
+                      "url": "http://www.ncbi.nlm.nih.gov/pubmed/7358733"
+                    }
+                  }
+                ],
+                "ftId": "",
+                "molecule": "",
+                "type": "CARBOHYD"
+              },
+              {
+                "begin": "17",
+                "category": "PTM",
+                "description": "N-linked (Glc) (glycation) lysine; alternate",
+                "end": "17",
+                "evidences": [
+                  {
+                    "code": "ECO:0000269",
+                    "source": {
+                      "alternativeUrl": "https://europepmc.org/abstract/MED/7358733",
+                      "id": "7358733",
+                      "name": "PubMed",
+                      "url": "http://www.ncbi.nlm.nih.gov/pubmed/7358733"
+                    }
+                  }
+                ],
+                "ftId": "",
+                "molecule": "",
+                "type": "CARBOHYD"
+              },
+              {
+                "begin": "41",
+                "category": "PTM",
+                "description": "N-linked (Glc) (glycation) lysine; alternate",
+                "end": "41",
+                "evidences": [
+                  {
+                    "code": "ECO:0000269",
+                    "source": {
+                      "alternativeUrl": "https://europepmc.org/abstract/MED/7358733",
+                      "id": "7358733",
+                      "name": "PubMed",
+                      "url": "http://www.ncbi.nlm.nih.gov/pubmed/7358733"
+                    }
+                  }
+                ],
+                "ftId": "",
+                "molecule": "",
+                "type": "CARBOHYD"
+              },
+              {
+                "begin": "62",
+                "category": "PTM",
+                "description": "N-linked (Glc) (glycation) lysine",
+                "end": "62",
+                "evidences": [
+                  {
+                    "code": "ECO:0000269",
+                    "source": {
+                      "alternativeUrl": "https://europepmc.org/abstract/MED/7358733",
+                      "id": "7358733",
+                      "name": "PubMed",
+                      "url": "http://www.ncbi.nlm.nih.gov/pubmed/7358733"
+                    }
+                  }
+                ],
+                "ftId": "",
+                "molecule": "",
+                "type": "CARBOHYD"
+              }
+            ],
+            "sequence": "MVLSPADKTNVKAAWGKVGAHAGEYGAEALERMFLSFPTTKTYFPHFDLSHGSAQVKGHGKKVADALTNAVAHVDDMPNALSALSDLHAHKLRVDPVNFKLLSHCLLVTLAAHLPAEFTPAVHASLDKFLASVSTVLTSKYR",
+            "sequenceChecksum": "15E13666573BBBAE",
+            "taxid": 9606
+          },
+          "status_code": 200,
+          "url": "https://www.ebi.ac.uk/proteins/api/features/P69905?categories=PTM&types=CARBOHYD"
+        },
+        "status": "ok",
+        "tool": "get_uniprot_protein_sequence_features_by_accession",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 4
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "62dbc37a17d433b8eac5341f2a88f68e3b819457c3fa31cea8ba6163f2d22e6e",
+  "judge_transport_error": null,
+  "parsed_judge": null,
+  "prompt_sha256": "a3bd9cfe7e807c421841669adc6630a2eef5a02b5e0cf370f3e32e951a41b7ac",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": null,
+  "reason_codes": [
+    "missing_final_answer"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "deepseek_flash_qoder_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "36d7f40b98c5c82e71544d237f1779cb8d50517e74d8373859cdb7707c79100a",
+    "run_summary_sha256": "04a76a4061afa6cee82d14583921e890f54c0244ea74a21d74893fe03cd44d98",
+    "run_task_sha256": "9fe83dfd2c8d9e9fb213a4e5b65bc664439bc26d6b8aef9647e49c51055f2c67",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "missing_answer",
+  "task_id": 22
+}

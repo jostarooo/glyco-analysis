@@ -1,0 +1,53 @@
+{
+  "cache_key": "768ec5d33f0f3c12f2a329013d83f99e46eb653bdfa2610328f48775a1fca319",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "external: ExternalChatError: http_error: status=429 body={\"error\":{\"code\":null,\"message\":\"OpenCode Zen: Free usage limit reached. Free models work in OpenCode (https://opencode.ai); subscribe to OpenCode Go to keep going: https://opencode.ai/go (out of its allowance: not asked again before 13:13 UTC+8)\",\"param\":null,\"type\":\"rate_limit_error\"}}\n"
+    ],
+    "evidence_ids": [],
+    "expected_tool_called": false,
+    "flags": [
+      "missing_final_answer",
+      "no_tool_calls",
+      "expected_tool_not_called",
+      "runner_errors"
+    ],
+    "has_final_answer": false,
+    "successful_result_tool_calls": 0,
+    "successful_tool_calls": 0,
+    "tool_calls": 0,
+    "tool_evidence": [],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 0
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "62dbc37a17d433b8eac5341f2a88f68e3b819457c3fa31cea8ba6163f2d22e6e",
+  "judge_transport_error": null,
+  "parsed_judge": null,
+  "prompt_sha256": "00ea64e4ade1e7e0a94d2db62e020776244bb70636c193221612cac7974cfddd",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": null,
+  "reason_codes": [
+    "missing_final_answer"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "deepseek_v41_flash_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "7d5e63ccf673bdff4426d9bf846a5677d8c53cbb48aca852c62a875f835dc7f6",
+    "run_summary_sha256": "44b9d3df0bac0f15b69383160f5eb6630809976183bb2ee7f684abc342263803",
+    "run_task_sha256": "ddffce44f849aa9336b864151a97940e250368e00c9d45be6034c886fc8d7526",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "missing_answer",
+  "task_id": 32
+}

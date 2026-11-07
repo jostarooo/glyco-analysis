@@ -1,0 +1,123 @@
+{
+  "cache_key": "65fea2c7c8ee83b5e7e7d93da8b3325338cdf5235f21082deeb3f74b05721ace",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "ReadTimeout: HTTPSConnectionPool(host='api.glycosmos.org', port=443): Read timed out. (read timeout=50)",
+      "partial_match_wurcs_rdf: ReadTimeout: HTTPSConnectionPool(host='api.glycosmos.org', port=443): Read timed out. (read timeout=50)",
+      "max_rounds_reached"
+    ],
+    "evidence_ids": [
+      "tool_1",
+      "tool_2",
+      "tool_3",
+      "tool_4"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "missing_final_answer",
+      "tool_errors",
+      "runner_errors"
+    ],
+    "has_final_answer": false,
+    "successful_result_tool_calls": 3,
+    "successful_tool_calls": 3,
+    "tool_calls": 4,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "composition": "Neu5Ac(1)Hex(3)HexNAc(2)Fuc(1)"
+        },
+        "error": null,
+        "expected_tool": false,
+        "id": "tool_1",
+        "result": {
+          "data": {
+            "message": "500 Internal Server Error"
+          },
+          "status_code": 500,
+          "url": "https://api.glycosmos.org/glycancompositionconverter/1.0.0/composition2wurcs/Neu5Ac%281%29Hex%283%29HexNAc%282%29Fuc%281%29"
+        },
+        "status": "ok",
+        "tool": "convert_composition_to_wurcs",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "text": "Neu5Ac(1)Hex(3)HexNAc(2)Fuc(1)"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": [
+          {
+            "message": "Accession not found.",
+            "wurcs": "WURCS=2.0/4,7,6/[Aad21122h-2x_2-6_5*NCC/3=O][axxxxh-1x_1-5_2*NCC/3=O][axxxxh-1x_1-5][a1221m-1x_1-5]/1-2-2-3-3-3-4/a?|b?|c?|d?|e?|f?|g?}-{a?|b?|c?|d?|e?|f?|g?_a?|b?|c?|d?|e?|f?|g?}-{a?|b?|c?|d?|e?|f?|g?_a?|b?|c?|d?|e?|f?|g?}-{a?|b?|c?|d?|e?|f?|g?_a?|b?|c?|d?|e?|f?|g?}-{a?|b?|c?|d?|e?|f?|g?_a?|b?|c?|d?|e?|f?|g?}-{a?|b?|c?|d?|e?|f?|g?_a?|b?|c?|d?|e?|f?|g?}-{a?|b?|c?|d?|e?|f?|g?"
+          }
+        ],
+        "status": "ok",
+        "tool": "convert_composition_text_to_wurcs_format",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "wurcs": "WURCS=2.0/4,7,6/[Aad21122h-2x_2-6_5*NCC/3=O][axxxxh-1x_1-5_2*NCC/3=O][axxxxh-1x_1-5][a1221m-1x_1-5]/1-2-2-3-3-3-4/a?|b?|c?|d?|e?|f?|g?}-{a?|b?|c?|d?|e?|f?|g?_a?|b?|c?|d?|e?|f?|g?}-{a?|b?|c?|d?|e?|f?|g?_a?|b?|c?|d?|e?|f?|g?}-{a?|b?|c?|d?|e?|f?|g?_a?|b?|c?|d?|e?|f?|g?}-{a?|b?|c?|d?|e?|f?|g?_a?|b?|c?|d?|e?|f?|g?}-{a?|b?|c?|d?|e?|f?|g?_a?|b?|c?|d?|e?|f?|g?}-{a?|b?|c?|d?|e?|f?|g?"
+        },
+        "error": null,
+        "expected_tool": false,
+        "id": "tool_3",
+        "result": [
+          {
+            "message": "Accession not found."
+          }
+        ],
+        "status": "ok",
+        "tool": "obtain_glytoucan_id_from_wurcs",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "wurcs": "WURCS=2.0/4,7,6/[Aad21122h-2x_2-6_5*NCC/3=O][axxxxh-1x_1-5_2*NCC/3=O][axxxxh-1x_1-5][a1221m-1x_1-5]/1-2-2-3-3-3-4/a?|b?|c?|d?|e?|f?|g?}-{a?|b?|c?|d?|e?|f?|g?_a?|b?|c?|d?|e?|f?|g?}-{a?|b?|c?|d?|e?|f?|g?_a?|b?|c?|d?|e?|f?|g?}-{a?|b?|c?|d?|e?|f?|g?_a?|b?|c?|d?|e?|f?|g?}-{a?|b?|c?|d?|e?|f?|g?_a?|b?|c?|d?|e?|f?|g?}-{a?|b?|c?|d?|e?|f?|g?_a?|b?|c?|d?|e?|f?|g?}-{a?|b?|c?|d?|e?|f?|g?"
+        },
+        "error": "ReadTimeout: HTTPSConnectionPool(host='api.glycosmos.org', port=443): Read timed out. (read timeout=50)",
+        "expected_tool": false,
+        "id": "tool_4",
+        "result": null,
+        "status": "error",
+        "tool": "partial_match_wurcs_rdf",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 3
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "62dbc37a17d433b8eac5341f2a88f68e3b819457c3fa31cea8ba6163f2d22e6e",
+  "judge_transport_error": null,
+  "parsed_judge": null,
+  "prompt_sha256": "15ca604ad6e97cf3199052bc73d901053ed37c789d25918ffecd9a46b8a78cd9",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": null,
+  "reason_codes": [
+    "missing_final_answer"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "deepseek_flash_qoder_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "ce2f6a27b38f54f035037a26c51bf9699906e9403537ae93aec2c8ce2d78011c",
+    "run_summary_sha256": "04a76a4061afa6cee82d14583921e890f54c0244ea74a21d74893fe03cd44d98",
+    "run_task_sha256": "90d53934a6dcaabda8feac50b487dc03ce3a4929da6a0f6158980814eb41aa69",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "missing_answer",
+  "task_id": 21
+}

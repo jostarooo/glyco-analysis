@@ -1,0 +1,124 @@
+{
+  "cache_key": "6ed97eec7f11afa38d240b550770b2553f9a5024e759d717dc551ea1450740a9",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "ConnectionError: ('Connection aborted.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None))",
+      "validate_composition_for_glycosylation: ConnectionError: ('Connection aborted.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None))"
+    ],
+    "evidence_ids": [
+      "answer",
+      "tool_1",
+      "tool_2",
+      "tool_3"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "tool_errors",
+      "runner_errors"
+    ],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 2,
+    "successful_tool_calls": 2,
+    "tool_calls": 3,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "wurcs": "WURCS=2.0/3,5,4/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3-3/a4-b1_b4-c1_c3-d1_c6-e1"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": [
+            {
+              "input": "WURCS=2.0/3,5,4/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3-3/a4-b1_b4-c1_c3-d1_c6-e1",
+              "mass": 910.32778
+            }
+          ],
+          "status_code": 200,
+          "url": "https://api.glycosmos.org/wurcsframework/1.2.14/wurcs2mass"
+        },
+        "status": "ok",
+        "tool": "calculate_mass_from_wurcs",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "wurcs": "WURCS=2.0/3,5,4/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3-3/a4-b1_b4-c1_c3-d1_c6-e1"
+        },
+        "error": "ConnectionError: ('Connection aborted.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None))",
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": null,
+        "status": "error",
+        "tool": "validate_composition_for_glycosylation",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "wurcs": "WURCS=2.0/3,5,4/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3-3/a4-b1_b4-c1_c3-d1_c6-e1"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_3",
+        "result": {
+          "data": [
+            {
+              "input": "WURCS=2.0/3,5,4/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3-3/a4-b1_b4-c1_c3-d1_c6-e1",
+              "valid": true
+            }
+          ],
+          "status_code": 200,
+          "url": "https://api.glycosmos.org/wurcsframework/1.2.14/compositionvalidator"
+        },
+        "status": "ok",
+        "tool": "validate_composition_for_glycosylation",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 2
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "947ffd5206cfa864a6f50b1b2300d15679d1f64be2958ac6aa515d7cb35cce74",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "Tool use fully supported the answer: calculate_mass_from_wurcs returned 910.32778 Da (tool_1), and validate_composition_for_glycosylation succeeded on retry with valid: true (tool_3) after one connection error (tool_2). The answer faithfully reflects both tool outputs.",
+    "critical_issues": [],
+    "decision": "SUCCESS",
+    "evidence_ids": [
+      "answer",
+      "tool_1",
+      "tool_3"
+    ],
+    "reason": "The final answer reports the calculated mass (910.32778 Da), which exactly matches the calculate_mass_from_wurcs tool output (tool_1), and reports the validation result as valid: true, indicating glycosylation suitability, which matches the successful validate_composition_for_glycosylation output (tool_3). Both expected tool results are present and accurately conveyed, with the transient connection error (tool_2) transparently noted and resolved by the successful retry.",
+    "scientific_accuracy": "accurate"
+  },
+  "prompt_sha256": "5735280201c2fc56b0437f824b0c52dc16ee811f53021368b33f6977cf6bbb99",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\n  \"decision\": \"SUCCESS\",\n  \"reason\": \"The final answer reports the calculated mass (910.32778 Da), which exactly matches the calculate_mass_from_wurcs tool output (tool_1), and reports the validation result as valid: true, indicating glycosylation suitability, which matches the successful validate_composition_for_glycosylation output (tool_3). Both expected tool results are present and accurately conveyed, with the transient connection error (tool_2) transparently noted and resolved by the successful retry.\",\n  \"critical_issues\": [],\n  \"scientific_accuracy\": \"accurate\",\n  \"api_usage_assessment\": \"Tool use fully supported the answer: calculate_mass_from_wurcs returned 910.32778 Da (tool_1), and validate_composition_for_glycosylation succeeded on retry with valid: true (tool_3) after one connection error (tool_2). The answer faithfully reflects both tool outputs.\",\n  \"evidence_ids\": [\"answer\", \"tool_1\", \"tool_3\"]\n}",
+  "reason_codes": [
+    "judge_success",
+    "successful_tool_evidence"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "deepseek_flash_qoder_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "dbda594704de474d17108742d2955af90130ffaa052bc3a8efe7585b8ae37027",
+    "run_summary_sha256": "04a76a4061afa6cee82d14583921e890f54c0244ea74a21d74893fe03cd44d98",
+    "run_task_sha256": "60f55f319f463a0c651c79a56691611acce01adf39b1873263ed2d60581d1de6",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "correct",
+  "task_id": 38
+}

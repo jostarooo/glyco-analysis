@@ -1,0 +1,110 @@
+{
+  "cache_key": "7d75108ec17386399c1b0d7f0fe36a00766314d2d45ce785a06d757a832111fc",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "invalid_action: "
+    ],
+    "evidence_ids": [
+      "tool_1",
+      "tool_2",
+      "tool_3"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "missing_final_answer",
+      "runner_errors"
+    ],
+    "has_final_answer": false,
+    "successful_result_tool_calls": 3,
+    "successful_tool_calls": 3,
+    "tool_calls": 3,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "consequencetype": "missense",
+          "hgvs": "NC_000017.11:g.58223910G>A"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": [],
+          "status_code": 200,
+          "url": "https://www.ebi.ac.uk/proteins/api/variation/hgvs/NC_000017.11%3Ag.58223910G%3EA?offset=0&size=100&consequencetype=missense"
+        },
+        "status": "ok",
+        "tool": "get_natural_variants_by_hgvs_expression",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "hgvs": "NC_000017.11:g.58223910G>A"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": {
+          "data": [],
+          "status_code": 200,
+          "url": "https://www.ebi.ac.uk/proteins/api/variation/hgvs/NC_000017.11%3Ag.58223910G%3EA?offset=0&size=100"
+        },
+        "status": "ok",
+        "tool": "get_natural_variants_by_hgvs_expression",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "hgvs": "g.58223910G>A"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_3",
+        "result": {
+          "data": {
+            "errorMessage": [
+              "Invalid HGVS representation should start with rs."
+            ],
+            "requestedURL": "https://www.ebi.ac.uk/proteins/api/variation/hgvs/g.58223910G%3EA?offset=0&size=100"
+          },
+          "status_code": 400,
+          "url": "https://www.ebi.ac.uk/proteins/api/variation/hgvs/g.58223910G%3EA?offset=0&size=100"
+        },
+        "status": "ok",
+        "tool": "get_natural_variants_by_hgvs_expression",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 3
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "62dbc37a17d433b8eac5341f2a88f68e3b819457c3fa31cea8ba6163f2d22e6e",
+  "judge_transport_error": null,
+  "parsed_judge": null,
+  "prompt_sha256": "9b5553b400e1752df221ca48e7977f0dd755c6dac1abc37be2c1a4f4dea1c177",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": null,
+  "reason_codes": [
+    "missing_final_answer"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "deepseek_v41_flash_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "6bbf6f650c1328104e8cc30a62c0826243cb5dbdc3fcd2a82c16cdb346374adb",
+    "run_summary_sha256": "44b9d3df0bac0f15b69383160f5eb6630809976183bb2ee7f684abc342263803",
+    "run_task_sha256": "f8bf413b4d1db57a37d0bdb47607a01542aa2f1db19e3b3a035d883af96c44f8",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "missing_answer",
+  "task_id": 18
+}

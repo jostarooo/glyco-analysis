@@ -1,0 +1,133 @@
+{
+  "cache_key": "543b5c65df4cc36cf95d5c4f6c9352b5e7187be57f35fc8aca843c75325d3a68",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "max_rounds_reached"
+    ],
+    "evidence_ids": [
+      "tool_1",
+      "tool_2",
+      "tool_3",
+      "tool_4"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "missing_final_answer",
+      "truncated_results",
+      "runner_errors"
+    ],
+    "has_final_answer": false,
+    "successful_result_tool_calls": 4,
+    "successful_tool_calls": 4,
+    "tool_calls": 4,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "accession": "P12345",
+          "size": 50,
+          "upid": "UP000005640"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": [],
+          "status_code": 200,
+          "url": "https://www.ebi.ac.uk/proteins/api/genecentric?offset=0&size=50&upid=UP000005640&accession=P12345"
+        },
+        "status": "ok",
+        "tool": "search_gene_centric_proteins",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "accession": "P12345"
+        },
+        "error": null,
+        "expected_tool": false,
+        "id": "tool_2",
+        "result": {
+          "data": {
+            "gene": {
+              "accession": "P12345",
+              "entryType": "Swiss-Prot",
+              "geneName": "GOT2",
+              "geneNameType": "Gene name",
+              "length": 430
+            }
+          },
+          "status_code": 200,
+          "url": "https://www.ebi.ac.uk/proteins/api/genecentric/P12345"
+        },
+        "status": "ok",
+        "tool": "get_gene_centric_proteins_by_uniprot_accession",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "size": 50,
+          "upid": "UP000005640"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_3",
+        "result": {
+          "preview": "{\"status_code\": 200, \"url\": \"https://www.ebi.ac.uk/proteins/api/genecentric?offset=0&size=50&upid=UP000005640\", \"data\": [{\"gene\": {\"accession\": \"Q96PU8\", \"entryType\": \"Swiss-Prot\", \"length\": 341, \"geneName\": \"HGNC:21100\", \"geneNameType\": \"MOD\"}, \"relatedGene\": [{\"accession\": \"A0ACP2FM54\", \"entryType\": \"TrEMBL\", \"length\": 54, \"geneName\": \"QKI\", \"geneNameType\": \"Gene name\"}, {\"accession\": \"F5H8C8\", \"entryType\": \"TrEMBL\", \"length\": 100, \"geneName\": \"HGNC:21100\", \"geneNameType\": \"MOD\"}, {\"accession\": \"Q96PU8-9\", \"entryType\": \"Swiss-Prot\", \"length\": 319, \"geneName\": \"QKI\", \"geneNameType\": \"Gene name\"}, {\"accession\": \"A0ACI8UEC7\", \"entryType\": \"TrEMBL\", \"length\": 216, \"geneName\": \"HGNC:21100\", \"geneNameType\": \"MOD\"}, {\"accession\": \"A0ACI8TL54\", \"entryType\": \"TrEMBL\", \"length\": 308, \"geneName\": \"HGNC:21100\", \"geneNameType\": \"MOD\"}, {\"accession\": \"A0ACP2C558\", \"entryType\": \"TrEMBL\", \"length\": 48, \"geneName\": \"HGNC:21100\", \"geneNameType\": \"MOD\"}, {\"accession\": \"A0ACP2C535\", \"entryType\": \"TrEMBL\", \"length\": 318, \"geneName\": \"ENSG00000112531\", \"geneNameType\": \"Ensembl\"}, {\"accession\": \"H0YGD6\", \"entryType\": \"TrEMBL\", \"length\": 185, \"geneName\": \"HGNC:21100\", \"geneNameType\": \"MOD\"}, {\"accession\": \"A0ACP2B9E3\", \"entryType\": \"TrEMBL\", \"length\": 48, \"geneName\": \"HGNC:21100\", \"geneNameType\": \"MOD\"}, {\"accession\": \"A0ACI8RIF0\", \"entryType\": \"TrEMBL\", \"length\": 285, \"geneName\": \"ENSG00000112531\", \"geneNameType\": \"Ensembl\"}, {\"accession\": \"A0ACI8QTS0\", \"entryType\": \"TrEMBL\", \"length\": 293, \"geneName\": \"QKI\", \"geneNameType\": \"Gene name\"}, {\"accession\": \"A0ACP2IZB7\", \"entryType\": \"TrEMBL\", \"length\": 219, \"geneName\": \"QKI\", \"geneNameType\": \"Gene name\"}, {\"accession\": \"H0YGD6\", \"entryType\": \"TrEMBL\", \"length\": 185, \"geneName\": \"ENSG00000112531\", \"geneNameType\": \"Ensembl\"}, {\"accession\": \"A0ACP2C553\", \"entryType\": \"TrEMBL\", \"length\": 269, \"geneName\": \"ENSG00000112531\", \"geneNameType\": \"Ensembl\"}, {\"accession\": \"A0ACP2C554\", \"entryType\": \"TrEMBL\", \"length\": 96, \"geneName\": \"ENSG00000112531\", \"geneNameType\": \"Ensembl\"}, {\"accession\": \"Q96PU8-8\", \"entryType\": \"Swiss-Prot\", \"length\": 319, \"geneName\": \"QKI\", \"geneNameType\": \"Gene name\"}, {\"accession\": \"Q96PU8-3\", \"entryType\": \"Swiss-Prot\", \"length\": 333, \"geneName\": \"QKI\", \"geneNameType\": \"Gene name\"}, {\"accession\": \"F5GYM3\", \"entryType\": \"TrEMBL\", \"length\": 170, \"geneName\": \"ENSG00000112531\", \"geneNameType\": \"Ensembl\"}, {\"accession\": \"A0ACI8RIF0\", \"entryType\": \"TrEMBL\", \"length\": 285, \"geneName\": \"QKI\", \"geneNameType\": \"Gene name\"}, {\"accession\": \"A0ACP2FMN0\", \"entryType\": \"TrEMBL\", \"length\": 271, \"geneName\": \"ENSG00000112531\", \"geneNameType\": \"Ensembl\"}, {\"accession\": \"A0ACP2B9E3\", \"entryType\": \"TrEMBL\", \"length\": 48, \"geneName\": \"ENSG00000112531\", \"geneNameType\": \"Ensembl\"}, {\"accession\": \"F5GYT7\", \"entryType\": \"TrEMBL\", \"length\": 41, \"geneName\": \"ENSG00000112531\", \"geneNameType\": \"Ensembl\"}, {\"accession\": \"A0ACP2C560\", \"entryType\": \"TrEMBL\", \"length\": 48, \"geneName\": \"ENSG00000112531\", \"geneNameType\": \"Ensembl\"}, {\"accession\": \"A0ACI8UER1\", \"entryType\": \"TrEMBL\", \"length\": 369, \"geneName\": \"QKI\", \"geneNameType\": \"Gene name\"}, {\"accession\": \"A0ACI8TKY5\", \"entryType\": \"TrEMBL\", \"length\": 338, \"geneName\": \"QKI\", \"geneNameType\": \"Gene name\"}, {\"accession\": \"A0ACP2C561\", \"entryType\": \"TrEMBL\", \"length\": 310, \"geneName\": \"ENSG00000112531\", \"geneNameType\": \"Ensembl\"}, {\"accession\": \"Q96PU8-6\", \"entryType\": \"Swiss-Prot\", \"length\": 325, \"geneName\": \"QKI\", \"geneNameType\": \"Gene name\"}, {\"accession\": \"A0ACP2FMI9\", \"entryType\": \"TrEMBL\", \"length\": 187, \"geneName\": \"ENSG00000112531\", \"geneNameType\": \"Ensembl\"}, {\"accession\": \"A0ACP2C570\", \"entryType\": \"TrEMBL\", \"length\": 96, \"geneName\": \"QKI\", \"geneNameType\": \"Gene name\"}, {\"accession\": \"A0ACP2C564\", \"entryType\": \"TrEMBL\", \"length\": 48, \"geneName\": \"QKI\", \"geneNameType\": \"Gene name\"}, {\"accession\": \"A0ACP2C543\", \"entryType\": \"TrEMBL\", \"length\": 318, \"geneName\": \"ENSG00000112531\", \"geneNameType\": \"Ensembl\"}, {\"accession\": \"A0ACP2IZ80\", \"entryType\": \"TrEMBL\", \"length\": 305, \"geneName\": \"HGNC:21100\", \"geneNameType\": \"MOD\"}, {\"accession\": \"F5GYT7\", \"entryType\": \"TrEMBL\", \"length\": 41, \"geneName\": \"QKI\", \"geneNameType\": \"Gene name\"}, {\"accession\": \"A0ACP2C558\", \"entryType\": \"TrEMBL\", \"length\": 48, \"geneName\": \"QKI\", \"geneNameType\": \"Gene name\"}, {\"accession\": \"A0ACI8TKZ0\", \"entryType\": \"TrEMBL\", \"length\": 340, \"geneName\": \"HGNC:21100\", \"geneNameType\": \"MOD\"}, {\"accession\": \"A0ACI8UI44\", \"entryType\": \"TrEMBL\", \"length\": 332, \"geneName\": \"ENSG00000112531\", \"geneNameType\": \"Ensembl\"}, {\"accession\": \"A0ACI8UEC7\", \"entryType\": \"TrEMBL\", \"length\": 216, \"geneName\": \"ENSG00000112531\", \"geneNameType\": \"Ensembl\"}, {\"accession\": \"F5GXS8\", \"entryType\": \"TrEMBL\", \"length\": 160, \"geneName\": \"QKI\", \"geneNameType\": \"Gene name\"}, {\"accession\": \"A0ACP2C531\", \"entryType\": \"TrEMBL\", \"length\": 316, \"geneName\": \"HGNC:21100\", \"geneNameType\": \"MOD\"}, {\"accession\": \"A0ACI8UHA9\", \"entryType\": \"TrEMBL\", \"length\": 316, \"geneName\": \"QKI\", \"geneNameType\": \"Gene name\"}, {\"accession\": \"A0ACP2C554\", \"entryType\": \"TrEMBL\", \"length\": 96, \"geneName\": \"QKI\", \"geneNameType\": \"Gene name\"}, {\"accession\": \"H0YGD6\", \"entryType\": \"TrEMBL\", \"length\": 185, \"geneName\": \"QKI\", \"geneNameType\": \"Gene name\"}, {\"accession\": \"F5H8C8\", \"entryType\": \"TrEMBL\", \"length\": 100, \"geneName\": \"QKI\", \"geneNameType\": \"Gene name\"}, {\"accession\": \"A0ACI8UI44\", \"entryType\": \"TrEMBL\", \"length\": 332, \"geneName\": \"QKI\", \"geneNameType\": \"Gene name\"}, {\"accession\": \"A0ACI8RIF0\", \"entryType\": \"TrEMBL\", \"length\": 285, \"geneName\": \"HGNC:21100\", \"geneNameType\": \"MOD\"}, {\"accession\": \"A0ACI8UI42\", \"entryType\": \"TrEMBL\", \"length\": 294, \"geneName\": \"ENSG00000112531\", \"geneNameType\": \"Ensembl\"}, {\"accession\": \"A0ACI8Q1P4\", \"entryType\": \"TrEMBL\", \"length\": 340, \"geneName\": \"HGNC:21100\", \"geneNameType\": \"MOD\"}, {\"accession\": \"A0ACP2C561\", \"entryType\": \"TrEMBL\", \"length\": 310, \"geneName\": \"HGNC:21100\", \"geneNameType\": \"MOD\"}, {\"accession\": \"H0YG47\", \"entryType\": \"TrEMBL\", \"length\": 238, \"geneName\": \"QKI\", \"gene",
+          "truncated": true
+        },
+        "status": "ok",
+        "tool": "search_gene_centric_proteins",
+        "truncated": true
+      },
+      {
+        "arguments": {
+          "gene": "GOT2",
+          "size": 50,
+          "upid": "UP000005640"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_4",
+        "result": {
+          "preview": "{\"status_code\": 200, \"url\": \"https://www.ebi.ac.uk/proteins/api/genecentric?offset=0&size=50&upid=UP000005640&gene=GOT2\", \"data\": [{\"gene\": {\"accession\": \"P00505\", \"entryType\": \"Swiss-Prot\", \"length\": 430, \"geneName\": \"HGNC:4433\", \"geneNameType\": \"MOD\"}, \"relatedGene\": [{\"accession\": \"A0ACI8UY08\", \"entryType\": \"TrEMBL\", \"length\": 467, \"geneName\": \"HGNC:4433\", \"geneNameType\": \"MOD\"}, {\"accession\": \"H3BRE7\", \"entryType\": \"TrEMBL\", \"length\": 59, \"geneName\": \"HGNC:4433\", \"geneNameType\": \"MOD\"}, {\"accession\": \"A0ACI8PP77\", \"entryType\": \"TrEMBL\", \"length\": 425, \"geneName\": \"ENSG00000125166\", \"geneNameType\": \"Ensembl\"}, {\"accession\": \"A0ACI8UXZ9\", \"entryType\": \"TrEMBL\", \"length\": 341, \"geneName\": \"GOT2\", \"geneNameType\": \"Gene name\"}, {\"accession\": \"A0ACP2BZS8\", \"entryType\": \"TrEMBL\", \"length\": 249, \"geneName\": \"GOT2\", \"geneNameType\": \"Gene name\"}, {\"accession\": \"A0ACP2GBA7\", \"entryType\": \"TrEMBL\", \"length\": 209, \"geneName\": \"GOT2\", \"geneNameType\": \"Gene name\"}, {\"accession\": \"A0ACI8QZW1\", \"entryType\": \"TrEMBL\", \"length\": 379, \"geneName\": \"ENSG00000125166\", \"geneNameType\": \"Ensembl\"}, {\"accession\": \"A0ACP2HPG7\", \"entryType\": \"TrEMBL\", \"length\": 414, \"geneName\": \"ENSG00000125166\", \"geneNameType\": \"Ensembl\"}, {\"accession\": \"A0ACI8PCD3\", \"entryType\": \"TrEMBL\", \"length\": 439, \"geneName\": \"HGNC:4433\", \"geneNameType\": \"MOD\"}, {\"accession\": \"A0ACP2E3H7\", \"entryType\": \"TrEMBL\", \"length\": 399, \"geneName\": \"HGNC:4433\", \"geneNameType\": \"MOD\"}, {\"accession\": \"A0ACI8UY38\", \"entryType\": \"TrEMBL\", \"length\": 428, \"geneName\": \"HGNC:4433\", \"geneNameType\": \"MOD\"}, {\"accession\": \"A0ACI8STP9\", \"entryType\": \"TrEMBL\", \"length\": 405, \"geneName\": \"ENSG00000125166\", \"geneNameType\": \"Ensembl\"}, {\"accession\": \"A0ACP2E3H7\", \"entryType\": \"TrEMBL\", \"length\": 399, \"geneName\": \"GOT2\", \"geneNameType\": \"Gene name\"}, {\"accession\": \"P00505\", \"entryType\": \"Swiss-Prot\", \"length\": 430, \"geneName\": \"ENSG00000125166\", \"geneNameType\": \"Ensembl\"}, {\"accession\": \"A0ACP2GBD7\", \"entryType\": \"TrEMBL\", \"length\": 237, \"geneName\": \"HGNC:4433\", \"geneNameType\": \"MOD\"}, {\"accession\": \"A0ACI8Q954\", \"entryType\": \"TrEMBL\", \"length\": 274, \"geneName\": \"GOT2\", \"geneNameType\": \"Gene name\"}, {\"accession\": \"A0ACP2E3I7\", \"entryType\": \"TrEMBL\", \"length\": 448, \"geneName\": \"ENSG00000125166\", \"geneNameType\": \"Ensembl\"}, {\"accession\": \"A0ACI8UY08\", \"entryType\": \"TrEMBL\", \"length\": 467, \"geneName\": \"GOT2\", \"geneNameType\": \"Gene name\"}, {\"accession\": \"A0ACP2GBD7\", \"entryType\": \"TrEMBL\", \"length\": 237, \"geneName\": \"ENSG00000125166\", \"geneNameType\": \"Ensembl\"}, {\"accession\": \"A0ACP2H2W7\", \"entryType\": \"TrEMBL\", \"length\": 127, \"geneName\": \"GOT2\", \"geneNameType\": \"Gene name\"}, {\"accession\": \"A0ACP2E3H2\", \"entryType\": \"TrEMBL\", \"length\": 59, \"geneName\": \"HGNC:4433\", \"geneNameType\": \"MOD\"}, {\"accession\": \"A0ACI8QZW1\", \"entryType\": \"TrEMBL\", \"length\": 379, \"geneName\": \"HGNC:4433\", \"geneNameType\": \"MOD\"}, {\"accession\": \"A0ACP2E3U9\", \"entryType\": \"TrEMBL\", \"length\": 110, \"geneName\": \"HGNC:4433\", \"geneNameType\": \"MOD\"}, {\"accession\": \"A0ACP2BZR3\", \"entryType\": \"TrEMBL\", \"length\": 343, \"geneName\": \"GOT2\", \"geneNameType\": \"Gene name\"}, {\"accession\": \"A0ACP2GB99\", \"entryType\": \"TrEMBL\", \"length\": 138, \"geneName\": \"ENSG00000125166\", \"geneNameType\": \"Ensembl\"}, {\"accession\": \"H3BRE7\", \"entryType\": \"TrEMBL\", \"length\": 59, \"geneName\": \"ENSG00000125166\", \"geneNameType\": \"Ensembl\"}, {\"accession\": \"A0ACP2BZQ7\", \"entryType\": \"TrEMBL\", \"length\": 127, \"geneName\": \"GOT2\", \"geneNameType\": \"Gene name\"}, {\"accession\": \"A0ACP2I237\", \"entryType\": \"TrEMBL\", \"length\": 340, \"geneName\": \"GOT2\", \"geneNameType\": \"Gene name\"}, {\"accession\": \"H3BRE7\", \"entryType\": \"TrEMBL\", \"length\": 59, \"geneName\": \"GOT2\", \"geneNameType\": \"Gene name\"}, {\"accession\": \"A0ACI8RJ11\", \"entryType\": \"TrEMBL\", \"length\": 376, \"geneName\": \"HGNC:4433\", \"geneNameType\": \"MOD\"}, {\"accession\": \"A0ACI8QGU3\", \"entryType\": \"TrEMBL\", \"length\": 395, \"geneName\": \"ENSG00000125166\", \"geneNameType\": \"Ensembl\"}, {\"accession\": \"A0ACP2GBC9\", \"entryType\": \"TrEMBL\", \"length\": 237, \"geneName\": \"HGNC:4433\", \"geneNameType\": \"MOD\"}, {\"accession\": \"A0ACP2H2W7\", \"entryType\": \"TrEMBL\", \"length\": 127, \"geneName\": \"HGNC:4433\", \"geneNameType\": \"MOD\"}, {\"accession\": \"A0ACI8UX74\", \"entryType\": \"TrEMBL\", \"length\": 344, \"geneName\": \"GOT2\", \"geneNameType\": \"Gene name\"}, {\"accession\": \"A0ACP2GBA7\", \"entryType\": \"TrEMBL\", \"length\": 209, \"geneName\": \"HGNC:4433\", \"geneNameType\": \"MOD\"}, {\"accession\": \"A0ACP2H319\", \"entryType\": \"TrEMBL\", \"length\": 240, \"geneName\": \"GOT2\", \"geneNameType\": \"Gene name\"}, {\"accession\": \"A0ACI8STR8\", \"entryType\": \"TrEMBL\", \"length\": 428, \"geneName\": \"GOT2\", \"geneNameType\": \"Gene name\"}, {\"accession\": \"A0ACI8QHF6\", \"entryType\": \"TrEMBL\", \"length\": 385, \"geneName\": \"HGNC:4433\", \"geneNameType\": \"MOD\"}, {\"accession\": \"A0ACP2I237\", \"entryType\": \"TrEMBL\", \"length\": 340, \"geneName\": \"HGNC:4433\", \"geneNameType\": \"MOD\"}, {\"accession\": \"A0ACP2H2W7\", \"entryType\": \"TrEMBL\", \"length\": 127, \"geneName\": \"ENSG00000125166\", \"geneNameType\": \"Ensembl\"}, {\"accession\": \"P00505-2\", \"entryType\": \"Swiss-Prot\", \"length\": 387, \"geneName\": \"GOT2\", \"geneNameType\": \"Gene name\"}, {\"accession\": \"A0ACP2BZS3\", \"entryType\": \"TrEMBL\", \"length\": 352, \"geneName\": \"GOT2\", \"geneNameType\": \"Gene name\"}, {\"accession\": \"A0ACI8Q954\", \"entryType\": \"TrEMBL\", \"length\": 274, \"geneName\": \"HGNC:4433\", \"geneNameType\": \"MOD\"}, {\"accession\": \"A0ACP2BZQ5\", \"entryType\": \"TrEMBL\", \"length\": 242, \"geneName\": \"ENSG00000125166\", \"geneNameType\": \"Ensembl\"}, {\"accession\": \"A0ACP2E3H2\", \"entryType\": \"TrEMBL\", \"length\": 59, \"geneName\": \"ENSG00000125166\", \"geneNameType\": \"Ensembl\"}, {\"accession\": \"A0ACP2GB99\", \"entryType\": \"TrEMBL\", \"length\": 138, \"geneName\": \"GOT2\", \"geneNameType\": \"Gene name\"}, {\"accession\": \"A0ACP2BZR3\", \"entryType\": \"TrEMBL\", \"length\": 343, \"geneName\": \"HGNC:4433\", \"geneNameType\": \"MOD\"}, {\"accession\": \"A0ACI8QGU3\", \"entryType\": \"TrEMBL\", \"length\": 395, \"geneName\": \"HGNC:4433\", \"geneNameType\": \"MOD\"}, {\"accession\": \"A0ACP2I237\", \"entryType\": \"TrEMBL\", \"length\": 340, \"geneName\":",
+          "truncated": true
+        },
+        "status": "ok",
+        "tool": "search_gene_centric_proteins",
+        "truncated": true
+      }
+    ],
+    "truncated_results": 2,
+    "usable_successful_tool_calls": 2
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "62dbc37a17d433b8eac5341f2a88f68e3b819457c3fa31cea8ba6163f2d22e6e",
+  "judge_transport_error": null,
+  "parsed_judge": null,
+  "prompt_sha256": "a80e97e693abf65d526738b36166e229614bb271162871c9c47f05117db166ab",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": null,
+  "reason_codes": [
+    "missing_final_answer"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "deepseek_flash_qoder_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "4b56a6e494eb3c907cba22e9bbfe7a4b476a540113aea291b78ba08ada84fb72",
+    "run_summary_sha256": "04a76a4061afa6cee82d14583921e890f54c0244ea74a21d74893fe03cd44d98",
+    "run_task_sha256": "84ee5e2d7627f922e3464b71a0554478bae1b33e222f79dec96905a5ecdf75e6",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "missing_answer",
+  "task_id": 29
+}

@@ -1,0 +1,102 @@
+{
+  "cache_key": "793d92c1fdfec7cfcdecdb88b3058da175a704783de8e9a7e8129788afcc58ed",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "ConnectionError: ('Connection aborted.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None))",
+      "ConnectTimeout: HTTPSConnectionPool(host='unilectin.unige.ch', port=443): Max retries exceeded with url: /api/getlectinspredicted (Caused by ConnectTimeoutError(<HTTPSConnection(host='unilectin.unige.ch', port=443) at 0x1f7081976e0>, 'Connection to unilectin.unige.ch timed out. (connect timeout=50)'))",
+      "get_predicted_lectins: ConnectionError: ('Connection aborted.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None))",
+      "get_predicted_lectins: ConnectTimeout: HTTPSConnectionPool(host='unilectin.unige.ch', port=443): Max retries exceeded with url: /api/getlectinspredicted (Caused by ConnectTimeoutError(<HTTPSConnection(host='unilectin.unige.ch', port=443) at 0x1f7081976e0>, 'Connection to unilectin.unige.ch timed out. (connect timeout=50)'))"
+    ],
+    "evidence_ids": [
+      "answer",
+      "tool_1",
+      "tool_2"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "tool_errors",
+      "runner_errors"
+    ],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 0,
+    "successful_tool_calls": 0,
+    "tool_calls": 2,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "getcolumns": "fold,domain,uniprot,superkingdom",
+          "isvalue": "Bacteria%",
+          "limit": 10,
+          "wherecolumn": "superkingdom"
+        },
+        "error": "ConnectionError: ('Connection aborted.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None))",
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": null,
+        "status": "error",
+        "tool": "get_predicted_lectins",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "getcolumns": "fold,domain,uniprot,superkingdom",
+          "isvalue": "Bacteria%",
+          "limit": 10,
+          "wherecolumn": "superkingdom"
+        },
+        "error": "ConnectTimeout: HTTPSConnectionPool(host='unilectin.unige.ch', port=443): Max retries exceeded with url: /api/getlectinspredicted (Caused by ConnectTimeoutError(<HTTPSConnection(host='unilectin.unige.ch', port=443) at 0x1f7081976e0>, 'Connection to unilectin.unige.ch timed out. (connect timeout=50)'))",
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": null,
+        "status": "error",
+        "tool": "get_predicted_lectins",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 0
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "bf3be3f99348ef9a306be458c205550fa858575d11eb5285a0926c9706117ce9",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "The correct tool (get_predicted_lectins) was invoked with the exact specified parameters, but both attempts failed due to server-side connectivity errors (tool_1, tool_2). The downstream tool get_proteomics_peptides_by_accession was never called because no accessions were available. Tool usage was appropriate but yielded no data, so it could not support the expected answer.",
+    "critical_issues": [
+      "No bacterial lectin data entries were retrieved, so the required lectin fold/domain/superkingdom results are missing.",
+      "No UniProt accessions were extracted and get_proteomics_peptides_by_accession was never successfully executed, so all expected proteomics peptide information is absent."
+    ],
+    "decision": "FAILURE",
+    "evidence_ids": [
+      "tool_1",
+      "tool_2"
+    ],
+    "reason": "The final answer reports that the get_predicted_lectins API call failed with a ConnectionResetError (tool_1) and a ConnectTimeout (tool_2), so no bacterial lectin records, UniProt accessions, or proteomics peptide data were obtained. The expected answer requires linked lectin structural/domain data and peptide features for each accession, none of which are present. The answer accurately describes the failure (consistent with the evidence) but omits the entire required scientific result.",
+    "scientific_accuracy": "unknown"
+  },
+  "prompt_sha256": "c991b8e79c0299a87a0eb238b013dd5c704fdbb4ed8ca670a7453768e79f8637",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "```json\n{\n  \"decision\": \"FAILURE\",\n  \"reason\": \"The final answer reports that the get_predicted_lectins API call failed with a ConnectionResetError (tool_1) and a ConnectTimeout (tool_2), so no bacterial lectin records, UniProt accessions, or proteomics peptide data were obtained. The expected answer requires linked lectin structural/domain data and peptide features for each accession, none of which are present. The answer accurately describes the failure (consistent with the evidence) but omits the entire required scientific result.\",\n  \"critical_issues\": [\n    \"No bacterial lectin data entries were retrieved, so the required lectin fold/domain/superkingdom results are missing.\",\n    \"No UniProt accessions were extracted and get_proteomics_peptides_by_accession was never successfully executed, so all expected proteomics peptide information is absent.\"\n  ],\n  \"scientific_accuracy\": \"unknown\",\n  \"api_usage_assessment\": \"The correct tool (get_predicted_lectins) was invoked with the exact specified parameters, but both attempts failed due to server-side connectivity errors (tool_1, tool_2). The downstream tool get_proteomics_peptides_by_accession was never called because no accessions were available. Tool usage was appropriate but yielded no data, so it could not support the expected answer.\",\n  \"evidence_ids\": [\"tool_1\", \"tool_2\"]\n}\n```",
+  "reason_codes": [
+    "judge_failure"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "deepseek_flash_qoder_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "d363dd556e8d2e19161481599c12844312e3dbaaf080cdbee35378a91b698b01",
+    "run_summary_sha256": "04a76a4061afa6cee82d14583921e890f54c0244ea74a21d74893fe03cd44d98",
+    "run_task_sha256": "d45a6a6c714efbe831754eb1e8e3d322c692de70b2cc766ea9d791d841e4bb19",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "incorrect",
+  "task_id": 41
+}

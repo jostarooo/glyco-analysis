@@ -1,0 +1,130 @@
+{
+  "cache_key": "c1b055052b8751a69c536f3f28e7cce4bf462cacfd577ed94562f148f9c7c4fb",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "SSLError: HTTPSConnectionPool(host='oglcnac.mcw.edu', port=443): Max retries exceeded with url: /api/v1/proteins/?query_protein=Q9NXB0 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)')))",
+      "get_proteins: SSLError: HTTPSConnectionPool(host='oglcnac.mcw.edu', port=443): Max retries exceeded with url: /api/v1/proteins/?query_protein=Q9NXB0 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)')))",
+      "max_rounds_reached"
+    ],
+    "evidence_ids": [
+      "tool_1",
+      "tool_2",
+      "tool_3",
+      "tool_4"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "missing_final_answer",
+      "tool_errors",
+      "truncated_results",
+      "runner_errors"
+    ],
+    "has_final_answer": false,
+    "successful_result_tool_calls": 3,
+    "successful_tool_calls": 3,
+    "tool_calls": 4,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "accession": "Q9NXB0-3",
+          "rfActive": "true",
+          "rfDdtype": "EMBL,RefSeq",
+          "rfTaxId": "9606"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": ">UPI0000E0384E status=inactive\nMAVPVSSFAQRTRSRFRVHLQRITSSNFLHYQPAAELGKDLIDLATFRPQPTASGHRPEE\nDEEEEIVIGWQEKLFSQFEVDLYQNETACQSPLDYQYRQEILKLENSGGKKNRRIFTYTD\nSDRYTNLEEHCQRMTTAASEVPSFLVERMANVRRRRQDRRGMEGGILKSRIVTWEPSEEF\nVRNNHVINTPLQTMHIMADLGPYKKLGYKKYEHVLCTLKVDSNGVITVKPDFTGLKGPYR\nIETEGEKQELWKYTIDNVSPHAQPEEEERERRVFKDLYGRHKEYLSSLVGTDFEMTVPGA\nLRLFVNGEVVSAQGYEYDNLYVHFFVELPTAHWSSPAFQQLSGVTQTCTTKSLAMDKVAH\nFSYPFTFEAFFLHEDESSDALPEWPVLYCEVLSLDFWQRYRVEGYGAVVLPATPGSHTLT\nVSTWRPVELGTVAELRRFFIGGSLELEDLSYVRIPGSFKGERLSRFGLRTETTGTVTFRL\nHCLQQSRAFMESSSLQKRMRSVLDRLEGFSQQSSIHNVLEAFRRARRRMQEARESLPQDL\nVSPSGTLVS\n",
+          "status_code": 200,
+          "url": "https://www.ebi.ac.uk/proteins/api/uniparc/accession/Q9NXB0-3?rfDdtype=EMBL%2CRefSeq&rfActive=true&rfTaxId=9606"
+        },
+        "status": "ok",
+        "tool": "get_uniparc_entry_by_uniprot_accession",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "query_protein": "Q9NXB0"
+        },
+        "error": "SSLError: HTTPSConnectionPool(host='oglcnac.mcw.edu', port=443): Max retries exceeded with url: /api/v1/proteins/?query_protein=Q9NXB0 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)')))",
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": null,
+        "status": "error",
+        "tool": "get_proteins",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "accession": "Q9NXB0-3"
+        },
+        "error": null,
+        "expected_tool": false,
+        "id": "tool_3",
+        "result": {
+          "preview": "{\"status_code\": 200, \"url\": \"https://www.ebi.ac.uk/proteins/api/proteins/Q9NXB0-3\", \"data\": {\"accession\": \"Q9NXB0-3\", \"id\": \"MKS1_HUMAN\", \"proteinExistence\": \"Evidence at protein level\", \"info\": {\"type\": \"Swiss-Prot\", \"created\": \"2006-03-07\", \"modified\": \"2026-11-04\", \"version\": 168}, \"organism\": {\"taxonomy\": 9606, \"names\": [{\"type\": \"scientific\", \"value\": \"Homo sapiens\"}, {\"type\": \"common\", \"value\": \"Human\"}], \"lineage\": [\"Eukaryota\", \"Metazoa\", \"Chordata\", \"Craniata\", \"Vertebrata\", \"Euteleostomi\", \"Mammalia\", \"Eutheria\", \"Euarchontoglires\", \"Primates\", \"Haplorrhini\", \"Catarrhini\", \"Hominidae\", \"Homo\"]}, \"protein\": {\"recommendedName\": {\"fullName\": {\"value\": \"Isoform 3 of Tectonic-like complex member MKS1\", \"evidences\": [{\"code\": \"ECO:0000305\"}]}}, \"alternativeName\": [{\"fullName\": {\"value\": \"Meckel syndrome type 1 protein\"}}]}, \"gene\": [{\"name\": {\"value\": \"MKS1\"}}], \"comments\": [{\"type\": \"ALTERNATIVE_PRODUCTS\", \"event\": [\"Alternative splicing\"], \"isoforms\": [{\"ids\": [\"Q9NXB0-1\"], \"name\": {\"value\": \"1\"}, \"sequenceStatus\": \"displayed\"}, {\"ids\": [\"Q9NXB0-2\"], \"name\": {\"value\": \"2\"}, \"sequenceStatus\": \"described\", \"sequence\": [\"VSP_017414\"]}, {\"ids\": [\"Q9NXB0-3\"], \"name\": {\"value\": \"3\"}, \"sequenceStatus\": \"described\", \"sequence\": [\"VSP_046063\"]}]}], \"dbReferences\": [{\"type\": \"Proteomes\", \"id\": \"UP000005640\", \"properties\": {\"component\": \"Chromosome 17\"}}], \"references\": [{\"citation\": {\"type\": \"journal article\", \"publicationDate\": \"2006\", \"title\": \"MKS1, encoding a component of the flagellar apparatus basal body proteome, is mutated in Meckel syndrome.\", \"authors\": [\"Kyttaelae M.\", \"Tallila J.\", \"Salonen R.\", \"Kopra O.\", \"Kohlschmidt N.\", \"Paavola-Sakki P.\", \"Peltonen L.\", \"Kestilae M.\"], \"publication\": {\"journalName\": \"Nat. Genet.\"}, \"location\": {\"volume\": \"38\", \"firstPage\": \"155\", \"lastPage\": \"157\"}, \"dbReferences\": [{\"type\": \"PubMed\", \"id\": \"16415886\"}, {\"type\": \"DOI\", \"id\": \"10.1038/ng1714\"}]}, \"scope\": [\"NUCLEOTIDE SEQUENCE [MRNA] (ISOFORM 1)\", \"INVOLVEMENT IN MKS1\"]}, {\"citation\": {\"type\": \"journal article\", \"publicationDate\": \"2004\", \"title\": \"Complete sequencing and characterization of 21,243 full-length human cDNAs.\", \"authors\": [\"Ota T.\", \"Suzuki Y.\", \"Nishikawa T.\", \"Otsuki T.\", \"Sugiyama T.\", \"Irie R.\", \"Wakamatsu A.\", \"Hayashi K.\", \"Sato H.\", \"Nagai K.\", \"Kimura K.\", \"Makita H.\", \"Sekine M.\", \"Obayashi M.\", \"Nishi T.\", \"Shibahara T.\", \"Tanaka T.\", \"Ishii S.\", \"Yamamoto J.\", \"Saito K.\", \"Kawai Y.\", \"Isono Y.\", \"Nakamura Y.\", \"Nagahari K.\", \"Murakami K.\", \"Yasuda T.\", \"Iwayanagi T.\", \"Wagatsuma M.\", \"Shiratori A.\", \"Sudo H.\", \"Hosoiri T.\", \"Kaku Y.\", \"Kodaira H.\", \"Kondo H.\", \"Sugawara M.\", \"Takahashi M.\", \"Kanda K.\", \"Yokoi T.\", \"Furuya T.\", \"Kikkawa E.\", \"Omura Y.\", \"Abe K.\", \"Kamihara K.\", \"Katsuta N.\", \"Sato K.\", \"Tanikawa M.\", \"Yamazaki M.\", \"Ninomiya K.\", \"Ishibashi T.\", \"Yamashita H.\", \"Murakawa K.\", \"Fujimori K.\", \"Tanai H.\", \"Kimata M.\", \"Watanabe M.\", \"Hiraoka S.\", \"Chiba Y.\", \"Ishida S.\", \"Ono Y.\", \"Takiguchi S.\", \"Watanabe S.\", \"Yosida M.\", \"Hotuta T.\", \"Kusano J.\", \"Kanehori K.\", \"Takahashi-Fujii A.\", \"Hara H.\", \"Tanase T.-O.\", \"Nomura Y.\", \"Togiya S.\", \"Komai F.\", \"Hara R.\", \"Takeuchi K.\", \"Arita M.\", \"Imose N.\", \"Musashino K.\", \"Yuuki H.\", \"Oshima A.\", \"Sasaki N.\", \"Aotsuka S.\", \"Yoshikawa Y.\", \"Matsunawa H.\", \"Ichihara T.\", \"Shiohata N.\", \"Sano S.\", \"Moriya S.\", \"Momiyama H.\", \"Satoh N.\", \"Takami S.\", \"Terashima Y.\", \"Suzuki O.\", \"Nakagawa S.\", \"Senoh A.\", \"Mizoguchi H.\", \"Goto Y.\", \"Shimizu F.\", \"Wakebe H.\", \"Hishigaki H.\", \"Watanabe T.\", \"Sugiyama A.\", \"Takemoto M.\", \"Kawakami B.\", \"Yamazaki M.\", \"Watanabe K.\", \"Kumagai A.\", \"Itakura S.\", \"Fukuzumi Y.\", \"Fujimori Y.\", \"Komiyama M.\", \"Tashiro H.\", \"Tanigami A.\", \"Fujiwara T.\", \"Ono T.\", \"Yamada K.\", \"Fujii Y.\", \"Ozaki K.\", \"Hirao M.\", \"Ohmori Y.\", \"Kawabata A.\", \"Hikiji T.\", \"Kobatake N.\", \"Inagaki H.\", \"Ikema Y.\", \"Okamoto S.\", \"Okitani R.\", \"Kawakami T.\", \"Noguchi S.\", \"Itoh T.\", \"Shigeta K.\", \"Senba T.\", \"Matsumura K.\", \"Nakajima Y.\", \"Mizuno T.\", \"Morinaga M.\", \"Sasaki M.\", \"Togashi T.\", \"Oyama M.\", \"Hata H.\", \"Watanabe M.\", \"Komatsu T.\", \"Mizushima-Sugano J.\", \"Satoh T.\", \"Shirai Y.\", \"Takahashi Y.\", \"Nakagawa K.\", \"Okumura K.\", \"Nagase T.\", \"Nomura N.\", \"Kikuchi H.\", \"Masuho Y.\", \"Yamashita R.\", \"Nakai K.\", \"Yada T.\", \"Nakamura Y.\", \"Ohara O.\", \"Isogai T.\", \"Sugano S.\"], \"publication\": {\"journalName\": \"Nat. Genet.\"}, \"location\": {\"volume\": \"36\", \"firstPage\": \"40\", \"lastPage\": \"45\"}, \"dbReferences\": [{\"type\": \"PubMed\", \"id\": \"14702039\"}, {\"type\": \"DOI\", \"id\": \"10.1038/ng1285\"}]}, \"source\": {\"tissue\": [{\"value\": \"Hepatoma\"}, {\"value\": \"Trachea\"}]}, \"scope\": [\"NUCLEOTIDE SEQUENCE [LARGE SCALE MRNA] (ISOFORM 3)\", \"NUCLEOTIDE SEQUENCE [LARGE SCALE MRNA] OF 86-559 (ISOFORM 1)\"]}, {\"citation\": {\"type\": \"journal article\", \"publicationDate\": \"2006\", \"title\": \"DNA sequence of human chromosome 17 and analysis of rearrangement in the human lineage.\", \"authors\": [\"Zody M.C.\", \"Garber M.\", \"Adams D.J.\", \"Sharpe T.\", \"Harrow J.\", \"Lupski J.R.\", \"Nicholson C.\", \"Searle S.M.\", \"Wilming L.\", \"Young S.K.\", \"Abouelleil A.\", \"Allen N.R.\", \"Bi W.\", \"Bloom T.\", \"Borowsky M.L.\", \"Bugalter B.E.\", \"Butler J.\", \"Chang J.L.\", \"Chen C.-K.\", \"Cook A.\", \"Corum B.\", \"Cuomo C.A.\", \"de Jong P.J.\", \"DeCaprio D.\", \"Dewar K.\", \"FitzGerald M.\", \"Gilbert J.\", \"Gibson R.\", \"Gnerre S.\", \"Goldstein S.\", \"Grafham D.V.\", \"Grocock R.\", \"Hafez N.\", \"Hagopian D.S.\", \"Hart E.\", \"Norman C.H.\", \"Humphray S.\", \"Jaffe D.B.\", \"Jones M.\", \"Kamal M.\", \"Khodiyar V.K.\", \"LaButti K.\", \"Laird G.\", \"Lehoczky J.\", \"Liu X.\", \"Lokyitsang T.\", \"Loveland J.\", \"Lui A.\", \"Macdonald P.\", \"Major J.E.\", \"Matthews L.\", \"Mauceli E.\", \"McCarroll S.A.\", \"Mihalev A.H.\", \"Mudge J.\", \"Nguyen C.\", \"Nicol R.\", \"O'Leary S.B.\", \"Osoegawa K.\", \"Schwartz D.C.\", \"Shaw-Smith C.\", \"Stankiewicz P.\", \"Steward C.\", \"Swarbreck D.\", \"Venkataraman V.\", \"Whittaker C.A.\", \"Yang X.\", \"Zimmer A.R.\", \"Bradley A.\", \"Hubbard T.\", \"Birren B.W.\", \"Rogers J.\", \"Lander E.S.\", \"Nusbaum C.\"], \"publication\": {\"jou",
+          "truncated": true
+        },
+        "status": "ok",
+        "tool": "get_uniprot_entry_by_accession",
+        "truncated": true
+      },
+      {
+        "arguments": {
+          "payload": "proteomics",
+          "uniprot_canonical_ac": "Q9NXB0"
+        },
+        "error": null,
+        "expected_tool": false,
+        "id": "tool_4",
+        "result": {
+          "data": {
+            "error_list": [
+              {
+                "error_code": "exception-error-AVQB7R"
+              }
+            ]
+          },
+          "status_code": 500,
+          "url": "https://api.glygen.org/protein/detail/Q9NXB0/"
+        },
+        "status": "ok",
+        "tool": "protein_detail",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 1,
+    "usable_successful_tool_calls": 2
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "62dbc37a17d433b8eac5341f2a88f68e3b819457c3fa31cea8ba6163f2d22e6e",
+  "judge_transport_error": null,
+  "parsed_judge": null,
+  "prompt_sha256": "dedbe31e36fc40cb7b09725f0f74e5e34346c2236813850e53b4dd28e19d64f9",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": null,
+  "reason_codes": [
+    "missing_final_answer"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "deepseek_flash_qoder_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "638c39f92dfca2b0de6d964584ed75d08a0f443ab0bb582cf762ea2982a22583",
+    "run_summary_sha256": "04a76a4061afa6cee82d14583921e890f54c0244ea74a21d74893fe03cd44d98",
+    "run_task_sha256": "49f2641aaf905b872b6bf2793a7e555b0a681a888af476d37c364d1255c6c16f",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "missing_answer",
+  "task_id": 46
+}

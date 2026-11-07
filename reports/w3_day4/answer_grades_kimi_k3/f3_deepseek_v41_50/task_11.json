@@ -1,0 +1,109 @@
+{
+  "cache_key": "1a1aea56e20d97c62c15aaea62b72e47f3575d052dea529cf39d6a82982a3842",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "invalid_action: "
+    ],
+    "evidence_ids": [
+      "tool_1",
+      "tool_2",
+      "tool_3"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "missing_final_answer",
+      "truncated_results",
+      "runner_errors"
+    ],
+    "has_final_answer": false,
+    "successful_result_tool_calls": 3,
+    "successful_tool_calls": 3,
+    "tool_calls": 3,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "gws": "freeEnd--?b1D-GlcNAc,p--4b1D-GlcNAc,p--4b1D-Man,p--?a1D-Man,p$MONO,Und,0,0,freeEnd"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": [
+          {
+            "GlycoCT": "RES\n1b:b-dglc-HEX-1:5\n2s:n-acetyl\n3b:b-dglc-HEX-1:5\n4s:n-acetyl\n5b:b-dman-HEX-1:5\n6b:a-dman-HEX-1:5\nLIN\n1:1d(2+1)2n\n2:1o(4+1)3d\n3:3d(2+1)4n\n4:3o(4+1)5d\n5:5o(-1+1)6d",
+            "WURCS": "WURCS=2.0/3,4,3/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3/a4-b1_b4-c1_c?-d1",
+            "id": "G03717EM",
+            "input": "freeEnd--?b1D-GlcNAc,p--4b1D-GlcNAc,p--4b1D-Man,p--?a1D-Man,p$MONO,Und,0,0,freeEnd",
+            "wurcs": "WURCS=2.0/3,4,3/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3/a4-b1_b4-c1_c?-d1"
+          }
+        ],
+        "status": "ok",
+        "tool": "convert_gws_format_to_wurcs_format",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "wurcs": "WURCS=2.0/3,4,3/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3/a4-b1_b4-c1_c?-d1"
+        },
+        "error": null,
+        "expected_tool": false,
+        "id": "tool_2",
+        "result": [
+          {
+            "id": "G03717EM",
+            "wurcs": "WURCS=2.0/3,4,3/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3/a4-b1_b4-c1_c?-d1"
+          }
+        ],
+        "status": "ok",
+        "tool": "obtain_glytoucan_id_from_wurcs",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "glytoucan_ac": "G03717EM"
+        },
+        "error": null,
+        "expected_tool": false,
+        "id": "tool_3",
+        "result": {
+          "preview": "{\"status_code\": 200, \"url\": \"https://api.glygen.org/glycan/detail/G03717EM/\", \"data\": {\"glytoucan\": {\"glytoucan_ac\": \"G03717EM\", \"glytoucan_url\": \"https://glytoucan.org/Structures/Glycans/G03717EM\"}, \"mass\": 748.27, \"number_monosaccharides\": 4, \"iupac\": \"alpha-D-Manp-(1->?)-beta-D-Manp-(1->4)-beta-D-GlcpNAc-(1->4)-beta-D-GlcpNAc-(1->\", \"wurcs\": \"WURCS=2.0/3,4,3/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5]/1-1-2-3/a4-b1_b4-c1_c?-d1\", \"glycoct\": \"RES 1b:b-dglc-HEX-1:5 2s:n-acetyl 3b:b-dglc-HEX-1:5 4s:n-acetyl 5b:b-dman-HEX-1:5 6b:a-dman-HEX-1:5 LIN 1:1d(2+1)2n 2:1o(4+1)3d 3:3d(2+1)4n 4:3o(4+1)5d 5:5o(-1+1)6d\", \"species\": [{\"taxid\": 3702, \"name\": \"Arabidopsis thaliana\", \"annotation_category\": \"subsumption\", \"evidence\": [{\"database\": \"Subsumption\", \"id\": \"G22573RC\", \"url\": \"https://www.glygen.org/glycan/G22573RC\"}, {\"database\": \"Subsumption\", \"id\": \"G81315DD\", \"url\": \"https://www.glygen.org/glycan/G81315DD\"}], \"common_name\": \"Mouse-ear cress\", \"glygen_name\": \"Arabidopsis\", \"reference_species\": \"Arabidopsis thaliana [3702]\"}, {\"taxid\": 9913, \"name\": \"Bos taurus\", \"annotation_category\": \"subsumption\", \"evidence\": [{\"database\": \"Subsumption\", \"id\": \"G22573RC\", \"url\": \"https://www.glygen.org/glycan/G22573RC\"}, {\"database\": \"Subsumption\", \"id\": \"G81315DD\", \"url\": \"https://www.glygen.org/glycan/G81315DD\"}, {\"database\": \"Subsumption\", \"id\": \"G08918EL\", \"url\": \"https://www.glygen.org/glycan/G08918EL\"}], \"common_name\": \"Bovine\", \"glygen_name\": \"Bovine\", \"reference_species\": \"Bos taurus [9913]\"}, {\"taxid\": 9031, \"name\": \"Gallus gallus\", \"annotation_category\": \"subsumption\", \"evidence\": [{\"database\": \"Subsumption\", \"id\": \"G22573RC\", \"url\": \"https://www.glygen.org/glycan/G22573RC\"}, {\"database\": \"Subsumption\", \"id\": \"G81315DD\", \"url\": \"https://www.glygen.org/glycan/G81315DD\"}], \"common_name\": \"Chicken\", \"glygen_name\": \"Chicken\", \"reference_species\": \"Gallus gallus [9031]\"}, {\"taxid\": 7227, \"name\": \"Drosophila melanogaster\", \"annotation_category\": \"both\", \"evidence\": [{\"database\": \"Subsumption\", \"id\": \"G22573RC\", \"url\": \"https://www.glygen.org/glycan/G22573RC\"}, {\"database\": \"Subsumption\", \"id\": \"G81315DD\", \"url\": \"https://www.glygen.org/glycan/G81315DD\"}, {\"database\": \"GlyConnect\", \"id\": \"9748\", \"url\": \"https://glyconnect.expasy.org/browser/structures/9748\"}, {\"database\": \"PubMed\", \"id\": \"16897177\", \"url\": \"https://glygen.org/publication/PubMed/16897177\"}], \"common_name\": \"Fruit fly\", \"glygen_name\": \"Fruit fly\", \"reference_species\": \"Drosophila melanogaster [7227]\"}, {\"taxid\": 9606, \"name\": \"Homo sapiens\", \"annotation_category\": \"both\", \"evidence\": [{\"database\": \"Subsumption\", \"id\": \"G22573RC\", \"url\": \"https://www.glygen.org/glycan/G22573RC\"}, {\"database\": \"Subsumption\", \"id\": \"G81315DD\", \"url\": \"https://www.glygen.org/glycan/G81315DD\"}, {\"database\": \"Subsumption\", \"id\": \"G08918EL\", \"url\": \"https://www.glygen.org/glycan/G08918EL\"}, {\"database\": \"GlyConnect\", \"id\": \"1724\", \"url\": \"https://glyconnect.expasy.org/browser/structures/1724\"}, {\"database\": \"GlyConnect\", \"id\": \"9748\", \"url\": \"https://glyconnect.expasy.org/browser/structures/9748\"}, {\"database\": \"PubMed\", \"id\": \"10677208\", \"url\": \"https://glygen.org/publication/PubMed/10677208\"}, {\"database\": \"PubMed\", \"id\": \"24308486\", \"url\": \"https://glygen.org/publication/PubMed/24308486\"}, {\"database\": \"UniCarbKB\", \"id\": \"GLY_000341\", \"url\": \"http://data.glygen.org/GLY_000341\"}], \"common_name\": \"Human\", \"glygen_name\": \"Human\", \"reference_species\": \"Homo sapiens [9606]\"}, {\"taxid\": 10090, \"name\": \"Mus musculus\", \"annotation_category\": \"subsumption\", \"evidence\": [{\"database\": \"Subsumption\", \"id\": \"G22573RC\", \"url\": \"https://www.glygen.org/glycan/G22573RC\"}, {\"database\": \"Subsumption\", \"id\": \"G81315DD\", \"url\": \"https://www.glygen.org/glycan/G81315DD\"}, {\"database\": \"Subsumption\", \"id\": \"G08918EL\", \"url\": \"https://www.glygen.org/glycan/G08918EL\"}], \"common_name\": \"Mouse\", \"glygen_name\": \"Mouse\", \"reference_species\": \"Mus musculus [10090]\"}, {\"taxid\": 9823, \"name\": \"Sus scrofa\", \"annotation_category\": \"subsumption\", \"evidence\": [{\"database\": \"Subsumption\", \"id\": \"G22573RC\", \"url\": \"https://www.glygen.org/glycan/G22573RC\"}, {\"database\": \"Subsumption\", \"id\": \"G81315DD\", \"url\": \"https://www.glygen.org/glycan/G81315DD\"}], \"common_name\": \"Pig\", \"glygen_name\": \"Pig\", \"reference_species\": \"Sus scrofa [9823]\"}, {\"taxid\": 10116, \"name\": \"Rattus norvegicus\", \"annotation_category\": \"both\", \"evidence\": [{\"database\": \"Subsumption\", \"id\": \"G22573RC\", \"url\": \"https://www.glygen.org/glycan/G22573RC\"}, {\"database\": \"Subsumption\", \"id\": \"G81315DD\", \"url\": \"https://www.glygen.org/glycan/G81315DD\"}, {\"database\": \"Subsumption\", \"id\": \"G08918EL\", \"url\": \"https://www.glygen.org/glycan/G08918EL\"}, {\"database\": \"GlyConnect\", \"id\": \"9748\", \"url\": \"https://glyconnect.expasy.org/browser/structures/9748\"}, {\"database\": \"PubMed\", \"id\": \"34106099\", \"url\": \"https://glygen.org/publication/PubMed/34106099\"}, {\"database\": \"UniCarbKB\", \"id\": \"GLY_000341\", \"url\": \"http://data.glygen.org/GLY_000341\"}], \"common_name\": \"Rat\", \"glygen_name\": \"Rat\", \"reference_species\": \"Rattus norvegicus [10116]\"}, {\"taxid\": 694009, \"name\": \"Severe acute respiratory syndrome-related coronavirus\", \"annotation_category\": \"subsumption\", \"evidence\": [{\"database\": \"Subsumption\", \"id\": \"G22573RC\", \"url\": \"https://www.glygen.org/glycan/G22573RC\"}, {\"database\": \"Subsumption\", \"id\": \"G81315DD\", \"url\": \"https://www.glygen.org/glycan/G81315DD\"}], \"common_name\": \"SARS-CoV\", \"glygen_name\": \"HCoV-SARS\", \"reference_species\": \"Severe acute respiratory syndrome-related coronavirus [694009]\"}, {\"taxid\": 2697049, \"name\": \"Severe acute respiratory syndrome coronavirus 2\", \"annotation_category\": \"both\", \"evidence\": [{\"database\": \"Subsumption\", \"id\": \"G22573RC\", \"url\": \"https://www.glygen.org/glycan/G22573RC\"}, {\"database\": \"Subsumption\", \"id\": \"G81315DD\", \"url\": \"https://www.glygen.org/glycan/G81315DD\"}, {\"database\": \"GlyConnect\", \"id\": \"9748\", \"url\": \"https://glyconnect.expasy.org/browser/structures/9748\"}, {\"database\": \"PubMed\",",
+          "truncated": true
+        },
+        "status": "ok",
+        "tool": "glycan_detail",
+        "truncated": true
+      }
+    ],
+    "truncated_results": 1,
+    "usable_successful_tool_calls": 2
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "62dbc37a17d433b8eac5341f2a88f68e3b819457c3fa31cea8ba6163f2d22e6e",
+  "judge_transport_error": null,
+  "parsed_judge": null,
+  "prompt_sha256": "25968aae22308a7a3eced9ffd40bb4cea8f485d20c622e9929020fac0144f42f",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": null,
+  "reason_codes": [
+    "missing_final_answer"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "deepseek_v41_flash_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "03e25e3bf9355b0b63473d44c4581c6f8a35fd6fa130dd9fd94755b9fc4b2ae4",
+    "run_summary_sha256": "44b9d3df0bac0f15b69383160f5eb6630809976183bb2ee7f684abc342263803",
+    "run_task_sha256": "82aefb59d905225b7cfcc594c8d12b34ab72f7a8fb67be3e249bbb12bdb64709",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "missing_answer",
+  "task_id": 11
+}

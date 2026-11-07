@@ -1,0 +1,97 @@
+{
+  "cache_key": "fb148fa2444f1e363eaa7ef29aed2d0cda0cd490113952a5e34896b3481f6e0d",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [],
+    "evidence_ids": [
+      "answer",
+      "tool_1",
+      "tool_2"
+    ],
+    "expected_tool_called": true,
+    "flags": [],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 2,
+    "successful_tool_calls": 2,
+    "tool_calls": 2,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "composition": "Hex:4|HexNAc:4|Fuc:1"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": "WURCS=2.0/3,9,8/[axxxxh-1x_1-5_2*NCC/3=O][axxxxh-1x_1-5][a1221m-1x_1-5]/1-1-1-1-2-2-2-2-3/a?|b?|c?|d?|e?|f?|g?|h?|i?}-{a?|b?|c?|d?|e?|f?|g?|h?|i?_a?|b?|c?|d?|e?|f?|g?|h?|i?}-{a?|b?|c?|d?|e?|f?|g?|h?|i?_a?|b?|c?|d?|e?|f?|g?|h?|i?}-{a?|b?|c?|d?|e?|f?|g?|h?|i?_a?|b?|c?|d?|e?|f?|g?|h?|i?}-{a?|b?|c?|d?|e?|f?|g?|h?|i?_a?|b?|c?|d?|e?|f?|g?|h?|i?}-{a?|b?|c?|d?|e?|f?|g?|h?|i?_a?|b?|c?|d?|e?|f?|g?|h?|i?}-{a?|b?|c?|d?|e?|f?|g?|h?|i?_a?|b?|c?|d?|e?|f?|g?|h?|i?}-{a?|b?|c?|d?|e?|f?|g?|h?|i?_a?|b?|c?|d?|e?|f?|g?|h?|i?}-{a?|b?|c?|d?|e?|f?|g?|h?|i?",
+          "status_code": 200,
+          "url": "https://api.glycosmos.org/glycancompositionconverter/1.0.0/composition2wurcs/Hex%3A4%7CHexNAc%3A4%7CFuc%3A1"
+        },
+        "status": "ok",
+        "tool": "convert_composition_to_wurcs",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "wurcs": "WURCS=2.0/3,9,8/[axxxxh-1x_1-5_2*NCC/3=O][axxxxh-1x_1-5][a1221m-1x_1-5]/1-1-1-1-2-2-2-2-3/a?|b?|c?|d?|e?|f?|g?|h?|i?}-{a?|b?|c?|d?|e?|f?|g?|h?|i?_a?|b?|c?|d?|e?|f?|g?|h?|i?}-{a?|b?|c?|d?|e?|f?|g?|h?|i?_a?|b?|c?|d?|e?|f?|g?|h?|i?}-{a?|b?|c?|d?|e?|f?|g?|h?|i?_a?|b?|c?|d?|e?|f?|g?|h?|i?}-{a?|b?|c?|d?|e?|f?|g?|h?|i?_a?|b?|c?|d?|e?|f?|g?|h?|i?}-{a?|b?|c?|d?|e?|f?|g?|h?|i?_a?|b?|c?|d?|e?|f?|g?|h?|i?}-{a?|b?|c?|d?|e?|f?|g?|h?|i?_a?|b?|c?|d?|e?|f?|g?|h?|i?}-{a?|b?|c?|d?|e?|f?|g?|h?|i?_a?|b?|c?|d?|e?|f?|g?|h?|i?}-{a?|b?|c?|d?|e?|f?|g?|h?|i?}"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": [
+          {
+            "message": "Accession not found."
+          }
+        ],
+        "status": "ok",
+        "tool": "obtain_glytoucan_id_from_wurcs",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 2
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "1bb9995b474951cb48dc0d8ce35de9dbebbfb646e91565a9f4241ff9980ff7b0",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "The first two expected tools were used appropriately and their outputs support the negative outcome: conversion succeeded but produced an ambiguous WURCS, and the ID lookup failed. However, because no accession was obtained, the pipeline could not support the expected detailed answer.",
+    "critical_issues": [
+      "No GlyTouCan ID was obtained; tool_2 returned 'Accession not found.'",
+      "glycan_detail was not called, so chemical properties, biological associations, classifications, and cross-references are absent.",
+      "Final answer does not substantively match the expected detailed glycan profile."
+    ],
+    "decision": "FAILURE",
+    "evidence_ids": [
+      "tool_1",
+      "tool_2"
+    ],
+    "reason": "The expected answer requires a detailed glycan profile with chemical properties, biological associations, classifications, and cross-references. The run converted the composition to an ambiguous WURCS (tool_1), but GlyTouCan lookup returned 'Accession not found' (tool_2), so glycan_detail was never called and the final answer omits the required profile.",
+    "scientific_accuracy": "partially_accurate"
+  },
+  "prompt_sha256": "c75d056fca4f0685249bfc9a3f5af56d7f5d6d74b760bf5c5df62392a3f403d6",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\n  \"decision\": \"FAILURE\",\n  \"reason\": \"The expected answer requires a detailed glycan profile with chemical properties, biological associations, classifications, and cross-references. The run converted the composition to an ambiguous WURCS (tool_1), but GlyTouCan lookup returned 'Accession not found' (tool_2), so glycan_detail was never called and the final answer omits the required profile.\",\n  \"critical_issues\": [\n    \"No GlyTouCan ID was obtained; tool_2 returned 'Accession not found.'\",\n    \"glycan_detail was not called, so chemical properties, biological associations, classifications, and cross-references are absent.\",\n    \"Final answer does not substantively match the expected detailed glycan profile.\"\n  ],\n  \"scientific_accuracy\": \"partially_accurate\",\n  \"api_usage_assessment\": \"The first two expected tools were used appropriately and their outputs support the negative outcome: conversion succeeded but produced an ambiguous WURCS, and the ID lookup failed. However, because no accession was obtained, the pipeline could not support the expected detailed answer.\",\n  \"evidence_ids\": [\"tool_1\", \"tool_2\"]\n}",
+  "reason_codes": [
+    "judge_failure"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "deepseek_flash_qoder_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "fd63b65e6eeb7cb51e7b98e632f547dc87db99fef77604122ef698b0fb1c5477",
+    "run_summary_sha256": "04a76a4061afa6cee82d14583921e890f54c0244ea74a21d74893fe03cd44d98",
+    "run_task_sha256": "05005744a0cd622423153bc04c3ea4a9192265f3d96c21215ab1e7e0cf30d7a1",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "incorrect",
+  "task_id": 31
+}

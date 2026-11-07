@@ -1,0 +1,133 @@
+{
+  "cache_key": "d0972007e86b095924580fa2592bea6c534413d82d063f6f6d9985e35f074155",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "SSLError: HTTPSConnectionPool(host='oglcnac.mcw.edu', port=443): Max retries exceeded with url: /api/v1/proteins/?query_protein=P08047 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)')))",
+      "get_proteins: SSLError: HTTPSConnectionPool(host='oglcnac.mcw.edu', port=443): Max retries exceeded with url: /api/v1/proteins/?query_protein=P08047 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)')))",
+      "max_rounds_reached"
+    ],
+    "evidence_ids": [
+      "tool_1",
+      "tool_2",
+      "tool_3",
+      "tool_4"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "missing_final_answer",
+      "tool_errors",
+      "truncated_results",
+      "runner_errors"
+    ],
+    "has_final_answer": false,
+    "successful_result_tool_calls": 3,
+    "successful_tool_calls": 3,
+    "tool_calls": 4,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "query_protein": "P08047"
+        },
+        "error": "SSLError: HTTPSConnectionPool(host='oglcnac.mcw.edu', port=443): Max retries exceeded with url: /api/v1/proteins/?query_protein=P08047 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)')))",
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": null,
+        "status": "error",
+        "tool": "get_proteins",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "accession": "P08047",
+          "format": "json"
+        },
+        "error": null,
+        "expected_tool": false,
+        "id": "tool_2",
+        "result": {
+          "preview": "{\"status_code\": 200, \"url\": \"https://www.ebi.ac.uk/proteins/api/proteins/P08047\", \"data\": {\"accession\": \"P08047\", \"id\": \"SP1_HUMAN\", \"proteinExistence\": \"Evidence at protein level\", \"info\": {\"type\": \"Swiss-Prot\", \"created\": \"1988-08-01\", \"modified\": \"2026-11-04\", \"version\": 271}, \"organism\": {\"taxonomy\": 9606, \"names\": [{\"type\": \"scientific\", \"value\": \"Homo sapiens\"}, {\"type\": \"common\", \"value\": \"Human\"}], \"lineage\": [\"Eukaryota\", \"Metazoa\", \"Chordata\", \"Craniata\", \"Vertebrata\", \"Euteleostomi\", \"Mammalia\", \"Eutheria\", \"Euarchontoglires\", \"Primates\", \"Haplorrhini\", \"Catarrhini\", \"Hominidae\", \"Homo\"]}, \"secondaryAccession\": [\"E4Z9M7\", \"G5E9M8\", \"Q86TN8\", \"Q9H3Q5\", \"Q9NR51\", \"Q9NY21\", \"Q9NYE7\"], \"protein\": {\"recommendedName\": {\"fullName\": {\"value\": \"Transcription factor Sp1\"}}}, \"gene\": [{\"name\": {\"value\": \"SP1\"}, \"synonyms\": [{\"value\": \"TSFP1\"}]}], \"comments\": [{\"type\": \"FUNCTION\", \"text\": [{\"value\": \"Transcription factor that can activate or repress transcription in response to physiological and pathological stimuli. Binds with high affinity to GC-rich motifs and regulates the expression of a large number of genes involved in a variety of processes such as cell growth, apoptosis, differentiation and immune responses. Highly regulated by post-translational modifications (phosphorylations, sumoylation, proteolytic cleavage, glycosylation and acetylation). Also binds the PDGFR-alpha G-box promoter. May have a role in modulating the cellular response to DNA damage. Implicated in chromatin remodeling. Plays an essential role in the regulation of FE65 gene expression. In complex with ATF7IP, maintains telomerase activity in cancer cells by inducing TERT and TERC gene expression. Isoform 3 is a stronger activator of transcription than isoform 1. Positively regulates the transcription of the core clock component BMAL1 (PubMed:10391891, PubMed:11371615, PubMed:11904305, PubMed:14593115, PubMed:16377629, PubMed:16478997, PubMed:16943418, PubMed:17049555, PubMed:18171990, PubMed:18199680, PubMed:18239466, PubMed:18513490, PubMed:18619531, PubMed:19193796, PubMed:20091743, PubMed:21046154, PubMed:21798247). Plays a role in the recruitment of SMARCA4/BRG1 on the c-FOS promoter. Plays a role in protecting cells against oxidative stress following brain injury by regulating the expression of RNF112 (By similarity)\", \"evidences\": [{\"code\": \"ECO:0000250\", \"source\": {\"name\": \"UniProtKB\", \"id\": \"O89090\", \"url\": \"https://www.uniprot.org/uniprot/O89090\"}}, {\"code\": \"ECO:0000250\", \"source\": {\"name\": \"UniProtKB\", \"id\": \"Q01714\", \"url\": \"https://www.uniprot.org/uniprot/Q01714\"}}, {\"code\": \"ECO:0000269\", \"source\": {\"name\": \"PubMed\", \"id\": \"10391891\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/10391891\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/10391891\"}}, {\"code\": \"ECO:0000269\", \"source\": {\"name\": \"PubMed\", \"id\": \"11371615\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/11371615\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/11371615\"}}, {\"code\": \"ECO:0000269\", \"source\": {\"name\": \"PubMed\", \"id\": \"11904305\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/11904305\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/11904305\"}}, {\"code\": \"ECO:0000269\", \"source\": {\"name\": \"PubMed\", \"id\": \"14593115\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/14593115\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/14593115\"}}, {\"code\": \"ECO:0000269\", \"source\": {\"name\": \"PubMed\", \"id\": \"16377629\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/16377629\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/16377629\"}}, {\"code\": \"ECO:0000269\", \"source\": {\"name\": \"PubMed\", \"id\": \"16478997\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/16478997\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/16478997\"}}, {\"code\": \"ECO:0000269\", \"source\": {\"name\": \"PubMed\", \"id\": \"16943418\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/16943418\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/16943418\"}}, {\"code\": \"ECO:0000269\", \"source\": {\"name\": \"PubMed\", \"id\": \"17049555\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/17049555\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/17049555\"}}, {\"code\": \"ECO:0000269\", \"source\": {\"name\": \"PubMed\", \"id\": \"18171990\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/18171990\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/18171990\"}}, {\"code\": \"ECO:0000269\", \"source\": {\"name\": \"PubMed\", \"id\": \"18199680\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/18199680\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/18199680\"}}, {\"code\": \"ECO:0000269\", \"source\": {\"name\": \"PubMed\", \"id\": \"18239466\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/18239466\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/18239466\"}}, {\"code\": \"ECO:0000269\", \"source\": {\"name\": \"PubMed\", \"id\": \"18513490\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/18513490\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/18513490\"}}, {\"code\": \"ECO:0000269\", \"source\": {\"name\": \"PubMed\", \"id\": \"18619531\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/18619531\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/18619531\"}}, {\"code\": \"ECO:0000269\", \"source\": {\"name\": \"PubMed\", \"id\": \"19193796\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/19193796\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/19193796\"}}, {\"code\": \"ECO:0000269\", \"source\": {\"name\": \"PubMed\", \"id\": \"20091743\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/20091743\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/20091743\"}}, {\"code\": \"ECO:0000269\", \"source\": {\"name\": \"PubMed\", \"id\": \"21046154\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/21046154\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/21046154\"}}, {\"code\": \"ECO:0000269\", \"source\": {\"name\": \"PubMed\", \"id\": \"21798247\", \"url\": \"http://www.ncbi.nlm.nih.gov/pubmed/21798247\", \"alternativeUrl\": \"https://europepmc.org/abstract/MED/21798247\"}}]}]}, {\"type\": \"SUBUNIT\", \"text\": [{\"value\": \"Interacts with ATF7IP, ATF7IP2, BAHD1, POGZ, HCFC1, AATF and PHC2. Interacts with HLTF; the",
+          "truncated": true
+        },
+        "status": "ok",
+        "tool": "get_uniprot_entry_by_accession",
+        "truncated": true
+      },
+      {
+        "arguments": {
+          "accession": "P08047",
+          "categories": "PTM"
+        },
+        "error": null,
+        "expected_tool": false,
+        "id": "tool_3",
+        "result": {
+          "data": {
+            "errorMessage": [
+              "Invalid category types"
+            ],
+            "requestedURL": "https://www.ebi.ac.uk/proteins/api/features/P08047?categories=P,T,M"
+          },
+          "status_code": 400,
+          "url": "https://www.ebi.ac.uk/proteins/api/features/P08047?categories=P%2CT%2CM"
+        },
+        "status": "ok",
+        "tool": "get_uniprot_protein_sequence_features_by_accession",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "accession": "P08047",
+          "types": "CARBOHYD"
+        },
+        "error": null,
+        "expected_tool": false,
+        "id": "tool_4",
+        "result": {
+          "data": {
+            "errorMessage": [
+              "Invalid feature types"
+            ],
+            "requestedURL": "https://www.ebi.ac.uk/proteins/api/features/P08047?types=C,A,R,B,O,H,Y,D"
+          },
+          "status_code": 400,
+          "url": "https://www.ebi.ac.uk/proteins/api/features/P08047?types=C%2CA%2CR%2CB%2CO%2CH%2CY%2CD"
+        },
+        "status": "ok",
+        "tool": "get_uniprot_protein_sequence_features_by_accession",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 1,
+    "usable_successful_tool_calls": 2
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "62dbc37a17d433b8eac5341f2a88f68e3b819457c3fa31cea8ba6163f2d22e6e",
+  "judge_transport_error": null,
+  "parsed_judge": null,
+  "prompt_sha256": "590fc58c1cca1b54df5aa35826546c9772d1d331bb4e3c58f205e36b126aefd4",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": null,
+  "reason_codes": [
+    "missing_final_answer"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "deepseek_flash_qoder_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "f8f521515a865e083368a9c38504661cab947ec1dd40c12714e81df1c9e08579",
+    "run_summary_sha256": "04a76a4061afa6cee82d14583921e890f54c0244ea74a21d74893fe03cd44d98",
+    "run_task_sha256": "cd37cd0d5d3da5fc6d382f8549fc2318036eecc86428b9bddedc0f4d8faa3de1",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "missing_answer",
+  "task_id": 20
+}

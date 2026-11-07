@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "provider": "local_magpie",
+  "model": "opencode-zen/deepseek-v4.1-flash-free",
+  "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+  "metrics_scope": "trajectory_only",
+  "answer_correctness": "not_evaluated",
+  "grader": "not_run_upstream_requires_gpt4o_api_key",
+  "tasks_run": 50,
+  "max_rounds": 4,
+  "tools_available": 70,
+  "prompt_hashes": {
+    "system": "ea6dbf107e44cf10e1e9430375c0d081b02184ea28fdefab7ba75ed5f4554e83",
+    "user_template": "91061473cda7ffc953222b6a91d3d40d6e566f4db558059c9e1dc978ce8ed74d",
+    "tool_catalog": "1c21bc74329197112b45d0f2b93c826294ce7df1067f6409ded9b59841510e3e"
+  },
+  "task_hash": "01f2af8a66851bb2cbd07a581e4febce06c394bc2f645b63b2199e8b7171f40d",
+  "request_options": {
+    "temperature": 0.0,
+    "max_tokens": 512,
+    "stream": false,
+    "request_timeout_seconds": 180.0,
+    "provider_native_tools": false,
+    "tool_choice": "not_sent"
+  },
+  "exact_sequence": 8,
+  "all_expected_called": 26,
+  "any_expected_called": 27,
+  "tasks_with_tool_call": 29,
+  "tasks_with_final_answer": 9,
+  "tool_call_successes": 60,
+  "tool_calls": 74,
+  "model_calls": 114,
+  "finish_reasons": {
+    "stop": 82,
+    "length": 13,
+    "not_provided": 19
+  },
+  "token_usage": {
+    "prompt_tokens": 333634,
+    "completion_tokens": 23058,
+    "total_tokens": 356692,
+    "responses_with_usage": 95
+  },
+  "elapsed_seconds": 651.038
+}

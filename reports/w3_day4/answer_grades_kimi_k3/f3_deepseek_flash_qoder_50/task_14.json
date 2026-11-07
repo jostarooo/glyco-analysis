@@ -1,0 +1,121 @@
+{
+  "cache_key": "6cf0a55a523ab10f523db3a837f684fd4ac3de7c3b473e6df99d9da0f3af0273",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "ConnectTimeout: HTTPSConnectionPool(host='unilectin.unige.ch', port=443): Max retries exceeded with url: /api/gettreflec (Caused by ConnectTimeoutError(<HTTPSConnection(host='unilectin.unige.ch', port=443) at 0x1f7081458b0>, 'Connection to unilectin.unige.ch timed out. (connect timeout=50)'))",
+      "ConnectTimeout: HTTPSConnectionPool(host='unilectin.unige.ch', port=443): Max retries exceeded with url: /api/gettreflec (Caused by ConnectTimeoutError(<HTTPSConnection(host='unilectin.unige.ch', port=443) at 0x1f708145100>, 'Connection to unilectin.unige.ch timed out. (connect timeout=50)'))",
+      "ConnectTimeout: HTTPSConnectionPool(host='unilectin.unige.ch', port=443): Max retries exceeded with url: /api/gettreflec (Caused by ConnectTimeoutError(<HTTPSConnection(host='unilectin.unige.ch', port=443) at 0x1f70814dcd0>, 'Connection to unilectin.unige.ch timed out. (connect timeout=50)'))",
+      "get_trefoil_lectins: ConnectTimeout: HTTPSConnectionPool(host='unilectin.unige.ch', port=443): Max retries exceeded with url: /api/gettreflec (Caused by ConnectTimeoutError(<HTTPSConnection(host='unilectin.unige.ch', port=443) at 0x1f7081458b0>, 'Connection to unilectin.unige.ch timed out. (connect timeout=50)'))",
+      "get_trefoil_lectins: ConnectTimeout: HTTPSConnectionPool(host='unilectin.unige.ch', port=443): Max retries exceeded with url: /api/gettreflec (Caused by ConnectTimeoutError(<HTTPSConnection(host='unilectin.unige.ch', port=443) at 0x1f708145100>, 'Connection to unilectin.unige.ch timed out. (connect timeout=50)'))",
+      "get_trefoil_lectins: ConnectTimeout: HTTPSConnectionPool(host='unilectin.unige.ch', port=443): Max retries exceeded with url: /api/gettreflec (Caused by ConnectTimeoutError(<HTTPSConnection(host='unilectin.unige.ch', port=443) at 0x1f70814dcd0>, 'Connection to unilectin.unige.ch timed out. (connect timeout=50)'))"
+    ],
+    "evidence_ids": [
+      "answer",
+      "tool_1",
+      "tool_2",
+      "tool_3"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "tool_errors",
+      "runner_errors"
+    ],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 0,
+    "successful_tool_calls": 0,
+    "tool_calls": 3,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "getcolumns": "domain,uniprot,superkingdom",
+          "isvalue": "Bacteria",
+          "limit": 2000,
+          "wherecolumn": "superkingdom"
+        },
+        "error": "ConnectTimeout: HTTPSConnectionPool(host='unilectin.unige.ch', port=443): Max retries exceeded with url: /api/gettreflec (Caused by ConnectTimeoutError(<HTTPSConnection(host='unilectin.unige.ch', port=443) at 0x1f7081458b0>, 'Connection to unilectin.unige.ch timed out. (connect timeout=50)'))",
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": null,
+        "status": "error",
+        "tool": "get_trefoil_lectins",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "getcolumns": "domain,uniprot,superkingdom",
+          "isvalue": "Bacteria",
+          "limit": 2000,
+          "wherecolumn": "superkingdom"
+        },
+        "error": "ConnectTimeout: HTTPSConnectionPool(host='unilectin.unige.ch', port=443): Max retries exceeded with url: /api/gettreflec (Caused by ConnectTimeoutError(<HTTPSConnection(host='unilectin.unige.ch', port=443) at 0x1f708145100>, 'Connection to unilectin.unige.ch timed out. (connect timeout=50)'))",
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": null,
+        "status": "error",
+        "tool": "get_trefoil_lectins",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "getcolumns": "domain,uniprot,superkingdom",
+          "isvalue": "Bacteria",
+          "limit": 2000,
+          "wherecolumn": "superkingdom"
+        },
+        "error": "ConnectTimeout: HTTPSConnectionPool(host='unilectin.unige.ch', port=443): Max retries exceeded with url: /api/gettreflec (Caused by ConnectTimeoutError(<HTTPSConnection(host='unilectin.unige.ch', port=443) at 0x1f70814dcd0>, 'Connection to unilectin.unige.ch timed out. (connect timeout=50)'))",
+        "expected_tool": true,
+        "id": "tool_3",
+        "result": null,
+        "status": "error",
+        "tool": "get_trefoil_lectins",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 0
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "4e6b4affcb76fee128582b0e4a5bd7784387a28ce78d796d100276876ac2b79b",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "The correct expected tool (get_trefoil_lectins) was invoked with the correct parameters (getcolumns='domain,uniprot,superkingdom', wherecolumn='superkingdom', isvalue='Bacteria', limit=2000) across three attempts (tool_1, tool_2, tool_3), but all failed due to ConnectTimeout errors to unilectin.unige.ch. Tool usage was appropriate but produced no usable data, so the answer could not be supported.",
+    "critical_issues": [
+      "No trefoil lectin data (domain/uniprot/superkingdom) for Bacteria was retrieved or reported, omitting the required result"
+    ],
+    "decision": "FAILURE",
+    "evidence_ids": [
+      "answer",
+      "tool_1",
+      "tool_2",
+      "tool_3"
+    ],
+    "reason": "The expected answer requires actual trefoil lectin data (domain, UniProt identifier, superkingdom) for Bacteria entries from UniLectin. All three get_trefoil_lectins calls (tool_1, tool_2, tool_3) failed with ConnectTimeout errors and returned no data, so the final answer reports no lectin records at all and thus omits the required scientific result.",
+    "scientific_accuracy": "unknown"
+  },
+  "prompt_sha256": "bd3ac536cdc85424048198108eb4ed34ffe96ea194991abda9d41407887f0f27",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\n  \"decision\": \"FAILURE\",\n  \"reason\": \"The expected answer requires actual trefoil lectin data (domain, UniProt identifier, superkingdom) for Bacteria entries from UniLectin. All three get_trefoil_lectins calls (tool_1, tool_2, tool_3) failed with ConnectTimeout errors and returned no data, so the final answer reports no lectin records at all and thus omits the required scientific result.\",\n  \"critical_issues\": [\"No trefoil lectin data (domain/uniprot/superkingdom) for Bacteria was retrieved or reported, omitting the required result\"],\n  \"scientific_accuracy\": \"unknown\",\n  \"api_usage_assessment\": \"The correct expected tool (get_trefoil_lectins) was invoked with the correct parameters (getcolumns='domain,uniprot,superkingdom', wherecolumn='superkingdom', isvalue='Bacteria', limit=2000) across three attempts (tool_1, tool_2, tool_3), but all failed due to ConnectTimeout errors to unilectin.unige.ch. Tool usage was appropriate but produced no usable data, so the answer could not be supported.\",\n  \"evidence_ids\": [\"answer\", \"tool_1\", \"tool_2\", \"tool_3\"]\n}",
+  "reason_codes": [
+    "judge_failure"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "deepseek_flash_qoder_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "412c1a991047a8fe42dfef7ae0eda9e438bb9698115c332677a600d0711f3af2",
+    "run_summary_sha256": "04a76a4061afa6cee82d14583921e890f54c0244ea74a21d74893fe03cd44d98",
+    "run_task_sha256": "7431a8f46dbfe54c5dfda49708b8d674e4e6181778464c6ce642070f268c2bf6",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "incorrect",
+  "task_id": 14
+}

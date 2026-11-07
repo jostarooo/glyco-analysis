@@ -1,0 +1,73 @@
+{
+  "cache_key": "9ef7683821426cd11aafe45c9b536ca0dfec318d78b9031ab9c1ea86102576a0",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": true,
+    "error_text": [
+      "invalid_action: "
+    ],
+    "evidence_ids": [
+      "tool_1"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "missing_final_answer",
+      "truncated_results",
+      "all_successful_evidence_truncated",
+      "runner_errors"
+    ],
+    "has_final_answer": false,
+    "successful_result_tool_calls": 1,
+    "successful_tool_calls": 1,
+    "tool_calls": 1,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "in_range": true,
+          "locations": "1:450000-550000",
+          "taxonomy": 9606
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "preview": "{\"status_code\": 200, \"url\": \"https://www.ebi.ac.uk/proteins/api/coordinates/9606/1:450000-550000/feature?offset=0&size=100&in_range=True\", \"data\": [{\"accession\": \"Q6IEY1\", \"name\": \"OR4F3_HUMAN\", \"taxid\": 9606, \"sequence\": \"MDGENHSVVSEFLFLGLTHSWEIQLLLLVFSSVLYVASITGNILIVFSVTTDPHLHSPMYFLLASLSFIDLGACSVTSPKMIYDLFRKRKVISFGGCIAQIFFIHVVGGVEMVLLIAMAFDRYVALCKPLHYLTIMSPRMCLSFLAVAWTLGVSHSLFQLAFLVNLAFCGPNVLDSFYCDLPRLLRLACTDTYRLQFMVTVNSGFICVGTFFILLISYVFILFTVWKHSSGGSSKALSTLSAHSTVVLLFFGPPMFVYTRPHPNSQMDKFLAIFDAVLTPFLNPVVYTFRNKEMKAAIKRVCKQLVIYKRIS\", \"protein\": {\"recommendedName\": {\"fullName\": \"Olfactory receptor 4F3/4F16/4F29\"}, \"alternativeName\": [{\"fullName\": \"Olfactory receptor OR1-1\"}]}, \"gene\": [{\"value\": \"OR4F3\", \"type\": \"primary\"}], \"gnCoordinate\": [{\"genomicLocation\": {\"chromosome\": \"1\", \"start\": 451678, \"end\": 450743, \"reverseStrand\": true, \"nucleotideId\": \"CM000663.2\", \"assemblyName\": \"GRCh38\"}, \"feature\": [{\"location\": {\"begin\": {\"position\": 196, \"status\": \"certain\"}, \"end\": {\"position\": 219, \"status\": \"certain\"}}, \"description\": \"Helical; Name=5.\", \"evidence\": [{\"code\": \"ECO:0000255\"}], \"type\": \"transmembrane region\", \"genomeLocation\": {\"begin\": {\"position\": 451093, \"status\": \"certain\"}, \"end\": {\"position\": 451022, \"status\": \"certain\"}}}, {\"location\": {\"begin\": {\"position\": 101, \"status\": \"certain\"}, \"end\": {\"position\": 120, \"status\": \"certain\"}}, \"description\": \"Helical; Name=3.\", \"evidence\": [{\"code\": \"ECO:0000255\"}], \"type\": \"transmembrane region\", \"genomeLocation\": {\"begin\": {\"position\": 451378, \"status\": \"certain\"}, \"end\": {\"position\": 451319, \"status\": \"certain\"}}}, {\"location\": {\"begin\": {\"position\": 80, \"status\": \"certain\"}, \"end\": {\"position\": 100, \"status\": \"certain\"}}, \"description\": \"Extracellular.\", \"evidence\": [{\"code\": \"ECO:0000255\"}], \"type\": \"topological domain\", \"genomeLocation\": {\"begin\": {\"position\": 451441, \"status\": \"certain\"}, \"end\": {\"position\": 451379, \"status\": \"certain\"}}}, {\"location\": {\"begin\": {\"position\": 270, \"status\": \"certain\"}, \"end\": {\"position\": 289, \"status\": \"certain\"}}, \"description\": \"Helical; Name=7.\", \"evidence\": [{\"code\": \"ECO:0000255\"}], \"type\": \"transmembrane region\", \"genomeLocation\": {\"begin\": {\"position\": 450871, \"status\": \"certain\"}, \"end\": {\"position\": 450812, \"status\": \"certain\"}}}, {\"location\": {\"begin\": {\"position\": 220, \"status\": \"certain\"}, \"end\": {\"position\": 235, \"status\": \"certain\"}}, \"description\": \"Cytoplasmic.\", \"evidence\": [{\"code\": \"ECO:0000255\"}], \"type\": \"topological domain\", \"genomeLocation\": {\"begin\": {\"position\": 451021, \"status\": \"certain\"}, \"end\": {\"position\": 450974, \"status\": \"certain\"}}}, {\"location\": {\"begin\": {\"position\": 140, \"status\": \"certain\"}, \"end\": {\"position\": 158, \"status\": \"certain\"}}, \"description\": \"Helical; Name=4.\", \"evidence\": [{\"code\": \"ECO:0000255\"}], \"type\": \"transmembrane region\", \"genomeLocation\": {\"begin\": {\"position\": 451261, \"status\": \"certain\"}, \"end\": {\"position\": 451205, \"status\": \"certain\"}}}, {\"location\": {\"begin\": {\"position\": 236, \"status\": \"certain\"}, \"end\": {\"position\": 258, \"status\": \"certain\"}}, \"description\": \"Helical; Name=6.\", \"evidence\": [{\"code\": \"ECO:0000255\"}], \"type\": \"transmembrane region\", \"genomeLocation\": {\"begin\": {\"position\": 450973, \"status\": \"certain\"}, \"end\": {\"position\": 450905, \"status\": \"certain\"}}}, {\"location\": {\"begin\": {\"position\": 1, \"status\": \"certain\"}, \"end\": {\"position\": 25, \"status\": \"certain\"}}, \"description\": \"Extracellular.\", \"evidence\": [{\"code\": \"ECO:0000255\"}], \"type\": \"topological domain\", \"genomeLocation\": {\"begin\": {\"position\": 451678, \"status\": \"certain\"}, \"end\": {\"position\": 451604, \"status\": \"certain\"}}}, {\"location\": {\"begin\": {\"position\": 259, \"status\": \"certain\"}, \"end\": {\"position\": 269, \"status\": \"certain\"}}, \"description\": \"Extracellular.\", \"evidence\": [{\"code\": \"ECO:0000255\"}], \"type\": \"topological domain\", \"genomeLocation\": {\"begin\": {\"position\": 450904, \"status\": \"certain\"}, \"end\": {\"position\": 450872, \"status\": \"certain\"}}}, {\"location\": {\"begin\": {\"position\": 26, \"status\": \"certain\"}, \"end\": {\"position\": 49, \"status\": \"certain\"}}, \"description\": \"Helical; Name=1.\", \"evidence\": [{\"code\": \"ECO:0000255\"}], \"type\": \"transmembrane region\", \"genomeLocation\": {\"begin\": {\"position\": 451603, \"status\": \"certain\"}, \"end\": {\"position\": 451532, \"status\": \"certain\"}}}, {\"location\": {\"position\": {\"position\": 5, \"status\": \"certain\"}}, \"description\": \"N-linked (GlcNAc...) asparagine.\", \"evidence\": [{\"code\": \"ECO:0000255\"}], \"type\": \"glycosylation site\", \"genomeLocation\": {\"begin\": {\"position\": 451666, \"status\": \"certain\"}, \"end\": {\"position\": 451664, \"status\": \"certain\"}}}, {\"location\": {\"begin\": {\"position\": 121, \"status\": \"certain\"}, \"end\": {\"position\": 139, \"status\": \"certain\"}}, \"description\": \"Cytoplasmic.\", \"evidence\": [{\"code\": \"ECO:0000255\"}], \"type\": \"topological domain\", \"genomeLocation\": {\"begin\": {\"position\": 451318, \"status\": \"certain\"}, \"end\": {\"position\": 451262, \"status\": \"certain\"}}}, {\"location\": {\"begin\": {\"position\": 50, \"status\": \"certain\"}, \"end\": {\"position\": 57, \"status\": \"certain\"}}, \"description\": \"Cytoplasmic.\", \"evidence\": [{\"code\": \"ECO:0000255\"}], \"type\": \"topological domain\", \"genomeLocation\": {\"begin\": {\"position\": 451531, \"status\": \"certain\"}, \"end\": {\"position\": 451508, \"status\": \"certain\"}}}, {\"location\": {\"begin\": {\"position\": 58, \"status\": \"certain\"}, \"end\": {\"position\": 79, \"status\": \"certain\"}}, \"description\": \"Helical; Name=2.\", \"evidence\": [{\"code\": \"ECO:0000255\"}], \"type\": \"transmembrane region\", \"genomeLocation\": {\"begin\": {\"position\": 451507, \"status\": \"certain\"}, \"end\": {\"position\": 451442, \"status\": \"certain\"}}}, {\"location\": {\"begin\": {\"position\": 159, \"status\": \"certain\"}, \"end\": {\"position\": 195, \"status\": \"certain\"}}, \"description\": \"Extracellular.\", \"evidence\": [{\"code\": \"ECO:0000255\"}], \"type\": \"topological domain\", \"genomeLocation\": {\"begin\": {\"position\": 451204, \"status\": \"certain\"}, \"end\": {\"position\": 451094, \"status\": \"certain\"}}}, {\"location\": {\"begin\": {\"position\": 97, \"status\": \"certain\"}, \"",
+          "truncated": true
+        },
+        "status": "ok",
+        "tool": "get_feature_by_locations",
+        "truncated": true
+      }
+    ],
+    "truncated_results": 1,
+    "usable_successful_tool_calls": 0
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "62dbc37a17d433b8eac5341f2a88f68e3b819457c3fa31cea8ba6163f2d22e6e",
+  "judge_transport_error": null,
+  "parsed_judge": null,
+  "prompt_sha256": "bae774e59d209b3fedb97bf22f22e7ae5d3dad335d4df3eb132bde805ab84e7f",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": null,
+  "reason_codes": [
+    "missing_final_answer"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "deepseek_v41_flash_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "372c1ed571eb653aa17d82a203af4d88483242df32b6555a22ec10ea0a0fb36c",
+    "run_summary_sha256": "44b9d3df0bac0f15b69383160f5eb6630809976183bb2ee7f684abc342263803",
+    "run_task_sha256": "61e0e0451b814ab3d6f59561f1be91bfbf06902d52af94136921d6061841f2bc",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "missing_answer",
+  "task_id": 6
+}

@@ -1,0 +1,39 @@
+{
+  "task_id": 50,
+  "question": "How do different lectins from specific species interact with proteins that have known glycosylation sites, and what are these sites? First, retrieve lectins from the species Saccharomyces cerevisiae using the UniLectin3D database, then fetch detailed protein information including glycosylation sites for these lectins using their UniProt IDs. Specifically, use the get_lectins tool with parameters getcolumns=\"pdb,uniprot\", wherecolumn=\"species\", isvalue=\"Saccharomyces cerevisiae\", and limit=100, then utilize the protein_detail tool for each UniProt ID.",
+  "expected_tools": [
+    "get_lectins",
+    "protein_detail"
+  ],
+  "tool_calls": [],
+  "final_answer": "",
+  "errors": [
+    "external: ExternalChatError: http_error: status=429 body={\"error\":{\"code\":null,\"message\":\"ModelScope: insufficient balance (out of its allowance: not asked again before 12:27 UTC+8)\",\"param\":null,\"type\":\"rate_limit_error\"}}\n"
+  ],
+  "elapsed_seconds": 0.006,
+  "exact_sequence": false,
+  "all_expected_called": false,
+  "any_expected_called": false,
+  "expected_steps": 2,
+  "called_steps": 0,
+  "call_successes": 0,
+  "model_calls": 1,
+  "model_responses": [
+    {
+      "round": 1,
+      "elapsed_seconds": 0.006,
+      "finish_reason": null,
+      "usage": {},
+      "error": "ExternalChatError: http_error: status=429 body={\"error\":{\"code\":null,\"message\":\"ModelScope: insufficient balance (out of its allowance: not asked again before 12:27 UTC+8)\",\"param\":null,\"type\":\"rate_limit_error\"}}\n"
+    }
+  ],
+  "token_usage": {
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "total_tokens": 0,
+    "responses_with_usage": 0
+  },
+  "finish_reasons": {
+    "not_provided": 1
+  }
+}

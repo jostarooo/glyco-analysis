@@ -1,0 +1,131 @@
+{
+  "cache_key": "bb546a5318dadded4cefbe3755ba1a0ebbfb14794b43ceb81906f7d696e2435d",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "max_rounds_reached"
+    ],
+    "evidence_ids": [
+      "tool_1",
+      "tool_2",
+      "tool_3",
+      "tool_4"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "missing_final_answer",
+      "runner_errors"
+    ],
+    "has_final_answer": false,
+    "successful_result_tool_calls": 4,
+    "successful_tool_calls": 4,
+    "tool_calls": 4,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "consequencetype": "missense mutation",
+          "hgvs": "NC_000017.11:g.58223910G>A",
+          "sourcetype": "large scale study"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": {
+            "errorMessage": [
+              "Invalid consequence type parameter. It can only be missense, stop gained or stop lost. Comma separated list accepted."
+            ],
+            "requestedURL": "https://www.ebi.ac.uk/proteins/api/variation/hgvs/NC_000017.11%3Ag.58223910G%3EA?offset=0&size=100&sourcetype=large scale study&consequencetype=missense mutation"
+          },
+          "status_code": 400,
+          "url": "https://www.ebi.ac.uk/proteins/api/variation/hgvs/NC_000017.11%3Ag.58223910G%3EA?offset=0&size=100&sourcetype=large+scale+study&consequencetype=missense+mutation"
+        },
+        "status": "ok",
+        "tool": "get_natural_variants_by_hgvs_expression",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "consequencetype": "missense",
+          "hgvs": "NC_000017.11:g.58223910G>A",
+          "sourcetype": "large scale study"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": {
+          "data": [],
+          "status_code": 200,
+          "url": "https://www.ebi.ac.uk/proteins/api/variation/hgvs/NC_000017.11%3Ag.58223910G%3EA?offset=0&size=100&sourcetype=large+scale+study&consequencetype=missense"
+        },
+        "status": "ok",
+        "tool": "get_natural_variants_by_hgvs_expression",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "hgvs": "NC_000017.11:g.58223910G>A"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_3",
+        "result": {
+          "data": [],
+          "status_code": 200,
+          "url": "https://www.ebi.ac.uk/proteins/api/variation/hgvs/NC_000017.11%3Ag.58223910G%3EA?offset=0&size=100"
+        },
+        "status": "ok",
+        "tool": "get_natural_variants_by_hgvs_expression",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "locations": "17:58223910-58223910",
+          "taxonomy": "9606"
+        },
+        "error": null,
+        "expected_tool": false,
+        "id": "tool_4",
+        "result": {
+          "data": [],
+          "status_code": 200,
+          "url": "https://www.ebi.ac.uk/proteins/api/coordinates/9606/17%3A58223910-58223910?offset=0&size=100"
+        },
+        "status": "ok",
+        "tool": "search_uniprot_entries_by_taxonomy_and_genomic_coordinates",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 4
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "62dbc37a17d433b8eac5341f2a88f68e3b819457c3fa31cea8ba6163f2d22e6e",
+  "judge_transport_error": null,
+  "parsed_judge": null,
+  "prompt_sha256": "5d51dca6987b5bca46b8936660aee89c9af579f155c54d678239ef3701a3e69c",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": null,
+  "reason_codes": [
+    "missing_final_answer"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "deepseek_flash_qoder_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "6bbf6f650c1328104e8cc30a62c0826243cb5dbdc3fcd2a82c16cdb346374adb",
+    "run_summary_sha256": "04a76a4061afa6cee82d14583921e890f54c0244ea74a21d74893fe03cd44d98",
+    "run_task_sha256": "27205f3a4f5cb795678a0215f0e569bf7b88f37f67f38e0a70ee5f602548101d",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "missing_answer",
+  "task_id": 18
+}

@@ -1,0 +1,121 @@
+{
+  "cache_key": "ff959626525da7977befd65b22dbfaec2e135fa1fcba043964afb66b71b0153f",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "ConnectTimeout: HTTPSConnectionPool(host='unilectin.unige.ch', port=443): Max retries exceeded with url: /api/getmycolec (Caused by ConnectTimeoutError(<HTTPSConnection(host='unilectin.unige.ch', port=443) at 0x1975e0eb7a0>, 'Connection to unilectin.unige.ch timed out. (connect timeout=50)'))",
+      "ConnectTimeout: HTTPSConnectionPool(host='unilectin.unige.ch', port=443): Max retries exceeded with url: /api/getmycolec (Caused by ConnectTimeoutError(<HTTPSConnection(host='unilectin.unige.ch', port=443) at 0x1975e0e8d40>, 'Connection to unilectin.unige.ch timed out. (connect timeout=50)'))",
+      "ConnectTimeout: HTTPSConnectionPool(host='unilectin.unige.ch', port=443): Max retries exceeded with url: /api/getlectins (Caused by ConnectTimeoutError(<HTTPSConnection(host='unilectin.unige.ch', port=443) at 0x1975e0e9820>, 'Connection to unilectin.unige.ch timed out. (connect timeout=50)'))",
+      "get_fungal_lectins: ConnectTimeout: HTTPSConnectionPool(host='unilectin.unige.ch', port=443): Max retries exceeded with url: /api/getmycolec (Caused by ConnectTimeoutError(<HTTPSConnection(host='unilectin.unige.ch', port=443) at 0x1975e0eb7a0>, 'Connection to unilectin.unige.ch timed out. (connect timeout=50)'))",
+      "get_fungal_lectins: ConnectTimeout: HTTPSConnectionPool(host='unilectin.unige.ch', port=443): Max retries exceeded with url: /api/getmycolec (Caused by ConnectTimeoutError(<HTTPSConnection(host='unilectin.unige.ch', port=443) at 0x1975e0e8d40>, 'Connection to unilectin.unige.ch timed out. (connect timeout=50)'))",
+      "get_lectins: ConnectTimeout: HTTPSConnectionPool(host='unilectin.unige.ch', port=443): Max retries exceeded with url: /api/getlectins (Caused by ConnectTimeoutError(<HTTPSConnection(host='unilectin.unige.ch', port=443) at 0x1975e0e9820>, 'Connection to unilectin.unige.ch timed out. (connect timeout=50)'))"
+    ],
+    "evidence_ids": [
+      "answer",
+      "tool_1",
+      "tool_2",
+      "tool_3"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "tool_errors",
+      "runner_errors"
+    ],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 0,
+    "successful_tool_calls": 0,
+    "tool_calls": 3,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "getcolumns": "fold,domain,species",
+          "isvalue": "Aspergillus niger",
+          "limit": 1000,
+          "wherecolumn": "species"
+        },
+        "error": "ConnectTimeout: HTTPSConnectionPool(host='unilectin.unige.ch', port=443): Max retries exceeded with url: /api/getmycolec (Caused by ConnectTimeoutError(<HTTPSConnection(host='unilectin.unige.ch', port=443) at 0x1975e0eb7a0>, 'Connection to unilectin.unige.ch timed out. (connect timeout=50)'))",
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": null,
+        "status": "error",
+        "tool": "get_fungal_lectins",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "getcolumns": "fold,domain,species",
+          "isvalue": "Aspergillus niger",
+          "limit": 1000,
+          "wherecolumn": "species"
+        },
+        "error": "ConnectTimeout: HTTPSConnectionPool(host='unilectin.unige.ch', port=443): Max retries exceeded with url: /api/getmycolec (Caused by ConnectTimeoutError(<HTTPSConnection(host='unilectin.unige.ch', port=443) at 0x1975e0e8d40>, 'Connection to unilectin.unige.ch timed out. (connect timeout=50)'))",
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": null,
+        "status": "error",
+        "tool": "get_fungal_lectins",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "getcolumns": "fold,domain,species",
+          "isvalue": "Aspergillus niger",
+          "limit": 1000,
+          "wherecolumn": "species"
+        },
+        "error": "ConnectTimeout: HTTPSConnectionPool(host='unilectin.unige.ch', port=443): Max retries exceeded with url: /api/getlectins (Caused by ConnectTimeoutError(<HTTPSConnection(host='unilectin.unige.ch', port=443) at 0x1975e0e9820>, 'Connection to unilectin.unige.ch timed out. (connect timeout=50)'))",
+        "expected_tool": false,
+        "id": "tool_3",
+        "result": null,
+        "status": "error",
+        "tool": "get_lectins",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 0
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "4725151a8d7454ef95fcae1dce9d6ccfe240e42970efe4c1f2b7f7c0c0fb4198",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "The agent attempted the expected get_fungal_lectins tool with the correct columns, species filter, and limit, but all relevant calls timed out and returned no data; therefore tool use could not support the requested answer.",
+    "critical_issues": [
+      "Required fold/domain/species results for Aspergillus niger are absent",
+      "Final answer substitutes an infrastructure failure report for the requested scientific comparison"
+    ],
+    "decision": "FAILURE",
+    "evidence_ids": [
+      "tool_1",
+      "tool_2",
+      "tool_3"
+    ],
+    "reason": "The expected answer required actual UniLectin rows listing fold, domain, and species for Aspergillus niger lectins (limit 1000), but the final answer provides no fold/domain data and only reports API timeouts. Evidence shows the expected get_fungal_lectins calls failed with ConnectTimeout and returned null, so the required scientific result was omitted rather than contradicted.",
+    "scientific_accuracy": "unknown"
+  },
+  "prompt_sha256": "5dd24c97da95faa72edaf9cd70b713a7d309e438cff5a52f1f6bee7ba1bce7c6",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\n  \"decision\": \"FAILURE\",\n  \"reason\": \"The expected answer required actual UniLectin rows listing fold, domain, and species for Aspergillus niger lectins (limit 1000), but the final answer provides no fold/domain data and only reports API timeouts. Evidence shows the expected get_fungal_lectins calls failed with ConnectTimeout and returned null, so the required scientific result was omitted rather than contradicted.\",\n  \"critical_issues\": [\n    \"Required fold/domain/species results for Aspergillus niger are absent\",\n    \"Final answer substitutes an infrastructure failure report for the requested scientific comparison\"\n  ],\n  \"scientific_accuracy\": \"unknown\",\n  \"api_usage_assessment\": \"The agent attempted the expected get_fungal_lectins tool with the correct columns, species filter, and limit, but all relevant calls timed out and returned no data; therefore tool use could not support the requested answer.\",\n  \"evidence_ids\": [\"tool_1\", \"tool_2\", \"tool_3\"]\n}",
+  "reason_codes": [
+    "judge_failure"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "deepseek_v41_flash_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "93b4c36c0307dc65bbb7c9b0220496b1c8c578da14eb758692bab875a6c4f69a",
+    "run_summary_sha256": "44b9d3df0bac0f15b69383160f5eb6630809976183bb2ee7f684abc342263803",
+    "run_task_sha256": "46471281c5d314f46dc638d83ede7b33cdefdbdbb0e20ee91cbc189a75b40097",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "incorrect",
+  "task_id": 23
+}

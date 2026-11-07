@@ -1,0 +1,124 @@
+{
+  "cache_key": "88747c5e026641e12084dfe8e4a72597660f09cc23b143b04d71204190fe0941",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "max_rounds_reached"
+    ],
+    "evidence_ids": [
+      "tool_1",
+      "tool_2",
+      "tool_3",
+      "tool_4"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "missing_final_answer",
+      "runner_errors"
+    ],
+    "has_final_answer": false,
+    "successful_result_tool_calls": 4,
+    "successful_tool_calls": 4,
+    "tool_calls": 4,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "database": "compound",
+          "query": "flavonoid"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": "C01579\tFlavonoid\nC02790\t3'-Hydroxyflavonoid\n",
+          "status_code": 200,
+          "url": "https://rest.kegg.jp/find/compound/flavonoid"
+        },
+        "status": "ok",
+        "tool": "find",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "dbentries": "C01579+C02790",
+          "option": "exact_mass"
+        },
+        "error": null,
+        "expected_tool": false,
+        "id": "tool_2",
+        "result": {
+          "data": "",
+          "status_code": 400,
+          "url": "https://rest.kegg.jp/get/C01579+C02790/exact_mass"
+        },
+        "status": "ok",
+        "tool": "get",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "dbentries": "C01579+C02790"
+        },
+        "error": null,
+        "expected_tool": false,
+        "id": "tool_3",
+        "result": {
+          "data": "ENTRY       C01579                      Compound\nNAME        Flavonoid\nCOMMENT     Generic compound in reaction hierarchy\nREACTION    R03615\nENZYME      1.14.14.82\nDBLINKS     PubChem: 4735\n            ChEBI: 47916\n///\n\nENTRY       C02790                      Compound\nNAME        3'-Hydroxyflavonoid\nCOMMENT     Generic compound in reaction hierarchy\nREACTION    R03615\nENZYME      1.14.14.82\nDBLINKS     PubChem: 5741\n            ChEBI: 27741\n///\n",
+          "status_code": 200,
+          "url": "https://rest.kegg.jp/get/C01579+C02790"
+        },
+        "status": "ok",
+        "tool": "get",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "dbentries": "C01579",
+          "option": "exact_mass"
+        },
+        "error": null,
+        "expected_tool": false,
+        "id": "tool_4",
+        "result": {
+          "data": "",
+          "status_code": 400,
+          "url": "https://rest.kegg.jp/get/C01579/exact_mass"
+        },
+        "status": "ok",
+        "tool": "get",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 4
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "62dbc37a17d433b8eac5341f2a88f68e3b819457c3fa31cea8ba6163f2d22e6e",
+  "judge_transport_error": null,
+  "parsed_judge": null,
+  "prompt_sha256": "cdc49cb0d731c5ea6c34f009454eda46d8a07a4c9d494df399a5d75864dad00c",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": null,
+  "reason_codes": [
+    "missing_final_answer"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "deepseek_v41_flash_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "04f7daa3555cee8f829c989d5fcbda5e82e978fd5da3ab9270e30e9cdbb6c190",
+    "run_summary_sha256": "44b9d3df0bac0f15b69383160f5eb6630809976183bb2ee7f684abc342263803",
+    "run_task_sha256": "de9611ae640f4781b0c484e66985811066acd7240d92000e1f9b749b5ea21584",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "missing_answer",
+  "task_id": 28
+}

@@ -1,0 +1,103 @@
+{
+  "cache_key": "9275de34f3641e9d6c158a366eae086575a27389513531a948441be95c5222d7",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "ConnectTimeout: HTTPSConnectionPool(host='unilectin.unige.ch', port=443): Max retries exceeded with url: /api/gettreflec (Caused by ConnectTimeoutError(<HTTPSConnection(host='unilectin.unige.ch', port=443) at 0x1975e0a3fb0>, 'Connection to unilectin.unige.ch timed out. (connect timeout=50)'))",
+      "ConnectTimeout: HTTPSConnectionPool(host='unilectin.unige.ch', port=443): Max retries exceeded with url: /api/gettreflec (Caused by ConnectTimeoutError(<HTTPSConnection(host='unilectin.unige.ch', port=443) at 0x1975e0a03e0>, 'Connection to unilectin.unige.ch timed out. (connect timeout=50)'))",
+      "get_trefoil_lectins: ConnectTimeout: HTTPSConnectionPool(host='unilectin.unige.ch', port=443): Max retries exceeded with url: /api/gettreflec (Caused by ConnectTimeoutError(<HTTPSConnection(host='unilectin.unige.ch', port=443) at 0x1975e0a3fb0>, 'Connection to unilectin.unige.ch timed out. (connect timeout=50)'))",
+      "get_trefoil_lectins: ConnectTimeout: HTTPSConnectionPool(host='unilectin.unige.ch', port=443): Max retries exceeded with url: /api/gettreflec (Caused by ConnectTimeoutError(<HTTPSConnection(host='unilectin.unige.ch', port=443) at 0x1975e0a03e0>, 'Connection to unilectin.unige.ch timed out. (connect timeout=50)'))"
+    ],
+    "evidence_ids": [
+      "answer",
+      "tool_1",
+      "tool_2"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "tool_errors",
+      "runner_errors"
+    ],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 0,
+    "successful_tool_calls": 0,
+    "tool_calls": 2,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "getcolumns": "domain,uniprot,superkingdom",
+          "isvalue": "Bacteria",
+          "limit": 2000,
+          "wherecolumn": "superkingdom"
+        },
+        "error": "ConnectTimeout: HTTPSConnectionPool(host='unilectin.unige.ch', port=443): Max retries exceeded with url: /api/gettreflec (Caused by ConnectTimeoutError(<HTTPSConnection(host='unilectin.unige.ch', port=443) at 0x1975e0a3fb0>, 'Connection to unilectin.unige.ch timed out. (connect timeout=50)'))",
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": null,
+        "status": "error",
+        "tool": "get_trefoil_lectins",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "getcolumns": "domain,uniprot,superkingdom",
+          "isvalue": "Bacteria",
+          "limit": 2000,
+          "wherecolumn": "superkingdom"
+        },
+        "error": "ConnectTimeout: HTTPSConnectionPool(host='unilectin.unige.ch', port=443): Max retries exceeded with url: /api/gettreflec (Caused by ConnectTimeoutError(<HTTPSConnection(host='unilectin.unige.ch', port=443) at 0x1975e0a03e0>, 'Connection to unilectin.unige.ch timed out. (connect timeout=50)'))",
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": null,
+        "status": "error",
+        "tool": "get_trefoil_lectins",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 0
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "cfad3369210a2a28b877a176392f178fbc55068924aabfd8b61af07ed5774b35",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "The correct tool (get_trefoil_lectins) was called with appropriate parameters (getcolumns=domain,uniprot,superkingdom; wherecolumn=superkingdom; isvalue=Bacteria; limit=2000), but both attempts failed due to a connection timeout, so tool use could not support the answer. The final answer accurately and honestly reports this failure, but it cannot satisfy the question.",
+    "critical_issues": [
+      "Both tool calls failed with ConnectTimeout to unilectin.unige.ch (tool_1, tool_2), returning no data",
+      "The final answer omits the required result: no trefoil lectin entries with domain, UniProt identifier, and superkingdom fields were retrieved"
+    ],
+    "decision": "FAILURE",
+    "evidence_ids": [
+      "answer",
+      "tool_1",
+      "tool_2"
+    ],
+    "reason": "The expected answer requires the actual list of trefoil lectins from Bacteria with domain, UniProt, and superkingdom fields. Both get_trefoil_lectins calls (tool_1, tool_2) failed with ConnectTimeout errors and returned null results, so the final answer provides no lectin data and omits the required scientific result entirely.",
+    "scientific_accuracy": "unknown"
+  },
+  "prompt_sha256": "73fa587a3da0e8848e884e2cb637f5c944d6c0c5caf68dde0cc91722394c82d2",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\n  \"decision\": \"FAILURE\",\n  \"reason\": \"The expected answer requires the actual list of trefoil lectins from Bacteria with domain, UniProt, and superkingdom fields. Both get_trefoil_lectins calls (tool_1, tool_2) failed with ConnectTimeout errors and returned null results, so the final answer provides no lectin data and omits the required scientific result entirely.\",\n  \"critical_issues\": [\n    \"Both tool calls failed with ConnectTimeout to unilectin.unige.ch (tool_1, tool_2), returning no data\",\n    \"The final answer omits the required result: no trefoil lectin entries with domain, UniProt identifier, and superkingdom fields were retrieved\"\n  ],\n  \"scientific_accuracy\": \"unknown\",\n  \"api_usage_assessment\": \"The correct tool (get_trefoil_lectins) was called with appropriate parameters (getcolumns=domain,uniprot,superkingdom; wherecolumn=superkingdom; isvalue=Bacteria; limit=2000), but both attempts failed due to a connection timeout, so tool use could not support the answer. The final answer accurately and honestly reports this failure, but it cannot satisfy the question.\",\n  \"evidence_ids\": [\"answer\", \"tool_1\", \"tool_2\"]\n}",
+  "reason_codes": [
+    "judge_failure"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "deepseek_v41_flash_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "412c1a991047a8fe42dfef7ae0eda9e438bb9698115c332677a600d0711f3af2",
+    "run_summary_sha256": "44b9d3df0bac0f15b69383160f5eb6630809976183bb2ee7f684abc342263803",
+    "run_task_sha256": "12f081699d01326c54627bcec18d45c9267eecf8df0f7ba1d54fa810e8850751",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "incorrect",
+  "task_id": 14
+}

@@ -1,0 +1,102 @@
+{
+  "answer_available_rate": {
+    "denominator": 50,
+    "numerator": 9,
+    "value": 0.18
+  },
+  "correct_over_task_count": {
+    "denominator": 50,
+    "numerator": 3,
+    "value": 0.06
+  },
+  "graded_accuracy": {
+    "denominator": 7,
+    "numerator": 3,
+    "value": 0.428571
+  },
+  "graded_correct": 3,
+  "graded_coverage": {
+    "denominator": 50,
+    "numerator": 7,
+    "value": 0.14
+  },
+  "graded_incorrect": 4,
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "deepseek_v41_flash_50",
+  "schema_version": 1,
+  "source": {
+    "run_summary_sha256": "44b9d3df0bac0f15b69383160f5eb6630809976183bb2ee7f684abc342263803",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status_counts": {
+    "correct": 3,
+    "incorrect": 4,
+    "invalid_trace": 0,
+    "judge_unavailable": 0,
+    "manual_review": 2,
+    "missing_answer": 41
+  },
+  "task_count": 50,
+  "task_ids": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50
+  ]
+}

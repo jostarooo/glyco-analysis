@@ -1,0 +1,107 @@
+{
+  "cache_key": "2c2d1affa6b79c6c61ac9c24b30a2ed8a4954a50d544b8857c93441ea39d2596",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "invalid_action: {\"action\":\"finish\",\"answer\":\"The GlycoSMOS composition-to-WURCS API (convert_composition_to_wurcs) returned HTTP 500 for 'Neu5Ac(1)Hex(3)HexNAc(2)Fuc(1)'. The alternate converter returned an ambiguous WURCS containing unspecified linkage placeholders: WURCS=2.0/4,7,6/[Aad21122h-2x_2-6_5*NCC/3=O][axxxxh-1x_1-5_2*NCC/3=O][axxxxh-1x_1-5][a1221m-1x_1-5]/1-2-2-3-3-3-4/a?|b?|c?|d?|e?|f?|g?}-{a?|b?|c?|d?|e?|f?|g?_a?|b?|c?|d?|e?|f?|g?}-{a?|b?|c?|d?|e?|f?|g?_a?|b?|c?|d?|e?|f?|g"
+    ],
+    "evidence_ids": [
+      "tool_1",
+      "tool_2",
+      "tool_3"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "missing_final_answer",
+      "runner_errors"
+    ],
+    "has_final_answer": false,
+    "successful_result_tool_calls": 3,
+    "successful_tool_calls": 3,
+    "tool_calls": 3,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "composition": "Neu5Ac(1)Hex(3)HexNAc(2)Fuc(1)"
+        },
+        "error": null,
+        "expected_tool": false,
+        "id": "tool_1",
+        "result": {
+          "data": {
+            "message": "500 Internal Server Error"
+          },
+          "status_code": 500,
+          "url": "https://api.glycosmos.org/glycancompositionconverter/1.0.0/composition2wurcs/Neu5Ac%281%29Hex%283%29HexNAc%282%29Fuc%281%29"
+        },
+        "status": "ok",
+        "tool": "convert_composition_to_wurcs",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "text": "Neu5Ac(1)Hex(3)HexNAc(2)Fuc(1)"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_2",
+        "result": [
+          {
+            "message": "Accession not found.",
+            "wurcs": "WURCS=2.0/4,7,6/[Aad21122h-2x_2-6_5*NCC/3=O][axxxxh-1x_1-5_2*NCC/3=O][axxxxh-1x_1-5][a1221m-1x_1-5]/1-2-2-3-3-3-4/a?|b?|c?|d?|e?|f?|g?}-{a?|b?|c?|d?|e?|f?|g?_a?|b?|c?|d?|e?|f?|g?}-{a?|b?|c?|d?|e?|f?|g?_a?|b?|c?|d?|e?|f?|g?}-{a?|b?|c?|d?|e?|f?|g?_a?|b?|c?|d?|e?|f?|g?}-{a?|b?|c?|d?|e?|f?|g?_a?|b?|c?|d?|e?|f?|g?}-{a?|b?|c?|d?|e?|f?|g?_a?|b?|c?|d?|e?|f?|g?}-{a?|b?|c?|d?|e?|f?|g?"
+          }
+        ],
+        "status": "ok",
+        "tool": "convert_composition_text_to_wurcs_format",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "wurcs": "WURCS=2.0/4,7,6/[Aad21122h-2x_2-6_5*NCC/3=O][axxxxh-1x_1-5_2*NCC/3=O][axxxxh-1x_1-5][a1221m-1x_1-5]/1-2-2-3-3-3-4/a?|b?|c?|d?|e?|f?|g?}-{a?|b?|c?|d?|e?|f?|g?_a?|b?|c?|d?|e?|f?|g?}-{a?|b?|c?|d?|e?|f?|g?_a?|b?|c?|d?|e?|f?|g?}-{a?|b?|c?|d?|e?|f?|g?_a?|b?|c?|d?|e?|f?|g?}-{a?|b?|c?|d?|e?|f?|g?_a?|b?|c?|d?|e?|f?|g?}-{a?|b?|c?|d?|e?|f?|g?_a?|b?|c?|d?|e?|f?|g?}-{a?|b?|c?|d?|e?|f?|g?"
+        },
+        "error": null,
+        "expected_tool": false,
+        "id": "tool_3",
+        "result": [
+          {
+            "message": "Accession not found."
+          }
+        ],
+        "status": "ok",
+        "tool": "obtain_glytoucan_id_from_wurcs",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 3
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "62dbc37a17d433b8eac5341f2a88f68e3b819457c3fa31cea8ba6163f2d22e6e",
+  "judge_transport_error": null,
+  "parsed_judge": null,
+  "prompt_sha256": "fdec7210db4efa3379eb5480538cfef98a2a2f41c95ffc65073c6ebf0715927c",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": null,
+  "reason_codes": [
+    "missing_final_answer"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "deepseek_v41_flash_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "ce2f6a27b38f54f035037a26c51bf9699906e9403537ae93aec2c8ce2d78011c",
+    "run_summary_sha256": "44b9d3df0bac0f15b69383160f5eb6630809976183bb2ee7f684abc342263803",
+    "run_task_sha256": "dcae9f48a22b9296373c244e401c7e25538f06884ae733c0f9b0b699545e94a2",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "missing_answer",
+  "task_id": 21
+}

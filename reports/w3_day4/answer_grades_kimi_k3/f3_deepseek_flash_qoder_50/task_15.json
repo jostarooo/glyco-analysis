@@ -1,0 +1,119 @@
+{
+  "cache_key": "ee289cc42385dc2e36f273120c3fb13f2c352b87144692e18c1cb7751f456495",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "invalid_action: \n\n<｜｜DSML｜｜ calls>\n<｜｜DSML｜｜ invoke name=\"get_feature_by_locations\">\n<｜｜DSML｜｜ parameter name=\"arguments\" string=\"false\">{\"format\": \"json\", \"in_range\": true, \"locations\": \"12:6000000-6100000\", \"offset\": 0, \"size\": 5, \"taxonomy\": \"9606\"}</｜｜DSML｜｜ parameter>\n<｜｜DSML｜｜ parameter name=\"tool\" string=\"true\">get_feature_by_locations</｜｜DSML｜｜ parameter>\n</｜｜DSML｜｜ invoke>\n</｜｜DSML｜｜ calls>"
+    ],
+    "evidence_ids": [
+      "tool_1",
+      "tool_2",
+      "tool_3"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "missing_final_answer",
+      "runner_errors"
+    ],
+    "has_final_answer": false,
+    "successful_result_tool_calls": 3,
+    "successful_tool_calls": 3,
+    "tool_calls": 3,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "format": "json",
+          "in_range": true,
+          "locations": "X:58205437-58219305",
+          "offset": 0,
+          "size": 100,
+          "taxonomy": "9606"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": [],
+          "status_code": 200,
+          "url": "https://www.ebi.ac.uk/proteins/api/coordinates/9606/X:58205437-58219305/feature?offset=0&size=100&in_range=True"
+        },
+        "status": "ok",
+        "tool": "get_feature_by_locations",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "format": "json",
+          "in_range": true,
+          "locations": "X:58205437-58219305",
+          "offset": 0,
+          "size": 100,
+          "taxonomy": "9606"
+        },
+        "error": null,
+        "expected_tool": false,
+        "id": "tool_2",
+        "result": {
+          "data": [],
+          "status_code": 200,
+          "url": "https://www.ebi.ac.uk/proteins/api/coordinates/9606/X%3A58205437-58219305?offset=0&size=100&in_range=True"
+        },
+        "status": "ok",
+        "tool": "search_uniprot_entries_by_taxonomy_and_genomic_coordinates",
+        "truncated": false
+      },
+      {
+        "arguments": {
+          "format": "json",
+          "in_range": false,
+          "locations": "X:58205437-58219305",
+          "offset": 0,
+          "size": 100,
+          "taxonomy": "9606"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_3",
+        "result": {
+          "data": [],
+          "status_code": 200,
+          "url": "https://www.ebi.ac.uk/proteins/api/coordinates/9606/X:58205437-58219305/feature?offset=0&size=100&in_range=False"
+        },
+        "status": "ok",
+        "tool": "get_feature_by_locations",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 3
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "62dbc37a17d433b8eac5341f2a88f68e3b819457c3fa31cea8ba6163f2d22e6e",
+  "judge_transport_error": null,
+  "parsed_judge": null,
+  "prompt_sha256": "90f713da8405db5a646a83171c70f2fc5061d28711dbc60a9449a25a882896db",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": null,
+  "reason_codes": [
+    "missing_final_answer"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "deepseek_flash_qoder_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "aac5dfbe4c38f9bed8b5e5b097853d467fe82362fa566606f3a19bba63c34526",
+    "run_summary_sha256": "04a76a4061afa6cee82d14583921e890f54c0244ea74a21d74893fe03cd44d98",
+    "run_task_sha256": "921cc0c4425b4f9bc4487957515a696c07389dc2bd55e5d8a61da2e5bdb1569b",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "missing_answer",
+  "task_id": 15
+}

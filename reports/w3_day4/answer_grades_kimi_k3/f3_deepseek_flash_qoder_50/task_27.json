@@ -1,0 +1,78 @@
+{
+  "cache_key": "66f4a5c8b23f0bcded3895ce904c8e974ce8257f5688e3105e12e120b03c856a",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": true,
+    "error_text": [],
+    "evidence_ids": [
+      "answer",
+      "tool_1"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "truncated_results",
+      "all_successful_evidence_truncated"
+    ],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 1,
+    "successful_tool_calls": 1,
+    "tool_calls": 1,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "glytoucan_ac": "G01543ZX"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "preview": "{\"status_code\": 200, \"url\": \"https://api.glygen.org/glycan/detail/G01543ZX/\", \"data\": {\"glytoucan\": {\"glytoucan_ac\": \"G01543ZX\", \"glytoucan_url\": \"https://glytoucan.org/Structures/Glycans/G01543ZX\"}, \"mass\": 2733.97, \"number_monosaccharides\": 14, \"wurcs\": \"WURCS=2.0/6,14,13/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5][a2112h-1b_1-5][a1221m-1a_1-5][Aad21122h-2a_2-6_5*NCC/3=O]/1-1-2-3-1-4-1-4-3-1-4-5-6-6/a4-b1_a6-l1_b4-c1_c3-d1_c6-i1_d2-e1_d4-g1_e4-f1_g4-h1_i2-j1_j4-k1_m2-a3|b3|c3|d3|e3|f3|g3|h3|i3|j3|k3|l3}_n2-a3|b3|c3|d3|e3|f3|g3|h3|i3|j3|k3|l3}\", \"glycoct\": \"RES 1b:b-dglc-HEX-1:5 2s:n-acetyl 3b:b-dglc-HEX-1:5 4s:n-acetyl 5b:b-dman-HEX-1:5 6b:a-dman-HEX-1:5 7b:b-dglc-HEX-1:5 8s:n-acetyl 9b:b-dgal-HEX-1:5 10b:b-dglc-HEX-1:5 11s:n-acetyl 12b:b-dgal-HEX-1:5 13b:a-dman-HEX-1:5 14b:b-dglc-HEX-1:5 15s:n-acetyl 16b:b-dgal-HEX-1:5 17b:a-lgal-HEX-1:5|6:d LIN 1:1d(2+1)2n 2:1o(4+1)3d 3:3d(2+1)4n 4:3o(4+1)5d 5:5o(3+1)6d 6:6o(2+1)7d 7:7d(2+1)8n 8:7o(4+1)9d 9:6o(4+1)10d 10:10d(2+1)11n 11:10o(4+1)12d 12:5o(6+1)13d 13:13o(2+1)14d 14:14d(2+1)15n 15:14o(4+1)16d 16:1o(6+1)17d UND UND1:100.0:100.0 ParentIDs:1|3|5|6|7|9|10|12|13|14|16|17 SubtreeLinkageID1:o(3+2)d RES 18b:a-dgro-dgal-NON-2:6|1:a|2:keto|3:d 19s:n-acetyl LIN 17:18d(5+1)19n UND2:100.0:100.0 ParentIDs:1|3|5|6|7|9|10|12|13|14|16|17 SubtreeLinkageID1:o(3+2)d RES 20b:a-dgro-dgal-NON-2:6|1:a|2:keto|3:d 21s:n-acetyl LIN 18:20d(5+1)21n\", \"species\": [{\"taxid\": 10029, \"name\": \"Cricetulus griseus\", \"annotation_category\": \"subsumption\", \"evidence\": [{\"database\": \"Subsumption\", \"id\": \"G62765SF\", \"url\": \"https://www.glygen.org/glycan/G62765SF\"}], \"common_name\": \"Chinese hamster\", \"glygen_name\": \"Hamster\", \"reference_species\": \"Cricetulus griseus [10029]\"}, {\"taxid\": 9606, \"name\": \"Homo sapiens\", \"annotation_category\": \"both\", \"evidence\": [{\"database\": \"Subsumption\", \"id\": \"G62765SF\", \"url\": \"https://www.glygen.org/glycan/G62765SF\"}, {\"database\": \"GlyConnect\", \"id\": \"3590\", \"url\": \"https://glyconnect.expasy.org/browser/structures/3590\"}, {\"database\": \"PubMed\", \"id\": \"10704524\", \"url\": \"https://glygen.org/publication/PubMed/10704524\"}, {\"database\": \"PubMed\", \"id\": \"8407880\", \"url\": \"https://glygen.org/publication/PubMed/8407880\"}, {\"database\": \"PubMed\", \"id\": \"8969451\", \"url\": \"https://glygen.org/publication/PubMed/8969451\"}], \"common_name\": \"Human\", \"glygen_name\": \"Human\", \"reference_species\": \"Homo sapiens [9606]\"}], \"classification\": [{\"type\": {\"name\": \"N-linked\"}, \"subtype\": {\"name\": \"Complex\"}}, {\"type\": {\"name\": \"N-linked\"}, \"subtype\": {\"name\": \"Core-fucosylated\"}}, {\"type\": {\"name\": \"N-linked\"}, \"subtype\": {\"name\": \"Triantennary\"}}], \"glycoprotein\": [{\"uniprot_canonical_ac\": \"P14210-1\", \"start_pos\": 294, \"end_pos\": 294, \"residue\": \"Asn\", \"evidence\": [{\"database\": \"PubMed\", \"id\": \"8407880\", \"url\": \"https://glygen.org/publication/PubMed/8407880\"}, {\"database\": \"GlyConnect\", \"id\": \"219\", \"url\": \"https://glyconnect.expasy.org/browser/proteins/219\"}], \"protein_name\": \"Hepatocyte growth factor\", \"gene_name\": \"HGF\", \"tax_id\": 9606, \"tax_name\": \"Homo sapiens\", \"tax_common_name\": \"Human\"}, {\"uniprot_canonical_ac\": \"P14210-1\", \"start_pos\": 402, \"end_pos\": 402, \"residue\": \"Asn\", \"evidence\": [{\"database\": \"PubMed\", \"id\": \"8407880\", \"url\": \"https://glygen.org/publication/PubMed/8407880\"}, {\"database\": \"GlyConnect\", \"id\": \"219\", \"url\": \"https://glyconnect.expasy.org/browser/proteins/219\"}], \"protein_name\": \"Hepatocyte growth factor\", \"gene_name\": \"HGF\", \"tax_id\": 9606, \"tax_name\": \"Homo sapiens\", \"tax_common_name\": \"Human\"}, {\"uniprot_canonical_ac\": \"P14210-1\", \"start_pos\": 566, \"end_pos\": 566, \"residue\": \"Asn\", \"evidence\": [{\"database\": \"PubMed\", \"id\": \"8407880\", \"url\": \"https://glygen.org/publication/PubMed/8407880\"}, {\"database\": \"GlyConnect\", \"id\": \"219\", \"url\": \"https://glyconnect.expasy.org/browser/proteins/219\"}], \"protein_name\": \"Hepatocyte growth factor\", \"gene_name\": \"HGF\", \"tax_id\": 9606, \"tax_name\": \"Homo sapiens\", \"tax_common_name\": \"Human\"}, {\"uniprot_canonical_ac\": \"P14210-1\", \"start_pos\": 653, \"end_pos\": 653, \"residue\": \"Asn\", \"evidence\": [{\"database\": \"PubMed\", \"id\": \"8407880\", \"url\": \"https://glygen.org/publication/PubMed/8407880\"}, {\"database\": \"GlyConnect\", \"id\": \"219\", \"url\": \"https://glyconnect.expasy.org/browser/proteins/219\"}], \"protein_name\": \"Hepatocyte growth factor\", \"gene_name\": \"HGF\", \"tax_id\": 9606, \"tax_name\": \"Homo sapiens\", \"tax_common_name\": \"Human\"}, {\"uniprot_canonical_ac\": \"P00451-1\", \"evidence\": [{\"database\": \"PubMed\", \"id\": \"8969451\", \"url\": \"https://glygen.org/publication/PubMed/8969451\"}, {\"database\": \"GlyConnect\", \"id\": \"99\", \"url\": \"https://glyconnect.expasy.org/browser/proteins/99\"}], \"protein_name\": \"Coagulation factor VIII\", \"gene_name\": \"F8\", \"tax_id\": 9606, \"tax_name\": \"Homo sapiens\", \"tax_common_name\": \"Human\"}, {\"uniprot_canonical_ac\": \"P17050-1\", \"evidence\": [{\"database\": \"PubMed\", \"id\": \"10704524\", \"url\": \"https://glygen.org/publication/PubMed/10704524\"}, {\"database\": \"GlyConnect\", \"id\": \"45\", \"url\": \"https://glyconnect.expasy.org/browser/proteins/45\"}], \"protein_name\": \"Alpha-N-acetylgalactosaminidase\", \"gene_name\": \"NAGA\", \"tax_id\": 9606, \"tax_name\": \"Homo sapiens\", \"tax_common_name\": \"Human\"}], \"enzyme\": [{\"uniprot_canonical_ac\": \"Q9D8C3-1\", \"xref_key\": \"glycan_xref_sandbox\", \"xref_id\": \"G01543ZX\", \"protein_name\": \"UDP-N-acetylglucosamine transferase subunit ALG13\", \"gene\": \"Alg13\", \"gene_link\": \"https://www.uniprot.org/uniprotkb/Q9D8C3\", \"tax_id\": 10090, \"tax_name\": \"Mus musculus\", \"tax_common_name\": \"Mouse\", \"evidence\": [{\"id\": \"G01543ZX\", \"database\": \"Sandbox\", \"url\": \"https://sandbox.glyomics.org/explore.html?G01543ZX\"}]}, {\"uniprot_canonical_ac\": \"Q9NP73-1\", \"xref_key\": \"glycan_xref_sandbox\", \"xref_id\": \"G01543ZX\", \"protein_name\": \"UDP-N-acetylglucosamine transferase subunit ALG13\", \"gene\": \"ALG13\", \"gene_link\": \"https://www.uniprot.org/uniprotkb/Q9NP73\", \"tax_id\": 9606, \"tax_name\": \"Homo sapiens\", \"tax_common_name\": \"Human\", \"evidence\": [{\"id\": \"G01543ZX\", \"database\": \"Sandbox\", \"url\": \"https://",
+          "truncated": true
+        },
+        "status": "ok",
+        "tool": "glycan_detail",
+        "truncated": true
+      }
+    ],
+    "truncated_results": 1,
+    "usable_successful_tool_calls": 0
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "b4972f97f35007c409137450b85b1e19bf029f7c3fb232950bb12ba38a8bb377",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "The expected glycan_detail tool was called once with the correct GlyTouCan accession (tool_1), and its returned data fully substantiated every component of the answer—chemical properties, structure, classification, biological associations, and cross-references.",
+    "critical_issues": [],
+    "decision": "SUCCESS",
+    "evidence_ids": [
+      "answer",
+      "tool_1"
+    ],
+    "reason": "The final answer accurately and comprehensively reports the GlyTouCan G01543ZX details from tool_1: correct mass (2733.97 Da), 14 monosaccharides, exact WURCS string, N-linked Complex/Core-fucosylated/Triantennary classification, species associations (Homo sapiens, Cricetulus griseus), glycoprotein sites (HGF P14210-1 Asn294/402/566/653, F8 P00451-1, NAGA P17050-1), enzyme associations (ALG13 Q9NP73-1 human, Q9D8C3-1 mouse), and cross-references (GlyGen G62765SF, GlyConnect 3590, PubMed 10704524/8407880/8969451). All claims are directly supported by the tool output with no contradictions.",
+    "scientific_accuracy": "accurate"
+  },
+  "prompt_sha256": "57dbffebdd9f0a48ce86802d26ad28e5c61502ca79b68b8a7be33f5c26322047",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\n  \"decision\": \"SUCCESS\",\n  \"reason\": \"The final answer accurately and comprehensively reports the GlyTouCan G01543ZX details from tool_1: correct mass (2733.97 Da), 14 monosaccharides, exact WURCS string, N-linked Complex/Core-fucosylated/Triantennary classification, species associations (Homo sapiens, Cricetulus griseus), glycoprotein sites (HGF P14210-1 Asn294/402/566/653, F8 P00451-1, NAGA P17050-1), enzyme associations (ALG13 Q9NP73-1 human, Q9D8C3-1 mouse), and cross-references (GlyGen G62765SF, GlyConnect 3590, PubMed 10704524/8407880/8969451). All claims are directly supported by the tool output with no contradictions.\",\n  \"critical_issues\": [],\n  \"scientific_accuracy\": \"accurate\",\n  \"api_usage_assessment\": \"The expected glycan_detail tool was called once with the correct GlyTouCan accession (tool_1), and its returned data fully substantiated every component of the answer—chemical properties, structure, classification, biological associations, and cross-references.\",\n  \"evidence_ids\": [\"answer\", \"tool_1\"]\n}",
+  "reason_codes": [
+    "success_with_only_truncated_tool_evidence"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "deepseek_flash_qoder_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "14bc955d0d1e650bd33a096c8cbaa63bc0ac24b77d550ce8ffe4a60b0a8d9c6d",
+    "run_summary_sha256": "04a76a4061afa6cee82d14583921e890f54c0244ea74a21d74893fe03cd44d98",
+    "run_task_sha256": "9690d79c2c72070116bf3cf833728d6fc25c23513bb8d51d94a182530ac663fc",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "manual_review",
+  "task_id": 27
+}

@@ -1,0 +1,347 @@
+{
+  "cache_key": "bc890db4133dcba9aa64308f6acb0076a86124115a5d5a24b4ff67f191eff0bd",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [],
+    "evidence_ids": [
+      "answer",
+      "tool_1"
+    ],
+    "expected_tool_called": true,
+    "flags": [],
+    "has_final_answer": true,
+    "successful_result_tool_calls": 1,
+    "successful_tool_calls": 1,
+    "tool_calls": 1,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "dbid": "XP_006524055",
+          "format": "json",
+          "rfActive": true,
+          "rfDdtype": "RefSeq",
+          "rfTaxId": 9606
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": [
+            {
+              "accession": "UPI0000000112",
+              "dataset": "uniparc",
+              "sequence": {
+                "checksum": "F93DFA38B057AC0A",
+                "content": "MALSYLRPWVSLLLADMALLGLLQGSLGNLLPQGLPGLWIEGTLRLGVLWGLLKVGELLGLVGTLLPLLCLATPLFFSLRALVGGTASTSVVRVASASWGWLLAGYGAVALSWAVWAVLSPAGVQEKEPGQENRTLMKRLLKLSRPDLPFLIAAFFFLVVAVWGETLIPRYSGRVIDILGGDFDPDAFASAIFFMCLFSVGSSFSAGCRGGSFLFTMSRINLRIREQLFSSLLRQDLGFFQETKTGELNSRLSSDTSLMSRWLPFNANILLRSLVKVVGLYFFMLQVSPRLTFLSLLDLPLTIAAEKVYNPRHQAVLKEIQDAVAKAGQVVREAVGGLQTVRSFGAEEQEVSHYKEALERCRQLWWRRDLEKDVYLVIRRVMALGMQVLILNCGVQQILAGEVTRGGLLSFLLYQEEVGQYVRNLVYMYGDMLSNVGAAEKVFSYLDRKPNLPQPGILAPPWLEGRVEFQDVSFSYPRRPEKPVLQGLTFTLHPGTVTALVGPNGSGKSTVAALLQNLYQPTGGQLLLDGEPLTEYDHHYLHRQVVLVGQEPVLFSGSVKDNIAYGLRDCEDAQVMAAAQAACADDFIGEMTNGINTEIGEKGGQLAVGQKQRLAIARALVRNPRVLILDEATSALDAQCEQALQNWRSQGDRTMLVIAHRLHTVQNADQVLVLKQGRLVEHDQLRDGQDVYAHLVQQRLEA",
+                "length": 702
+              },
+              "signatureSequenceMatch": [
+                {
+                  "database": "SMART",
+                  "id": "SM00382",
+                  "ipr": {
+                    "id": "IPR003593",
+                    "name": "AAA+ ATPase domain"
+                  },
+                  "lcn": [
+                    {
+                      "end": 678,
+                      "start": 494
+                    }
+                  ]
+                },
+                {
+                  "database": "Gene3D",
+                  "id": "G3DSA:1.20.1560.10",
+                  "ipr": {
+                    "id": "IPR036640",
+                    "name": "ABC transporter type 1, transmembrane domain superfamily"
+                  },
+                  "lcn": [
+                    {
+                      "end": 450,
+                      "start": 129
+                    }
+                  ]
+                },
+                {
+                  "database": "NCBIfam",
+                  "id": "TIGR00958",
+                  "ipr": {
+                    "id": "IPR013305",
+                    "name": "ABC transporter Tap-like"
+                  },
+                  "lcn": [
+                    {
+                      "end": 696,
+                      "start": 1
+                    }
+                  ]
+                },
+                {
+                  "database": "SUPFAM",
+                  "id": "SSF52540",
+                  "ipr": {
+                    "id": "IPR027417",
+                    "name": "P-loop containing nucleoside triphosphate hydrolase"
+                  },
+                  "lcn": [
+                    {
+                      "end": 698,
+                      "start": 457
+                    }
+                  ]
+                },
+                {
+                  "database": "PROSITE",
+                  "id": "PS00211",
+                  "ipr": {
+                    "id": "IPR017871",
+                    "name": "ABC transporter-like, conserved site"
+                  },
+                  "lcn": [
+                    {
+                      "end": 620,
+                      "start": 606
+                    }
+                  ]
+                },
+                {
+                  "database": "PRINTS",
+                  "id": "PR01897",
+                  "ipr": {
+                    "id": "IPR005293",
+                    "name": "Antigen peptide transporter 2"
+                  },
+                  "lcn": [
+                    {
+                      "end": 51,
+                      "start": 37
+                    },
+                    {
+                      "end": 66,
+                      "start": 52
+                    },
+                    {
+                      "end": 83,
+                      "start": 69
+                    },
+                    {
+                      "end": 115,
+                      "start": 101
+                    },
+                    {
+                      "end": 131,
+                      "start": 116
+                    },
+                    {
+                      "end": 191,
+                      "start": 177
+                    },
+                    {
+                      "end": 320,
+                      "start": 302
+                    },
+                    {
+                      "end": 369,
+                      "start": 355
+                    },
+                    {
+                      "end": 586,
+                      "start": 571
+                    }
+                  ]
+                },
+                {
+                  "database": "SUPFAM",
+                  "id": "SSF90123",
+                  "ipr": {
+                    "id": "IPR036640",
+                    "name": "ABC transporter type 1, transmembrane domain superfamily"
+                  },
+                  "lcn": [
+                    {
+                      "end": 453,
+                      "start": 138
+                    }
+                  ]
+                },
+                {
+                  "database": "Pfam",
+                  "id": "PF00005",
+                  "ipr": {
+                    "id": "IPR003439",
+                    "name": "ABC transporter-like, ATP-binding domain"
+                  },
+                  "lcn": [
+                    {
+                      "end": 634,
+                      "start": 485
+                    }
+                  ]
+                },
+                {
+                  "database": "Gene3D",
+                  "id": "G3DSA:3.40.50.300",
+                  "ipr": {
+                    "id": "IPR027417",
+                    "name": "P-loop containing nucleoside triphosphate hydrolase"
+                  },
+                  "lcn": [
+                    {
+                      "end": 702,
+                      "start": 460
+                    }
+                  ]
+                },
+                {
+                  "database": "PIRSF",
+                  "id": "PIRSF002773",
+                  "lcn": [
+                    {
+                      "end": 701,
+                      "start": 97
+                    }
+                  ]
+                },
+                {
+                  "database": "FUNFAM",
+                  "id": "G3DSA:1.20.1560.10:FF:000042",
+                  "lcn": [
+                    {
+                      "end": 451,
+                      "start": 122
+                    }
+                  ]
+                },
+                {
+                  "database": "CDD",
+                  "id": "cd18590",
+                  "lcn": [
+                    {
+                      "end": 442,
+                      "start": 154
+                    }
+                  ]
+                },
+                {
+                  "database": "PROSITE",
+                  "id": "PS50929",
+                  "ipr": {
+                    "id": "IPR011527",
+                    "name": "ABC transporter type 1, transmembrane domain"
+                  },
+                  "lcn": [
+                    {
+                      "end": 434,
+                      "start": 152
+                    }
+                  ]
+                },
+                {
+                  "database": "Pfam",
+                  "id": "PF00664",
+                  "ipr": {
+                    "id": "IPR011527",
+                    "name": "ABC transporter type 1, transmembrane domain"
+                  },
+                  "lcn": [
+                    {
+                      "end": 415,
+                      "start": 151
+                    }
+                  ]
+                },
+                {
+                  "database": "PANTHER",
+                  "id": "PTHR43394",
+                  "ipr": {
+                    "id": "IPR039421",
+                    "name": "Type 1 protein exporter"
+                  },
+                  "lcn": [
+                    {
+                      "end": 699,
+                      "start": 126
+                    }
+                  ]
+                },
+                {
+                  "database": "FUNFAM",
+                  "id": "G3DSA:3.40.50.300:FF:000140",
+                  "lcn": [
+                    {
+                      "end": 702,
+                      "start": 458
+                    }
+                  ]
+                },
+                {
+                  "database": "PROSITE",
+                  "id": "PS50893",
+                  "ipr": {
+                    "id": "IPR003439",
+                    "name": "ABC transporter-like, ATP-binding domain"
+                  },
+                  "lcn": [
+                    {
+                      "end": 701,
+                      "start": 467
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "status_code": 200,
+          "url": "https://www.ebi.ac.uk/proteins/api/uniparc/dbreference/XP_006524055?offset=0&size=100&rfDdtype=RefSeq&rfActive=True&rfTaxId=9606"
+        },
+        "status": "ok",
+        "tool": "get_uniparc_entries_by_cross_reference_accessions",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 1
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "94afbd05df1bcc48b690bc0087fa7a420394ed2a2f51c0f05e878d5e2fe70879",
+  "judge_transport_error": null,
+  "parsed_judge": {
+    "api_usage_assessment": "The expected tool get_uniparc_entries_by_cross_reference_accessions was used with the correct accession XP_006524055 and all required filters (rfDdtype=RefSeq, rfActive=true, rfTaxId=9606, format=json). The tool output directly supports every factual claim in the final answer, including accession, length, checksum, and domain annotations.",
+    "critical_issues": [],
+    "decision": "SUCCESS",
+    "evidence_ids": [
+      "answer",
+      "tool_1"
+    ],
+    "reason": "The final answer correctly reports the single UniParc entry UPI0000000112 returned by tool_1, with the correct sequence length (702), checksum (F93DFA38B057AC0A), and accurately cited InterPro annotations (IPR003439, IPR011527, IPR013305, IPR005293) all present in the tool output. The tool was called with the correct filters (RefSeq, active, TaxId 9606, JSON format), consistent with the expected result.",
+    "scientific_accuracy": "accurate"
+  },
+  "prompt_sha256": "c3cd179b91503450ea0c305ae7906fbd1bf29b2c8c908c36e47b4b8773ae73a3",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": "{\n  \"decision\": \"SUCCESS\",\n  \"reason\": \"The final answer correctly reports the single UniParc entry UPI0000000112 returned by tool_1, with the correct sequence length (702), checksum (F93DFA38B057AC0A), and accurately cited InterPro annotations (IPR003439, IPR011527, IPR013305, IPR005293) all present in the tool output. The tool was called with the correct filters (RefSeq, active, TaxId 9606, JSON format), consistent with the expected result.\",\n  \"critical_issues\": [],\n  \"scientific_accuracy\": \"accurate\",\n  \"api_usage_assessment\": \"The expected tool get_uniparc_entries_by_cross_reference_accessions was used with the correct accession XP_006524055 and all required filters (rfDdtype=RefSeq, rfActive=true, rfTaxId=9606, format=json). The tool output directly supports every factual claim in the final answer, including accession, length, checksum, and domain annotations.\",\n  \"evidence_ids\": [\"answer\", \"tool_1\"]\n}",
+  "reason_codes": [
+    "judge_success",
+    "successful_tool_evidence"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "deepseek_v41_flash_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "3e59c84ae7c9265e365581af6dec9e3f783ba0831f49340a94b232db5f0e743f",
+    "run_summary_sha256": "44b9d3df0bac0f15b69383160f5eb6630809976183bb2ee7f684abc342263803",
+    "run_task_sha256": "07aebf1f0039e5443487db553915425e757879163cdf2768f72936faff24bcd6",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "correct",
+  "task_id": 4
+}

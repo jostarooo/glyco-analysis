@@ -1,0 +1,130 @@
+{
+  "cache_key": "5dff2b085e18ff923659de4f4e65ba89584fecead254a7423392824d96c8462b",
+  "evidence_audit": {
+    "all_successful_evidence_truncated": false,
+    "error_text": [
+      "invalid_action: "
+    ],
+    "evidence_ids": [
+      "tool_1"
+    ],
+    "expected_tool_called": true,
+    "flags": [
+      "missing_final_answer",
+      "runner_errors"
+    ],
+    "has_final_answer": false,
+    "successful_result_tool_calls": 1,
+    "successful_tool_calls": 1,
+    "tool_calls": 1,
+    "tool_evidence": [
+      {
+        "arguments": {
+          "MatchCharges": true,
+          "MatchIsotopes": true,
+          "MaxRecords": 50,
+          "MaxSeconds": 60,
+          "output_format": "json",
+          "smiles": "C(C1C(C(C(C(O1)O)O)O)O)O"
+        },
+        "error": null,
+        "expected_tool": true,
+        "id": "tool_1",
+        "result": {
+          "data": {
+            "IdentifierList": {
+              "CID": [
+                5988,
+                14982,
+                73111,
+                5280804,
+                5280805,
+                5793,
+                157355,
+                14969,
+                36462,
+                107971,
+                439503,
+                440936,
+                444041,
+                5281800,
+                11679800,
+                452548,
+                5281233,
+                9549171,
+                16129778,
+                159278,
+                9898279,
+                25147451,
+                6036,
+                7427,
+                10621,
+                11333,
+                656630,
+                6420023,
+                5281377,
+                91440,
+                5281544,
+                5281613,
+                5281771,
+                5318997,
+                6072,
+                28523,
+                442428,
+                5281718,
+                14049689,
+                5486699,
+                441921,
+                11954171,
+                442534,
+                6918840,
+                636380,
+                44814423,
+                28620,
+                5360621,
+                5360373,
+                119245
+              ]
+            }
+          },
+          "status_code": 200,
+          "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/fastsubstructure/smiles/C%28C1C%28C%28C%28C%28O1%29O%29O%29O%29O%29O/cids/json?MatchIsotopes=true&MatchCharges=true&MaxSeconds=60&MaxRecords=50"
+        },
+        "status": "ok",
+        "tool": "structure_search_substructure",
+        "truncated": false
+      }
+    ],
+    "truncated_results": 0,
+    "usable_successful_tool_calls": 1
+  },
+  "judge_model_config": {
+    "api_key_env": "DOC2AGENT_JUDGE_API_KEY",
+    "endpoint": "http://127.0.0.1:3425/v1/chat/completions",
+    "max_tokens": 1500,
+    "model": "workbuddy-ai/kimi-k3",
+    "request_timeout_seconds": 180.0,
+    "temperature": 0.0
+  },
+  "judge_response_sha256": "62dbc37a17d433b8eac5341f2a88f68e3b819457c3fa31cea8ba6163f2d22e6e",
+  "judge_transport_error": null,
+  "parsed_judge": null,
+  "prompt_sha256": "78de7d2f739812e91f3db4f271254f52dfe77b749bc0b8abfd1bf9d37c097b32",
+  "prompt_template_sha256": "7a780fa5096748b06d5b0f8f0555759854b037f09dc49198e1af597a6cec34e4",
+  "raw_response": null,
+  "reason_codes": [
+    "missing_final_answer"
+  ],
+  "rubric_sha256": "82b8d27788bfc3a99b6c08c2b69e2f1f250ae413b24f8fb68e1a9ef168a0b27b",
+  "rubric_version": "doc2agent-answer-rubric-v1",
+  "run_id": "deepseek_v41_flash_50",
+  "schema_version": 1,
+  "source_hashes": {
+    "authoritative_task_sha256": "db0166186cbe938cec8c7e9db1dd0822f668b53591d96f08473518047c4e5eb8",
+    "run_summary_sha256": "44b9d3df0bac0f15b69383160f5eb6630809976183bb2ee7f684abc342263803",
+    "run_task_sha256": "9aa533d9da3345ced08d3f2733de624866d0a01d0d67a2d9c487928b3341d30d",
+    "tasks_file_sha256": "d0dd61a793d78c10bf8ee13b8870f1451100b73024915ee42f79e2aeb2e02abf"
+  },
+  "status": "missing_answer",
+  "task_id": 9
+}

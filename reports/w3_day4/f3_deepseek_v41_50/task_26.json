@@ -1,0 +1,165 @@
+{
+  "task_id": 26,
+  "question": "Investigate the post-translational modifications specifically phosphorylation occurring in phosphoglycerate kinase 1 (PGK1) protein across both Homo sapiens (human) and Mus musculus (mouse). Use the UniProt accession numbers 'P00558' for human and 'P52480' for mouse, and filter results from the data sources PRIDE and PTMExchange with a PTM confidence score of Gold.",
+  "expected_tools": [
+    "search_proteomics_peptide_ptm"
+  ],
+  "tool_calls": [
+    {
+      "tool": "search_proteomics_peptide_ptm",
+      "arguments": {
+        "accession": "P00558",
+        "datasource": "PRIDE",
+        "ptm": "phosphorylation",
+        "confidence_score": "Gold",
+        "size": 100
+      },
+      "status": "ok",
+      "error": "",
+      "result": {
+        "truncated": true,
+        "preview": "{\"status_code\": 200, \"url\": \"https://www.ebi.ac.uk/people/person/henning-hermjakob/?size=100&accession=P00558&datasource=PRIDE&ptm=phosphorylation&confidence_score=Gold\", \"data\": \"<!doctype html><html lang=\\\"en\\\" class=\\\"vf-no-js\\\">\\n  <head>\\n    <script>\\n// Detect if JS is on and swap vf-no-js for vf-js on the html element\\n(function(H){H.className=H.className.replace(/\\\\bvf-no-js\\\\b/,'vf-js')})(document.documentElement);\\n</script>\\n\\n    <meta charset=\\\"utf-8\\\">\\n    <meta name=\\\"viewport\\\" content=\\\"width=device-width, initial-scale=1.0\\\">\\n    <link rel=\\\"stylesheet\\\" media=\\\"all\\\" href=\\\"/people/css/styles.css?\\\" />\\n    <title>Henning Hermjakob, Head of Molecular Systems | People | EMBLâs European Bionformatics Institute</title>\\n    <link rel=\\\"shortcut icon\\\" href=\\\"https://assets.emblstatic.net/vf/v2.5.0/assets/embl-favicon/assets/favicon.ico\\\">\\n<link rel=\\\"apple-touch-icon\\\" sizes=\\\"180x180\\\" href=\\\"https://assets.emblstatic.net/vf/v2.5.0/assets/embl-favicon/assets/apple-touch-icon.png\\\">\\n<link rel=\\\"icon\\\" type=\\\"image/png\\\" sizes=\\\"32x32\\\" href=\\\"https://assets.emblstatic.net/vf/v2.5.0/assets/embl-favicon/assets/favicon-32x32.png\\\">\\n<link rel=\\\"icon\\\" type=\\\"image/png\\\" sizes=\\\"16x16\\\" href=\\\"https://assets.emblstatic.net/vf/v2.5.0/assets/embl-favicon/assets/favicon-16x16.png\\\">\\n<link rel=\\\"manifest\\\" href=\\\"https://assets.emblstatic.net/vf/v2.5.0/assets/embl-favicon/assets/site.webmanifest\\\">\\n<link rel=\\\"mask-icon\\\" href=\\\"https://assets.emblstatic.net/vf/v2.5.0/assets/embl-favicon/assets/safari-pinned-tab.svg\\\" color=\\\"#ffffff\\\">\\n<meta name=\\\"msapplication-TileColor\\\" content=\\\"#ffffff\\\">\\n<meta name=\\\"theme-color\\\" content=\\\"#ffffff\\\">\\n\\n\\n    <!-- Search indexing optimisations -->\\n    <meta class=\\\"swiftype\\\" name=\\\"what\\\" data-type=\\\"string\\\" content=\\\"People directory\\\" />\\n    <meta class=\\\"swiftype\\\" name=\\\"where\\\" data-type=\\\"string\\\" content=\\\"\\\" />\\n    \\n\\n    <!-- Descriptive meta -->\\n    <meta name=\\\"title\\\" content=\\\"Henning Hermjakob, Head of Molecular Systems | People | EMBLâs European Bionformatics Institute\\\">\\n    <meta name=\\\"author\\\" content=\\\"EMBLâs European Bionformatics Institute\\\">\\n    <meta name=\\\"robots\\\" content=\\\"index, follow\\\">\\n    <meta name=\\\"keywords\\\" content=\\\"EMBL-EBI, people, staff, visitors\\\">\\n    <meta name=\\\"description\\\" content=\\\"EMBL employs 1800 people from a range of scientific and non-scientific backgrounds.\\\">\\n\\n    <!-- Open Graph / Facebook -->\\n    <meta property=\\\"og:type\\\" content=\\\"website\\\">\\n    <meta property=\\\"og:url\\\" content=\\\"https://www.ebi.ac.uk/people/person/henning-hermjakob/\\\">\\n    <meta property=\\\"og:title\\\" content=\\\"Henning Hermjakob, Head of Molecular Systems | People | EMBLâs European Bionformatics Institute\\\">\\n    <meta property=\\\"og:description\\\" content=\\\"EMBL employs 1800 people from a range of scientific and non-scientific backgrounds.\\\">\\n    \\n\\n    <!-- Twitter -->\\n    <meta property=\\\"twitter:card\\\" content=\\\"summary_large_image\\\">\\n    <meta property=\\\"og:url\\\" content=\\\"https://www.ebi.ac.uk/people/person/henning-hermjakob/\\\">\\n    <meta property=\\\"twitter:title\\\" content=\\\"Henning Hermjakob, Head of Molecular Systems | People | EMBLâs European Bionformatics Institute\\\">\\n    <meta property=\\\"twitter:description\\\" content=\\\"EMBL employs 1800 people from a range of scientific and non-scientific backgrounds.\\\">\\n    \\n\\n    <!-- Content descriptors -->\\n    \\n    <meta name=\\\"embl:who\\\" content=\\\"none\\\"> \\n     \\n    <meta name=\\\"embl:where\\\" content=\\\"none\\\"> \\n    <meta name=\\\"embl:what\\\" content=\\\"People directory\\\"> \\n    <meta name=\\\"embl:active\\\" content=\\\"what\\\"> \\n\\n    <!-- Content role -->\\n    <meta name=\\\"embl:utility\\\" content=\\\"7\\\"> \\n    <meta name=\\\"embl:reach\\\" content=\\\"10\\\"> \\n\\n    <!-- Page infromation -->\\n    <meta name=\\\"embl:maintainer\\\" content=\\\"EMBL Communications\\\"> \\n    <meta name=\\\"embl:last-review\\\" content=\\\"2021.10.18\\\"> \\n    <meta name=\\\"embl:review-cycle\\\" content=\\\"365\\\"> \\n    <meta name=\\\"embl:expiry\\\" content=\\\"never\\\"> \\n\\n    <!-- analytics -->\\n    <meta name=\\\"vf:page-type\\\" content=\\\"content;dimension1\\\"> \\n    <script type=\\\"application/ld+json\\\">\\n    {\\n      \\\"@context\\\": \\\"https://schema.org\\\",\\n      \\\"@type\\\": \\\"ProfilePage\\\",\\n      \\\"mainEntity\\\": {\\n        \\\"@type\\\": \\\"Person\\\",\\n        \\\"name\\\": \\\"Henning Hermjakob\\\",\\n        \\\"jobTitle\\\": \\\"Head of Molecular Systems\\\",\\n        \\\"worksFor\\\": {\\n          \\\"@type\\\": \\\"Organization\\\",\\n          \\\"name\\\": \\\"EMBL-EBI\\\",\\n          \\\"department\\\": {\\n            \\\"@type\\\": \\\"Organization\\\",\\n            \\\"name\\\": \\\"Molecular Networks\\\"\\n          }\\n        },\\n        \\\"url\\\": \\\"https://www.ebi.ac.uk/people/person/henning-hermjakob/\\\",\\n        \\\"image\\\": \\\"https://content.embl.org/sites/default/files/persons/CP-60002342.jpg\\\"\\n      }\\n    }\\n    </script>\\n  </head>\\n  <body class=\\\" vf-body vf-stack vf-stack--400\\\">\\n    <!-- Tell the VF 1.4 not to display a data protection banner. -->\\n<!-- You should use the 2.0 data protection banner from the contentHub. -->\\n<span data-protection-message-disable=\\\"true\\\"></span>\\n<!-- embl-ebi global header -->\\n<header id=\\\"masthead-black-bar\\\" class=\\\"clearfix masthead-black-bar | ebi-header-footer vf-content vf-u-fullbleed\\\"></header>\\n<link rel=\\\"import\\\" href=\\\"https://www.embl.org/api/v1/pattern.html?filter-content-type=article&filter-id=6682&pattern=node-body&source=contenthub\\\" data-target=\\\"self\\\" data-embl-js-content-hub-loader>\\n<link rel=\\\"stylesheet\\\" href=\\\"//ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css\\\" type=\\\"text/css\\\" media=\\\"all\\\" />\\n<script defer=\\\"defer\\\" src=\\\"//ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.4/js/script.js\\\"></script>\\n<link rel=\\\"stylesheet\\\" href=\\\"https://assets.emblstatic.net/vf/v2/assets/ebi-header-footer/ebi-header-footer.css\\\" type=\\\"text/css\\\" media=\\\"all\\\" />\\n    <nav class=\\\"vf-breadcrumbs\\\" aria-label=\\\"Breadcrumb\\\">\\n      <ul class=\\\"vf-breadc"
+      }
+    },
+    {
+      "tool": "get_proteomics_peptide_ptm",
+      "arguments": {
+        "accession": "P00558",
+        "confidence_score": "Gold"
+      },
+      "status": "ok",
+      "error": "",
+      "result": {
+        "truncated": true,
+        "preview": "{\"status_code\": 200, \"url\": \"https://www.ebi.ac.uk/proteins/api/proteomics-ptm/P00558?confidence_score=Gold\", \"data\": {\"accession\": \"P00558\", \"entryName\": \"PGK1_HUMAN\", \"sequence\": \"MSLSNKLTLDKLDVKGKRVVMRVDFNVPMKNNQITNNQRIKAAVPSIKFCLDNGAKSVVLMSHLGRPDGVPMPDKYSLEPVAVELKSLLGKDVLFLKDCVGPEVEKACANPAAGSVILLENLRFHVEEEGKGKDASGNKVKAEPAKIEAFRASLSKLGDVYVNDAFGTAHRAHSSMVGVNLPQKAGGFLMKKELNYFAKALESPERPFLAILGGAKVADKIQLINNMLDKVNEMIIGGGMAFTFLKVLNNMEIGTSLFDEEGAKIVKDLMSKAEKNGVKITLPVDFVTADKFDENAKTGQATVASGIPAGWMGLDCGPESSKKYAEAVTRAKQIVWNGPVGVFEWEAFARGTKALMDEVVKATSRGCITIIGGGDTATCCAKWNTEDKVSHVSTGGGASLELLEGKVLPGVDALSNI\", \"sequenceChecksum\": \"B5DFC7B5FA01767C\", \"taxid\": 9606, \"features\": [{\"type\": \"PROTEOMICS_PTM\", \"begin\": \"1\", \"end\": \"15\", \"xrefs\": [{\"name\": \"Proteomes\", \"id\": \"UP000005640\", \"url\": \"https://www.uniprot.org/proteomes/UP000005640\"}], \"evidences\": [{\"code\": \"ECO:0007829\", \"source\": {\"id\": \"MSLSNKLTLDKLDVK\", \"url\": \"https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetPeptide?atlas_build_id=604&action=QUERY&searchWithinThis=Peptide+Sequence&searchForThis=MSLSNKLTLDKLDVK\"}}], \"peptide\": \"MSLSNKLTLDKLDVK\", \"unique\": false, \"ptms\": [{\"name\": \"Ubiquitinylation\", \"position\": 11, \"sources\": [\"PTMeXchange\"], \"dbReferences\": [{\"id\": \"PXD037009\", \"properties\": {\"Pubmed ID\": \"38626770\", \"PeptideAtlas URL\": \"https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetPeptide?atlas_build_id=604&action=QUERY&searchWithinThis=Peptide+Sequence&searchForThis=MSLSNKLTLDKLDVK\", \"Organism part\": \"cervix\", \"Universal Spectrum Id\": \"mzspec:PXD037009:20170203_QE2_nLC10_SS_QC_UbStoi_EXP2_newPCU_L_CCU_H_PCUbatch2_dil1_50_scx1.mzML:scan:20932:M[Oxidation]SLSNK[+8.01]LTLDK[UNIMOD:121]LDVK/3\", \"Final site probability\": \"0.957699749\", \"PSM Probability\": \"0.9601\", \"url\": \"https://www.ebi.ac.uk/pride/archive/projects/PXD037009\", \"Proforma\": \"M[Oxidation]SLSNK[8.01]LTLDK[GlyGly]LDVK\", \"Confidence score\": \"Gold\", \"Site q value\": \"0.044322514\", \"Dataset ID\": \"PXD037009\", \"PSM Count (0.05 gFLR)\": \"2\"}}]}]}, {\"type\": \"PROTEOMICS_PTM\", \"begin\": \"7\", \"end\": \"15\", \"xrefs\": [{\"name\": \"Proteomes\", \"id\": \"UP000005640\", \"url\": \"https://www.uniprot.org/proteomes/UP000005640\"}], \"evidences\": [{\"code\": \"ECO:0007829\", \"source\": {\"id\": \"LTLDKLDVK\", \"url\": \"https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetPeptide?atlas_build_id=604&action=QUERY&searchWithinThis=Peptide+Sequence&searchForThis=LTLDKLDVK\"}}], \"peptide\": \"LTLDKLDVK\", \"unique\": false, \"ptms\": [{\"name\": \"Ubiquitinylation\", \"position\": 5, \"sources\": [\"PTMeXchange\"], \"dbReferences\": [{\"id\": \"PXD006201\", \"properties\": {\"Pubmed ID\": \"29967540\", \"Confidence score\": \"Gold\", \"Site q value\": \"0.00660029\", \"PeptideAtlas URL\": \"https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetPeptide?atlas_build_id=604&action=QUERY&searchWithinThis=Peptide+Sequence&searchForThis=LTLDKLDVK\", \"Dataset ID\": \"PXD006201\", \"Universal Spectrum Id\": \"mzspec:PXD006201:20150804SL_Qe2_HEP2_UBISITE_rep2_A_15_HpH_10.mzML:scan:20865:LTLDK[UNIMOD:121]LDVK/2\", \"Final site probability\": \"0.9952038\", \"PSM Probability\": \"0.9962\", \"PSM Count (0.05 gFLR)\": \"9\", \"url\": \"https://www.ebi.ac.uk/pride/archive/projects/PXD006201\", \"Proforma\": \"LTLDK[GlyGly]LDVK\"}}, {\"id\": \"PXD037009\", \"properties\": {\"Pubmed ID\": \"38626770\", \"PeptideAtlas URL\": \"https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetPeptide?atlas_build_id=604&action=QUERY&searchWithinThis=Peptide+Sequence&searchForThis=LTLDKLDVK\", \"Organism part\": \"cervix\", \"Universal Spectrum Id\": \"mzspec:PXD037009:20180907_QE1_nLC10_GP_SA_UAEInh_CTRlight_10MINmedium_60MINheavy_Repl3_F07_20180911142734.mzML:scan:20276:LTLDK[UNIMOD:121]LDVK/2\", \"Final site probability\": \"0.99580437\", \"PSM Probability\": \"0.9977\", \"url\": \"https://www.ebi.ac.uk/pride/archive/projects/PXD037009\", \"Proforma\": \"LTLDK[GlyGly]LDVK\", \"Confidence score\": \"Gold\", \"Site q value\": \"0.002005383\", \"Dataset ID\": \"PXD037009\", \"PSM Count (0.05 gFLR)\": \"13\"}}, {\"id\": \"PXD027328\", \"properties\": {\"Pubmed ID\": \"35585066\", \"Confidence score\": \"Gold\", \"Site q value\": \"0.026015387\", \"PeptideAtlas URL\": \"https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetPeptide?atlas_build_id=604&action=QUERY&searchWithinThis=Peptide+Sequence&searchForThis=LTLDKLDVK\", \"Dataset ID\": \"PXD027328\", \"Universal Spectrum Id\": \"mzspec:PXD027328:20191027_SL_QexXn2_1023_22cmr2um_FRED_PR2_RT_HpH_8.mzML:scan:19753:LTLDK[UNIMOD:121]LDVK/2\", \"Final site probability\": \"0.803577254\", \"PSM Probability\": \"0.9826\", \"PSM Count (0.05 gFLR)\": \"1\", \"url\": \"https://www.ebi.ac.uk/pride/archive/projects/PXD027328\", \"Proforma\": \"LTLDK[GlyGly]LDVK\"}}]}]}, {\"type\": \"PROTEOMICS_PTM\", \"begin\": \"7\", \"end\": \"15\", \"xrefs\": [{\"name\": \"Proteomes\", \"id\": \"UP000005640\", \"url\": \"https://www.uniprot.org/proteomes/UP000005640\"}], \"evidences\": [{\"code\": \"ECO:0007829\", \"source\": {\"id\": \"LTLDKLDVK\", \"url\": \"https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetPeptide?atlas_build_id=0&action=QUERY&searchWithinThis=Peptide+Sequence&searchForThis=LTLDKLDVK\"}}], \"peptide\": \"LTLDKLDVK\", \"unique\": false, \"ptms\": [{\"name\": \"Acetylation\", \"position\": 5, \"sources\": [\"PTMeXchange\"], \"dbReferences\": [{\"id\": \"PXD005252\", \"properties\": {\"Pubmed ID\": \"29804834\", \"Confidence score\": \"Gold\", \"Site q value\": \"0.011592092\", \"Dataset ID\": \"PXD005252\", \"Organism part\": \"kidney\", \"Universal Spectrum Id\": \"mzspec:PXD005252:20180110_QE1_nLC2_BTW_SA_hs_293FT_p300tfxn-L_control-H_acK_F01.mzML:scan:32384:LTLDK[UNIMOD:1]LDVK/2\", \"Final site probability\": \"0.915811084\", \"PSM Probability\": \"0.9232\", \"PSM Count (0.05 gFLR)\": \"4\", \"url\": \"https://www.ebi.ac.uk/pride/archive/projects/PXD005252\", \"Proforma\": \"LTLDK[Acetyl]LDVK\"}}, {\"id\": \"PXD041171\", \"properties\": {\"Pubmed ID\": \"37916830\", \"Confidence score\": \"Gold\", \"Site q value\": \"0.045682239\", \"Dataset ID\": \"PXD041171\", \"Organism part\": \"fibroblasts\", \"Universal Spectrum Id\": \"mzspec:PXD041171:20220613_CNB_SIRT2_UNIMOD:1-IP_0HPI_25uM_Rep2.mzML:scan:20432:LTLDK[UNIMOD:1]LDVK/2\", \"Final site probability\": \"0.60502236\", \"PSM Probability\": \"0.80"
+      }
+    },
+    {
+      "tool": "search_proteomics_peptide_ptm",
+      "arguments": {
+        "accession": "P00558",
+        "ptm": "phosphorylation",
+        "confidence_score": "Gold",
+        "size": 100
+      },
+      "status": "ok",
+      "error": "",
+      "result": {
+        "truncated": true,
+        "preview": "{\"status_code\": 200, \"url\": \"https://www.ebi.ac.uk/people/person/henning-hermjakob/?size=100&accession=P00558&ptm=phosphorylation&confidence_score=Gold\", \"data\": \"<!doctype html><html lang=\\\"en\\\" class=\\\"vf-no-js\\\">\\n  <head>\\n    <script>\\n// Detect if JS is on and swap vf-no-js for vf-js on the html element\\n(function(H){H.className=H.className.replace(/\\\\bvf-no-js\\\\b/,'vf-js')})(document.documentElement);\\n</script>\\n\\n    <meta charset=\\\"utf-8\\\">\\n    <meta name=\\\"viewport\\\" content=\\\"width=device-width, initial-scale=1.0\\\">\\n    <link rel=\\\"stylesheet\\\" media=\\\"all\\\" href=\\\"/people/css/styles.css?\\\" />\\n    <title>Henning Hermjakob, Head of Molecular Systems | People | EMBLâs European Bionformatics Institute</title>\\n    <link rel=\\\"shortcut icon\\\" href=\\\"https://assets.emblstatic.net/vf/v2.5.0/assets/embl-favicon/assets/favicon.ico\\\">\\n<link rel=\\\"apple-touch-icon\\\" sizes=\\\"180x180\\\" href=\\\"https://assets.emblstatic.net/vf/v2.5.0/assets/embl-favicon/assets/apple-touch-icon.png\\\">\\n<link rel=\\\"icon\\\" type=\\\"image/png\\\" sizes=\\\"32x32\\\" href=\\\"https://assets.emblstatic.net/vf/v2.5.0/assets/embl-favicon/assets/favicon-32x32.png\\\">\\n<link rel=\\\"icon\\\" type=\\\"image/png\\\" sizes=\\\"16x16\\\" href=\\\"https://assets.emblstatic.net/vf/v2.5.0/assets/embl-favicon/assets/favicon-16x16.png\\\">\\n<link rel=\\\"manifest\\\" href=\\\"https://assets.emblstatic.net/vf/v2.5.0/assets/embl-favicon/assets/site.webmanifest\\\">\\n<link rel=\\\"mask-icon\\\" href=\\\"https://assets.emblstatic.net/vf/v2.5.0/assets/embl-favicon/assets/safari-pinned-tab.svg\\\" color=\\\"#ffffff\\\">\\n<meta name=\\\"msapplication-TileColor\\\" content=\\\"#ffffff\\\">\\n<meta name=\\\"theme-color\\\" content=\\\"#ffffff\\\">\\n\\n\\n    <!-- Search indexing optimisations -->\\n    <meta class=\\\"swiftype\\\" name=\\\"what\\\" data-type=\\\"string\\\" content=\\\"People directory\\\" />\\n    <meta class=\\\"swiftype\\\" name=\\\"where\\\" data-type=\\\"string\\\" content=\\\"\\\" />\\n    \\n\\n    <!-- Descriptive meta -->\\n    <meta name=\\\"title\\\" content=\\\"Henning Hermjakob, Head of Molecular Systems | People | EMBLâs European Bionformatics Institute\\\">\\n    <meta name=\\\"author\\\" content=\\\"EMBLâs European Bionformatics Institute\\\">\\n    <meta name=\\\"robots\\\" content=\\\"index, follow\\\">\\n    <meta name=\\\"keywords\\\" content=\\\"EMBL-EBI, people, staff, visitors\\\">\\n    <meta name=\\\"description\\\" content=\\\"EMBL employs 1800 people from a range of scientific and non-scientific backgrounds.\\\">\\n\\n    <!-- Open Graph / Facebook -->\\n    <meta property=\\\"og:type\\\" content=\\\"website\\\">\\n    <meta property=\\\"og:url\\\" content=\\\"https://www.ebi.ac.uk/people/person/henning-hermjakob/\\\">\\n    <meta property=\\\"og:title\\\" content=\\\"Henning Hermjakob, Head of Molecular Systems | People | EMBLâs European Bionformatics Institute\\\">\\n    <meta property=\\\"og:description\\\" content=\\\"EMBL employs 1800 people from a range of scientific and non-scientific backgrounds.\\\">\\n    \\n\\n    <!-- Twitter -->\\n    <meta property=\\\"twitter:card\\\" content=\\\"summary_large_image\\\">\\n    <meta property=\\\"og:url\\\" content=\\\"https://www.ebi.ac.uk/people/person/henning-hermjakob/\\\">\\n    <meta property=\\\"twitter:title\\\" content=\\\"Henning Hermjakob, Head of Molecular Systems | People | EMBLâs European Bionformatics Institute\\\">\\n    <meta property=\\\"twitter:description\\\" content=\\\"EMBL employs 1800 people from a range of scientific and non-scientific backgrounds.\\\">\\n    \\n\\n    <!-- Content descriptors -->\\n    \\n    <meta name=\\\"embl:who\\\" content=\\\"none\\\"> \\n     \\n    <meta name=\\\"embl:where\\\" content=\\\"none\\\"> \\n    <meta name=\\\"embl:what\\\" content=\\\"People directory\\\"> \\n    <meta name=\\\"embl:active\\\" content=\\\"what\\\"> \\n\\n    <!-- Content role -->\\n    <meta name=\\\"embl:utility\\\" content=\\\"7\\\"> \\n    <meta name=\\\"embl:reach\\\" content=\\\"10\\\"> \\n\\n    <!-- Page infromation -->\\n    <meta name=\\\"embl:maintainer\\\" content=\\\"EMBL Communications\\\"> \\n    <meta name=\\\"embl:last-review\\\" content=\\\"2021.10.18\\\"> \\n    <meta name=\\\"embl:review-cycle\\\" content=\\\"365\\\"> \\n    <meta name=\\\"embl:expiry\\\" content=\\\"never\\\"> \\n\\n    <!-- analytics -->\\n    <meta name=\\\"vf:page-type\\\" content=\\\"content;dimension1\\\"> \\n    <script type=\\\"application/ld+json\\\">\\n    {\\n      \\\"@context\\\": \\\"https://schema.org\\\",\\n      \\\"@type\\\": \\\"ProfilePage\\\",\\n      \\\"mainEntity\\\": {\\n        \\\"@type\\\": \\\"Person\\\",\\n        \\\"name\\\": \\\"Henning Hermjakob\\\",\\n        \\\"jobTitle\\\": \\\"Head of Molecular Systems\\\",\\n        \\\"worksFor\\\": {\\n          \\\"@type\\\": \\\"Organization\\\",\\n          \\\"name\\\": \\\"EMBL-EBI\\\",\\n          \\\"department\\\": {\\n            \\\"@type\\\": \\\"Organization\\\",\\n            \\\"name\\\": \\\"Molecular Networks\\\"\\n          }\\n        },\\n        \\\"url\\\": \\\"https://www.ebi.ac.uk/people/person/henning-hermjakob/\\\",\\n        \\\"image\\\": \\\"https://content.embl.org/sites/default/files/persons/CP-60002342.jpg\\\"\\n      }\\n    }\\n    </script>\\n  </head>\\n  <body class=\\\" vf-body vf-stack vf-stack--400\\\">\\n    <!-- Tell the VF 1.4 not to display a data protection banner. -->\\n<!-- You should use the 2.0 data protection banner from the contentHub. -->\\n<span data-protection-message-disable=\\\"true\\\"></span>\\n<!-- embl-ebi global header -->\\n<header id=\\\"masthead-black-bar\\\" class=\\\"clearfix masthead-black-bar | ebi-header-footer vf-content vf-u-fullbleed\\\"></header>\\n<link rel=\\\"import\\\" href=\\\"https://www.embl.org/api/v1/pattern.html?filter-content-type=article&filter-id=6682&pattern=node-body&source=contenthub\\\" data-target=\\\"self\\\" data-embl-js-content-hub-loader>\\n<link rel=\\\"stylesheet\\\" href=\\\"//ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css\\\" type=\\\"text/css\\\" media=\\\"all\\\" />\\n<script defer=\\\"defer\\\" src=\\\"//ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.4/js/script.js\\\"></script>\\n<link rel=\\\"stylesheet\\\" href=\\\"https://assets.emblstatic.net/vf/v2/assets/ebi-header-footer/ebi-header-footer.css\\\" type=\\\"text/css\\\" media=\\\"all\\\" />\\n    <nav class=\\\"vf-breadcrumbs\\\" aria-label=\\\"Breadcrumb\\\">\\n      <ul class=\\\"vf-breadcrumbs__list vf-li"
+      }
+    },
+    {
+      "tool": "get_proteomics_peptide_ptm",
+      "arguments": {
+        "accession": "P52480",
+        "confidence_score": "Gold"
+      },
+      "status": "ok",
+      "error": "",
+      "result": {
+        "truncated": true,
+        "preview": "{\"status_code\": 200, \"url\": \"https://www.ebi.ac.uk/proteins/api/proteomics-ptm/P52480?confidence_score=Gold\", \"data\": {\"accession\": \"P52480\", \"entryName\": \"KPYM_MOUSE\", \"sequence\": \"MPKPHSEAGTAFIQTQQLHAAMADTFLEHMCRLDIDSAPITARNTGIICTIGPASRSVEMLKEMIKSGMNVARLNFSHGTHEYHAETIKNVREATESFASDPILYRPVAVALDTKGPEIRTGLIKGSGTAEVELKKGATLKITLDNAYMEKCDENILWLDYKNICKVVEVGSKIYVDDGLISLQVKEKGADFLVTEVENGGSLGSKKGVNLPGAAVDLPAVSEKDIQDLKFGVEQDVDMVFASFIRKAADVHEVRKVLGEKGKNIKIISKIENHEGVRRFDEILEASDGIMVARGDLGIEIPAEKVFLAQKMMIGRCNRAGKPVICATQMLESMIKKPRPTRAEGSDVANAVLDGADCIMLSGETAKGDYPLEAVRMQHLIAREAEAAIYHLQLFEELRRLAPITSDPTEAAAVGAVEASFKCCSGAIIVLTKSGRSAHQVARYRPRAPIIAVTRNPQTARQAHLYRGIFPVLCKDAVLNAWAEDVDLRVNLAMDVGKARGFFKKGDVVIVLTGWRPGSGFTNTMRVVPVP\", \"sequenceChecksum\": \"34CBBC01BC0C047D\", \"taxid\": 10090, \"features\": [{\"type\": \"PROTEOMICS_PTM\", \"begin\": \"126\", \"end\": \"135\", \"xrefs\": [{\"name\": \"Proteomes\", \"id\": \"UP000000589\", \"url\": \"https://www.uniprot.org/proteomes/UP000000589\"}], \"evidences\": [{\"code\": \"ECO:0007829\", \"source\": {\"id\": \"GSGTAEVELK\", \"url\": \"https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetPeptide?atlas_build_id=577&action=QUERY&searchWithinThis=Peptide+Sequence&searchForThis=GSGTAEVELK\"}}], \"peptide\": \"GSGTAEVELK\", \"unique\": true, \"ptms\": [{\"name\": \"Phosphorylation\", \"position\": 2, \"sources\": [\"PTMeXchange\"], \"dbReferences\": [{\"id\": \"PXD000821\", \"properties\": {\"Pubmed ID\": \"23375375\", \"PeptideAtlas URL\": \"https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetPeptide?atlas_build_id=577&action=QUERY&searchWithinThis=Peptide+Sequence&searchForThis=GSGTAEVELK\", \"Organism part\": \"Skin\", \"Universal Spectrum Id\": \"mzspec:PXD000821:20100104_Velos3_SaZa_SA_CARCIN_Exp2_SCC-SkinSILAC_SCX_FlThr_04:scan:06243:GS[Phospho]GTAEVELK[Label:13C(6)]/2\", \"Final site probability\": \"0.974025\", \"PSM Probability\": \"0.999\", \"url\": \"https://www.ebi.ac.uk/pride/archive/projects/PXD000821\", \"Proforma\": \"GS[Phospho]GTAEVELK[Label:13C(6)]\", \"Confidence score\": \"Gold\", \"Site q value\": \"0.0163569034115079\", \"Dataset ID\": \"PXD000821\", \"PSM Count (0.05 gFLR)\": \"8\"}}]}]}, {\"type\": \"PROTEOMICS_PTM\", \"begin\": \"126\", \"end\": \"135\", \"xrefs\": [{\"name\": \"Proteomes\", \"id\": \"UP000000589\", \"url\": \"https://www.uniprot.org/proteomes/UP000000589\"}], \"evidences\": [{\"code\": \"ECO:0007829\", \"source\": {\"id\": \"GSGTAEVELK\", \"url\": \"https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetPeptide?atlas_build_id=577&action=QUERY&searchWithinThis=Peptide+Sequence&searchForThis=GSGTAEVELK\"}}], \"peptide\": \"GSGTAEVELK\", \"unique\": true, \"ptms\": [{\"name\": \"Phosphorylation\", \"position\": 2, \"sources\": [\"PTMeXchange\"], \"dbReferences\": [{\"id\": \"PXD010697\", \"properties\": {\"Pubmed ID\": \"31601739 / 31601740\", \"PeptideAtlas URL\": \"https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetPeptide?atlas_build_id=577&action=QUERY&searchWithinThis=Peptide+Sequence&searchForThis=GSGTAEVELK\", \"Organism part\": \"Brain\", \"Universal Spectrum Id\": \"mzspec:PXD010697:20181217_FrBr_SA_Phospho_homogenate_25:scan:22507:GS[Phospho]GTAEVELK/2\", \"Final site probability\": \"0.95940808\", \"PSM Probability\": \"0.9998\", \"url\": \"https://www.ebi.ac.uk/pride/archive/projects/PXD010697\", \"Proforma\": \"GS[Phospho]GTAEVELK\", \"Confidence score\": \"Gold\", \"Site q value\": \"0.0039048216159458\", \"Dataset ID\": \"PXD010697\", \"PSM Count (0.05 gFLR)\": \"17\"}}, {\"id\": \"PXD018140\", \"properties\": {\"Pubmed ID\": \"32976891\", \"PeptideAtlas URL\": \"https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetPeptide?atlas_build_id=577&action=QUERY&searchWithinThis=Peptide+Sequence&searchForThis=GSGTAEVELK\", \"Organism part\": \"Brain\", \"Universal Spectrum Id\": \"mzspec:PXD018140:20161007_QEp6_JeLi_SA_L976_5min_CHLU50_str_3:scan:26125:GS[Phospho]GTAEVELK/2\", \"Final site probability\": \"0.97660233\", \"PSM Probability\": \"0.9999\", \"url\": \"https://www.ebi.ac.uk/pride/archive/projects/PXD018140\", \"Proforma\": \"GS[Phospho]GTAEVELK\", \"Confidence score\": \"Gold\", \"Site q value\": \"0.0085281576527776\", \"Dataset ID\": \"PXD018140\", \"PSM Count (0.05 gFLR)\": \"20\"}}, {\"id\": \"PXD003071\", \"properties\": {\"Pubmed ID\": \"26824392\", \"PeptideAtlas URL\": \"https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetPeptide?atlas_build_id=577&action=QUERY&searchWithinThis=Peptide+Sequence&searchForThis=GSGTAEVELK\", \"Organism part\": \"Brain\", \"Universal Spectrum Id\": \"mzspec:PXD003071:20150707_QEp6_MaSt_SA_BrainLilly_G2019S_MLI2_3_150812035841:scan:31039:GS[Phospho]GTAEVELK/2\", \"Final site probability\": \"0.992199999974972\", \"PSM Probability\": \"1.0\", \"url\": \"https://www.ebi.ac.uk/pride/archive/projects/PXD003071\", \"Proforma\": \"GS[Phospho]GTAEVELK\", \"Confidence score\": \"Gold\", \"Site q value\": \"0.0022722182186443\", \"Dataset ID\": \"PXD003071\", \"PSM Count (0.05 gFLR)\": \"5\"}}, {\"id\": \"PXD000821\", \"properties\": {\"Pubmed ID\": \"23375375\", \"PeptideAtlas URL\": \"https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetPeptide?atlas_build_id=577&action=QUERY&searchWithinThis=Peptide+Sequence&searchForThis=GSGTAEVELK\", \"Organism part\": \"Skin\", \"Universal Spectrum Id\": \"mzspec:PXD000821:20100107_Velos3_SaZa_SA_CARCIN_Exp2_TPA-SkinSILAC_SCX_FlThr_04:scan:06582:GS[Phospho]GTAEVELK/2\", \"Final site probability\": \"0.97833762\", \"PSM Probability\": \"0.9981\", \"url\": \"https://www.ebi.ac.uk/pride/archive/projects/PXD000821\", \"Proforma\": \"GS[Phospho]GTAEVELK\", \"Confidence score\": \"Gold\", \"Site q value\": \"0.0117471443538113\", \"Dataset ID\": \"PXD000821\", \"PSM Count (0.05 gFLR)\": \"7\"}}, {\"id\": \"PXD006637\", \"properties\": {\"Pubmed ID\": \"29930108\", \"PeptideAtlas URL\": \"https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetPeptide?atlas_build_id=577&action=QUERY&searchWithinThis=Peptide+Sequence&searchForThis=GSGTAEVELK\", \"Organism part\": \"Cerebellum\", \"Universal Spectrum Id\": \"mzspec:PXD006637:20150623_QEp6_JeLi_SA_L976_Cereb_Sal_1:scan:28593:GS[Phospho]GTAEVELK/2\", \"Final site probability\": \"0.98710968\", \"PSM Probability\": \"0.9992\", \"url\": \"https://www.ebi.ac.uk/pride/archive/projects/PXD006637\", \"Proforma\": \"GS[Phospho]GTAEVELK\", \"Confidence score\": \"Gold\", \"Site q value\": \"0.0108779513195055\", \"Datas"
+      }
+    }
+  ],
+  "final_answer": "",
+  "errors": [
+    "max_rounds_reached"
+  ],
+  "elapsed_seconds": 23.438,
+  "exact_sequence": false,
+  "all_expected_called": true,
+  "any_expected_called": true,
+  "expected_steps": 1,
+  "called_steps": 4,
+  "call_successes": 4,
+  "model_calls": 4,
+  "model_responses": [
+    {
+      "round": 1,
+      "elapsed_seconds": 2.638,
+      "finish_reason": "stop",
+      "usage": {
+        "prompt_tokens": 2660,
+        "total_tokens": 3028,
+        "completion_tokens": 368,
+        "prompt_tokens_details": {
+          "cached_tokens": 2560,
+          "image_tokens": 0,
+          "text_tokens": 2660
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 315,
+          "text_tokens": 52
+        }
+      }
+    },
+    {
+      "round": 2,
+      "elapsed_seconds": 4.166,
+      "finish_reason": "stop",
+      "usage": {
+        "prompt_tokens": 5043,
+        "total_tokens": 5254,
+        "completion_tokens": 211,
+        "prompt_tokens_details": {
+          "cached_tokens": 2560,
+          "image_tokens": 0,
+          "text_tokens": 5043
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 174,
+          "text_tokens": 36
+        }
+      }
+    },
+    {
+      "round": 3,
+      "elapsed_seconds": 4.158,
+      "finish_reason": "stop",
+      "usage": {
+        "prompt_tokens": 7626,
+        "total_tokens": 7897,
+        "completion_tokens": 271,
+        "prompt_tokens_details": {
+          "cached_tokens": 4864,
+          "image_tokens": 0,
+          "text_tokens": 7626
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 225,
+          "text_tokens": 45
+        }
+      }
+    },
+    {
+      "round": 4,
+      "elapsed_seconds": 2.673,
+      "finish_reason": "stop",
+      "usage": {
+        "prompt_tokens": 9991,
+        "total_tokens": 10080,
+        "completion_tokens": 89,
+        "prompt_tokens_details": {
+          "cached_tokens": 7424,
+          "image_tokens": 0,
+          "text_tokens": 9991
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 52,
+          "text_tokens": 36
+        }
+      }
+    }
+  ],
+  "token_usage": {
+    "prompt_tokens": 25320,
+    "completion_tokens": 939,
+    "total_tokens": 26259,
+    "responses_with_usage": 4
+  },
+  "finish_reasons": {
+    "stop": 4
+  }
+}
