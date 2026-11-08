@@ -1,6 +1,6 @@
 # 糖基化分析系统：以蛋白质语言模型预测 N-糖基化位点、以图神经网络解析糖链、并用工具调用智能体把两者串成一个可对话的分析工作台
 
-> 2026-10-27 第一次对齐；2026-10-28 W1 交付闭环与 W2 启动；2026-10-29 W2 核心实验收口；2026-10-30 W2 Day 3 阻断工具修正；2026-10-31 W2 Day 4 可重算记分卡；2026-11-01 W2 Day 5 web 单文件离线交付与录制功能演示；2026-11-04 W3 Day 1 登录与真实位点预测系统纵切；2026-11-05 W3 Day 2 外部模型 F3 轨迹对照；2026-11-06 W3 Day 3 F3 答案评分与覆盖对照；2026-11-07 W3 Day 4 三模型轨迹对照；2026-11-08 W3 Day 5 11/10 检查点与交付包闭环
+> 2026-10-27 第一次对齐；2026-10-28 W1 交付闭环与 W2 启动；2026-10-29 W2 核心实验收口；2026-10-30 W2 Day 3 阻断工具修正；2026-10-31 W2 Day 4 可重算记分卡；2026-11-01 W2 Day 5 web 单文件离线交付与录制功能演示；2026-11-04 W3 Day 1 登录与真实位点预测系统纵切；2026-11-05 W3 Day 2 外部模型 F3 轨迹对照；2026-11-06 W3 Day 3 F3 答案评分与覆盖对照；2026-11-07 W3 Day 4 三模型轨迹对照；2026-11-08 W3 Day 5 11/10 检查点、交付包闭环与 AI 编程会话工程归档
 > 代码状态：W1 的环境、数据集 v0、35M 线性探针、作者 150M LoRA 复算、三方法对拍和 10 个分歧位点人工复核均已完成。
 > 数据口径见 `reports/dataset_v0.md`，探针结果见 `reports/esm35_linear_probe_v0/report.md`，
 > 150M 复算结论见 `reports/mcc_repro.md`，候选位点对拍见 `reports/w1_three_method_v0/report.md`。
@@ -19,6 +19,8 @@
 > W3 Day 4 增加第三个模型对照。DeepSeek V4.1 Flash 的免费 Magpie 路由在运行中返回 17 次 HTTP 429，只能作为配额失败证据，不能当成模型能力结果。最终改用 `qoder-cn/dfmodel`（`DeepSeek-Flash · Qoder CN`）完成同一批 50 题，轨迹为 `exact_sequence=13`、`all_expected_called=42`、`any_expected_called=48`、有最终回答 22、148 次工具调用中 115 次成功。同一 Kimi K3 judge 评分下为 15 正确、5 错误、2 人工复核、28 缺回答，可判定正确率 15/20，可判定覆盖率 20/50。三模型报告由 `reports/w3_day4/f3_models.json` 驱动，输出 `f3_three_model_report.json` 和 `f3_three_model_report.md`。这些仍是工具轨迹和本地证据评分，不是上游 GPT-4o 答案正确率。
 >
 > W3 Day 5 把 F1、F2 Table 3、F3 三模型、真实系统 O75144 和最新全量回归收束为机器可复核检查点。唯一入口是 `reports/w3_day5/checkpoint.md`，JSON、源路径、字节数和 SHA256 在 `reports/w3_day5/checkpoint.json`。生成器会拒绝过期、手改或内部不一致的检查点输出。
+>
+> 2026-11-08 新增本项目 AI 编程会话工程归档。`agent-sessions/INDEX.md` 汇总 5 篇按日工程记录、12 个真实 Codex 会话和 33 条证据。生成器只读 AgentsView SQLite，每条证据绑定会话 ID、消息 ordinal 或工具 call/event 序号，并记录规范化行 SHA256。原始 137 MB JSONL 不进入仓库，隐藏推理 `thinking_text` 不导出，统一脱敏密码、token、Cookie、Authorization、私钥、URL token 和用户主目录。该目录是可审计工程记录，不替代本人手写日志总结，也不改写原始工具结果。
 > W03 交付包由 `scripts/build_w3_delivery.py` 从固定路径复制并生成两套 SHA256 清单，正式视频仍由用户录制后放入 `01-视频/`。
 
 ## 教师建议阅读顺序
@@ -32,6 +34,7 @@
 7. 需要重跑外部 F3 对照时读 `reports/w3_day2/README.md`。外部 summary 与本地 summary 分别用 `scripts/summarize_doc2agent_run.py` 复核，再用 `scripts/compare_doc2agent_runs.py` 生成对照。
 8. 需要复核 F3 答案评分时读 `reports/w3_day3/answer_grade_comparison.md`。两份评分目录先用 `scripts/grade_doc2agent_answers.py --check` 复核，再运行 `scripts/compare_doc2agent_answer_grades.py`。
 9. 需要复核三模型轨迹和评分时读 `reports/w3_day4/README.md`。先运行 `scripts/doc2agent_three_model_report.py --check`，再对照 `reports/w3_day4/f3_three_model_report.md` 的来源哈希和边界说明。
+10. 需要审计本项目 AI 使用过程时读 `agent-sessions/INDEX.md`。每条工程记录都链接真实消息或工具事件；运行 `scripts/build_agent_session_archive.py --check` 可验证源证据、脱敏结果和生成文件是否仍一致。
 
 文档、标题、表头和人工复核说明均使用中文。代码标识、JSON 与 CSV 字段名、状态枚举、模型名、路径、命令和原始软件告警保留英文，确保机器复核和哈希追溯不被破坏。
 
@@ -79,6 +82,8 @@ $env:PYTHONUTF8 = "1"
 D:\python\python.exe scripts\build_web_data.py --check
 D:\node\node.exe D:\node\node_modules\npm\bin\npm-cli.js run build --prefix D:\wbworkspace\glyco-analysis\web
 D:\python\python.exe scripts\check_web_dist.py --browser
+# AI 会话工程归档：只读抽取、脱敏、证据哈希和离线检查
+D:\python\python.exe scripts\build_agent_session_archive.py --check
 # W3 Day 1 真实系统：先检查模型来源，再启动登录与预测界面
 & 'D:\wbworkspace\glyco-analysis\scripts\run_w3_system.ps1' doctor
 & 'D:\wbworkspace\glyco-analysis\scripts\run_w3_system.ps1' serve
@@ -222,7 +227,7 @@ W3 Day 5 检查点保存在 `reports/w3_day5/`。生成器从 F1、F2 Table 3、
 glyco-analysis/
 ├─ scripts/          可直接运行的脚本（环境、数据、探针、校验、检查点与 web 数据契约）
 ├─ reports/          体检、数据集、探针产物与发布记录
-├─ agent-sessions/   本项目 AI 编程会话的脱敏归档目录
+├─ agent-sessions/   本项目 AI 编程会话的脱敏、证据链接式工程归档
 ├─ docs/             设计与说明
 ├─ web/              交付前端界面（React + Vite，数据由 scripts/build_web_data.py 生成）
 ├─ system/           W3 登录、任务队列、真实 ESM-150M 推理服务与单文件 UI

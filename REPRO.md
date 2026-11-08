@@ -133,6 +133,34 @@ F1/F2/F3 源证据、真实系统结果和 unittest 原始输出，并生成核�
 `SHA256SUMS.txt`。它不复制代码、模型权重或全部中间 task JSON。用户录制视频后
 把文件放进 `01-视频/`，再重跑构建器以刷新根级清单。
 
+### AI 编程会话工程归档（2026-11-08）
+
+```powershell
+$env:PYTHONUTF8='1'
+D:\python\python.exe scripts\build_agent_session_archive.py `
+  --db D:\AppData\agentsview\sessions.db `
+  --plan agent-sessions\archive-plan.json `
+  --out agent-sessions
+
+D:\python\python.exe scripts\build_agent_session_archive.py `
+  --db D:\AppData\agentsview\sessions.db `
+  --plan agent-sessions\archive-plan.json `
+  --out agent-sessions --check
+```
+
+归档器以只读 SQLite 连接读取 AgentsView。`archive-plan.json` 固定项目会话白名单、
+消息 `ordinal`、工具 `call_index` 和 `event_index`。生成器为每条证据记录规范化行
+SHA256，并把工程叙述中的判断链接到真实证据 ID。当前归档为 5 篇按日记录、12 个会话、
+33 条证据。主会话仍在增长，因此不记录易变的整文件哈希，只校验选定证据；已关闭子会话
+同时校验源文件 SHA256。
+
+原始 137 MB JSONL 不提交，隐藏推理 `thinking_text` 不导出。生成内容包括
+`agent-sessions/INDEX.md`、每日 `README.md`、工程记录和 `SOURCES.sha256`。
+脱敏覆盖密码、token、Cookie、Authorization、私钥、URL token 与用户主目录。连续两跑
+必须保持字节和 mtime 不变；手改生成文件或注入高置信度密钥后，`--check` 必须退出 1。
+该归档是真实会话的工程整理，不伪造原始聊天或工具输出，也不替代用户本人手写日志总结。
+验证记录见 `reports/w3_day5/agent_session_archive_validation_2026-11-08.md`。
+
 ## 一、可行性五关（项目级，W1 只验收第 1 至第 3 关）
 
 五关按顺序过，前一关没过不进下一关。每关都留一个可检查的产物。
@@ -641,3 +669,4 @@ F3 计数上限、工具可行性题号集合和 Markdown 参考锚点都必须�
 | 2026-11-05 | W3 Day 2：同 50 题外部模型轨迹对照 | GLM-5.3 与 Qwen3 4B 共用任务、70 个工具、提示词、JSON 动作协议和 4 轮上限；两份 summary 与 50 题对齐检查通过 | ✅ 外部轨迹五项 13/41/47/25/114；聚焦测试 14/14；全量 157 项中 149 通过、8 项门控跳过；报告明确不作为答案正确率 |
 | 2026-11-06 | W3 Day 3：F3 答案评分与覆盖对照 | 同一 Kimi K3 judge 对两份 50 题轨迹评分；缺回答、无效轨迹、judge 不可用和人工复核分开记录；原始响应哈希可离线复核 | ✅ Qwen3 9 正确/38 可判定，GLM-5.3 18 正确/21 可判定；两份 `--check` PASS；聚焦 18/18；全量 175 项中 167 通过、8 项门控跳过 |
 | 2026-11-07 | W3 Day 4：三模型 F3 轨迹与答案评分 | 同一 50 题、70 个工具和动作协议增加 DeepSeek-Flash；V4.1 免费路由 17 次 429 只作为失败证据；三模型报告由 manifest 驱动并校验源哈希 | ✅ Qoder DeepSeek-Flash 轨迹 13/42/48/22/115/148，评分 15/20、覆盖 20/50；聚焦 10/10；全量 185 项中 177 通过、8 项门控跳过；输出连续两跑字节和 mtime 不变 |
+| 2026-11-08 | W3 Day 5：AI 编程会话专业化归档 | 从 AgentsView 只读抽取 12 个项目会话，生成 5 篇按日工程记录和 33 条带定位、规范化行哈希的证据；脱敏后离线复核源证据和生成文件 | ✅ 归档聚焦测试 13/13；全量 214 项中 206 通过、8 项按设计或 GPU 门控跳过；连续两跑修改 0 个文件；手改并注入假 token 后 `--check` 退出 1 |
