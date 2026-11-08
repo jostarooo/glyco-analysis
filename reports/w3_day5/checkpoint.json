@@ -1,0 +1,315 @@
+{
+  "boundaries": [
+    "F2 对齐 GlycanML Table 3，不是 Table 2；本地是 PyG 自实现，不是 TorchDrug 逐位克隆。",
+    "F3 的轨迹指标不是答案正确率；Kimi K3 是本地证据评分器，不等同于上游 GPT-4o。",
+    "每个模型只有一次固定 50 题运行，不能据此声称方差或模型大小因果。",
+    "系统只预测 N-X-S/T sequon，不是实验证据或临床诊断。"
+  ],
+  "f1": {
+    "confusion": {
+      "fn": 128,
+      "fp": 67,
+      "tn": 1186,
+      "tp": 1173
+    },
+    "delta_local_minus_reference": 0.0003488428592927084,
+    "local": 0.8483488428592927,
+    "metric": "MCC",
+    "reference": 0.848,
+    "row_count": 2554
+  },
+  "f2": [
+    {
+      "delta_local_minus_reference": -0.00513648632159136,
+      "mean": 0.7748635136784087,
+      "metric": "auprc",
+      "n": 3,
+      "per_seed": [
+        {
+          "seed": 0,
+          "value": 0.7832559324152325
+        },
+        {
+          "seed": 1,
+          "value": 0.7651717289430979
+        },
+        {
+          "seed": 2,
+          "value": 0.7761628796768958
+        }
+      ],
+      "reference": {
+        "std": 0.006,
+        "value": 0.78
+      },
+      "std": 0.009111853148723878,
+      "task": "immunogenicity"
+    },
+    {
+      "delta_local_minus_reference": -0.01020714399707312,
+      "mean": 0.9377928560029268,
+      "metric": "macro_f1",
+      "n": 3,
+      "per_seed": [
+        {
+          "seed": 0,
+          "value": 0.9407962109575013
+        },
+        {
+          "seed": 1,
+          "value": 0.9333997727074045
+        },
+        {
+          "seed": 2,
+          "value": 0.9391825843438747
+        }
+      ],
+      "reference": {
+        "std": 0.004,
+        "value": 0.948
+      },
+      "std": 0.0038891301525018625,
+      "task": "glycosylation"
+    }
+  ],
+  "f3": {
+    "judge_model": "workbuddy-ai/kimi-k3",
+    "models": [
+      {
+        "answer_grade": {
+          "graded_accuracy": {
+            "denominator": 38,
+            "numerator": 9,
+            "value": 0.23684210526315788
+          },
+          "graded_correct": 9,
+          "graded_coverage": {
+            "denominator": 50,
+            "numerator": 38,
+            "value": 0.76
+          },
+          "graded_incorrect": 29,
+          "status_counts": {
+            "correct": 9,
+            "incorrect": 29,
+            "invalid_trace": 0,
+            "judge_unavailable": 0,
+            "manual_review": 1,
+            "missing_answer": 11
+          }
+        },
+        "key": "qwen3_4b",
+        "label": "Qwen3 4B (Ollama)",
+        "model": "qwen3:4b",
+        "provider": "ollama",
+        "trajectory": {
+          "all_expected_called": 34,
+          "any_expected_called": 41,
+          "exact_sequence": 19,
+          "tasks_run": 50,
+          "tasks_with_final_answer": 39,
+          "tasks_with_tool_call": 50,
+          "tool_call_successes": 78,
+          "tool_calls": 110
+        }
+      },
+      {
+        "answer_grade": {
+          "graded_accuracy": {
+            "denominator": 21,
+            "numerator": 18,
+            "value": 0.8571428571428571
+          },
+          "graded_correct": 18,
+          "graded_coverage": {
+            "denominator": 50,
+            "numerator": 21,
+            "value": 0.42
+          },
+          "graded_incorrect": 3,
+          "status_counts": {
+            "correct": 18,
+            "incorrect": 3,
+            "invalid_trace": 0,
+            "judge_unavailable": 0,
+            "manual_review": 4,
+            "missing_answer": 25
+          }
+        },
+        "key": "glm_5_3",
+        "label": "GLM-5.3 (Magpie)",
+        "model": "workbuddy-ai/glm-5.3",
+        "provider": "local_magpie",
+        "trajectory": {
+          "all_expected_called": 41,
+          "any_expected_called": 47,
+          "exact_sequence": 13,
+          "tasks_run": 50,
+          "tasks_with_final_answer": 25,
+          "tasks_with_tool_call": 49,
+          "tool_call_successes": 114,
+          "tool_calls": 129
+        }
+      },
+      {
+        "answer_grade": {
+          "graded_accuracy": {
+            "denominator": 20,
+            "numerator": 15,
+            "value": 0.75
+          },
+          "graded_correct": 15,
+          "graded_coverage": {
+            "denominator": 50,
+            "numerator": 20,
+            "value": 0.4
+          },
+          "graded_incorrect": 5,
+          "status_counts": {
+            "correct": 15,
+            "incorrect": 5,
+            "invalid_trace": 0,
+            "judge_unavailable": 0,
+            "manual_review": 2,
+            "missing_answer": 28
+          }
+        },
+        "key": "deepseek_flash_qoder",
+        "label": "DeepSeek-Flash (Qoder CN)",
+        "model": "qoder-cn/dfmodel",
+        "provider": "local_magpie",
+        "trajectory": {
+          "all_expected_called": 42,
+          "any_expected_called": 48,
+          "exact_sequence": 13,
+          "tasks_run": 50,
+          "tasks_with_final_answer": 22,
+          "tasks_with_tool_call": 50,
+          "tool_call_successes": 115,
+          "tool_calls": 148
+        }
+      }
+    ],
+    "reference_model": "qwen3_4b",
+    "task_count": 50,
+    "tool_count": 70,
+    "upstream_gpt4o_equivalent": false
+  },
+  "policy": {
+    "f2_reference": "GlycanML Table 3",
+    "f3_metrics": "trajectory_and_local_evidence_grading_not_upstream_gpt4o",
+    "no_wall_clock_timestamp": true
+  },
+  "schema_version": "w3-day5-checkpoint-v1",
+  "scope": "W3 11/10 checkpoint",
+  "sources": [
+    {
+      "byte_count": 473,
+      "path": "reports/esm150_lora_repro_v0/metrics.json",
+      "role": "f1_metrics",
+      "sha256": "5bbfbfddbc944ae7f07f92095a7c54b590440c95690196f127151c9fc4752d26"
+    },
+    {
+      "byte_count": 8125,
+      "path": "reports/w2_day1/glycanml_rgcn_recompute.json",
+      "role": "f2_recompute",
+      "sha256": "546e5bb7bff0986bc4185d2671aec2ad2b92e7e4bc285e4c7a3d6aca8ac301b8"
+    },
+    {
+      "byte_count": 1776,
+      "path": "reports/w2_day4/reference_values.json",
+      "role": "f2_references",
+      "sha256": "a59ff3dadcb5f88e3ee45489680a51c5db5553117d59279408d45c8a2bc4fbd8"
+    },
+    {
+      "byte_count": 197797,
+      "path": "reports/w3_day4/f3_three_model_report.json",
+      "role": "f3_three_model",
+      "sha256": "d0f7d417bb478791b0f571c9af31877021738b97573c536d38007eceba99397f"
+    },
+    {
+      "byte_count": 2300,
+      "path": "reports/w3_day1/real_e2e_2026-11-04.json",
+      "role": "system_e2e",
+      "sha256": "5b3c0edc019c1ef860b273f08b098aaa1dd598751a9ceefe7bd582caf936102b"
+    },
+    {
+      "byte_count": 28852,
+      "path": "reports/w3_day5/unittest_2026-11-08.txt",
+      "role": "validation",
+      "sha256": "be5be000916c07e0b131d8bb0d650e15fd73fd91fb7d8d57e63c68879aa0d223"
+    }
+  ],
+  "status": "PASS",
+  "system": {
+    "all_labels_match": true,
+    "candidate_count": 6,
+    "inference_seconds": 6.588676699999269,
+    "max_probability_delta": 0.0,
+    "model": {
+      "adapter_sha256": "A4A5B486862724F459F60E8343AC135C340305D5A0F2E936EB5AD1DFD34788D4",
+      "adapter_tensor_count": 376,
+      "attention_backend": "sdpa",
+      "base_model_id": "facebook/esm2_t30_150M_UR50D",
+      "base_model_revision": "a695f6045e2e32885fa60af20c13cb35398ce30c",
+      "device": "NVIDIA GeForce RTX 5060 Laptop GPU",
+      "full_sequence": true,
+      "truncation": false,
+      "windowing": false
+    },
+    "sample_accession": "O75144",
+    "sequence_length": 302,
+    "site_matches": [
+      {
+        "label_match": true,
+        "motif": "NSS",
+        "position": 70,
+        "predicted_label": 1,
+        "prob_delta": 0.0
+      },
+      {
+        "label_match": true,
+        "motif": "NVT",
+        "position": 102,
+        "predicted_label": 1,
+        "prob_delta": 0.0
+      },
+      {
+        "label_match": true,
+        "motif": "NFS",
+        "position": 137,
+        "predicted_label": 1,
+        "prob_delta": 0.0
+      },
+      {
+        "label_match": true,
+        "motif": "NKT",
+        "position": 173,
+        "predicted_label": 1,
+        "prob_delta": 0.0
+      },
+      {
+        "label_match": true,
+        "motif": "NDT",
+        "position": 186,
+        "predicted_label": 1,
+        "prob_delta": 0.0
+      },
+      {
+        "label_match": true,
+        "motif": "NLT",
+        "position": 225,
+        "predicted_label": 1,
+        "prob_delta": 0.0
+      }
+    ],
+    "wall_seconds": 22.63631170000008
+  },
+  "validation": {
+    "duration_seconds": 41.026,
+    "passed": 193,
+    "skipped": 8,
+    "status": "PASS",
+    "tests_run": 201
+  }
+}

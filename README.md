@@ -1,6 +1,6 @@
 # 糖基化分析系统：以蛋白质语言模型预测 N-糖基化位点、以图神经网络解析糖链、并用工具调用智能体把两者串成一个可对话的分析工作台
 
-> 2026-10-27 第一次对齐；2026-10-28 W1 交付闭环与 W2 启动；2026-10-29 W2 核心实验收口；2026-10-30 W2 Day 3 阻断工具修正；2026-10-31 W2 Day 4 可重算记分卡；2026-11-01 W2 Day 5 web 单文件离线交付与录制功能演示；2026-11-04 W3 Day 1 登录与真实位点预测系统纵切；2026-11-05 W3 Day 2 外部模型 F3 轨迹对照；2026-11-06 W3 Day 3 F3 答案评分与覆盖对照；2026-11-07 W3 Day 4 三模型轨迹对照
+> 2026-10-27 第一次对齐；2026-10-28 W1 交付闭环与 W2 启动；2026-10-29 W2 核心实验收口；2026-10-30 W2 Day 3 阻断工具修正；2026-10-31 W2 Day 4 可重算记分卡；2026-11-01 W2 Day 5 web 单文件离线交付与录制功能演示；2026-11-04 W3 Day 1 登录与真实位点预测系统纵切；2026-11-05 W3 Day 2 外部模型 F3 轨迹对照；2026-11-06 W3 Day 3 F3 答案评分与覆盖对照；2026-11-07 W3 Day 4 三模型轨迹对照；2026-11-08 W3 Day 5 11/10 检查点与交付包闭环
 > 代码状态：W1 的环境、数据集 v0、35M 线性探针、作者 150M LoRA 复算、三方法对拍和 10 个分歧位点人工复核均已完成。
 > 数据口径见 `reports/dataset_v0.md`，探针结果见 `reports/esm35_linear_probe_v0/report.md`，
 > 150M 复算结论见 `reports/mcc_repro.md`，候选位点对拍见 `reports/w1_three_method_v0/report.md`。
@@ -17,14 +17,17 @@
 > W3 Day 3 为两份 50 题轨迹增加答案评分。统一 judge 为 `workbuddy-ai/kimi-k3`，temperature 为 0，max_tokens 为 1500。Qwen3 4B 为 9 正确、29 错误、1 人工复核、11 缺回答；GLM-5.3 为 18 正确、3 错误、4 人工复核、25 缺回答。这是本地证据约束评分，不是上游 GPT-4o 评分。GLM-5.3 在已有最终回答中更容易被判正确，但最终回答覆盖只有 25/50，不能据此宣称整体模型优劣或模型大小因果。
 >
 > W3 Day 4 增加第三个模型对照。DeepSeek V4.1 Flash 的免费 Magpie 路由在运行中返回 17 次 HTTP 429，只能作为配额失败证据，不能当成模型能力结果。最终改用 `qoder-cn/dfmodel`（`DeepSeek-Flash · Qoder CN`）完成同一批 50 题，轨迹为 `exact_sequence=13`、`all_expected_called=42`、`any_expected_called=48`、有最终回答 22、148 次工具调用中 115 次成功。同一 Kimi K3 judge 评分下为 15 正确、5 错误、2 人工复核、28 缺回答，可判定正确率 15/20，可判定覆盖率 20/50。三模型报告由 `reports/w3_day4/f3_models.json` 驱动，输出 `f3_three_model_report.json` 和 `f3_three_model_report.md`。这些仍是工具轨迹和本地证据评分，不是上游 GPT-4o 答案正确率。
+>
+> W3 Day 5 把 F1、F2 Table 3、F3 三模型、真实系统 O75144 和最新全量回归收束为机器可复核检查点。唯一入口是 `reports/w3_day5/checkpoint.md`，JSON、源路径、字节数和 SHA256 在 `reports/w3_day5/checkpoint.json`。生成器会拒绝过期、手改或内部不一致的检查点输出。
+> W03 交付包由 `scripts/build_w3_delivery.py` 从固定路径复制并生成两套 SHA256 清单，正式视频仍由用户录制后放入 `01-视频/`。
 
 ## 教师建议阅读顺序
 
-1. 先读 `reports/w2_day4/scorecard.md`，这是 F1/F2/F3 指标和工具可行性的唯一汇总入口。需要正式可视化浏览时打开 `web/` 交付界面，数据由 `scripts/build_web_data.py` 生成；需要录屏时打开 `video-ui/dist/index.html`。
+1. 先读 `reports/w3_day5/checkpoint.md`，这是 11/10 检查点的唯一汇总入口；F1/F2/F3 的 W2 记分卡在 `reports/w2_day4/scorecard.md`。需要正式可视化浏览时打开 `web/` 交付界面，数据由 `scripts/build_web_data.py` 生成；需要录屏时打开 `video-ui/dist/index.html`。
 2. 再读 `reports/weekly/W02_2026-11-03_progress.md`，了解 W2 Day 1 至 Day 5 的实验、证据边界和验证结果。
-3. 接着读 `reports/w2_day2/f2_f3_comparison.md`、`reports/w3_day2/f3_glm53_vs_qwen3_4b.md`、`reports/w3_day3/answer_grade_comparison.md`、`reports/w3_day4/f3_three_model_report.md` 与 `docs/W2_D3_tool_blocker_triage.txt`，核对论文值、轨迹对照、答案评分、三模型结果和 W2 Day 3 阻断工具分类。
+3. 接着读 `reports/w2_day2/f2_f3_comparison.md`、`reports/w3_day2/f3_glm53_vs_qwen3_4b.md`、`reports/w3_day3/answer_grade_comparison.md`、`reports/w3_day4/f3_three_model_report.md`、`reports/w3_day5/checkpoint.md` 与 `docs/W2_D3_tool_blocker_triage.txt`，核对论文值、轨迹对照、答案评分、三模型结果和 W2 Day 3 阻断工具分类。
 4. 需要复查 W1 时读 `reports/weekly/W01_2026-10-27_progress.md`，核对交付、130 行评估池和三方法对拍。
-5. 需要重跑时读 `REPRO.md`；原始证据在 `reports/w2_day1/` 至 `reports/w2_day5/`、`reports/w3_day1/` 至 `reports/w3_day4/`。
+5. 需要重跑时读 `REPRO.md`；原始证据在 `reports/w2_day1/` 至 `reports/w2_day5/`、`reports/w3_day1/` 至 `reports/w3_day5/`。
 6. 需要现场验证 F1 真实推理系统时运行 `scripts/run_w3_system.ps1`，先执行 `doctor`，再执行 `serve`，然后访问 `http://127.0.0.1:8765`。W3 证据在 `reports/w3_day1/`。
 7. 需要重跑外部 F3 对照时读 `reports/w3_day2/README.md`。外部 summary 与本地 summary 分别用 `scripts/summarize_doc2agent_run.py` 复核，再用 `scripts/compare_doc2agent_runs.py` 生成对照。
 8. 需要复核 F3 答案评分时读 `reports/w3_day3/answer_grade_comparison.md`。两份评分目录先用 `scripts/grade_doc2agent_answers.py --check` 复核，再运行 `scripts/compare_doc2agent_answer_grades.py`。
@@ -151,6 +154,14 @@ $env:PYTHONUTF8='1'
 # W3 Day 4 三模型报告：manifest 驱动，三份运行和评分必须同题同契约
 & 'C:\Users\jostaro\AppData\Roaming\uv\python\cpython-3.12.14-windows-x86_64-none\python.exe' scripts\doc2agent_three_model_report.py --manifest reports\w3_day4\f3_models.json --json-out reports\w3_day4\f3_three_model_report.json --md-out reports\w3_day4\f3_three_model_report.md --check
 
+# W3 Day 5 11/10 检查点：从固定源生成，再检查输出是否过期
+D:\python\python.exe scripts\build_w3_checkpoint.py
+D:\python\python.exe scripts\build_w3_checkpoint.py --check
+
+# W03 交付包：复制固定证据、生成核心证据清单和根级 SHA256
+D:\python\python.exe scripts\build_w3_delivery.py
+D:\python\python.exe scripts\build_w3_delivery.py --check
+
 # W3 Day 1 真实 GPU 回归：加载作者检查点并对拍 O75144 的历史位点结果
 $env:PYTHONPATH='D:\wbworkspace\glyco-analysis;D:\wbworkspace\glyco-analysis\.venv\Lib\site-packages'
 $env:HF_HOME='D:\hf'
@@ -200,11 +211,16 @@ W2 Day 4 记分卡保存在 `reports/w2_day4/`。生成器会重算 F1 混淆矩
 F3 的五个数都是工具轨迹或输出存在性，不是答案正确率；F2 是 PyG 自实现，
 不是 TorchDrug 逐位复刻。
 
+W3 Day 5 检查点保存在 `reports/w3_day5/`。生成器从 F1、F2 Table 3、F3 三模型、
+真实系统结果和最新 unittest 日志重新计算，输出 JSON、Markdown 和源哈希。`--check`
+会拒绝缺失、过期、手改或内部不一致的输出；该检查点不重新训练 F2，也不重新运行
+任何 Doc2Agent 50 题。
+
 ## 目录
 
 ```
 glyco-analysis/
-├─ scripts/          可直接运行的脚本（环境、数据、探针、校验、发布与 web 数据契约）
+├─ scripts/          可直接运行的脚本（环境、数据、探针、校验、检查点与 web 数据契约）
 ├─ reports/          体检、数据集、探针产物与发布记录
 ├─ agent-sessions/   本项目 AI 编程会话的脱敏归档目录
 ├─ docs/             设计与说明

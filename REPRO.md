@@ -99,6 +99,40 @@ Qoder DeepSeek-Flash 使用同一批 50 题、70 个工具、系统提示词、J
 expected tools、prompt/rubric 契约、summary 哈希、50 个运行 task、
 50 个评分 task 以及输出幂等性。完整说明见 `reports/w3_day4/README.md`。
 
+### W3 Day 5（2026-11-08，进行中）
+
+W3 Day 5 把 11/10 检查点需要的 F1、F2 Table 3、F3 三模型、真实系统 O75144
+和全量回归收束为 `reports/w3_day5/checkpoint.json`、`checkpoint.md`。
+生成器为 `scripts/build_w3_checkpoint.py`，从六份固定源读取并校验：
+
+- F1 指标：`reports/esm150_lora_repro_v0/metrics.json`
+- F2 复算：`reports/w2_day1/glycanml_rgcn_recompute.json`
+- F2 论文参考：`reports/w2_day4/reference_values.json`
+- F3 三模型：`reports/w3_day4/f3_three_model_report.json`
+- 真实系统：`reports/w3_day1/real_e2e_2026-11-04.json`
+- 最新回归：`reports/w3_day5/unittest_2026-11-08.txt`
+
+检查点重新计算 F1 MCC、F2 三种子均值和样本标准差、F3 评分覆盖率和源文件
+SHA256。`--check` 会拒绝缺失、过期、手改或内部不一致的输出。F3 不生成合并准确率，
+且始终标记 `upstream_gpt4o_equivalent=false`。
+
+本轮全量 unittest 为 201 项，193 项通过，8 项由既有 GPU 门控或环境合同测试跳过。
+检查点聚焦测试为 11/11。生成器连续运行保持字节和 mtime 不变。W3 Day 5 不重新训练
+F2，也不重新运行 Qwen3、GLM-5.3 或 DeepSeek-Flash 的 50 题。
+
+W03 交付包由以下命令生成和复核：
+
+```powershell
+$env:PYTHONUTF8='1'
+D:\python\python.exe scripts\build_w3_delivery.py
+D:\python\python.exe scripts\build_w3_delivery.py --check
+```
+
+默认目录为 `D:\毕设交付\W03_2026-11-10`。构建器复制周报、视频脚本、检查点、
+F1/F2/F3 源证据、真实系统结果和 unittest 原始输出，并生成核心证据与根级
+`SHA256SUMS.txt`。它不复制代码、模型权重或全部中间 task JSON。用户录制视频后
+把文件放进 `01-视频/`，再重跑构建器以刷新根级清单。
+
 ## 一、可行性五关（项目级，W1 只验收第 1 至第 3 关）
 
 五关按顺序过，前一关没过不进下一关。每关都留一个可检查的产物。
@@ -351,7 +385,7 @@ D:\wbworkspace\glyco-analysis\.venv\Scripts\python.exe scripts\publish_github.py
 均为 `9b93d60aecb82a3328d7fab05a8cf64c6147124c`。目录树 SHA 为
 `e7d6fc1b8bb6b8fd39c7a428df424c757a3df7d4`，共 274 个文件。
 普通 `git fetch` 仍被本机到 `github.com:443` 的网络重置阻断，因此远端状态使用
-GitHub REST API 独立核验。W3 Day 1 的提交尚未发布。
+GitHub REST API 独立核验。W3 Day 1 至 Day 5 的提交尚未发布。
 后续交付记录中的历史 SHA 是当日发布快照，不代表当前交付状态；当前状态以本文第零节和交付总表为准。
 
 ### F2 GlycanML Table 3
