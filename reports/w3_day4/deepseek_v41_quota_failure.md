@@ -1,43 +1,42 @@
-# DeepSeek V4.1 Flash free-route quota failure
+# DeepSeek V4.1 Flash 免费路由额度失败记录
 
-Date: 2026-11-07
+日期：2026-11-07
 
-This run is failure evidence, not a model-quality result.
+本次运行是失败证据，不是模型质量结果。
 
-## Route
+## 路由
 
-- Magpie model: `opencode-zen/deepseek-v4.1-flash-free`
-- Endpoint: `http://127.0.0.1:3425/v1/chat/completions`
-- Temperature: `0`
-- Max tokens: `512`
-- Max rounds: `4`
-- Provider-native tools: not sent
+- Magpie 模型：`opencode-zen/deepseek-v4.1-flash-free`
+- 接口地址：`http://127.0.0.1:3425/v1/chat/completions`
+- Temperature：`0`
+- 最大输出 token：`512`
+- 最大轮数：`4`
+- 没有发送 provider 原生工具
 
-## Result
+## 结果
 
-The runner completed 50 task files in `reports/w3_day4/f3_deepseek_v41_50`.
-During the run, 17 model calls returned HTTP 429 because the free route reached
-its usage limit. As a result, 23 tasks produced no tool call and only 9 tasks
-produced a final answer.
+Runner 在 `reports/w3_day4/f3_deepseek_v41_50` 中完成了 50 个任务文件。
+运行期间，免费路由达到用量限制，17 次模型调用返回 HTTP 429。结果是 23 道
+题没有产生任何工具调用，只有 9 道题产生最终回答。
 
-Trajectory summary:
+轨迹摘要：
 
-| Metric | Value |
+| 指标 | 值 |
 |---|---:|
-| Tasks | 50 |
+| 任务数 | 50 |
 | `exact_sequence` | 8 |
 | `all_expected_called` | 26 |
 | `any_expected_called` | 27 |
-| Tasks with a tool call | 29 |
-| Tasks with a final answer | 9 |
-| Successful tool calls | 60 |
-| Tool calls | 74 |
-| Model calls | 114 |
-| Elapsed seconds | 651.038 |
+| 产生工具调用的任务 | 29 |
+| 产生最终回答的任务 | 9 |
+| 成功工具调用 | 60 |
+| 工具调用 | 74 |
+| 模型调用 | 114 |
+| 总耗时（秒） | 651.038 |
 
-The same Kimi K3 judge graded the partial traces:
+同一 Kimi K3 judge 对这份不完整轨迹评分：
 
-| Status | Count |
+| 状态 | 数量 |
 |---|---:|
 | `correct` | 3 |
 | `incorrect` | 4 |
@@ -46,17 +45,16 @@ The same Kimi K3 judge graded the partial traces:
 | `invalid_trace` | 0 |
 | `judge_unavailable` | 0 |
 
-## Decision
+## 决策
 
-Do not compare this run with Qwen3 4B or GLM-5.3 as a model capability result.
-The run measured free-route quota exhaustion. W3 Day 4 therefore uses
-`qoder-cn/dfmodel` DeepSeek-Flash for the complete 50-task third-model
-comparison.
+不要把本次运行与 Qwen3 4B 或 GLM-5.3 的结果比较，也不要把它写成模型能力
+结论。本次运行测到的是免费路由额度耗尽。因此 W3 Day 4 改用
+`qoder-cn/dfmodel` 的 DeepSeek-Flash 完成第三模型 50 题对照。
 
-## Evidence
+## 证据
 
-- Run summary: `reports/w3_day4/f3_deepseek_v41_50/summary.json`
-- Task traces: `reports/w3_day4/f3_deepseek_v41_50/task_01.json` through
+- 运行摘要：`reports/w3_day4/f3_deepseek_v41_50/summary.json`
+- 任务轨迹：`reports/w3_day4/f3_deepseek_v41_50/task_01.json` 至
   `task_50.json`
-- Answer grades:
+- 答案评分：
   `reports/w3_day4/answer_grades_kimi_k3/f3_deepseek_v41_50/summary.json`

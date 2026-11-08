@@ -1,8 +1,9 @@
-# Three-model Doc2Agent report
+# Doc2Agent 三模型报告设计
 
-## Usage sketch
+## 使用方式
 
-The caller supplies one manifest. The manifest names exactly three models, their run directories, their grade directories, the reference model, and an optional historical provenance sidecar.
+调用方只提供一份清单。清单给出三个模型、各自的运行目录和评分目录、参考
+模型，以及可选的历史提示词来源文件。
 
 ```powershell
 $env:PYTHONUTF8='1'
@@ -12,7 +13,8 @@ D:\python\python.exe scripts\doc2agent_three_model_report.py `
   --md-out reports\w3_day4\f3_three_model_report.md
 ```
 
-The check mode regenerates both reports in memory and fails when either output is missing or differs.
+检查模式会在内存中重新生成两份报告。任一输出缺失或与重生成结果不一致时，
+检查失败。
 
 ```powershell
 D:\python\python.exe scripts\doc2agent_three_model_report.py `
@@ -22,7 +24,7 @@ D:\python\python.exe scripts\doc2agent_three_model_report.py `
   --check
 ```
 
-The public Python interface is one function:
+公开的 Python 接口只有一个函数：
 
 ```python
 from scripts.doc2agent_three_model_report import build_report
@@ -30,65 +32,90 @@ from scripts.doc2agent_three_model_report import build_report
 report = build_report(Path("reports/w3_day4/f3_models.json"))
 ```
 
-## Problem
+## 问题
 
-The repository already has two-model run comparisons and two-model answer-grade comparisons. Adding a third model by calling both scripts and merging their outputs would create two report formats, two metric definitions, and a hand-written join.
+仓库已有双模型运行对照和双模型答案评分对照。增加第三个模型时，如果分别
+调用这两个脚本再合并输出，会产生两套报告格式、两套指标定义和一层手工拼接。
 
-The three-model report has to keep trajectory metrics separate from answer-grade metrics. It also has to prove that all three models used the same task set, the same prompt contract, and the same grading contract. The older Qwen run predates runtime prompt hash recording, so the report needs an explicit historical provenance path instead of assuming equality.
+三模型报告必须把工具轨迹指标与答案评分指标分开。它还必须证明三个模型使用
+同一批任务、同一提示词契约和同一评分契约。Qwen 的旧运行早于运行时提示词
+哈希记录，因此报告需要一条明确的历史来源路径，不能直接假设提示词相同。
 
-## Shape
+## 结构
 
-`ModelSnapshot` is the domain boundary. It holds one model's run summary, grade summary, 50 run tasks, 50 grade tasks, prompt provenance, source hashes, trajectory metrics, diagnostics, and answer-grade metrics. Manifest entries only identify locations and labels. Model names are never branches in logic.
+`ModelSnapshot` 是领域边界。它保存单个模型的运行摘要、评分摘要、50 个运行
+任务、50 个评分任务、提示词来源、源文件哈希、轨迹指标、诊断和答案评分
+指标。清单条目只负责指定位置和显示名称。模型名称不进入逻辑分支。
 
-`build_report` owns the complete report operation. It loads each snapshot, checks snapshots against each other, derives report rows, and returns one JSON-compatible object. The Markdown renderer reads that object and does not maintain a second data source.
+`build_report` 负责完整报告操作。它加载每个快照，检查快照之间是否一致，
+推导报告行，并返回一个可序列化为 JSON 的对象。Markdown 渲染器只读取这个
+对象，不再维护第二份数据源。
 
-Validation lives at the artifact boundary. The loader rejects missing files, extra or missing task files, mismatched questions or expected tools, inconsistent run settings, mismatched prompt hashes, mixed grading contracts, edited grade summaries, and run-summary hash drift. Internal report construction trusts the validated snapshots.
+校验位于产物边界。加载器拒绝缺失文件、多出或缺少任务文件、问题或预期
+工具有差异、运行配置不一致、提示词哈希不一致、评分契约混杂、评分摘要被
+修改和运行摘要哈希漂移。内部报告构造信任已经校验的快照。
 
-The output keeps `trajectory` and `answer_grade` in separate objects. Every delta is named as `model_minus_reference_model`, and the reference key is repeated beside the delta. There is no combined accuracy field.
+输出把 `trajectory` 和 `answer_grade` 保存在两个独立对象中。每个差值都按
+`model_minus_reference_model` 命名，并在差值旁重复参考模型键。输出中没有
+合并准确率字段。
 
-The public interface hides task discovery, source aggregation, cross-model validation, prompt provenance, metric recomputation, delta calculation, and deterministic serialization behind one function. The caller does not coordinate stages.
+公开接口用一个函数隐藏任务发现、来源聚合、跨模型校验、提示词来源、指标
+重算、差值计算和确定性序列化。调用方不需要自己编排各阶段。
 
-## Candidate A: manifest-driven snapshots
+## 候选 A：清单驱动的模型快照
 
-One loader creates three `ModelSnapshot` values. One builder validates the snapshots as a set and returns the report. JSON and Markdown are renderings of that report.
+一个加载器创建三个 `ModelSnapshot`。一个构建器按集合校验快照并返回报告。
+JSON 和 Markdown 都只是同一报告的渲染结果。
 
-This candidate gives one model collection, one contract, one validation path, and one three-model entry. It handles the difference between old Qwen artifacts and current artifacts inside prompt provenance resolution.
+该候选只有一份模型集合、一套契约、一条校验路径和一个三模型入口。Qwen 旧
+产物与当前产物的差异在提示词来源解析中处理。
 
-## Candidate B: extend and merge the two-model scripts
+## 候选 B：扩展并合并双模型脚本
 
-Add a third directory argument to the existing run comparison and answer-grade comparison, then write a merge script for the two intermediate reports.
+给现有运行对照和答案评分对照各增加一个目录参数，再写一个脚本合并两份中间
+报告。
 
-This candidate is rejected. It preserves two report schemas, repeats model and metric lists, and makes the merge layer a pass-through. It also encourages the three-model layer to import private helpers from two CLI modules.
+该候选不采用。它会保留两套报告结构，重复模型和指标列表，并让合并层主要
+负责转发字段。它还会促使三模型层导入两个 CLI 模块的私有辅助函数。
 
-## Red-flag table
+## 风险对照表
 
-| Check | Candidate A | Candidate B |
+| 检查项 | 候选 A | 候选 B |
 |---|---|---|
-| Shallow module | Pass. One builder hides loading, validation, aggregation, and rendering. | Fail. A merge layer mostly forwards fields from two old reports. |
-| Information leakage | Pass. Raw run and grade artifacts become `ModelSnapshot` values. | Fail. Two-model report schemas leak into the three-model layer. |
-| Temporal decomposition | Pass. Ownership follows model artifacts, not load and render phases. | Fail. Old run comparison, old grade comparison, and a merge stage split one report. |
-| Pass-through method | Pass. `build_report` performs the report operation. | Fail. The merge function mostly copies fields. |
-| Split ownership | Pass. The manifest owns model membership and the builder owns output. | Fail. Model and metric lists exist in old scripts and the merge script. |
-| Two ways to do one task | Pass for the new three-model scope. Existing two-model reports remain historical regeneration paths. | Fail. Two-model merge and three-model report become competing paths. |
-| Importable internals | Pass. Only `build_report` is public. | Fail. The new path would import old CLI internals. |
-| Hand-synced list | Pass. One manifest and one metric registry drive the report. | Fail. Model order, metric columns, and source paths appear in several places. |
+| 模块是否足够浅 | 通过。一个构建器隐藏加载、校验、聚合和渲染。 | 失败。合并层主要转发两份旧报告中的字段。 |
+| 是否泄漏内部结构 | 通过。原始运行和评分产物转换成 `ModelSnapshot`。 | 失败。双模型报告结构泄漏到三模型层。 |
+| 职责是否按领域拆分 | 通过。所有权按模型产物划分，不按加载和渲染阶段划分。 | 失败。旧运行对照、旧评分对照和合并阶段拆散了一份报告。 |
+| 是否存在纯转发方法 | 通过。`build_report` 执行完整报告操作。 | 失败。合并函数主要复制字段。 |
+| 所有权是否分裂 | 通过。清单拥有模型成员信息，构建器拥有输出。 | 失败。模型和指标列表同时出现在旧脚本与合并脚本中。 |
+| 是否出现两条同功能路径 | 新三模型范围内通过。已有双模型报告仍作为历史重生成路径。 | 失败。双模型合并和三模型报告会形成竞争路径。 |
+| 是否暴露可导入内部实现 | 通过。只公开 `build_report`。 | 失败。新路径会导入旧 CLI 内部实现。 |
+| 是否存在手工同步列表 | 通过。一个清单和一个指标登记表驱动报告。 | 失败。模型顺序、指标列和来源路径出现在多处。 |
 
-## Synthesis decision
+## 综合决策
 
-Candidate A is the base. The synthesized design keeps the single manifest, one `ModelSnapshot` collection, one validation pass, and one report object. It adds explicit historical provenance for the old Qwen run because runtime prompt hashes were not recorded there. It does not migrate or delete the existing two-model report scripts. Those scripts remain historical regeneration paths for their earlier two-model reports. This script is the only three-model report entry.
+以候选 A 为基础。综合后的设计保留单一清单、一个 `ModelSnapshot` 集合、一次
+校验和一份报告对象。它为 Qwen 旧运行增加明确的历史来源，因为该运行没有
+记录运行时提示词哈希。它不迁移也不删除已有双模型报告脚本。那些脚本继续
+作为早期双模型报告的历史重生成路径，新脚本则是唯一的三模型报告入口。
 
-## Tradeoffs accepted
+## 接受的取舍
 
-We accept a stricter report input contract in exchange for making cross-model claims auditable. Missing prompt provenance or missing grade fields stop the report instead of producing partial confidence.
+我们接受更严格的报告输入契约，以换取跨模型结论可审计。缺少提示词来源或
+缺少评分字段时，报告直接停止，不生成可信度不明的部分结果。
 
-We accept a larger validation module in exchange for one three-model entry point. The alternative distributes the same rules across two legacy comparators and a merge script.
+我们接受更大的校验模块，以换取一个三模型入口。另一种做法会把相同规则分散
+到两个旧对照脚本和一个合并脚本中。
 
-We accept that the Qwen prompt contract is historical evidence, not runtime evidence. The report names that distinction in every source record.
+我们接受 Qwen 提示词契约属于历史证据，不是运行时证据。报告在每条来源记录
+中明确写出这一区别。
 
-## Implementation reconciliation
+## 实现对齐
 
-The implementation follows the synthesized shape. The only added detail is the aggregate source hash for each set of 50 JSON task files. It hashes a canonical list of filename and file SHA256 pairs so the report records both the directory identity and each task file.
+实现遵循综合后的结构。唯一补充是为每组 50 个 JSON 任务文件增加聚合来源
+哈希。该哈希对文件名和文件 SHA256 组成的规范列表计算，因此报告同时记录
+目录身份和每个任务文件。
 
-## Next implementation step
+## 下一步实现
 
-Run the focused unit tests against temporary 3 by 50 fixtures, then run the report against the real manifest once the DeepSeek 50-task run and Kimi K3 grades are present.
+先用临时的 3 乘 50 测试数据运行聚焦单元测试。等 DeepSeek 50 题运行和
+Kimi K3 评分齐备后，再用真实清单运行报告器。

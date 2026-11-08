@@ -508,7 +508,7 @@ class ComparisonTest(unittest.TestCase):
             )
             self.assertTrue(json_out.is_file())
             self.assertIn(
-                "not equivalent to the upstream GPT-4o grader",
+                "不等同于上游 GPT-4o 评分器",
                 markdown_out.read_text(encoding="utf-8"),
             )
 

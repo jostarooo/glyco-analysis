@@ -32,6 +32,24 @@ OK (skipped=8)
 201 项中 193 项通过，8 项来自既有 GPU 门控或按设计跳过的环境合同测试。
 原始输出在 `reports/w3_day5/unittest_2026-11-08.txt`。
 
+## 纯英文报告修正
+
+本轮扫描仓库内全部受版本控制的人类可读 Markdown 和 `docs/` 下的文本记录。
+排除原始 unittest、checker 输出、论文摘录、命令日志和 SHA256 清单后，首次
+发现 9 份纯英文文档。
+
+三份派生报告已通过修改生成器修正并重新生成：
+
+- `reports/w3_day2/f3_glm53_vs_qwen3_4b.md`
+- `reports/w3_day3/answer_grade_comparison.md`
+- `reports/w3_day4/f3_three_model_report.md`
+
+其余 6 份 README、设计说明、验证记录和 W2 Day 1 决策记录已直接改写为中文。
+仓库与交付包合计扫描 135 份人类可读文档，复扫结果为 `offenders=0`。修正后的三模型 Markdown SHA256 为
+`2F0E56B948098EB810E7C00E9501EA3A3A1F53A751041F5E37C8AB63A3ECA39A`。
+相关聚焦测试 32 项全部通过，重新生成的三模型 JSON 未发生变化。双模型轨迹
+生成器已固定使用 LF 换行，Windows 重跑不会再改变 JSON 的换行格式。
+
 ## 负向控制
 
 - 修改 F1 的 MCC 但保留旧差值时，生成器拒绝写入，并报告必须在混淆矩阵上重算。

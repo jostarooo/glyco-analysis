@@ -316,7 +316,7 @@ class ThreeModelReportTest(unittest.TestCase):
             report["models"][0]["prompt_provenance"]["runtime_recorded"],
             False,
         )
-        self.assertIn("Trajectory metrics and answer-grade metrics", markdown)
+        self.assertIn("工具轨迹指标与答案评分指标分开报告", markdown)
         self.assertNotIn("combined accuracy:", markdown.lower())
 
     def test_manifest_requires_three_unique_models_and_existing_reference(

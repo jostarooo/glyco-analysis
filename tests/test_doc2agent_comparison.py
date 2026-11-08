@@ -154,9 +154,9 @@ class ComparisonTest(unittest.TestCase):
             self.assertEqual(report["tasks"][0]["delta"]["tool_calls"], 1)
             self.assertNotIn("model_calls", report["aggregate"]["delta"])
             self.assertNotIn("model_calls", report["tasks"][0]["delta"])
-            self.assertIn("## Per task", markdown_path.read_text(encoding="utf-8"))
+            self.assertIn("## 逐题结果", markdown_path.read_text(encoding="utf-8"))
             self.assertIn(
-                "External model: `workbuddy-ai/glm-5.3`",
+                "外部模型为 `workbuddy-ai/glm-5.3`",
                 markdown_path.read_text(encoding="utf-8"),
             )
 

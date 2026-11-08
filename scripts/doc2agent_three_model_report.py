@@ -890,13 +890,13 @@ def build_report(manifest_path: Path) -> dict[str, Any]:
 def _format_ratio(metric: dict[str, Any]) -> str:
     value = metric.get("value")
     if value is None:
-        return f"{metric['numerator']}/{metric['denominator']} (undefined)"
+        return f"{metric['numerator']}/{metric['denominator']}（未定义）"
     return f"{metric['numerator']}/{metric['denominator']} ({value:.6f})"
 
 
 def _format_delta(value: Any) -> str:
     if value is None:
-        return "n/a"
+        return "不适用"
     if isinstance(value, float):
         return f"{value:+.6f}"
     return f"{value:+d}"
@@ -908,18 +908,18 @@ def render_markdown(report: dict[str, Any]) -> str:
     keys = [model["key"] for model in models]
     reference = report["reference_model"]
     lines = [
-        "# Three-model Doc2Agent report",
+        "# Doc2Agent 三模型报告",
         "",
-        f"Scope: `{report['scope']}`.",
-        f"Reference model: `{reference}`.",
-        "Delta definition: `model_minus_reference_model`.",
-        "Trajectory metrics and answer-grade metrics are separate.",
-        "No combined accuracy is computed.",
-        "This is local evidence-grounded grading, not the upstream GPT-4o grader.",
+        f"本报告范围为 `{report['scope']}`。",
+        f"参考模型为 `{reference}`。",
+        "差值定义为 `model_minus_reference_model`。",
+        "工具轨迹指标与答案评分指标分开报告。",
+        "不计算合并准确率。",
+        "这是本地证据约束评分，不是上游 GPT-4o 评分器。",
         "",
-        "## Trajectory metrics",
+        "## 工具轨迹指标",
         "",
-        "| Metric | " + " | ".join(labels[key] for key in keys) + " |",
+        "| 指标 | " + " | ".join(labels[key] for key in keys) + " |",
         "|---|" + "|".join("---:" for _ in keys) + "|",
     ]
     for metric in TRAJECTORY_KEYS:
@@ -929,9 +929,9 @@ def render_markdown(report: dict[str, Any]) -> str:
     lines.extend(
         [
             "",
-            "## Answer-grade metrics",
+            "## 答案评分指标",
             "",
-            "| Metric | " + " | ".join(labels[key] for key in keys) + " |",
+            "| 指标 | " + " | ".join(labels[key] for key in keys) + " |",
             "|---|" + "|".join("---:" for _ in keys) + "|",
         ]
     )
@@ -948,10 +948,10 @@ def render_markdown(report: dict[str, Any]) -> str:
     lines.extend(
         [
             "",
-            "## Deltas against the reference",
+            "## 相对参考模型的差值",
             "",
-            "| Model | Trajectory exact | Trajectory all tools | "
-            "Trajectory final answers | Answer correct | Answer coverage |",
+            "| 模型 | 轨迹 `exact` | 轨迹全工具命中 | "
+            "轨迹最终回答 | 答案正确数 | 答案覆盖率 |",
             "|---|---:|---:|---:|---:|---:|",
         ]
     )
@@ -969,10 +969,10 @@ def render_markdown(report: dict[str, Any]) -> str:
     lines.extend(
         [
             "",
-            "## Sources",
+            "## 来源",
             "",
-            "| Model | Run summary SHA256 | Run tasks aggregate SHA256 | "
-            "Grade summary SHA256 | Grade tasks aggregate SHA256 |",
+            "| 模型 | 运行摘要 SHA256 | 运行任务聚合 SHA256 | "
+            "评分摘要 SHA256 | 评分任务聚合 SHA256 |",
             "|---|---|---|---|---|",
         ]
     )
@@ -988,9 +988,9 @@ def render_markdown(report: dict[str, Any]) -> str:
     lines.extend(
         [
             "",
-            "## Per-task status",
+            "## 逐题状态",
             "",
-            "| Task | "
+            "| 题号 | "
             + " | ".join(labels[key] for key in keys)
             + " |",
             "|---:|" + "|".join("---" for _ in keys) + "|",

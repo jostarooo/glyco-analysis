@@ -1,15 +1,15 @@
-# Three-model Doc2Agent report
+# Doc2Agent 三模型报告
 
-Scope: `f3_three_model`.
-Reference model: `qwen3_4b`.
-Delta definition: `model_minus_reference_model`.
-Trajectory metrics and answer-grade metrics are separate.
-No combined accuracy is computed.
-This is local evidence-grounded grading, not the upstream GPT-4o grader.
+本报告范围为 `f3_three_model`。
+参考模型为 `qwen3_4b`。
+差值定义为 `model_minus_reference_model`。
+工具轨迹指标与答案评分指标分开报告。
+不计算合并准确率。
+这是本地证据约束评分，不是上游 GPT-4o 评分器。
 
-## Trajectory metrics
+## 工具轨迹指标
 
-| Metric | Qwen3 4B (Ollama) | GLM-5.3 (Magpie) | DeepSeek-Flash (Qoder CN) |
+| 指标 | Qwen3 4B (Ollama) | GLM-5.3 (Magpie) | DeepSeek-Flash (Qoder CN) |
 |---|---:|---:|---:|
 | `tasks_run` | 50 | 50 | 50 |
 | `exact_sequence` | 19 | 13 | 13 |
@@ -20,9 +20,9 @@ This is local evidence-grounded grading, not the upstream GPT-4o grader.
 | `tool_call_successes` | 78 | 114 | 115 |
 | `tool_calls` | 110 | 129 | 148 |
 
-## Answer-grade metrics
+## 答案评分指标
 
-| Metric | Qwen3 4B (Ollama) | GLM-5.3 (Magpie) | DeepSeek-Flash (Qoder CN) |
+| 指标 | Qwen3 4B (Ollama) | GLM-5.3 (Magpie) | DeepSeek-Flash (Qoder CN) |
 |---|---:|---:|---:|
 | `status:correct` | 9 | 18 | 15 |
 | `status:incorrect` | 29 | 3 | 5 |
@@ -38,25 +38,25 @@ This is local evidence-grounded grading, not the upstream GPT-4o grader.
 | `correct_over_task_count` | 9/50 (0.180000) | 18/50 (0.360000) | 15/50 (0.300000) |
 | `answer_available_rate` | 39/50 (0.780000) | 25/50 (0.500000) | 22/50 (0.440000) |
 
-## Deltas against the reference
+## 相对参考模型的差值
 
-| Model | Trajectory exact | Trajectory all tools | Trajectory final answers | Answer correct | Answer coverage |
+| 模型 | 轨迹 `exact` | 轨迹全工具命中 | 轨迹最终回答 | 答案正确数 | 答案覆盖率 |
 |---|---:|---:|---:|---:|---:|
 | Qwen3 4B (Ollama) | +0 | +0 | +0 | +0 | +0.000000 |
 | GLM-5.3 (Magpie) | -6 | +7 | -14 | +9 | -0.340000 |
 | DeepSeek-Flash (Qoder CN) | -6 | +8 | -17 | +6 | -0.360000 |
 
-## Sources
+## 来源
 
-| Model | Run summary SHA256 | Run tasks aggregate SHA256 | Grade summary SHA256 | Grade tasks aggregate SHA256 |
+| 模型 | 运行摘要 SHA256 | 运行任务聚合 SHA256 | 评分摘要 SHA256 | 评分任务聚合 SHA256 |
 |---|---|---|---|---|
 | Qwen3 4B (Ollama) | `4ead0e26a15760a34450c55859679a5c5aeee4dd913014826540b77e5b7c66f4` | `3c66eb7f19938c4609bff19d46106d1a92a7271c682393ef4e0e50c3feb24616` | `980ea2f0fe77157415774d8a6e6a9f4731b0971db688596096915f6e657b224e` | `b8d8b8d85458521c2daa66e80c6290c215f0b8d261f8036578a5ca3a6e79062e` |
 | GLM-5.3 (Magpie) | `9b144e8e7a450caa3f3b2e596ba1a01e26f35485ac3138387b5ff7abdea1dabb` | `36d9569e0366085386cfd829e341cc2696748f49d3da20cc0e814f576560e994` | `e5b9e23d0a6304ce7a14b717c5e62c8f34ed23683a460435b995c14ea751de0c` | `34cdf11ed75edbd70c8e5b29cc3532b15e1b268a774ae3568acb9c29930c8e05` |
 | DeepSeek-Flash (Qoder CN) | `04a76a4061afa6cee82d14583921e890f54c0244ea74a21d74893fe03cd44d98` | `c169f8f72f620247546f07f231d25268eaf0a960da7f55e116b64e94d3d1b185` | `9d03f1fbb37432ed7ded474e4d2f10e523f49fe94bfaa0b4d1bf47bad0698891` | `4fd4c813a84dde6a7c57c656a247fac389211125d59ebc0a8fa7919178f44099` |
 
-## Per-task status
+## 逐题状态
 
-| Task | Qwen3 4B (Ollama) | GLM-5.3 (Magpie) | DeepSeek-Flash (Qoder CN) |
+| 题号 | Qwen3 4B (Ollama) | GLM-5.3 (Magpie) | DeepSeek-Flash (Qoder CN) |
 |---:|---|---|---|
 | 1 | `incorrect` | `correct` | `incorrect` |
 | 2 | `incorrect` | `missing_answer` | `missing_answer` |

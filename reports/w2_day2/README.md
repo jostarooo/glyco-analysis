@@ -1,24 +1,30 @@
-# W2 Day 2 F3 artifacts
+# W2 Day 2 F3 产物
 
-The authoritative 50-task result is `f3_qwen3_4b_50`. It contains 50 task JSON files and a summary that recomputes with `scripts/summarize_doc2agent_run.py --expected-tasks 50 --check-summary`.
+具有权威性的 50 题结果是 `f3_qwen3_4b_50`。该目录包含 50 个任务 JSON
+文件和一份摘要。运行
+`scripts/summarize_doc2agent_run.py --expected-tasks 50 --check-summary`
+可以重新计算并核对这份摘要。
 
-`f3_qwen3_8b_50_incomplete` is a mixed, interrupted process directory. Do not use its summary or task files as a completed 8B 50-task result.
+`f3_qwen3_8b_50_incomplete` 是 8B 任务被中断后留下的混合过程目录。不要把
+其中的摘要或任务文件当作完整的 8B 50 题结果。
 
-`f3_qwen3_8b_smoke` and `f3_qwen3_8b_task31_768` are valid single-task 8B checks. The first verifies the reduced runtime profile. The second verifies that a long WURCS task needs a larger output cap than 256 tokens.
+`f3_qwen3_8b_smoke` 和 `f3_qwen3_8b_task31_768` 是有效的 8B 单题检查。
+前者验证缩减后的运行配置，后者证明较长的 WURCS 任务需要高于 256 token
+的输出上限。
 
-The `probe_*.json` files record the runtime investigation. They show why the runner must expose context, output-cap, timeout, and thinking controls. They are not an answer-quality benchmark.
+`probe_*.json` 记录运行环境排查过程。这些文件说明 runner 为什么必须暴露
+上下文长度、输出上限、超时和思考模式控制。它们不是答案质量基准。
 
-`tool_feasibility.csv` assigns one primary blocker category to each of the 50
-tasks. `tool_feasibility_summary.json` records the original W2 counts of 20
-direct, 25 replacement, and 5 service-failure tasks and binds them to the
-source-file hashes. These files remain unchanged as the historical W2 result.
+`tool_feasibility.csv` 为 50 道题各指定一个主要阻断类别。
+`tool_feasibility_summary.json` 记录 W2 当时的原始分类，即直接完成 20 题、
+需要替代工具 25 题、服务失败 5 题，并绑定源文件哈希。这些文件作为 W2
+历史结果保持不变。
 
-The 2026-10-30 task-grounded recheck in `reports/w2_day3/` revises the current
-classification to 43 direct, 5 replacement, and 2 service-failure tasks. The
-revision distinguishes invalid generic probe arguments, wrapper contract
-failures, TLS verification failure, and unavailable service. Use
-`task_feasibility_revised.csv` when reporting the current tool status.
+2026-10-30 在 `reports/w2_day3/` 完成的任务级复测把当前分类修正为
+直接完成 43 题、需要替代工具 5 题、服务失败 2 题。修正过程区分了通用
+探针参数无效、wrapper 契约失败、TLS 校验失败和服务不可用。报告当前工具
+状态时使用 `task_feasibility_revised.csv`。
 
-`f2_f3_comparison.md` explains the Table 3 comparison and the limits of the F3
-trajectory metrics. `unittest_2026-10-29.txt` and
-`f3_summary_check_2026-10-29.txt` preserve the final verification output.
+`f2_f3_comparison.md` 解释 Table 3 对照以及 F3 轨迹指标的边界。
+`unittest_2026-10-29.txt` 和 `f3_summary_check_2026-10-29.txt` 保存最终
+验证输出。

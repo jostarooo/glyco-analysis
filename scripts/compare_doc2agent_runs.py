@@ -237,7 +237,7 @@ def build_comparison(local_dir: Path, external_dir: Path) -> dict[str, Any]:
 
 
 def bool_label(value: bool) -> str:
-    return "Y" if value else "N"
+    return "是" if value else "否"
 
 
 def render_markdown(report: dict[str, Any]) -> str:
@@ -245,16 +245,16 @@ def render_markdown(report: dict[str, Any]) -> str:
     external = report["aggregate"]["external"]
     delta = report["aggregate"]["delta"]
     lines = [
-        "# Doc2Agent trajectory comparison",
+        "# Doc2Agent 工具轨迹对照",
         "",
-        f"Scope: `{report['metrics_scope']}`. Answer quality was not evaluated.",
-        f"Delta definition: `{report['delta_definition']}`.",
-        f"Local model: `{report['models']['local'] or 'not_recorded'}`.",
-        f"External model: `{report['models']['external'] or 'not_recorded'}`.",
+        f"本报告的范围为 `{report['metrics_scope']}`，不评价答案质量。",
+        f"差值定义为 `{report['delta_definition']}`。",
+        f"本地模型为 `{report['models']['local'] or '未记录'}`。",
+        f"外部模型为 `{report['models']['external'] or '未记录'}`。",
         "",
-        "## Aggregate",
+        "## 汇总",
         "",
-        "| Metric | Local | External | Delta |",
+        "| 指标 | 本地 | 外部 | 差值 |",
         "|---|---:|---:|---:|",
     ]
     for metric in SUMMARY_METRICS:
@@ -265,9 +265,9 @@ def render_markdown(report: dict[str, Any]) -> str:
     lines.extend(
         [
             "",
-            "## Behavior diagnostics",
+            "## 行为诊断",
             "",
-            "| Diagnostic | Local | External |",
+            "| 诊断项 | 本地 | 外部 |",
             "|---|---:|---:|",
         ]
     )
@@ -284,10 +284,10 @@ def render_markdown(report: dict[str, Any]) -> str:
     lines.extend(
         [
             "",
-            "## Per task",
+            "## 逐题结果",
             "",
-            "| Task | Local exact/all/any | External exact/all/any | "
-            "Delta exact | Delta all | Delta called | Delta successes |",
+            "| 题号 | 本地 `exact/all/any` | 外部 `exact/all/any` | "
+            "`exact` 差值 | `all` 差值 | 调用数差值 | 成功调用差值 |",
             "|---:|---|---|---:|---:|---:|---:|",
         ]
     )
@@ -316,9 +316,13 @@ def write_reports(report: dict[str, Any], json_path: Path, markdown_path: Path) 
     json_path.parent.mkdir(parents=True, exist_ok=True)
     markdown_path.parent.mkdir(parents=True, exist_ok=True)
     json_path.write_text(
-        json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+        json.dumps(report, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+        newline="\n",
     )
-    markdown_path.write_text(render_markdown(report), encoding="utf-8")
+    markdown_path.write_text(
+        render_markdown(report), encoding="utf-8", newline="\n"
+    )
 
 
 def main() -> int:

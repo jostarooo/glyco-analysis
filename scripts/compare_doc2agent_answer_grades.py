@@ -184,19 +184,19 @@ def render_markdown(report: dict[str, Any]) -> str:
     local = report["runs"]["local"]
     external = report["runs"]["external"]
     lines = [
-        "# Doc2Agent answer-grade comparison",
+        "# Doc2Agent 答案评分对照",
         "",
-        "This report uses local evidence-grounded judging.",
-        "It is not equivalent to the upstream GPT-4o grader.",
-        "Status differences are not evidence of a model-size effect or another cause.",
+        "本报告使用本地证据约束评分。",
+        "该评分不等同于上游 GPT-4o 评分器。",
+        "状态差异不能作为模型大小或其他原因的因果证据。",
         "",
-        f"Scope: `{report['comparison_scope']}`.",
-        f"Upstream GPT-4o equivalent: `{str(report['upstream_gpt4o_equivalent']).lower()}`.",
-        f"Judge: `{report['judge_model_config']['model']}`.",
+        f"本报告范围为 `{report['comparison_scope']}`。",
+        f"上游 GPT-4o 等价为 `{str(report['upstream_gpt4o_equivalent']).lower()}`。",
+        f"评分器为 `{report['judge_model_config']['model']}`。",
         "",
-        "## Summary",
+        "## 汇总",
         "",
-        "| Metric | Local | External | Delta |",
+        "| 指标 | 本地 | 外部 | 差值 |",
         "|---|---:|---:|---:|",
     ]
     for metric in ("task_count", "graded_correct", "graded_incorrect"):
@@ -213,9 +213,9 @@ def render_markdown(report: dict[str, Any]) -> str:
     lines.extend(
         [
             "",
-            "## Graded metrics",
+            "## 可判定指标",
             "",
-            "| Metric | Local | External |",
+            "| 指标 | 本地 | 外部 |",
             "|---|---|---|",
         ]
     )
@@ -232,9 +232,9 @@ def render_markdown(report: dict[str, Any]) -> str:
     lines.extend(
         [
             "",
-            "## Task statuses",
+            "## 逐题状态",
             "",
-            "| Task | Local | External | Same |",
+            "| 题号 | 本地 | 外部 | 状态相同 |",
             "|---:|---|---|---|",
         ]
     )
@@ -242,7 +242,7 @@ def render_markdown(report: dict[str, Any]) -> str:
         lines.append(
             f"| {task['task_id']} | `{task['local_status']}` | "
             f"`{task['external_status']}` | "
-            f"{'Y' if task['same_status'] else 'N'} |"
+            f"{'是' if task['same_status'] else '否'} |"
         )
     lines.append("")
     return "\n".join(lines)
@@ -251,7 +251,7 @@ def render_markdown(report: dict[str, Any]) -> str:
 def format_ratio(metric: dict[str, Any]) -> str:
     value = metric["value"]
     if value is None:
-        return f"{metric['numerator']}/{metric['denominator']} (undefined)"
+        return f"{metric['numerator']}/{metric['denominator']}（未定义）"
     return f"{metric['numerator']}/{metric['denominator']} ({value:.6f})"
 
 
