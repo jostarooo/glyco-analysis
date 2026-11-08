@@ -89,7 +89,7 @@ PASS: W3 Day5 checkpoint outputs are current
 展示 `reports/w3_day5/unittest_2026-11-08.txt` 末尾：
 
 ```text
-Ran 196 tests in 45.093s
+Ran 201 tests in 41.026s
 OK (skipped=8)
 ```
 
