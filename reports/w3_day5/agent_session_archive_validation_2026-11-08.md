@@ -39,6 +39,7 @@
 主要输出：
 
 - `agent-sessions/INDEX.md`
+- `agent-sessions/REVIEW_GUIDE.md`
 - `agent-sessions/SOURCES.sha256`
 - `agent-sessions/2026-11-04/01-real-system-vertical-slice.md`
 - `agent-sessions/2026-11-05/01-external-model-trajectory-comparison.md`
@@ -51,23 +52,24 @@
 | 文件 | SHA256 |
 |---|---|
 | `agent-sessions/SOURCES.sha256` | `31B9FFC16751B2F13F415F32D0678F01F0AC5149057D2920207C00068B154202` |
-| `agent-sessions/INDEX.md` | `EB99353A57972AA3338779EE1402895216FF0C185BD325C16D713FBF45CC076B` |
+| `agent-sessions/INDEX.md` | `3E4011A561B60996D91B44F7F2FAE6CD2433097DE1571DD27A6FEDCE0BA0C494` |
+| `agent-sessions/REVIEW_GUIDE.md` | `ED131778C46C1537414784919E2E821D7A1B7C61A9D03054F3C3B198115E240C` |
 | `agent-sessions/archive-plan.json` | `9A98442A8300637B47C834A85D9E34874659FE9469F56B33EF9E8E752A6710C8` |
-| `scripts/build_agent_session_archive.py` | `DF71CFA355D58DC7D88235DA3EB9EC67EE1B5A92E38F1481F6F706A856D6D313` |
+| `scripts/build_agent_session_archive.py` | `1CFED2EC48B65DD175A85B6AA9148F430D143E3257934E28987BEB6CA436B763` |
 
 ## 验证
 
 聚焦测试：
 
 ```text
-Ran 13 tests
+Ran 14 tests
 OK
 ```
 
 全量测试：
 
 ```text
-Ran 214 tests in 50.288s
+Ran 215 tests in 50.141s
 OK (skipped=8)
 ```
 
@@ -85,6 +87,9 @@ PASS: 生成文件、源证据和脱敏检查一致
 
 负向控制：复制真实归档后手改 `README.md` 并注入假 GitHub token，
 `--check` 返回 1，首条错误为“生成文件已过期或被手改：README.md”。
+
+审阅说明：`agent-sessions/REVIEW_GUIDE.md` 明确列出证据强度、建议审阅路线、
+可复现命令和不能声称的内容，`INDEX.md` 与 `README.md` 均包含入口链接。
 
 ## 判定边界
 

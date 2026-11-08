@@ -2,6 +2,8 @@
 
 本目录保存与毕设糖基化分析系统直接相关的真实 AI 编程会话工程记录。记录来源是 Codex 会话在 AgentsView 中的结构化数据，不是手工编写的进度摘要。
 
+审阅方式和证据边界见 [REVIEW_GUIDE.md](REVIEW_GUIDE.md)。
+
 ## 归档原则
 
 - 只归档本项目会话，不提交其他课程、私人项目或无关上下文。
@@ -17,6 +19,7 @@
 agent-sessions/
 ├─ README.md
 ├─ INDEX.md
+├─ REVIEW_GUIDE.md
 ├─ archive-plan.json
 ├─ SOURCES.sha256
 └─ YYYY-MM-DD/

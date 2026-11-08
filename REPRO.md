@@ -155,7 +155,9 @@ SHA256，并把工程叙述中的判断链接到真实证据 ID。当前归档�
 同时校验源文件 SHA256。
 
 原始 137 MB JSONL 不提交，隐藏推理 `thinking_text` 不导出。生成内容包括
-`agent-sessions/INDEX.md`、每日 `README.md`、工程记录和 `SOURCES.sha256`。
+`agent-sessions/REVIEW_GUIDE.md`、`agent-sessions/INDEX.md`、每日 `README.md`、
+工程记录和 `SOURCES.sha256`。审阅指南明确区分用户消息、助手结论、工具输出和
+Git 提交各自能够证明的范围，并说明本归档不能替代本人手写日志总结。
 脱敏覆盖密码、token、Cookie、Authorization、私钥、URL token 与用户主目录。连续两跑
 必须保持字节和 mtime 不变；手改生成文件或注入高置信度密钥后，`--check` 必须退出 1。
 该归档是真实会话的工程整理，不伪造原始聊天或工具输出，也不替代用户本人手写日志总结。

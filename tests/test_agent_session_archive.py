@@ -377,6 +377,15 @@ class AgentSessionArchiveTest(unittest.TestCase):
             with self.assertRaisesRegex(archive.ArchiveError, "volatile_reason"):
                 archive.parse_plan(plan)
 
+    def test_review_guide_is_present_and_linked(self) -> None:
+        archive_root = ROOT / "agent-sessions"
+        guide = archive_root / "REVIEW_GUIDE.md"
+        self.assertTrue(guide.is_file())
+        self.assertIn("不能证明", guide.read_text(encoding="utf-8"))
+        for name in ("INDEX.md", "README.md"):
+            text = (archive_root / name).read_text(encoding="utf-8")
+            self.assertIn("[REVIEW_GUIDE.md](REVIEW_GUIDE.md)", text)
+
     def test_redaction_handles_realistic_secret_fields(self) -> None:
         secret = "s" * 12
         cases = [

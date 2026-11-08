@@ -34,7 +34,7 @@
 7. 需要重跑外部 F3 对照时读 `reports/w3_day2/README.md`。外部 summary 与本地 summary 分别用 `scripts/summarize_doc2agent_run.py` 复核，再用 `scripts/compare_doc2agent_runs.py` 生成对照。
 8. 需要复核 F3 答案评分时读 `reports/w3_day3/answer_grade_comparison.md`。两份评分目录先用 `scripts/grade_doc2agent_answers.py --check` 复核，再运行 `scripts/compare_doc2agent_answer_grades.py`。
 9. 需要复核三模型轨迹和评分时读 `reports/w3_day4/README.md`。先运行 `scripts/doc2agent_three_model_report.py --check`，再对照 `reports/w3_day4/f3_three_model_report.md` 的来源哈希和边界说明。
-10. 需要审计本项目 AI 使用过程时读 `agent-sessions/INDEX.md`。每条工程记录都链接真实消息或工具事件；运行 `scripts/build_agent_session_archive.py --check` 可验证源证据、脱敏结果和生成文件是否仍一致。
+10. 需要审计本项目 AI 使用过程时先读 `agent-sessions/REVIEW_GUIDE.md`，再进入 `agent-sessions/INDEX.md`。审阅指南说明证据能证明什么、不能证明什么；运行 `scripts/build_agent_session_archive.py --check` 可验证源证据、脱敏结果和生成文件是否仍一致。
 
 文档、标题、表头和人工复核说明均使用中文。代码标识、JSON 与 CSV 字段名、状态枚举、模型名、路径、命令和原始软件告警保留英文，确保机器复核和哈希追溯不被破坏。
 
